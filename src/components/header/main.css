@@ -1,0 +1,52 @@
+.dropdown-item:hover, .nav-link:hover {
+  color: var(--green) !important;
+}
+
+.header_search {
+  border-radius: 20px; 
+  border: 2px solid #E6E6E6;
+  padding: 8px;
+  margin-right: 110px;
+}
+
+.header_search_input {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  width: 150px;
+}
+
+.header_search_input::placeholder {
+  color: #CCC;
+}
+
+.basket_counter_father {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  border: 2px solid #E6E6E6;
+  background-color: transparent;
+  margin-right: 24px;
+}
+
+.basket_counter {
+  display: flex;
+  width: 18px;
+  height: 18px;
+  padding: 3px 6px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: #F94A4A;
+  color: #FFF;
+  font-family: Montserrat Alternates;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
+  z-index: 2;
+  margin-left: 28px;
+  margin-top: -8px;
+}

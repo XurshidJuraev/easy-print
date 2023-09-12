@@ -1,0 +1,16 @@
+.splide__arrow {
+  width: 60px !important;
+  height: 60px !important;
+  padding: 14px !important;
+  border-radius: 50px !important;
+  background: #FFF !important;
+  box-shadow: 0px 4px 12px 0px rgba(145, 132, 109, 0.20) !important;
+}
+
+.splide__arrow--prev {
+  left: 7em !important;
+}
+
+.splide__arrow--next {
+  right: 9em !important;
+}
