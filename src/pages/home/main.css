@@ -1,0 +1,33 @@
+.products_father_text {
+  color: #1A1A1A;
+  font-family: Heebo;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.16px;
+}
+
+.cards {
+  width: 376px;
+  height: 440px; 
+}
+
+.t-shirt_name {
+  color: #000;
+  font-family: Montserrat Alternates;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.t-shirt_price {
+  color: #333;
+  font-family: Montserrat Alternates Bold;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  margin-top: -11px;
+}

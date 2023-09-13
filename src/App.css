@@ -3,6 +3,16 @@
   src: local('Heebo'), url(./layouts/fonts/heebocyrillic.ttf) format('woff');
 }
 
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: local('Montserrat Alternates'), url(./layouts/fonts/Montserrat_Alternates/MontserratAlternates-Medium.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Montserrat Alternates Bold';
+  src: local('Montserrat Alternates Bold'), url(./layouts/fonts/Montserrat_Alternates/MontserratAlternates-Bold.ttf) format('woff');
+}
+
 :root {
   --green: #4DAD1F;
   --white: #ffffff;
