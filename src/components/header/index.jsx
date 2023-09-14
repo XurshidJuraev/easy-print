@@ -4,14 +4,16 @@ import logo from '../../layouts/icons/logo.svg'
 import search from '../../layouts/icons/search.svg'
 import bag from '../../layouts/icons/bag.svg'
 import user from '../../layouts/icons/User.svg'
+import { NavLink } from 'react-router-dom'
 
-function HeaderMain() {
+function HeaderMain({ trashCardData }) {
   return (
     <header className="navbar navbar-expand-lg bg-body-tertiary">
       <div style={{ margin: '12px 120px' }} className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <NavLink to={'/'} className="navbar-brand" href="#">
           <img src={logo} alt="logo" />
-        </a>
+        </NavLink>
+        
         <button
           className="navbar-toggler"
           type="button"
@@ -96,10 +98,10 @@ function HeaderMain() {
               </center>
             </div>
             <div className="d-flex">
-              <div className='basket_counter_father'>
-                <div className='basket_counter'>2</div>
+              <NavLink to={'/basket'} className='basket_counter_father'>
+                <div className='basket_counter'>{trashCardData.length}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
-              </div>
+              </NavLink>
 
               <button style={{backgroundColor: 'transparent', border: 'none'}}>
                 <img src={user} alt="user" />
