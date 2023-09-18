@@ -35,9 +35,10 @@ function Basket() {
   
     setIdCounter((prevId) => prevId + 1);
   
-    setTrashCardData((prevData) => [...prevData, clickedCardData]);
+    const updatedTrashCardData = [...trashCardData, clickedCardData];
+    setTrashCardData(updatedTrashCardData);
   
-    localStorage.setItem('trashCard', JSON.stringify([...trashCardData, clickedCardData]));
+    localStorage.setItem('trashCard', JSON.stringify(updatedTrashCardData));
   
     toast.success(`${name} в корзину`, {
       position: toast.POSITION.TOP_RIGHT,
@@ -123,8 +124,8 @@ function Basket() {
       (total, item) => total + item.count * parseFloat(item.price.replace(/,/g, '')),
       0
     );
-    const totalSelectedPriceWithDiscount = totalSelectedPrice - totalSelectedPrice * 0.1; // 10% chegirma
-    const totalSelectedDiscount = totalSelectedPrice * 0.1; // 10% chegirma miqdori
+    const totalSelectedPriceWithDiscount = totalSelectedPrice - totalSelectedPrice * 0.1;
+    const totalSelectedDiscount = totalSelectedPrice * 0.1;
   
     if (selectedItems.length === 0) {
       toast.warning('Сначала выберите товары для заказа', {
@@ -134,6 +135,8 @@ function Basket() {
       return;
     }
   
+    const savedOrders = JSON.parse(localStorage.getItem('Orders')) || [];
+  
     const orderData = {
       items: selectedItems,
       totalWithDiscount: totalSelectedPriceWithDiscount.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 000 сум',
@@ -142,14 +145,17 @@ function Basket() {
       giftPackagingAdded,
     };
   
-    localStorage.setItem('Orders', JSON.stringify(orderData));
+    const updatedOrders = [...savedOrders, orderData];
+  
+    localStorage.setItem('Orders', JSON.stringify(updatedOrders));
   
     localStorage.removeItem('trashCard');
-
+  
     setTimeout(() => {
       navigate('/orders');
     }, 1000);
-  }  
+  }
+  
 
   return (
     <div>
