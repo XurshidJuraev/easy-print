@@ -8,7 +8,7 @@ import telegram from '../../layouts/icons/telegram.svg'
 function FooterMain() {
   return (
     <footer className='footer'>
-      <ul style={{listStyle: 'none', display: 'flex', justifyContent: 'space-between', margin: '0 120px', paddingTop: '60px'}}>
+      <ul style={{listStyle: 'none', display: 'flex', justifyContent: 'space-between', margin: '0 120px 0 120px', paddingTop: '60px'}}>
         <li style={{marginTop: '80px'}}>
           <img src={logo} alt="logo" />
         </li>
@@ -39,16 +39,18 @@ function FooterMain() {
         </li>
 
         <li>
-          <h3 className='footer_title'>Контакты</h3>
+          <h3 style={{position: 'relative', left: '30px'}} className='footer_title'>Контакты</h3>
           <br />
 
           <ul style={{listStyle: 'none'}}>
-            <li className='footer_text'>easyprint@gmail.com</li>
-            <li className='footer_text'>+998 99 335 75 78</li>
-            <li style={{marginLeft: '-30px'}} className='d-flex'>
-              <img src={instagram} alt="instagram" />
-              <img className='ms-5' src={telegram} alt="telegram" />
-            </li>
+            <div style={{position: 'relative', left: '30px'}}>
+              <li className='footer_text'>easyprint@gmail.com</li>
+              <li className='footer_text'>+998 99 335 75 78</li>
+              <li style={{marginLeft: '-30px'}} className='d-flex'>
+                <img src={instagram} alt="instagram" />
+                <img className='ms-5' src={telegram} alt="telegram" />
+              </li>
+            </div>
             <li className='footer_laws'>© {(new Date().getFullYear())} Easy Print, Все права защищены.</li>
           </ul>
         </li>

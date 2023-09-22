@@ -4,6 +4,11 @@
 }
 
 @font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(./layouts/fonts/Inter/static/Inter-Medium.ttf) format('woff');
+}
+
+@font-face {
   font-family: 'Montserrat Alternates';
   src: local('Montserrat Alternates'), url(./layouts/fonts/Montserrat_Alternates/MontserratAlternates-Medium.ttf) format('woff');
 }
@@ -22,7 +27,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #F2F2F2;
+  background-color: #ffffff;
 }
 
 .center {
@@ -33,4 +38,8 @@ body {
 
 .dropdown-toggle::after {
   display: none !important;
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+  border-color: transparent !important;
 }

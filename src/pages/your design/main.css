@@ -1,0 +1,132 @@
+.white_background {
+  background-color: #F8F9FA;
+  width: 59%;
+  height: 100px;
+  position: relative;
+  margin-top: -99px;
+  margin-left: 303px;
+  padding-top: 29px;
+  padding-left: 640px;
+}
+
+.layers {
+  display: inline-flex;
+  width: 305px;
+  height: 730px;
+  padding: 24px 60px 652px 60px;
+  flex-direction: column;
+  align-items: center;
+  gap: 200px;
+  flex-shrink: 0;
+  border: 1px solid var(--neutral-100, #E6E6E6);
+  background: var(--neutral-50, #F8F8F8);
+  text-align: center;
+}
+
+.shirt_drawing {
+  width: 100%;
+  background-color: #E6E6E6;
+}
+
+.shirt_drawing_header {
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--neutral-100, #E6E6E6);
+  background: var(--neutral-50, #F8F8F8);
+  display: flex;
+}
+
+.shirt_drawing_header_select {
+  display: flex;
+  padding: 6px 16px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--neutral-100, #E6E6E6);
+  background: var(--neutral-50, #F8F8F8);
+  outline: none;
+  color: var(--primary-7, #17262B);
+  font-family: Inter;
+  font-size: 15.86px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  margin-top: -1px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
+.layers_text_fat {
+  color: var(--primary-7, #17262B);
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px; /* 90% */
+  letter-spacing: -0.1px;
+}
+
+.layers_text {
+  color: var(--neutral-400, #999);
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 137.5% */
+  letter-spacing: -0.08px;
+  width: 184px;
+}
+
+.add_text {
+  position: absolute;
+  right: 634px;
+  top: 400px;
+  outline: none;
+  background-color: #fff;
+  border: 1px solid var(--primary-2, #83A1AB);
+  color: var(--neutral-950, #0D0D0D);
+  font-family: Inter;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+}
+
+.add_text::placeholder {
+  color: var(--neutral-950, #0D0D0D);
+  font-family: Inter;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.circle_image img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 395px;
+  margin-left: 210px;
+  z-index: 100;
+}
+
+.size_image img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 439px;
+  margin-left: 412px;
+  z-index: 100;
+}

@@ -4,54 +4,27 @@ import './main.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
-import design1 from '../../layouts/images/gifts_for_him.svg'
-import design2 from '../../layouts/images/trump.svg'
-import like from '../../layouts/icons/like.svg'
-import bag from '../../layouts/icons/active_bag_icon.svg'
 import pencil from '../../layouts/icons/pencil.svg'
 import trash from '../../layouts/icons/trash.svg'
 
 import no_data from '../../layouts/images/no_trash.svg'
 import AdvantageMain from '../../components/advantage';
 import FooterMain from '../../components/footer';
+import CardFour from '../../layouts/always';
 
 function Basket() {
   const [trashCardData, setTrashCardData] = useState([]);
-  const [idCounter, setIdCounter] = useState(1);
-  const [basketCardCount, setBasketCardCount] = useState(1);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [giftPackagingAdded, setGiftPackagingAdded] = useState(false);
-
-  function handleCardClick(imageSrc, name, price) {
-    const currentTime = new Date();
-    const clickedCardData = {
-      id: idCounter,
-      count: basketCardCount,
-      imageSrc,
-      name,
-      price,
-      timestamp: currentTime.toString(),
-    };
-  
-    setIdCounter((prevId) => prevId + 1);
-  
-    const updatedTrashCardData = [...trashCardData, clickedCardData];
-    setTrashCardData(updatedTrashCardData);
-  
-    localStorage.setItem('trashCard', JSON.stringify(updatedTrashCardData));
-  
-    toast.success(`${name} в корзину`, {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 2000,
-    });
-  }
-  
 
   function handleDeleteClick(id) {
     const updatedTrashCardData = trashCardData.filter((item) => item.id !== id);
     setTrashCardData(updatedTrashCardData);
-
+  
     localStorage.setItem('trashCard', JSON.stringify(updatedTrashCardData));
+  
+    // Yangilash uchun selectedProduct ni o'zgartiramiz
+    setSelectedProduct({ id }); // yoki boshqa unikal qiymat
   }
 
   function handleCountChange(id, change) {
@@ -155,7 +128,14 @@ function Basket() {
       navigate('/orders');
     }, 1000);
   }
-  
+
+  const addToBasket = (productData) => {
+    console.log('Adding to basket:', productData);
+  };
+
+  useEffect(() => {
+    addToBasket(selectedProduct);
+  }, [selectedProduct]);
 
   return (
     <div>
@@ -175,115 +155,7 @@ function Basket() {
                 <h3 className='recomendation_title'>Рекомендуем</h3>
               </center>
 
-              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
-                <div className="cards">
-                  <div>
-                    <img style={{position: 'absolute', zIndex: '1', borderRadius: '20px'}} src={design2} alt="your_design" />
-                    <img style={{position: 'relative', zIndex: '2', left: '340px', top: '10px'}} src={like} alt="your_design" />
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{marginTop: '373px'}}>
-                    <div>
-                      <p className='t-shirt_name'>Футболка с вашим принтом </p>
-                      <p className='t-shirt_price'>От 140 000 сум</p>
-                    </div>
-
-                    <div onClick={() => handleCardClick(design2, 'Футболка с вашим принтом', '140 000')}>
-                      <img src={bag} alt="bag" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="cards">
-                  <div>
-                    <img style={{position: 'absolute', zIndex: '1'}} src={design1} alt="your_design" />
-                    <img style={{position: 'relative', zIndex: '2', left: '340px', top: '10px'}} src={like} alt="your_design" />
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{marginTop: '373px'}}>
-                    <div>
-                      <p className='t-shirt_name'>Футболка с вашим принтом </p>
-                      <p className='t-shirt_price'>От 140 000 сум</p>
-                    </div>
-
-                    <div onClick={() => handleCardClick(design1, 'Футболка с вашим принтом', '140 000')}>
-                      <img src={bag} alt="bag" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="cards">
-                  <div>
-                    <img style={{position: 'absolute', zIndex: '1', borderRadius: '20px'}} src={design2} alt="your_design" />
-                    <img style={{position: 'relative', zIndex: '2', left: '340px', top: '10px'}} src={like} alt="your_design" />
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{marginTop: '373px'}}>
-                    <div>
-                      <p className='t-shirt_name'>Футболка с вашим принтом </p>
-                      <p className='t-shirt_price'>От 140 000 сум</p>
-                    </div>
-
-                    <div onClick={() => handleCardClick(design2, 'Футболка с вашим принтом', '140 000')}>
-                      <img src={bag} alt="bag" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="cards mt-4">
-                  <div>
-                    <img style={{position: 'absolute', zIndex: '1'}} src={design1} alt="your_design" />
-                    <img style={{position: 'relative', zIndex: '2', left: '340px', top: '10px'}} src={like} alt="your_design" />
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{marginTop: '373px'}}>
-                    <div>
-                      <p className='t-shirt_name'>Футболка с вашим принтом </p>
-                      <p className='t-shirt_price'>От 140 000 сум</p>
-                    </div>
-
-                    <div onClick={() => handleCardClick(design1, 'Футболка с вашим принтом', '140 000')}>
-                      <img src={bag} alt="bag" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="cards mt-4">
-                  <div>
-                    <img style={{position: 'absolute', zIndex: '1', borderRadius: '20px'}} src={design2} alt="your_design" />
-                    <img style={{position: 'relative', zIndex: '2', left: '340px', top: '10px'}} src={like} alt="your_design" />
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{marginTop: '373px'}}>
-                    <div>
-                      <p className='t-shirt_name'>Футболка с вашим принтом </p>
-                      <p className='t-shirt_price'>От 140 000 сум</p>
-                    </div>
-
-                    <div onClick={() => handleCardClick(design2, 'Футболка с вашим принтом', '140 000')}>
-                      <img src={bag} alt="bag" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="cards mt-4">
-                  <div>
-                    <img style={{position: 'absolute', zIndex: '1'}} src={design1} alt="your_design" />
-                    <img style={{position: 'relative', zIndex: '2', left: '340px', top: '10px'}} src={like} alt="your_design" />
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{marginTop: '373px'}}>
-                    <div>
-                      <p className='t-shirt_name'>Футболка с вашим принтом </p>
-                      <p className='t-shirt_price'>От 140 000 сум</p>
-                    </div>
-
-                    <div onClick={() => handleCardClick(design1, 'Футболка с вашим принтом', '140 000')}>
-                      <img src={bag} alt="bag" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <CardFour addToBasket={addToBasket} />
             </div>
           ) : (
             <div>
@@ -391,61 +263,7 @@ function Basket() {
 
               <h3 className='recomendation_title'>Вас может заинтересовать:</h3>
 
-              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
-                <div className="cards">
-                  <div>
-                    <img style={{position: 'absolute', zIndex: '1'}} src={design1} alt="your_design" />
-                    <img style={{position: 'relative', zIndex: '2', left: '340px', top: '10px'}} src={like} alt="your_design" />
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{marginTop: '373px'}}>
-                    <div>
-                      <p className='t-shirt_name'>Футболка с вашим принтом </p>
-                      <p className='t-shirt_price'>От 140 000 сум</p>
-                    </div>
-
-                    <div onClick={() => handleCardClick(design1, 'Футболка с вашим принтом', '140 000')}>
-                      <img src={bag} alt="bag" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="cards">
-                  <div>
-                    <img style={{position: 'absolute', zIndex: '1', borderRadius: '20px'}} src={design2} alt="your_design" />
-                    <img style={{position: 'relative', zIndex: '2', left: '340px', top: '10px'}} src={like} alt="your_design" />
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{marginTop: '373px'}}>
-                    <div>
-                      <p className='t-shirt_name'>Футболка с вашим принтом </p>
-                      <p className='t-shirt_price'>От 140 000 сум</p>
-                    </div>
-
-                    <div onClick={() => handleCardClick(design2, 'Футболка с вашим принтом', '140 000')}>
-                      <img src={bag} alt="bag" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="cards">
-                  <div>
-                    <img style={{position: 'absolute', zIndex: '1'}} src={design1} alt="your_design" />
-                    <img style={{position: 'relative', zIndex: '2', left: '340px', top: '10px'}} src={like} alt="your_design" />
-                  </div>
-
-                  <div className="d-flex justify-content-between" style={{marginTop: '373px'}}>
-                    <div>
-                      <p className='t-shirt_name'>Футболка с вашим принтом </p>
-                      <p className='t-shirt_price'>От 140 000 сум</p>
-                    </div>
-
-                    <div onClick={() => handleCardClick(design1, 'Футболка с вашим принтом', '140 000')}>
-                      <img src={bag} alt="bag" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <CardFour addToBasket={addToBasket} />
             </div>
           )}
         </div>

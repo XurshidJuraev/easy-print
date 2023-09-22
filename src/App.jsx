@@ -10,6 +10,9 @@ import Basket from './pages/basket';
 // Мои заказы страниция 
 import MyOrders from './pages/orders';
 
+// Изменить футболки страниция 
+import YourDesign from './pages/your design';
+
 function App() {
   return (
     <div>
@@ -19,6 +22,8 @@ function App() {
         <Route path='/basket' element={<Basket />} />
 
         <Route path='/orders' element={<MyOrders />} />
+
+        <Route path='/yourDesign' element={<YourDesign />} />
       </Routes>
     </div>
   );

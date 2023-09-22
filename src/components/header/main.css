@@ -2,11 +2,22 @@
   color: var(--green) !important;
 }
 
+.nav-link {
+  color: var(--primary-8, #121E22) !important;
+  font-family: Inter !important;
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 20px !important; 
+}
+
 .header_search {
-  border-radius: 20px; 
+  border-radius: 20px;
   border: 2px solid #E6E6E6;
-  padding: 8px;
+  padding: 3px 9px;
   margin-right: 110px;
+  height: 40px;
+  margin-top: 6px;
 }
 
 .header_search_input {
@@ -24,10 +35,11 @@
   width: 48px;
   height: 48px;
   border-radius: 24px;
-  border: 2px solid #E6E6E6;
   background-color: transparent;
-  margin-right: 24px;
+  margin-right: 26px;
   text-decoration: none;
+  margin-top: 8px;
+  margin-left: 26px;
 }
 
 .basket_counter {
@@ -39,7 +51,7 @@
   align-items: center;
   flex-shrink: 0;
   border-radius: 9px;
-  background: #F94A4A;
+  background: #F19654;
   color: #FFF;
   font-family: Montserrat Alternates;
   font-size: 11px;

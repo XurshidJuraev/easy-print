@@ -4,6 +4,7 @@ import logo from '../../layouts/icons/logo.svg'
 import search from '../../layouts/icons/search.svg'
 import bag from '../../layouts/icons/bag.svg'
 import user from '../../layouts/icons/User.svg'
+import language from '../../layouts/icons/language.svg'
 import { NavLink } from 'react-router-dom'
 
 function HeaderMain({ trashCardData }) {
@@ -27,60 +28,28 @@ function HeaderMain({ trashCardData }) {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ marginLeft: '100px', fontFamily: 'Heebo' }}>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Категория
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Женское
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Мужское
-                  </a>
-                </li>
-                <li>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Детям
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Аксессуары
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Новинки
-                  </a>
-                </li>
-                <li>
-                </li>
-              </ul>
-            </li>
-
-
-            <li className="nav-item">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ marginLeft: '50px', fontFamily: 'Inter' }}>
+            <li className="nav-item ms-3 me-3">
               <a className="nav-link" href="#">
-                Мои заказы
+                Футболки
               </a>
             </li>
 
-            <li className="nav-item">
+            <li className="nav-item ms-3 me-3">
               <a className="nav-link" href="#">
-                Принты
+                Лонгсливы
+              </a>
+            </li>
+
+            <li className="nav-ite ms-3 me-3">
+              <a className="nav-link" href="#">
+                Худи
+              </a>
+            </li>
+
+            <li className="nav-item ms-3 me-3">
+              <a className="nav-link" href="#">
+                Аксессуары
               </a>
             </li>
           </ul>
@@ -91,13 +60,17 @@ function HeaderMain({ trashCardData }) {
                 <input
                   className="header_search_input"
                   type="search"
-                  placeholder="Поиск"
-                  aria-label="Поиск"
+                  placeholder="Поиск..."
+                  aria-label="Поиск..."
                 />
                 <img src={search} alt="search" />
               </center>
             </div>
             <div className="d-flex">
+              <button style={{backgroundColor: 'transparent', border: 'none'}}>
+                <img src={language} alt="user" />
+              </button>
+
               <NavLink to={'/basket'} className='basket_counter_father'>
                 <div className='basket_counter'>{trashCardData.length}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>

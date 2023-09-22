@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import Splide from '@splidejs/splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
-import Slide1 from '../../layouts/images/Slide_default.svg'
-import Slide2 from '../../layouts/images/Slide_two.svg'
+import Home from '../../layouts/assets/Home.svg'
+// import Home from '../../layouts/assets/Home_2.svg'
 import './main.css';
 import { NavLink } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ function HeroMain() {
 
   return (
     <div>
-      <div className="splide" ref={splideRef}>
+      {/* <div className="splide" ref={splideRef}>
         <div className="splide__track">
           <ul className="splide__list">
             <li className="splide__slide"><NavLink><img src={Slide1} alt="Slide1" /></NavLink></li>
@@ -32,7 +32,11 @@ function HeroMain() {
             <li className="splide__slide"><NavLink><img src={Slide1} alt="Slide1" /></NavLink></li>
           </ul>
         </div>
-      </div>
+      </div> */}
+
+      <NavLink to={'/'}>
+        <div style={{width: '100%', height: '900px', backgroundImage: `url(${Home})`, backgroundSize: 'cover'}}></div>
+      </NavLink>
     </div>
   );
 }

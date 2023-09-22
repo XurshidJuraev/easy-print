@@ -9,25 +9,155 @@
 }
 
 .cards {
-  width: 376px;
-  height: 440px; 
+  width: 276px;
+  height: 384px; 
+}
+
+.clothes_fat {
+  width: 276px;
+  height: 320px;
+  background-color: #E9E9E9;
+  margin-bottom: 20px;
 }
 
 .t-shirt_name {
-  color: #000;
-  font-family: Montserrat Alternates;
+  color: var(--primary-8, #121E22);
+  font-family: 'Inter';
   font-size: 16px;
   font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  width: 216px;
+  display: inline-block;
 }
 
 .t-shirt_price {
-  color: #333;
-  font-family: Montserrat Alternates Bold;
+  color: var(--primary-6, #32454B);
+  font-family: 'Inter';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 110% */
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 276px;
+  height: 320px;
+  background-color: #0d0d0d66;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.overlay-text {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+.detail_back {
+  border-radius: 100px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  width: 178px;
+  padding-top: 15px;
+  height: 39px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal */
+
+.modal_image_fat {
+  width: 500px;
+  height: 579.71px;
+  background: #E9E9E9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_image_fat img {
+  width: 471.014px;
+  height: 543.478px;
+}
+
+.modal_name {
+  color: #17262B;
+  font-family: Inter;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 40px; /* 125% */
+  width: 336px;
+}
+
+.modal_info {
+  color: var(--neutral-600, #666);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.032px;
+  margin-top: 16px;
+}
+
+.modal_price {
+  color: #F2AA76;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px; /* 110% */
+  letter-spacing: -0.2px;
+  margin-top: 16px;
+}
+
+.color_size {
+  --bs-dropdown-min-width: 102px !important;
+}
+
+.order_now {
+  display: flex;
+  width: 236px;
+  height: 52px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  border-radius: 10px;
+  background: var(--primary-6, #32454B);
+  box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.30);
+  color: var(--White, #FFF);
+  font-family: Inter;
   font-size: 18px;
   font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-  margin-top: -11px;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
+  border: none;
+  margin-left: 15px;
 }
