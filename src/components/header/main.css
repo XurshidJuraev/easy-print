@@ -63,3 +63,112 @@
   margin-left: 28px;
   margin-top: -8px;
 }
+
+/* modal */
+
+.register_title {
+  color: var(--neutral-800, #121212);
+  font-family: Inter;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 114.286% */
+  letter-spacing: -0.448px;
+}
+
+.register_text {
+  color: var(--neutral-500, #666);
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.16px;
+}
+
+.register {
+  display: flex;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  color: var(--White, #FFF);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary-6, #32454B);
+  margin-top: 32px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.login {
+  display: flex;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  color: var(--primary-7, #17262B);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--neutral-50, #F8F8F8);
+  width: 100%;
+}
+
+.register_input {
+  display: flex;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 12px;
+  background: var(--neutral-50, #F8F8F8);
+  border: none;
+  outline: none;
+}
+
+.register_in_text {
+  color: var(--neutral-800, #121212);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.16px;
+}
+
+.register_and_text {
+  color: var(--neutral-400, #999);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.16px;
+  margin-top: 3px;
+}
+
+.register_text_no_password {
+  color: #17262B;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.16px;
+}

@@ -5,6 +5,10 @@ import search from '../../layouts/icons/search.svg'
 import bag from '../../layouts/icons/bag.svg'
 import user from '../../layouts/icons/User.svg'
 import language from '../../layouts/icons/language.svg'
+import register_image from '../../layouts/images/43.svg'
+import google from '../../layouts/images/google.svg'
+import facebook from '../../layouts/images/facebook.svg'
+import verifed from '../../layouts/images/green_verifed.svg'
 import { NavLink } from 'react-router-dom'
 
 function HeaderMain({ trashCardData }) {
@@ -54,7 +58,7 @@ function HeaderMain({ trashCardData }) {
             </li>
           </ul>
 
-          <form className="d-flex" role="search">
+          <div className="d-flex">
             <div className='header_search'>
               <center>
                 <input
@@ -76,11 +80,114 @@ function HeaderMain({ trashCardData }) {
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
               </NavLink>
 
-              <button style={{backgroundColor: 'transparent', border: 'none'}}>
+              <button style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
                 <img src={user} alt="user" />
               </button>
             </div>
-          </form>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
+          <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
+            <div className="modal-body" style={{padding: '32px'}}>
+              <center>
+                <h2 className='register_title'>Регистрация</h2>
+                <p className='register_text'>Зарегистрируйтесь если вы тут впервые</p>
+                <img src={register_image} alt="register_image" />
+              </center>
+
+                <button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" className='register'>Регистрация</button>
+                <button data-bs-target="#exampleModalToggle4" data-bs-toggle="modal" className='login'>Войти в существующий</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
+          <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
+            <div className="modal-body" style={{padding: '32px'}}>
+              <center>
+                <h2 className='register_title'>Регистация</h2>
+                <p className='register_text'>Введите свои данные</p>
+              </center>
+
+              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                <p className='register_in_text'>E-mail </p>
+                <input className='register_input' type="text" placeholder='Введите адрес электронной почты' />
+              </label>
+
+              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                <p className='register_in_text'>Пароль</p>
+                <input className='register_input' type="password" placeholder='Введите пароль' />
+              </label>
+
+              <label className='d-flex mt-4'>
+                <input style={{width: '24px', height: '24px', borderRadius: '10px'}} type="checkbox" name="" id="" />
+                <p style={{marginLeft: '15px'}} className='register_in_text'>Я согласен с условиями пользования</p>
+              </label>
+
+              <button data-bs-target="#exampleModalToggle3" data-bs-toggle="modal"className='register'>Регистрация</button>
+
+              <div className='d-flex'>
+                <div style={{width: '179.5px', marginRight: '16px', height: '1px', backgroundColor: 'var(--neutral-200, #E6E6E6)', marginTop: '16px'}}></div>
+                <p className='register_and_text'>или</p>
+                <div style={{width: '179.5px', marginLeft: '16px', height: '1px', backgroundColor: 'var(--neutral-200, #E6E6E6)', marginTop: '16px'}}></div>
+              </div>
+
+              <div className="d-flex justify-content-between">
+                <img src={google} alt="google" />
+                <img src={facebook} alt="facebook" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
+          <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
+            <div className="modal-body" style={{padding: '32px'}}>
+              <center>
+                <h2 className='register_title'>Отлично!</h2>
+                <p className='register_text'>Вы вошли в свой личный кабинет</p>
+                <img src={verifed} alt="verifed" />
+              </center>
+
+              <button data-bs-dismiss="modal" className='register'>Назад на главную</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" id="exampleModalToggle4" aria-hidden="true" aria-labelledby="exampleModalToggleLabel4" tabindex="-1">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
+          <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
+            <div className="modal-body" style={{padding: '32px'}}>
+              <center>
+                <h2 className='register_title'>Авторизация</h2>
+                <p className='register_text'>Введите свои данные</p>
+              </center>
+
+              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                <p className='register_in_text'>E-mail </p>
+                <input className='register_input' type="text" placeholder='Введите адрес электронной почты' />
+              </label>
+
+              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                <p className='register_in_text'>Пароль</p>
+                <input className='register_input' type="password" placeholder='Введите пароль' />
+              </label>
+
+              <div style={{textAlign: 'right'}}>
+                <p className='register_text_no_password'>Забыли пароль?</p>
+              </div>
+
+              <button data-bs-target="#exampleModalToggle3" data-bs-toggle="modal"className='register'>Регистрация</button>
+            </div>
+          </div>
         </div>
       </div>
     </header>

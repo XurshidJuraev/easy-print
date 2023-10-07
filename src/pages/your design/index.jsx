@@ -130,13 +130,12 @@ function YourDesign() {
   };  
 
   const sliderStyle = {
-    // background: 'linear-gradient(to right, red, yellow, green)', // O'zgartirilgan fongrund ranglari
-    background: 'transparent', // O'zgartirilgan fongrund ranglari
+    background: 'transparent',
     color: 'black',
   };
 
   const togglePicker = () => {
-    setShowPicker(!showPicker); // Toggle the picker visibility
+    setShowPicker(!showPicker);
   };
 
   return (
@@ -521,7 +520,7 @@ function YourDesign() {
                   <p className='layers_text_fat'>Цвет</p>
 
                   <div style={{width: '200px', height: '40px', padding: '16px'}} className='selcet_option_layer'>{color}</div>
-                  <SketchPicker color={color} onChange={color => setColor(color.hex)} className={showPicker ? '' : 'hidden'} />
+                  <SketchPicker color={color} onChange={(color) => {setColor(color.hex); localStorage.setItem('selectedColor', color.hex);}}  className={showPicker ? '' : 'hidden'} />
                 </div>
               </div>
             </Reveal>
