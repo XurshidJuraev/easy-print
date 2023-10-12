@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './main.css'
 import logo from '../../layouts/icons/logo.svg'
 import search from '../../layouts/icons/search.svg'
@@ -12,8 +12,41 @@ import verifed from '../../layouts/images/green_verifed.svg'
 import { NavLink } from 'react-router-dom'
 
 function HeaderMain({ trashCardData }) {
+  const [dataBs, setDataBs] = useState('#exampleModalToggle3')
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  function uuidv4() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(32)
+    );
+  }
+
+  const handleImageSelect = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const selectedImage = e.target.result;
+        localStorage.setItem('selectedImage', selectedImage);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  console.log('Image selected; file: ' + selectedImage)
+
+  const saveUserCredentials = (email, password) => {
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
+    localStorage.setItem('token', uuidv4());
+    localStorage.setItem('loginTime', new Date().toString());
+    if (selectedImage) {
+      localStorage.setItem('userImage', selectedImage);
+    }
+  };
+
   return (
-    <header className="navbar navbar-expand-lg bg-body-tertiary">
+    <header className="navbar navbar-expand-lg bg-body-tertiary" style={{boxShadow: '0px 10px 32px 1px rgba(0,0,0,0.25)'}}>
       <div style={{ margin: '12px 120px' }} className="container-fluid">
         <NavLink to={'/'} className="navbar-brand" href="#">
           <img src={logo} alt="logo" />
@@ -80,9 +113,17 @@ function HeaderMain({ trashCardData }) {
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
               </NavLink>
 
-              <button style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                <img src={user} alt="user" />
-              </button>
+              {localStorage.getItem('email') ? (
+                <NavLink to={'/profile'} style={{marginTop: '14px'}}>
+                  <button style={{backgroundColor: 'transparent', border: 'none'}}>
+                    <img src={user} alt="user" />
+                  </button>                
+                </NavLink>
+              ) : (
+                <button style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                  <img src={user} alt="user" />
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -95,7 +136,27 @@ function HeaderMain({ trashCardData }) {
               <center>
                 <h2 className='register_title'>Регистрация</h2>
                 <p className='register_text'>Зарегистрируйтесь если вы тут впервые</p>
-                <img src={register_image} alt="register_image" />
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageSelect}
+                  style={{ display: 'none' }}
+                  value={selectedImage}
+                />
+                
+                <button
+                  className='register_image_button'
+                  onClick={() => {
+                    const fileInput = document.querySelector('input[type="file"]');
+                    if (fileInput) {
+                      fileInput.click();
+                    }
+                  }}
+                  style={{ backgroundColor: 'transparent', borderColor: 'transparent' }}
+                >
+                  {selectedImage ? <img src={selectedImage} alt="register_image" /> : <img src={register_image} alt="register_image" />}
+                </button>
               </center>
 
                 <button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" className='register'>Регистрация</button>
@@ -116,21 +177,48 @@ function HeaderMain({ trashCardData }) {
 
               <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
                 <p className='register_in_text'>E-mail </p>
-                <input className='register_input' type="text" placeholder='Введите адрес электронной почты' />
+                <input id='emailInput' className='register_input' type="text" placeholder='Введите адрес электронной почты' />
               </label>
 
               <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
                 <p className='register_in_text'>Пароль</p>
-                <input className='register_input' type="password" placeholder='Введите пароль' />
+                <input id='passwordInput' className='register_input' type="password" placeholder='Введите пароль' />
               </label>
 
               <label className='d-flex mt-4'>
-                <input style={{width: '24px', height: '24px', borderRadius: '10px'}} type="checkbox" name="" id="" />
+                <input
+                  style={{width: '24px', height: '24px', borderRadius: '10px'}}
+                  type="checkbox"
+                  name=""
+                  id="agreeCheckbox"
+                />
                 <p style={{marginLeft: '15px'}} className='register_in_text'>Я согласен с условиями пользования</p>
               </label>
 
-              <button data-bs-target="#exampleModalToggle3" data-bs-toggle="modal"className='register'>Регистрация</button>
+              <button
+                data-bs-target={dataBs}
+                data-bs-toggle="modal"
+                className='register'
+                onClick={() => {
+                  const emailInput = document.getElementById('emailInput');
+                  const passwordInput = document.getElementById('passwordInput');
+                  const agreeCheckbox = document.getElementById('agreeCheckbox');
 
+                  const email = emailInput.value;
+                  const password = passwordInput.value;
+                  const agree = agreeCheckbox.checked;
+
+                  if (email && password && agree) {
+                    saveUserCredentials(email, password);  
+                    setDataBs('#exampleModalToggle3')          
+                  } else {
+                    alert('Iltimos, email, parol va rozilik belgisini to\'ldiring!');
+                    setDataBs('#exampleModalToggle2')
+                  }
+                }}
+              >
+                Регистрация
+              </button>
               <div className='d-flex'>
                 <div style={{width: '179.5px', marginRight: '16px', height: '1px', backgroundColor: 'var(--neutral-200, #E6E6E6)', marginTop: '16px'}}></div>
                 <p className='register_and_text'>или</p>

@@ -13,6 +13,12 @@ import MyOrders from './pages/orders';
 // Изменить футболки страниция 
 import YourDesign from './pages/your design';
 
+// 404 Не Найдено
+import Error404 from './pages/404/index';
+
+// Страница профиля
+import Profile from './pages/profile';
+
 function App() {
   return (
     <div>
@@ -24,6 +30,10 @@ function App() {
         <Route path='/orders' element={<MyOrders />} />
 
         <Route path='/yourDesign' element={<YourDesign />} />
+
+        <Route path='*' element={<Error404 />} />
+
+        <Route path='/profile' element={<Profile />} />
       </Routes>
     </div>
   );

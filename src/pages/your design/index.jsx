@@ -13,6 +13,9 @@ import size_img from '../../layouts/icons/size.svg'
 import { Slider } from '@mui/material';
 import Reveal from '../../animation';
 import { SketchPicker } from 'react-color'
+import Cropper from 'react-cropper';
+import ImageGallery from 'react-image-gallery';
+import TextRotate from 'react-text-rotate';
 
 function YourDesign() {
   const [trashCardData, setTrashCardData] = useState([]);
