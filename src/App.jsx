@@ -18,6 +18,9 @@ import Error404 from './pages/404/index';
 
 // Страница профиля
 import Profile from './pages/profile';
+import ProfileAddres from './pages/profile/addres';
+import ProfileOrders from './pages/profile/orders';
+import ProfilePayment from './pages/profile/pay';
 
 function App() {
   return (
@@ -34,6 +37,9 @@ function App() {
         <Route path='*' element={<Error404 />} />
 
         <Route path='/profile' element={<Profile />} />
+        <Route path='/profile/addres' element={<ProfileAddres />} />
+        <Route path='/profile/orders' element={<ProfileOrders />} />
+        <Route path='/profile/payment' element={<ProfilePayment />} />
       </Routes>
     </div>
   );

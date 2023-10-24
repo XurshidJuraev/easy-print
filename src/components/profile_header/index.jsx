@@ -10,11 +10,14 @@ function ProfileHeader() {
     setIsActive(itemIndex);
   };
 
+  const formData = JSON.parse(localStorage.getItem('formData'));
+
   return (
     <div className='profile_header'>
-      <NavLink to={'/profile'} style={{textDecoration: 'none'}} className="d-flex justify-content-between">
+      <NavLink to={'/profile'} style={{textDecoration: 'none'}} className="d-flex">
         <img className='user_image' src={no_image} alt="no_image" />
-        <h3 className='user_name'>Без имени фамилия</h3>
+        <h3 style={{marginLeft: '7px', marginTop: '2px'}} className='user_name'>Без имени фамилия</h3>
+        {/* <h3 style={{marginLeft: '12px', marginTop: '2px'}} className='user_name'>{formData.name ? `${formData.name} ${formData.lastName}` : 'Без имени фамилия'}</h3> */}
       </NavLink>
 
       <NavLink to={'/profile'} className={`d-flex profile_item ${isActive === 0 ? 'active' : ''}`} onClick={() => toggleActive(0)} style={{marginTop: '65px', textDecoration: 'none'}}>
@@ -45,7 +48,7 @@ function ProfileHeader() {
         <p className={isActive === 0 ? 'profile_header_text_active' : 'profile_header_text'}>Личная информация</p>
       </NavLink>
 
-      <NavLink to={'/profile'} className={`d-flex profile_item ${isActive === 1 ? 'active' : ''}`} onClick={() => toggleActive(1)} style={{marginTop: '20px', textDecoration: 'none'}}>
+      <NavLink to={'/profile/addres'} className={`d-flex profile_item ${isActive === 1 ? 'active' : ''}`} onClick={() => toggleActive(1)} style={{marginTop: '20px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}
@@ -73,7 +76,7 @@ function ProfileHeader() {
         <p className={isActive === 1 ? 'profile_header_text_active' : 'profile_header_text'}>Мои адреса</p>
       </NavLink>
 
-      <NavLink to={'/profile'} className={`d-flex profile_item ${isActive === 2 ? 'active' : ''}`} onClick={() => toggleActive(2)} style={{marginTop: '20px', textDecoration: 'none'}}>
+      <NavLink to={'/profile/orders'} className={`d-flex profile_item ${isActive === 2 ? 'active' : ''}`} onClick={() => toggleActive(2)} style={{marginTop: '20px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}
@@ -97,7 +100,7 @@ function ProfileHeader() {
         <p className={isActive === 2 ? 'profile_header_text_active' : 'profile_header_text'}>Мои заказы</p>
       </NavLink>
 
-      <NavLink to={'/profile'} className={`d-flex profile_item ${isActive === 3 ? 'active' : ''}`} onClick={() => toggleActive(3)} style={{marginTop: '18px', textDecoration: 'none'}}>
+      <NavLink to={'/profile/payment'} className={`d-flex profile_item ${isActive === 3 ? 'active' : ''}`} onClick={() => toggleActive(3)} style={{marginTop: '18px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}
