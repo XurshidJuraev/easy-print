@@ -9,6 +9,8 @@ import image from '../../layouts/icons/image.svg'
 import magic from '../../layouts/icons/magic.svg'
 import refresh from '../../layouts/icons/refresh.svg'
 import circle from '../../layouts/icons/circle.svg'
+import Fut_old from '../../layouts/images/Футболка сзади.svg'
+import Fut_orq from '../../layouts/images/Футболка спереди.svg'
 import size_img from '../../layouts/icons/size.svg'
 import { Slider } from '@mui/material';
 import Reveal from '../../animation';
@@ -21,7 +23,8 @@ function YourDesign() {
   const [width, setWidth] = useState('604');
   const [height, setHeight] = useState('562');
   const [isFrontView, setIsFrontView] = useState(true);
-  const [textInputVisible, setTextInputVisible] = useState(false);
+  const [textInputVisible, setTextInputVisible] = useState(true);
+  const [photoInputVisible, setPhotoInputVisible] = useState(true);
   const [textInputValue, setTextInputValue] = useState('');
   const [fontSizePx, setFontSizePx] = useState('');
   const [showPicker, setShowPicker] = useState(false);
@@ -49,6 +52,10 @@ function YourDesign() {
       const newTextData = [...existingData, textInputValue];
       localStorage.setItem('textData', JSON.stringify(newTextData));
     }
+  };
+
+  const handleClickPhoto = () => {
+    setPhotoInputVisible(!photoInputVisible);
   };
 
   useEffect(() => {
@@ -142,7 +149,7 @@ function YourDesign() {
     <>
       <HeaderMain trashCardData={trashCardData}/>
       <div className='white_background'>
-        <img src={addToBasket} alt="" />
+        <img style={{cursor: 'pointer'}} data-bs-target="#exampleModalToggle5" data-bs-toggle="modal" src={addToBasket} alt="" />
       </div>
 
       <div className="d-flex">
@@ -194,6 +201,53 @@ function YourDesign() {
             </Reveal>
           ) : (
             <Reveal><p className='layers_text'>Добавленные объекты будут отображаться здесь</p></Reveal>
+          )}
+
+          {!photoInputVisible ? (
+            <Reveal>
+              <div style={{marginTop: '-170px'}}>
+                <div className='layers_div'>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                    <g clip-path="url(#clip0_527_5462)">
+                      <path d="M22.4213 22.8137H25.0273L23.0885 30L0 23.6882L3.56274 10.4943V20.1648L3.09694 21.9011L21.3261 26.8821L22.4213 22.8137ZM13.0046 8.87199C14.0495 8.87199 14.893 8.02281 14.893 6.97085C14.893 5.91888 14.0495 5.06971 13.0046 5.06971C11.9597 5.06971 11.1162 5.91888 11.1162 6.97085C11.1162 8.02281 11.9597 8.87199 13.0046 8.87199ZM30 3.80228V20.2788H6.08057V3.80228C6.08057 1.71103 7.78011 0 9.85732 0H26.2232C28.3005 0 30 1.71103 30 3.80228ZM8.5984 3.80228V17.3257L18.3424 7.51584L22.4969 11.6984L27.4822 6.67934V3.80228C27.4822 3.1052 26.9157 2.53485 26.2232 2.53485H9.85732C9.16492 2.53485 8.5984 3.1052 8.5984 3.80228ZM27.4822 17.744V10.2662L22.4969 15.2852L18.3424 11.1027L11.7457 17.744H27.4822Z" fill="white"/>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_527_5462">
+                        <rect width="30" height="30" fill="white"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+
+                  <h3 className='layers_text_value'>Фото 1</h3>
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <g clip-path="url(#clip0_519_4042)">
+                      <path d="M16.6667 16.6667H0V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L14.1667 0C14.8297 0 15.4656 0.263392 15.9344 0.732233C16.4033 1.20107 16.6667 1.83696 16.6667 2.5V16.6667ZM1.66667 15H15V2.5C15 2.27899 14.9122 2.06702 14.7559 1.91074C14.5996 1.75446 14.3877 1.66667 14.1667 1.66667H2.5C2.27899 1.66667 2.06702 1.75446 1.91074 1.91074C1.75446 2.06702 1.66667 2.27899 1.66667 2.5V15ZM18.3333 3.48667V18.3333H3.33333V20H20V5.83333C19.9979 5.31812 19.8366 4.81614 19.5383 4.39608C19.2399 3.97603 18.8191 3.6584 18.3333 3.48667Z" fill="#F8F8F8"/>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_519_4042">
+                        <rect width="20" height="20" fill="white"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <g clip-path="url(#clip0_519_4037)">
+                      <path d="M18.3327 3.33333H14.166V1.66667C14.166 1.22464 13.9904 0.800716 13.6779 0.488155C13.3653 0.175595 12.9414 0 12.4993 0L7.49935 0C7.05732 0 6.6334 0.175595 6.32084 0.488155C6.00828 0.800716 5.83268 1.22464 5.83268 1.66667V3.33333H1.66602V5H3.33268V17.5C3.33268 18.163 3.59607 18.7989 4.06492 19.2678C4.53376 19.7366 5.16964 20 5.83268 20H14.166C14.8291 20 15.4649 19.7366 15.9338 19.2678C16.4026 18.7989 16.666 18.163 16.666 17.5V5H18.3327V3.33333ZM7.49935 1.66667H12.4993V3.33333H7.49935V1.66667ZM14.9993 17.5C14.9993 17.721 14.9116 17.933 14.7553 18.0893C14.599 18.2455 14.387 18.3333 14.166 18.3333H5.83268C5.61167 18.3333 5.39971 18.2455 5.24343 18.0893C5.08715 17.933 4.99935 17.721 4.99935 17.5V5H14.9993V17.5Z" fill="#F8F8F8"/>
+                      <path d="M9.16667 8.33337H7.5V15H9.16667V8.33337Z" fill="#F8F8F8"/>
+                      <path d="M12.4987 8.33337H10.832V15H12.4987V8.33337Z" fill="#F8F8F8"/>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_519_4037">
+                        <rect width="20" height="20" fill="white"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+            </Reveal>
+          ) : (
+            <Reveal></Reveal>
           )}
         </div>
 
@@ -247,7 +301,7 @@ function YourDesign() {
               {isFrontView ? 'Спереди' : 'Сзади'} <img style={{ marginLeft: '5px' }} src={refresh} alt="" />
             </div>
 
-            <div className='shirt_drawing_header_select' style={{padding: '0'}}>
+            <div className='shirt_drawing_header_select' style={{padding: '0'}} onClick={handleClickPhoto}>
               <img src={add_image} alt="" />
             </div>
 
@@ -436,6 +490,12 @@ function YourDesign() {
                       </div>
                     </Reveal>
                   )}
+                  
+                  {!photoInputVisible && (
+                    <Reveal>
+                      Add Photo
+                    </Reveal>
+                  )}
                 </div>
               ) : (
                 <svg
@@ -527,6 +587,25 @@ function YourDesign() {
           ) : (
             <Reveal><p className='layers_text'>Детали объектов будут отображаться здесь</p></Reveal>
           )}
+        </div>
+      </div>
+
+      <div className="modal fade" id="exampleModalToggle5" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '0px', border: 'none', width: '900px', height: '580px', marginLeft: '316px'}}>
+          <div className="modal-content modal_content_print" style={{borderRadius: '0px', border: 'none', width: '900px', height: '580px'}}>
+            <div className="modal-header">
+              <h5 className="modal-title">Просмотр дизайна</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body" style={{padding: '32px', width: '900px', height: '580px'}}>
+              <center>
+                <img src={Fut_orq} alt="" />
+                <img style={{marginLeft: '50px'}} src={Fut_old} alt="" />
+
+                <img data-bs-dismiss="modal" aria-label="Close" style={{marginTop: '50px', cursor: 'pointer'}} src={addToBasket} alt="" />
+              </center>
+            </div>
+          </div>
         </div>
       </div>
     </>

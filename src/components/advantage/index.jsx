@@ -17,21 +17,21 @@ function AdvantageMain() {
               <img src={blueVerifed} alt="blueVerifed" />
 
               <h3 className='advantage_theme'>Гарантия качества</h3>
-              <p className='advantage_text'>Качественные экологичные материалы</p>
+              <p className='advantage_text'>Качественные экологичные <br /> материалы</p>
             </div>
 
             <div className='advantage_cards'>
               <img src={blueTruck} alt="blueVerifed" />
 
               <h3 className='advantage_theme'>Быстрая доставка</h3>
-              <p className='advantage_text'>Доставка по всему Узбекистану</p>
+              <p className='advantage_text'>Доставка по всему <br /> Узбекистану</p>
             </div>
 
             <div className='advantage_cards'>
               <img src={blueBuds} alt="blueVerifed" />
 
               <h3 className='advantage_theme'>Сервис</h3>
-              <p className='advantage_text'>Лёгкий процесс оплаты, обмена и <br /> возврата</p>
+              <p className='advantage_text'>Лёгкий процесс оплаты, <br /> обмена и возврата</p>
             </div>
           </div>
         </div>

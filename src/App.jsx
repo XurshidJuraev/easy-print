@@ -22,6 +22,9 @@ import ProfileAddres from './pages/profile/addres';
 import ProfileOrders from './pages/profile/orders';
 import ProfilePayment from './pages/profile/pay';
 
+
+import ShowDetail from './pages/show';
+
 function App() {
   return (
     <div>
@@ -40,6 +43,8 @@ function App() {
         <Route path='/profile/addres' element={<ProfileAddres />} />
         <Route path='/profile/orders' element={<ProfileOrders />} />
         <Route path='/profile/payment' element={<ProfilePayment />} />
+
+        <Route path='/show/detail' element={<ShowDetail />} />
       </Routes>
     </div>
   );

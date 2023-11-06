@@ -46,7 +46,7 @@ function HeaderMain({ trashCardData }) {
   };
 
   return (
-    <header className="navbar navbar-expand-lg bg-body-tertiary" style={{boxShadow: '0px 10px 32px 1px rgba(0,0,0,0.25)'}}>
+    <header className="navbar navbar-expand-lg bg-body-tertiary" style={{boxShadow: '1px 5px 31px -14px rgba(0,0,0,0.72)'}}>
       <div style={{ margin: '12px 120px' }} className="container-fluid">
         <NavLink to={'/'} className="navbar-brand" href="#">
           <img src={logo} alt="logo" />
@@ -176,13 +176,18 @@ function HeaderMain({ trashCardData }) {
               </center>
 
               <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                <p className='register_in_text'>E-mail </p>
-                <input id='emailInput' className='register_input' type="text" placeholder='Введите адрес электронной почты' />
+                <p className='register_in_text'>E-mail или номер телефона</p>
+                <input id='emailInput' className='register_input' type="text" placeholder='Введите адрес эл. почты или номер телефона' />
               </label>
 
               <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
                 <p className='register_in_text'>Пароль</p>
                 <input id='passwordInput' className='register_input' type="password" placeholder='Введите пароль' />
+              </label>
+
+              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                <p className='register_in_text'>Подтвердите пароль</p>
+                <input id='passwordInput2' className='register_input' type="password" placeholder='Подтвердите пароль' />
               </label>
 
               <label className='d-flex mt-4'>

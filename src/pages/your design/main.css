@@ -203,3 +203,8 @@
   line-height: 18px; /* 112.5% */
   letter-spacing: -0.08px;
 }
+
+.modal_content_print {
+  width: 900px !important;
+  height: 580px !important;
+}
