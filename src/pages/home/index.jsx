@@ -6,7 +6,6 @@ import AdvantageMain from '../../components/advantage'
 import FooterMain from '../../components/footer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import your_design from '../../layouts/images/your_design.svg'
 import design1 from '../../layouts/images/boxing.svg'
 import design2 from '../../layouts/images/kiikii.svg'

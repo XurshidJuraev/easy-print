@@ -123,7 +123,6 @@ function Basket() {
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
-
       <ToastContainer />
 
       <div className="container" style={{ marginTop: '32px'  }}>
@@ -136,10 +135,6 @@ function Basket() {
                   <img className='mt-3' src={no_data} alt="no_data" />
                 </center>
               </div>
-
-              <NavLink to={'/'}>
-                <img style={{marginTop: '32px'}} src={continue_shopping} alt="continue_shopping" />
-              </NavLink>
             </>
           ) : (
             <>
