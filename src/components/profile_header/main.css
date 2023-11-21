@@ -2,7 +2,7 @@
   width: 340px;
   height: 600px;
   flex-shrink: 0;
-  background: var(--White, #FFF);
+  background: var(--White, #F8F8F8);
   padding: 24px;
 }
 

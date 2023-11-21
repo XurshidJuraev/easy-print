@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import './main.css'
 import logo from '../../layouts/icons/logo.svg'
 import search from '../../layouts/icons/search.svg'
@@ -10,57 +10,102 @@ import google from '../../layouts/images/google.svg'
 import facebook from '../../layouts/images/facebook.svg'
 import verifed from '../../layouts/images/green_verifed.svg'
 import { NavLink } from 'react-router-dom'
+import axios from 'axios'
 
 function HeaderMain({ trashCardData }) {
-  const [dataBs, setDataBs] = useState('#exampleModalToggle3')
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem('token');
+  const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || '');
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
 
-  function uuidv4() {
-    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(32)
-    );
-  }
+  const handleSubmitLogin = (evt) => {
+    evt.preventDefault();
 
-  const handleImageSelect = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const selectedImage = e.target.result;
-        localStorage.setItem('selectedImage', selectedImage);
-      };
-      reader.readAsDataURL(selectedFile);
-    }
+    const { user_email, user_password } = evt.target.elements;
+
+    fetch(`${process.env.REACT_APP_TWO}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: user_email.value.trim(),
+        password: user_password.value.trim(),
+      }),
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        if (result.status === true) {
+          document.getElementById('exampleModalToggle3').classList.add('show');
+          document.body.classList.add('modal-open');
+          localStorage.setItem('token', result.data.token);
+        } else {
+          console.log("Login failed"); // Masalan, xabar chiqaring yoki boshqa muvofiqlikni ko'rsating
+        }
+      })      
+      .catch(error => console.log('error', error));
   };
 
-  console.log('Image selected; file: ' + selectedImage)
+  const handleSubmitRegister = (evt) => {
+    evt.preventDefault();
+  
+    const { user_name, user_email, user_password, user_password_confirmation } = evt.target.elements;
+  
+    fetch(`${process.env.REACT_APP_TWO}/register`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: user_name.value.trim(),
+        email: user_email.value.trim(),
+        password: user_password.value.trim(),
+        password_confirmation: user_password_confirmation.value.trim(),
+      }),
+    })
+      .then(response => response.json())
+      .then(result => {console.log(result)})      
+      .catch(error => console.log('error', error));
+  }
 
-  const saveUserCredentials = (email, password) => {
-    localStorage.setItem('email', email);
-    localStorage.setItem('password', password);
-    localStorage.setItem('token', uuidv4());
-    localStorage.setItem('loginTime', new Date().toString());
-    if (selectedImage) {
-      localStorage.setItem('userImage', selectedImage);
-    }
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/profile-info`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json"
+      }
+    }).then((response) => {
+      setData(response.data)
+    }).catch((error) => {
+      console.log(error)
+    })
+  }, []);
+
+  const handleLanguageChange = (event) => {
+    const selectedLang = event;
+    setSelectedLanguage(selectedLang);
+    localStorage.setItem('selectedLanguage', selectedLang);
+    toggleLanguageDropdown();
+  };  
+
+  const toggleLanguageDropdown = () => {
+    setShowLanguageDropdown(!showLanguageDropdown);
+  };
+
+  const handleGoogleAuthRedirect = () => {
+    window.location.href = 'http://admin.easyprint.uz/api/googleauth';
   };
 
   return (
-    <header className="navbar navbar-expand-lg bg-body-tertiary" style={{boxShadow: '1px 5px 31px -14px rgba(0,0,0,0.72)'}}>
+    <header className="navbar navbar-expand-lg bg-body-tertiary">
       <div style={{ margin: '12px 120px' }} className="container-fluid">
         <NavLink to={'/'} className="navbar-brand" href="#">
           <img src={logo} alt="logo" />
         </NavLink>
         
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
 
@@ -104,16 +149,37 @@ function HeaderMain({ trashCardData }) {
               </center>
             </div>
             <div className="d-flex">
-              <button style={{backgroundColor: 'transparent', border: 'none'}}>
-                <img src={language} alt="user" />
+              <button onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none'}}>
+                <img onClick={toggleLanguageDropdown} src={language} alt="user" />
               </button>
+
+              {showLanguageDropdown && (
+                <div
+                  value={selectedLanguage}
+                  style={{
+                    border: 'none',
+                    backgroundColor: 'transparent',
+                    position: 'absolute',
+                    top: '70px',
+                    right: '225px',
+                  }}
+                >
+                  {data.data &&
+                    data.data.language &&
+                    data.data.language.map((lang) => (
+                      <div onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
+                        {lang.name}
+                      </div>
+                    ))}
+                </div>
+              )}
 
               <NavLink to={'/basket'} className='basket_counter_father'>
                 <div className='basket_counter'>{trashCardData.length}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
               </NavLink>
 
-              {localStorage.getItem('email') ? (
+              {localStorage.getItem('token') ? (
                 <NavLink to={'/profile'} style={{marginTop: '14px'}}>
                   <button style={{backgroundColor: 'transparent', border: 'none'}}>
                     <img src={user} alt="user" />
@@ -137,26 +203,7 @@ function HeaderMain({ trashCardData }) {
                 <h2 className='register_title'>Регистрация</h2>
                 <p className='register_text'>Зарегистрируйтесь если вы тут впервые</p>
 
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageSelect}
-                  style={{ display: 'none' }}
-                  value={selectedImage}
-                />
-                
-                <button
-                  className='register_image_button'
-                  onClick={() => {
-                    const fileInput = document.querySelector('input[type="file"]');
-                    if (fileInput) {
-                      fileInput.click();
-                    }
-                  }}
-                  style={{ backgroundColor: 'transparent', borderColor: 'transparent' }}
-                >
-                  {selectedImage ? <img src={selectedImage} alt="register_image" /> : <img src={register_image} alt="register_image" />}
-                </button>
+                <img src={register_image} alt={register_image} />
               </center>
 
                 <button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" className='register'>Регистрация</button>
@@ -170,70 +217,51 @@ function HeaderMain({ trashCardData }) {
         <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
           <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
             <div className="modal-body" style={{padding: '32px'}}>
-              <center>
-                <h2 className='register_title'>Регистация</h2>
-                <p className='register_text'>Введите свои данные</p>
-              </center>
+              <form onSubmit={handleSubmitRegister}>
+                <center>
+                  <h2 className='register_title'>Регистация</h2>
+                  <p className='register_text'>Введите свои данные</p>
+                </center>
 
-              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                <p className='register_in_text'>E-mail или номер телефона</p>
-                <input id='emailInput' className='register_input' type="text" placeholder='Введите адрес эл. почты или номер телефона' />
-              </label>
+                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text'>Имя</p>
+                  <input name='user_name' id='emailInput' className='register_input' type="text" placeholder='Введите имя' />
+                </label>
 
-              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                <p className='register_in_text'>Пароль</p>
-                <input id='passwordInput' className='register_input' type="password" placeholder='Введите пароль' />
-              </label>
+                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text'>E-mail или номер телефона</p>
+                  <input name='user_email' id='emailInput' className='register_input' type="text" placeholder='Введите адрес эл. почты или номер телефона' />
+                </label>
 
-              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                <p className='register_in_text'>Подтвердите пароль</p>
-                <input id='passwordInput2' className='register_input' type="password" placeholder='Подтвердите пароль' />
-              </label>
+                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text'>Пароль</p>
+                  <input name='user_password' id='passwordInput' className='register_input' type="password" placeholder='Введите пароль' />
+                </label>
 
-              <label className='d-flex mt-4'>
-                <input
-                  style={{width: '24px', height: '24px', borderRadius: '10px'}}
-                  type="checkbox"
-                  name=""
-                  id="agreeCheckbox"
-                />
-                <p style={{marginLeft: '15px'}} className='register_in_text'>Я согласен с условиями пользования</p>
-              </label>
+                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text'>Подтвердите пароль</p>
+                  <input name='user_password_confirmation' id='passwordInput2' className='register_input' type="password" placeholder='Подтвердите пароль' />
+                </label>
 
-              <button
-                data-bs-target={dataBs}
-                data-bs-toggle="modal"
-                className='register'
-                onClick={() => {
-                  const emailInput = document.getElementById('emailInput');
-                  const passwordInput = document.getElementById('passwordInput');
-                  const agreeCheckbox = document.getElementById('agreeCheckbox');
+                <label className='d-flex mt-4'>
+                  <input style={{width: '24px', height: '24px', borderRadius: '10px'}} type="checkbox" name="" id="agreeCheckbox" />
+                  <p style={{marginLeft: '15px'}} className='register_in_text'>Я согласен с условиями пользования</p>
+                </label>
 
-                  const email = emailInput.value;
-                  const password = passwordInput.value;
-                  const agree = agreeCheckbox.checked;
+                <button data-bs-target='exampleModalToggle3' data-bs-toggle="modal" className='register'>
+                  Регистрация
+                </button>
+                <div className='d-flex'>
+                  <div style={{width: '179.5px', marginRight: '16px', height: '1px', backgroundColor: 'var(--neutral-200, #E6E6E6)', marginTop: '16px'}}></div>
+                  <p className='register_and_text'>или</p>
+                  <div style={{width: '179.5px', marginLeft: '16px', height: '1px', backgroundColor: 'var(--neutral-200, #E6E6E6)', marginTop: '16px'}}></div>
+                </div>
 
-                  if (email && password && agree) {
-                    saveUserCredentials(email, password);  
-                    setDataBs('#exampleModalToggle3')          
-                  } else {
-                    alert('Iltimos, email, parol va rozilik belgisini to\'ldiring!');
-                    setDataBs('#exampleModalToggle2')
-                  }
-                }}
-              >
-                Регистрация
-              </button>
-              <div className='d-flex'>
-                <div style={{width: '179.5px', marginRight: '16px', height: '1px', backgroundColor: 'var(--neutral-200, #E6E6E6)', marginTop: '16px'}}></div>
-                <p className='register_and_text'>или</p>
-                <div style={{width: '179.5px', marginLeft: '16px', height: '1px', backgroundColor: 'var(--neutral-200, #E6E6E6)', marginTop: '16px'}}></div>
-              </div>
-
-              <div className="d-flex justify-content-between">
-                <img src={google} alt="google" />
-                <img src={facebook} alt="facebook" />
-              </div>
+                <div className="d-flex justify-content-between">
+                  <img onClick={handleGoogleAuthRedirect} src={google} alt="google" />
+                  <img src={facebook} alt="facebook" />
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -259,26 +287,30 @@ function HeaderMain({ trashCardData }) {
         <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
           <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
             <div className="modal-body" style={{padding: '32px'}}>
-              <center>
-                <h2 className='register_title'>Авторизация</h2>
-                <p className='register_text'>Введите свои данные</p>
-              </center>
+              <form onSubmit={handleSubmitLogin} action="">
+                <center>
+                  <h2 className='register_title'>Авторизация</h2>
+                  <p className='register_text'>Введите свои данные</p>
+                </center>
 
-              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                <p className='register_in_text'>E-mail </p>
-                <input className='register_input' type="text" placeholder='Введите адрес электронной почты' />
-              </label>
+                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text'>E-mail </p>
+                  <input name='user_email' className='register_input' type="text" placeholder='Введите адрес электронной почты' />
+                </label>
 
-              <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                <p className='register_in_text'>Пароль</p>
-                <input className='register_input' type="password" placeholder='Введите пароль' />
-              </label>
+                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text'>Пароль</p>
+                  <input name='user_password' className='register_input' type="password" placeholder='Введите пароль' />
+                </label>
 
-              <div style={{textAlign: 'right'}}>
-                <p className='register_text_no_password'>Забыли пароль?</p>
-              </div>
+                <p className='register_text_no_password'></p>
 
-              <button data-bs-target="#exampleModalToggle3" data-bs-toggle="modal"className='register'>Регистрация</button>
+                <div style={{textAlign: 'right'}}>
+                  <p className='register_text_no_password'>Забыли пароль?</p>
+                </div>
+
+                <button data-bs-target='exampleModalToggle3' data-bs-toggle="modal" className='register'>Регистрация</button>
+              </form>
             </div>
           </div>
         </div>

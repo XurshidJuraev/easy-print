@@ -20,9 +20,7 @@ function HomePage() {
   const [count, setCount] = useState(1);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedSize, setSelectedSize] = useState('s');
-  const [handleLink, setHandleLink] = useState('');
   const [selectedColor, setSelectedColor] = useState('#D9CCC6');
-  const navigate = useNavigate();
 
   function handleCardClick(imageSrc, name, price, selectedSize, selectedColor) {
     const currentTime = new Date();

@@ -35,7 +35,7 @@ function HeroMain() {
       </div> */}
 
       <NavLink to={'/'}>
-        <div style={{width: '100%', height: '900px', backgroundImage: `url(${Home})`, backgroundSize: 'cover'}}></div>
+        <div style={{width: '100%', height: '52vw', backgroundImage: `url(${Home})`, backgroundSize: 'cover'}}></div>
       </NavLink>
     </div> 
   );
