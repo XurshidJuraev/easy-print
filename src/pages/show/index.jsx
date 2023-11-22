@@ -7,10 +7,17 @@ import order from '../../layouts/icons/order.svg'
 import './main.css'
 import 'react-toastify/dist/ReactToastify.css';
 import CardFour from '../../layouts/always'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 function ShowDetail() {
+  const { id } = useParams()
   const [trashCardData, setTrashCardData] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem('token');
+
+  console.log(id);
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -19,7 +26,7 @@ function ShowDetail() {
     }
   }, []);
 
-  const data = JSON.parse(localStorage.getItem('showDetail'));
+  // const data = JSON.parse(localStorage.getItem('showDetail'));
 
   const addToBasket = (productData) => {
     console.log('Adding to basket:', productData);
@@ -28,6 +35,21 @@ function ShowDetail() {
   useEffect(() => {
     addToBasket(selectedProduct);
   }, [selectedProduct]);
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/get-warehouses`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json"
+      }
+    }).then((response) => {
+      console.log(response.data);
+      setData(response.data);
+    }).catch((error) => {
+      console.log(error);
+    });    
+  }, []);
 
   return (
     <div>

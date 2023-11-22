@@ -14,6 +14,7 @@ import axios from 'axios'
 
 function HeaderMain({ trashCardData }) {
   const [data, setData] = useState([]);
+  const [category, setCategory] = useState([]);
   const token = localStorage.getItem('token');
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || '');
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
@@ -77,7 +78,24 @@ function HeaderMain({ trashCardData }) {
         Accept: "application/json"
       }
     }).then((response) => {
+      localStorage.setItem('basket_count', response.data.data.basket_count)
       setData(response.data)
+    }).catch((error) => {
+      console.log(error)
+    })
+  }, []);
+
+  const basket_count_localstorage = localStorage.getItem('basket_count');
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/get-products-by-categories`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json"
+      }
+    }).then((response) => {
+      setCategory(response.data)
     }).catch((error) => {
       console.log(error)
     })
@@ -101,7 +119,7 @@ function HeaderMain({ trashCardData }) {
   return (
     <header className="navbar navbar-expand-lg bg-body-tertiary">
       <div style={{ margin: '12px 120px' }} className="container-fluid">
-        <NavLink to={'/'} className="navbar-brand" href="#">
+        <NavLink to={'/'} className="navbar-brand">
           <img src={logo} alt="logo" />
         </NavLink>
         
@@ -111,30 +129,14 @@ function HeaderMain({ trashCardData }) {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ marginLeft: '50px', fontFamily: 'Inter' }}>
-            <li className="nav-item ms-3 me-3">
-              <a className="nav-link" href="#">
-                Футболки
-              </a>
-            </li>
-
-            <li className="nav-item ms-3 me-3">
-              <a className="nav-link" href="#">
-                Лонгсливы
-              </a>
-            </li>
-
-            <li className="nav-ite ms-3 me-3">
-              <a className="nav-link" href="#">
-                Худи
-              </a>
-            </li>
-
-            <li className="nav-item ms-3 me-3">
-              <a className="nav-link" href="#">
-                Аксессуары
-              </a>
-            </li>
-          </ul>
+            {category.data && category.data.map((data2) => (
+                <li className="nav-item ms-3 me-3">
+                  <NavLink to={`/get-products-by-category?category_id=${data2.category.id}`} className="nav-link">
+                    {data2.category.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
 
           <div className="d-flex">
             <div className='header_search'>
@@ -175,7 +177,7 @@ function HeaderMain({ trashCardData }) {
               )}
 
               <NavLink to={'/basket'} className='basket_counter_father'>
-                <div className='basket_counter'>{trashCardData.length}</div>
+                <div className='basket_counter'>{basket_count_localstorage}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
               </NavLink>
 

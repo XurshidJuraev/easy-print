@@ -7,12 +7,9 @@ import FooterMain from '../../components/footer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import your_design from '../../layouts/images/your_design.svg'
-import design1 from '../../layouts/images/boxing.svg'
-import design2 from '../../layouts/images/kiikii.svg'
-import design3 from '../../layouts/images/original.svg'
-import design4 from '../../layouts/images/underland.svg'
 import bag from '../../layouts/icons/active_bag_icon.svg'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import axios from 'axios'
 
 function HomePage() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -21,6 +18,8 @@ function HomePage() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedSize, setSelectedSize] = useState('s');
   const [selectedColor, setSelectedColor] = useState('#D9CCC6');
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem('token');
 
   function handleCardClick(imageSrc, name, price, selectedSize, selectedColor) {
     const currentTime = new Date();
@@ -63,8 +62,6 @@ function HomePage() {
     console.log(clickedCardData);
   
     localStorage.setItem('showDetail', JSON.stringify(clickedCardData));
-
-    window.location.href = "/show/detail";
     // navigate('/show/detail');
   }  
 
@@ -73,6 +70,20 @@ function HomePage() {
     if (savedCards) {
       setTrashCardData(savedCards);
     }
+  }, []);
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/get-warehouses`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json"
+      }
+    }).then((response) => {
+      setData(response.data);
+    }).catch((error) => {
+      console.log(error);
+    });    
   }, []);
 
   function openModal(cardData) {
@@ -112,269 +123,61 @@ function HomePage() {
             </div>
           </div>
 
-          <div className="cards">
-            <div onClick={() => handleCardShow(design1, 'Мужская футболка Boxing', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img src={design1} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
+          {data.data ? data.data.warehouse_product_list.slice(0, 3).map((data2) => (
+            <div key={data2.id}>
+              <div className="cards">
+                <NavLink to={`/product/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`)} className="clothes_fat">
+                  <div className="image-container" style={{position: 'relative'}}>
+                    <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                    <div className="image-overlay">
+                      <div className="detail_back">
+                        <p className="overlay-text">Посмотреть детали</p>
+                      </div>
+                    </div>
+                  </div>
+                </NavLink>
+
+                <div className="d-flex">
+                  <div>
+                    <p className='t-shirt_name'>{data2.name}</p>
+                    <p className='t-shirt_price'>{data2.price} сум</p>
+                  </div>
+
+                  <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
                   </div>
                 </div>
               </div>
             </div>
+          )): null}
 
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка Boxing</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
+          {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
+            <div key={data2.id}>
+              <div className="cards">
+                <div onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`)} className="clothes_fat">
+                  <div className="image-container" style={{position: 'relative'}}>
+                    <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                    <div className="image-overlay">
+                      <div className="detail_back">
+                        <p className="overlay-text">Посмотреть детали</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-              <div onClick={() => openModal({imageSrc: design1, name: 'Мужская футболка Boxing', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
+                <div className="d-flex">
+                  <div>
+                    <p className='t-shirt_name'>{data2.name}</p>
+                    <p className='t-shirt_price'>{data2.price} сум</p>
+                  </div>
 
-          <div className="cards">
-            <div onClick={() => handleCardShow(design2, 'Мужская футболка Kiikii', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design2} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
+                  <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
                   </div>
                 </div>
               </div>
             </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка Kiikii</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design2, name: 'Мужская футболка Kiikii', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
-
-          <div className="cards">
-            <div onClick={() => handleCardShow(design4, 'Мужская футболка UNDRGRAUND', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design4} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка UNDRGRAUND</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design4, name: 'Мужская футболка UNDRGRAUND', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
-
-          <div className="cards mt-5">
-            <div onClick={() => handleCardShow(design2, 'Мужская футболка Kiikii', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design2} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка Kiikii</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design2, name: 'Мужская футболка Kiikii', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
-
-          <div className="cards mt-5">
-            <div onClick={() => handleCardShow(design4, 'Мужская футболка UNDRGAUND', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design4} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка UNDRGRAUND</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design4, name: 'Мужская футболка UNDRGRAUND', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
-
-          <div className="cards mt-5">
-            <div onClick={() => handleCardShow(design1, 'Мужская футболка Boxing', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design1} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка Boxing</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design1, name: 'Мужская футболка Boxing', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
-
-          <div className="cards mt-5">
-            <div onClick={() => handleCardShow(design3, 'Мужская футболка Kiikii', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design3} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка Kiikii</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design3, name: 'Мужская футболка Kiikii', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
-
-          <div className="cards mt-5">
-            <div onClick={() => handleCardShow(design1, 'Мужская футболка Boxing', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design1} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка Boxing</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design1, name: 'Мужская футболка Boxing', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
-
-          <div className="cards mt-5">
-            <div onClick={() => handleCardShow(design3, 'Мужская футболка Kiikii', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design3} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка Kiikii</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design3, name: 'Мужская футболка Kiikii', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
-
-          <div className="cards mt-5">
-            <div onClick={() => handleCardShow(design4, 'Мужская футболка UNDRGAUND', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design4} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка UNDRGRAUND</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design4, name: 'Мужская футболка UNDRGRAUND', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
-
-          <div className="cards mt-5">
-            <div onClick={() => handleCardShow(design2, 'Мужская футболка Kiikii', '120 000')} className="clothes_fat">
-              <div className="image-container" style={{position: 'relative'}}>
-                <img style={{borderRadius: '20px'}} src={design2} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Посмотреть детали</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex">
-              <div>
-                <p className='t-shirt_name'>Мужская футболка Kiikii</p>
-                <p className='t-shirt_price'>120 000 сум</p>
-              </div>
-
-              <div onClick={() => openModal({imageSrc: design2, name: 'Мужская футболка Kiikii', price: '120 000'})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-              </div>
-            </div>
-          </div>
+          )): null}
         </div>
       </section>
 
