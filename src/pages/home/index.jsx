@@ -137,11 +137,11 @@ function HomePage() {
                   </div>
                 </NavLink>
 
-                <div className="d-flex">
-                  <div>
+                <div className="d-flex mt-3">
+                  <NavLink to={`/product/${data2.id}`} style={{textDecoration: 'none'}}>
                     <p className='t-shirt_name'>{data2.name}</p>
                     <p className='t-shirt_price'>{data2.price} сум</p>
-                  </div>
+                  </NavLink>
 
                   <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
@@ -153,7 +153,7 @@ function HomePage() {
 
           {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
             <div key={data2.id}>
-              <div className="cards">
+              <div className="cards mt-5">
                 <div onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`)} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative'}}>
                     <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
