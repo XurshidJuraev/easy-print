@@ -35,7 +35,7 @@ function HeroMain() {
             Accept: "application/json"
           }
         });
-
+        console.log(response.data.data);
         setData(response.data.data);
       } catch (error) {
         console.log(error);
@@ -74,7 +74,7 @@ function HeroMain() {
               </NavLink>
             </div>
             <div>
-              <img style={{ width: '800px', height: '900px' }} src={data[currentIndex].image} alt={data[currentIndex].title} />
+              <img style={{ width: '800px', height: '900px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
             </div>
           </div>
         </CSSTransition>

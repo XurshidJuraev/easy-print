@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import your_design from '../../layouts/images/your_design.svg'
 import bag from '../../layouts/icons/active_bag_icon.svg'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 function HomePage() {
@@ -20,6 +20,7 @@ function HomePage() {
   const [selectedColor, setSelectedColor] = useState('#D9CCC6');
   const [data, setData] = useState([]);
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   function handleCardClick(imageSrc, name, price, selectedSize, selectedColor) {
     const currentTime = new Date();
@@ -50,7 +51,7 @@ function HomePage() {
     });
   }  
 
-  function handleCardShow(imageSrc, name, price) {
+  function handleCardShow(imageSrc, name, price, id) {
     const currentTime = new Date();
     const clickedCardData = {
       imageSrc,
@@ -59,11 +60,8 @@ function HomePage() {
       timestamp: currentTime.toString(),
     };
 
-    console.log(clickedCardData);
-  
     localStorage.setItem('showDetail', JSON.stringify(clickedCardData));
-    // navigate('/show/detail');
-  }  
+  }
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -125,8 +123,8 @@ function HomePage() {
 
           {data.data ? data.data.warehouse_product_list.slice(0, 3).map((data2) => (
             <div key={data2.id}>
-              <div className="cards">
-                <NavLink to={`/product/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`)} className="clothes_fat">
+              <a href={`/show/detail/${data2.id}`} style={{textDecoration: 'none'}} className="cards">
+                <div onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative'}}>
                     <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
                     <div className="image-overlay">
@@ -135,26 +133,26 @@ function HomePage() {
                       </div>
                     </div>
                   </div>
-                </NavLink>
+                </div>
 
                 <div className="d-flex mt-3">
-                  <NavLink to={`/product/${data2.id}`} style={{textDecoration: 'none'}}>
+                  <div style={{textDecoration: 'none'}}>
                     <p className='t-shirt_name'>{data2.name}</p>
                     <p className='t-shirt_price'>{data2.price} сум</p>
-                  </NavLink>
+                  </div>
 
                   <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           )): null}
 
           {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
-            <div key={data2.id}>
-              <div className="cards mt-5">
-                <div onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`)} className="clothes_fat">
+            <div key={data2.id} className='mt-4'>
+              <a href={`/show/detail/${data2.id}`} style={{textDecoration: 'none'}} className="cards">
+                <div onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative'}}>
                     <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
                     <div className="image-overlay">
@@ -175,7 +173,7 @@ function HomePage() {
                     <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           )): null}
         </div>

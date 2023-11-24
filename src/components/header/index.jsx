@@ -18,6 +18,7 @@ function HeaderMain({ trashCardData }) {
   const token = localStorage.getItem('token');
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || '');
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [activeLinkId, setActiveLinkId] = useState(null);
 
   const handleSubmitLogin = (evt) => {
     evt.preventDefault();
@@ -130,13 +131,24 @@ function HeaderMain({ trashCardData }) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ marginLeft: '50px', fontFamily: 'Inter' }}>
             {category.data && category.data.map((data2) => (
-                <li className="nav-item ms-3 me-3">
-                  <NavLink to={`/get-products-by-category?category_id=${data2.category.id}`} className="nav-link">
-                    {data2.category.name}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
+              <li key={data2.category.id} className="nav-item ms-3 me-3">
+                <NavLink
+                  to={`/categories/${data2.category.id}`}
+                  className={`nav-link ${activeLinkId === data2.category.id ? 'active' : ''}`}
+                  onMouseEnter={() => setActiveLinkId(data2.category.id)}
+                  onMouseLeave={() => setActiveLinkId(null)}
+                >
+                  {data2.category.name}
+                </NavLink>
+
+                <div className={`language_list language_list_${data2.category.id}`}>
+                  <NavLink to={`/categories/${data2.category.id}`} className='language_item'>Мужчинам</NavLink>
+                  <NavLink to={`/categories/${data2.category.id}`} className='language_item'>Женчинам</NavLink>
+                  <NavLink to={`/categories/${data2.category.id}`} className='language_item'>Детям</NavLink>
+                </div>
+              </li>
+            ))}
+          </ul>
 
           <div className="d-flex">
             <div className='header_search'>

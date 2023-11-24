@@ -22,8 +22,11 @@ import ProfileAddres from './pages/profile/addres';
 import ProfileOrders from './pages/profile/orders';
 import ProfilePayment from './pages/profile/pay';
 
-
+// Показать детальный продукт
 import ShowDetail from './pages/show';
+
+
+import CategoryListByName from './pages/categories';
 
 function App() {
   return (
@@ -37,14 +40,17 @@ function App() {
 
         <Route path='/yourDesign' element={<YourDesign />} />
 
-        <Route path='*' element={<Error404 />} />
+        <Route path="/show/detail/:id" element={<ShowDetail />} />
 
         <Route path='/profile' element={<Profile />} />
         <Route path='/profile/addres' element={<ProfileAddres />} />
         <Route path='/profile/orders' element={<ProfileOrders />} />
         <Route path='/profile/payment' element={<ProfilePayment />} />
 
-        <Route path='/show/detail' element={<ShowDetail />} />
+        {/* <Route path='/categories/:id/:name' element={<CategoryListByName />} /> */}
+        <Route path='/categories/:id' element={<CategoryListByName />} />
+
+        <Route path='*' element={<Error404 />} />
       </Routes>
     </div>
   );

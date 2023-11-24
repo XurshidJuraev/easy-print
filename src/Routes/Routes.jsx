@@ -22,8 +22,11 @@ import ProfileAddres from '../pages/profile/addres';
 import ProfileOrders from '../pages/profile/orders';
 import ProfilePayment from '../pages/profile/pay';
 
-
+// Показать детальный продукт
 import ShowDetail from '../pages/show';
+
+
+import CategoryListByName from '../pages/categories';
 
 function Routlar() {
   return (
@@ -37,14 +40,17 @@ function Routlar() {
 
         <Route path='/yourDesign' element={<YourDesign />} />
 
-        <Route path='/product/:id' element={<ShowDetail />} />
+        <Route path="/show/detail/:id" element={<ShowDetail />} />
 
         <Route path='/profile' element={<Profile />} />
         <Route path='/profile/addres' element={<ProfileAddres />} />
         <Route path='/profile/orders' element={<ProfileOrders />} />
         <Route path='/profile/payment' element={<ProfilePayment />} />
 
-        <Route path='*' element={<Error404 />} />
+        {/* <Route path='/categories/:name' exact={true} element={<CategoryListByName />} /> */}
+        <Route path={['/categories/:id', '/network']} exact={true} element={<CategoryListByName />} />
+
+        {/* <Route path='*' element={<Error404 />} /> */}
       </Routes>
     </div>
   );

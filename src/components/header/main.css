@@ -195,3 +195,31 @@
   transform: scale(1.1);
   transition: all 0.2s ease;
 }
+
+.language_list {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item:hover .language_list {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.language_item {
+  margin-bottom: 8px;
+  color: currentColor;
+  text-decoration: none;
+}
+
+.nav-item {
+  position: relative;
+}

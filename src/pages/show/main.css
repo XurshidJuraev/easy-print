@@ -25,8 +25,11 @@
 }
 
 .img_card_detail img {
-  width: 471.014px;
-  height: 543.75px;
+  width: 500px;
+  height: 580px;
+  position: absolute;
+  z-index: 100;
+  transition: all 0.1s ease-in-out;
 }
 
 .show_detail_name {
@@ -100,6 +103,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.1s ease;
+  cursor: pointer;
 }
 
 .color {
