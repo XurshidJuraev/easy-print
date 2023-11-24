@@ -103,7 +103,9 @@ function ShowDetail() {
   }
 
   const handleShowMore = () => {
-    setDisplayedItems((prevDisplayedItems) => prevDisplayedItems + 8);
+    if (data.data && data.data.warehouse_product_list.length > displayedItems) {
+      setDisplayedItems((prevDisplayedItems) => prevDisplayedItems + 8);
+    }
   };
 
   return (
@@ -227,9 +229,11 @@ function ShowDetail() {
           )): null}
         </div>
 
-        <center className='mt-5'>
-          <button className='show_detail_button' onClick={handleShowMore}>Показать еще</button>
-        </center>
+        {data.data && data.data.warehouse_product_list.length > displayedItems && (
+          <center className='mt-5'>
+            <button className='show_detail_button' onClick={handleShowMore}>Показать еще</button>
+          </center>
+        )}
       </div>
 
       <AdvantageMain />
