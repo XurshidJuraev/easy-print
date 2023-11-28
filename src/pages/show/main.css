@@ -10,7 +10,7 @@
 
 .card_detail {
   width: 100%;
-  background: var(--White, #F8F8F8);
+  background: var(--White, #ffffff);
   padding: 24px;
   display: flex;
 }

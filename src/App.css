@@ -27,7 +27,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
+  background-color: #F8F8F8;
 }
 
 .center {
@@ -43,3 +43,9 @@ body {
 .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
   border-color: transparent !important;
 }
+
+/* React Error Display Hiding  */
+
+/* iframe {
+  display: none;
+} */

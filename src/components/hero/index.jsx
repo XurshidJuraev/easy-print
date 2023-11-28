@@ -11,6 +11,7 @@ function HeroMain() {
   const [data, setData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const token = localStorage.getItem('token');
+  const numberOfImages = 3;
 
   useEffect(() => {
     if (splideRef.current) {
@@ -53,15 +54,17 @@ function HeroMain() {
     return () => clearInterval(intervalId);
   }, [data]);
 
+  const handleImageClick = (index) => {
+    // Handle the click event
+    if (splideRef.current) {
+      splideRef.current.go(index);
+    }
+  };
+
   return (
     <div>
       {data.length > 0 && (
-        <CSSTransition
-          in={true}
-          appear={true}
-          timeout={300}
-          classNames="hero-fade"
-        >
+        <CSSTransition in={true} appear={true} timeout={300} classNames="hero-fade">
           <div style={{ width: '100%', height: '900px' }} className='d-flex justify-content-between'>
             <div style={{ paddingTop: '160px', paddingLeft: '120px' }}>
               <h1 className='hero_title'>{data[currentIndex].title}</h1>
@@ -74,7 +77,18 @@ function HeroMain() {
               </NavLink>
             </div>
             <div>
-              <img style={{ width: '800px', height: '900px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
+              <div>
+                <img style={{ width: '800px', height: '900px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
+              </div>
+
+              <div className="d-flex" style={{ position: 'relative', top: '-600px', right: '0px' }}>
+                {data[currentIndex] && data[currentIndex].carousel_image.slice(0, numberOfImages).map((data2, index) => (
+                  <div key={data2} className={`${ index === 0 ? 'left-image' : index === numberOfImages - 1 ? 'right-image' : 'center-image' }`} style={{ maxWidth: '140px', maxHeight: '310px', marginRight: '10px' }} onClick={() => handleImageClick(index)}
+                  >
+                    <img src={data2} alt={data[currentIndex].title} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </CSSTransition>

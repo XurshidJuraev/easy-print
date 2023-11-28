@@ -202,8 +202,8 @@ function ShowDetail() {
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
           {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
             <div key={data2.id}>
-              <a href={`/show/detail/${data2.id}`} style={{textDecoration: 'none'}} className="cards">
-                <div className="clothes_fat">
+              <div style={{textDecoration: 'none'}} className="cards">
+                <a href={`/show/detail/${data2.id}`} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative'}}>
                     <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
                     <div className="image-overlay">
@@ -212,7 +212,7 @@ function ShowDetail() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </a>
 
                 <div className="d-flex mt-3">
                   <div style={{textDecoration: 'none'}}>
@@ -224,7 +224,7 @@ function ShowDetail() {
                     <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
                   </div>
                 </div>
-              </a>
+              </div>
             </div>
           )): null}
         </div>

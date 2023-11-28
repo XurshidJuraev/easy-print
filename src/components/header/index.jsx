@@ -96,6 +96,7 @@ function HeaderMain({ trashCardData }) {
         Accept: "application/json"
       }
     }).then((response) => {
+      console.log(response.data);
       setCategory(response.data)
     }).catch((error) => {
       console.log(error)
@@ -118,7 +119,7 @@ function HeaderMain({ trashCardData }) {
   };
 
   return (
-    <header className="navbar navbar-expand-lg bg-body-tertiary">
+    <header style={{backgroundColor: '#ffffff'}} className="navbar navbar-expand-lg bg-body-tertiary">
       <div style={{ margin: '12px 120px' }} className="container-fluid">
         <NavLink to={'/'} className="navbar-brand">
           <img src={logo} alt="logo" />
@@ -131,20 +132,18 @@ function HeaderMain({ trashCardData }) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ marginLeft: '50px', fontFamily: 'Inter' }}>
             {category.data && category.data.map((data2) => (
-              <li key={data2.category.id} className="nav-item ms-3 me-3">
-                <NavLink
-                  to={`/categories/${data2.category.id}`}
-                  className={`nav-link ${activeLinkId === data2.category.id ? 'active' : ''}`}
-                  onMouseEnter={() => setActiveLinkId(data2.category.id)}
+              <li key={data2.id} className="nav-item ms-3 me-3">
+                <a
+                  href={`/categories/${data2.id}`}
+                  className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`}
+                  onMouseEnter={() => setActiveLinkId(data2.id)}
                   onMouseLeave={() => setActiveLinkId(null)}
                 >
-                  {data2.category.name}
-                </NavLink>
+                  {data2.name}
+                </a>
 
-                <div className={`language_list language_list_${data2.category.id}`}>
-                  <NavLink to={`/categories/${data2.category.id}`} className='language_item'>Мужчинам</NavLink>
-                  <NavLink to={`/categories/${data2.category.id}`} className='language_item'>Женчинам</NavLink>
-                  <NavLink to={`/categories/${data2.category.id}`} className='language_item'>Детям</NavLink>
+                <div className={`language_list language_list_${data2.subcategory.id}`}>
+                  <NavLink to={`/categories/${data2.subcategory.id}`} className='language_item'>{data2.subcategory.name}</NavLink>
                 </div>
               </li>
             ))}
@@ -172,7 +171,7 @@ function HeaderMain({ trashCardData }) {
                   value={selectedLanguage}
                   style={{
                     border: 'none',
-                    backgroundColor: 'transparent',
+                    backgroundColor: 'white',
                     position: 'absolute',
                     top: '70px',
                     right: '225px',

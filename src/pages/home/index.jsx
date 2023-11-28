@@ -13,16 +13,19 @@ import axios from 'axios'
 
 function HomePage() {
   const [trashCardData, setTrashCardData] = useState([]);
+  const [modalData, setModalData] = useState([]);
   const [idCounter, setIdCounter] = useState(1);
   const [count, setCount] = useState(1);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedSize, setSelectedSize] = useState('s');
+  const [sizeOptions, setSizeOptions] = useState([]);
+  const [colorOptions, setColorOptions] = useState([]);
   const [selectedColor, setSelectedColor] = useState('#D9CCC6');
   const [data, setData] = useState([]);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
-  function handleCardClick(imageSrc, name, price, selectedSize, selectedColor) {
+  function handleCardClick(imageSrc, name, price) {
     const currentTime = new Date();
     const clickedCardData = {
       id: idCounter,
@@ -52,16 +55,19 @@ function HomePage() {
   }  
 
   function handleCardShow(imageSrc, name, price, id) {
-    const currentTime = new Date();
-    const clickedCardData = {
-      imageSrc,
-      name,
-      price,
-      timestamp: currentTime.toString(),
-    };
-
-    localStorage.setItem('showDetail', JSON.stringify(clickedCardData));
-  }
+    axios.get(`${process.env.REACT_APP_TWO}/product/show/warehouse_product?warehouse_product_id=${id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json"
+      }
+    }).then((response) => {
+      const detailData = response.data.data;
+      console.log(response.data);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }  
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -90,7 +96,34 @@ function HomePage() {
     if (modal) {
       modal.style.display = 'block';
     }
+    
+    axios.get(`${process.env.REACT_APP_TWO}/product/show/warehouse_product?warehouse_product_id=${cardData.id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json"
+      }
+    }).then((response) => {
+      setModalData(response.data.data);
+      console.log(response.data.data);
+    }).catch((error) => {
+      console.log(error);
+    });
   }
+
+  useEffect(() => {
+    if (data.data && data.data.size_by_color && data.data.size_by_color.length > 0) {
+      const sizes = data.data.size_by_color.flatMap((size) => size.sizes.map((s) => s.name));
+      setSizeOptions(sizes);
+      console.log(sizes);
+    }
+  
+    if (data.data && data.data.color_by_size && data.data.color_by_size.length > 0) {
+      const colors = data.data.color_by_size.flatMap((color) => color.color.map((c) => c.name));
+      setColorOptions(colors);
+      console.log(colors);
+    }
+  }, [data.data]);
 
   return (
     <>
@@ -123,8 +156,8 @@ function HomePage() {
 
           {data.data ? data.data.warehouse_product_list.slice(0, 3).map((data2) => (
             <div key={data2.id}>
-              <a href={`/show/detail/${data2.id}`} style={{textDecoration: 'none'}} className="cards">
-                <div onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
+              <div style={{textDecoration: 'none'}} className="cards">
+                <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative'}}>
                     <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
                     <div className="image-overlay">
@@ -133,7 +166,7 @@ function HomePage() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </a>
 
                 <div className="d-flex mt-3">
                   <div style={{textDecoration: 'none'}}>
@@ -141,18 +174,18 @@ function HomePage() {
                     <p className='t-shirt_price'>{data2.price} сум</p>
                   </div>
 
-                  <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <div onClick={() => openModal({id: `${data2.id}`, imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
                   </div>
                 </div>
-              </a>
+              </div>
             </div>
           )): null}
 
           {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
             <div key={data2.id} className='mt-4'>
-              <a href={`/show/detail/${data2.id}`} style={{textDecoration: 'none'}} className="cards">
-                <div onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
+              <div style={{textDecoration: 'none'}} className="cards">
+                <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative'}}>
                     <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
                     <div className="image-overlay">
@@ -161,7 +194,7 @@ function HomePage() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </a>
 
                 <div className="d-flex">
                   <div>
@@ -169,11 +202,11 @@ function HomePage() {
                     <p className='t-shirt_price'>{data2.price} сум</p>
                   </div>
 
-                  <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
+                  <div onClick={() => openModal({ imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`, id: `${data2.id}` })} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <img style={{ cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px' }} src={bag} alt="bag" />
                   </div>
                 </div>
-              </a>
+              </div>
             </div>
           )): null}
         </div>
@@ -183,12 +216,12 @@ function HomePage() {
         <div className="modal-dialog modal-lg">
           <div className="modal-content" style={{borderRadius: '0px'}}>
             <div className="modal-body" style={{padding: '0'}}>
-              {selectedCard && (
+              {modalData && (
                 <div className='d-flex'>
                   <div style={{padding: '80px 32px 0px 32px'}}>
-                    <p className='modal_name'>{selectedCard.name}</p>
-                    <p className='modal_info'>{selectedCard.name} с круглым вырезом и с принтом Kiikii</p>
-                    <p className='modal_price'>{selectedCard.price} сум</p>
+                    <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
+                    <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
+                    <p className='modal_price'>{modalData.price} сум</p>
 
                     <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                       <div class="dropdown">
@@ -196,10 +229,11 @@ function HomePage() {
                           Размер <span style={{textTransform: 'uppercase', marginLeft: '12px'}}>{selectedSize} <span className='ms-1' style={{fontSize: '12px', marginTop: '-5px'}}>▼</span></span>
                         </button>
                         <ul class="dropdown-menu">
-                          <li className='d-flex'><div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize('xxs')}>xxs</div> <div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize('xs')}>xs</div></li>
-                          <li className='d-flex'><div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize('s')}>s</div> <div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize('m')}>m</div></li>
-                          <li className='d-flex'><div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize('l')}>l</div> <div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize('xl')}>xl</div></li>
-                          <li className='d-flex'><div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize('xl')}>xl</div> <div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize('3xl')}>3xl</div></li>
+                          {sizeOptions.map((size, index) => (
+                            <li key={index} className='d-flex'>
+                              <div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize(size)}>{size}</div>
+                            </li>
+                          ))}
                         </ul>
                       </div>
 
@@ -208,10 +242,11 @@ function HomePage() {
                           Цвет <div style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', marginLeft: '12px', marginRight: '12px', backgroundColor: selectedColor}}> <span style={{fontSize: '12px', marginTop: '-5px', marginLeft: '30px'}}>▼</span></div>
                         </button>
                         <ul class="dropdown-menu w-100 color_size">
-                          <li className='d-flex'><div class="dropdown-item m-2" style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: '#0D0D0D'}} onClick={() => setSelectedColor('#0D0D0D')}></div> <div style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: '#FFF'}} onClick={() => setSelectedColor('#FFF')} class="dropdown-item m-2"></div></li>
-                          <li className='d-flex'><div class="dropdown-item m-2" style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: '#666'}} onClick={() => setSelectedColor('#666')}></div> <div style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: '#0EB5EB'}} onClick={() => setSelectedColor('#0EB5EB')} class="dropdown-item m-2"></div></li>
-                          <li className='d-flex'><div class="dropdown-item m-2" style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: '#D30808'}} onClick={() => setSelectedColor('#D30808')}></div> <div style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: '#FAC817'}} onClick={() => setSelectedColor('#FAC817')} class="dropdown-item m-2"></div></li>
-                          <li className='d-flex'><div class="dropdown-item m-2" style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: '#1DB223'}} onClick={() => setSelectedColor('#1DB223')}></div> <div style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: '#9747FF'}} onClick={() => setSelectedColor('#9747FF')} class="dropdown-item m-2"></div></li>
+                          {colorOptions.map((color, index) => (
+                            <li key={index} className='d-flex'>
+                              <div class="dropdown-item m-2" style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: `${color}`}} onClick={() => setSelectedColor(color)}></div> 
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     </div>
@@ -235,18 +270,18 @@ function HomePage() {
                     </div>
 
                     <div style={{marginTop: '50px'}}  className="d-flex">
-                      <div onClick={() => handleCardClick(selectedCard.imageSrc, selectedCard.name, selectedCard.price, selectedSize, selectedColor)}>
+                      <div onClick={() => handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price)}>
                         <img style={{cursor: 'pointer', width: '84px', height: '56px'}} src={bag} alt="bag" />
                       </div>
 
-                      <div onClick={() => handleCardClick(selectedCard.imageSrc, selectedCard.name, selectedCard.price, selectedSize, selectedColor)}>
+                      <div onClick={() => handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price)}>
                         <button className='order_now'>Заказать сейчас →</button>
                       </div>
                     </div>
                   </div>
 
                   <div className='modal_image_fat'>
-                    <img src={selectedCard.imageSrc} alt="your_design" />
+                    <img src={modalData.images ? modalData.images[0] : ''} alt="your_design" />
                   </div>
                 </div>
               )}
