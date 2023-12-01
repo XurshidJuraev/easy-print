@@ -42,8 +42,8 @@
   background: var(--primary-6, #32454B);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.30);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
   gap: 16px;
   border: none;
   color: var(--White, #FFF);
@@ -57,6 +57,27 @@
   height: 64px;
   margin-left: 40px;
   margin-top: 160px;
+  transition: all 0.3s ease;
+  padding: 20px 0px 0px 30px;
+}
+
+.hero_button span {
+  color: var(--White, #FFF);
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
+  text-decoration: none;
+}
+
+.hero_button:hover svg {
+  margin-left: 10px;
+  transition: 0.3s;
+}
+
+.hero_button svg {
+  transition: all 0.3s ease;
 }
 
 .hero-fade-enter {

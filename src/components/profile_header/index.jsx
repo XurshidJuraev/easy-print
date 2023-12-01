@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './main.css'
 import no_image from '../../layouts/images/user.png'
 import { NavLink } from 'react-router-dom';
@@ -10,17 +10,36 @@ function ProfileHeader() {
     setIsActive(itemIndex);
   };
 
-  const formData = JSON.parse(localStorage.getItem('formData'));
+  const user_name = localStorage.getItem('user_name');
+  const user_last_name = localStorage.getItem('user_last_name');
+  const user_image = localStorage.getItem('user_image');
+
+  useEffect(() => {
+    const updateActiveTab = () => {
+      const path = window.location.pathname;
+
+      if (path === '/profile') {
+        setIsActive(0);
+      } else if (path === '/profile/addres') {
+        setIsActive(1);
+      } else if (path === '/profile/orders') {
+        setIsActive(2);
+      } else if (path === '/profile/payment') {
+        setIsActive(3);
+      }
+    };
+
+    updateActiveTab();
+  }, []);
 
   return (
     <div className='profile_header'>
       <NavLink to={'/profile'} style={{textDecoration: 'none'}} className="d-flex">
-        <img className='user_image' src={no_image} alt="no_image" />
-        <h3 style={{marginLeft: '7px', marginTop: '2px'}} className='user_name'>Без имени фамилия</h3>
-        {/* <h3 style={{marginLeft: '12px', marginTop: '2px'}} className='user_name'>{formData.name ? `${formData.name} ${formData.lastName}` : 'Без имени фамилия'}</h3> */}
+        <img className='user_image' src={user_image ? user_image : no_image} alt={user_name} style={{borderRadius: '50%'}} />
+        <h3 title={user_name ? `${user_name} ${user_last_name}` : 'Без имени фамилия'} style={{marginLeft: '15px', marginTop: '2px'}} className='user_name'>{user_name ? `${user_name} ${user_last_name}` : 'Без имени фамилия'}</h3>
       </NavLink>
 
-      <NavLink to={'/profile'} className={`d-flex profile_item ${isActive === 0 ? 'active' : ''}`} onClick={() => toggleActive(0)} style={{marginTop: '65px', textDecoration: 'none'}}>
+      <NavLink to={'/profile'} onClick={() => toggleActive(0)} className={`d-flex profile_item ${isActive == 0 ? 'active' : ''}`} style={{marginTop: '65px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}
@@ -48,7 +67,7 @@ function ProfileHeader() {
         <p className={isActive === 0 ? 'profile_header_text_active' : 'profile_header_text'}>Личная информация</p>
       </NavLink>
 
-      <NavLink to={'/profile/addres'} className={`d-flex profile_item ${isActive === 1 ? 'active' : ''}`} onClick={() => toggleActive(1)} style={{marginTop: '20px', textDecoration: 'none'}}>
+      <NavLink to={'/profile/addres'} onClick={() => toggleActive(1)} className={`d-flex profile_item ${isActive == 1 ? 'active' : ''}`} style={{marginTop: '20px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}
@@ -76,7 +95,7 @@ function ProfileHeader() {
         <p className={isActive === 1 ? 'profile_header_text_active' : 'profile_header_text'}>Мои адреса</p>
       </NavLink>
 
-      <NavLink to={'/profile/orders'} className={`d-flex profile_item ${isActive === 2 ? 'active' : ''}`} onClick={() => toggleActive(2)} style={{marginTop: '20px', textDecoration: 'none'}}>
+      <NavLink to={'/profile/orders'} onClick={() => toggleActive(2)} className={`d-flex profile_item ${isActive == 2 ? 'active' : ''}`} style={{marginTop: '20px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}
@@ -100,7 +119,7 @@ function ProfileHeader() {
         <p className={isActive === 2 ? 'profile_header_text_active' : 'profile_header_text'}>Мои заказы</p>
       </NavLink>
 
-      <NavLink to={'/profile/payment'} className={`d-flex profile_item ${isActive === 3 ? 'active' : ''}`} onClick={() => toggleActive(3)} style={{marginTop: '18px', textDecoration: 'none'}}>
+      <NavLink to={'/profile/payment'} onClick={() => toggleActive(3)} className={`d-flex profile_item ${isActive == 3 ? 'active' : ''}`} style={{marginTop: '18px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}

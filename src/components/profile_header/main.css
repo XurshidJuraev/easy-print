@@ -19,6 +19,9 @@
   font-style: normal;
   font-weight: 600;
   line-height: 48px; /* 200% */
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .profile_header_text_active {

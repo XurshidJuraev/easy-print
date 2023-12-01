@@ -53,6 +53,13 @@ function HeaderMain({ trashCardData }) {
     evt.preventDefault();
   
     const { user_name, user_email, user_password, user_password_confirmation } = evt.target.elements;
+
+    console.log({
+      name: user_name.value.trim(),
+      email: user_email.value.trim(),
+      password: user_password.value.trim(),
+      password_confirmation: user_password_confirmation.value.trim(),
+    });
   
     fetch(`${process.env.REACT_APP_TWO}/register`, {
       method: 'POST',
@@ -67,8 +74,16 @@ function HeaderMain({ trashCardData }) {
       }),
     })
       .then(response => response.json())
-      .then(result => {console.log(result)})      
-      .catch(error => console.log('error', error));
+      .then(result => {
+          if (result.status === true) {
+          document.getElementById('exampleModalToggle3').classList.add('show');
+          document.body.classList.add('modal-open');
+          localStorage.setItem('token', result.data.token);
+        } else {
+          console.log("Login failed"); // Masalan, xabar chiqaring yoki boshqa muvofiqlikni ko'rsating
+        }
+      })      
+      .catch(error => console.error('error', error));
   }
 
   useEffect(() => {
@@ -96,7 +111,6 @@ function HeaderMain({ trashCardData }) {
         Accept: "application/json"
       }
     }).then((response) => {
-      console.log(response.data);
       setCategory(response.data)
     }).catch((error) => {
       console.log(error)
@@ -121,7 +135,7 @@ function HeaderMain({ trashCardData }) {
   return (
     <header style={{backgroundColor: '#ffffff'}} className="navbar navbar-expand-lg bg-body-tertiary">
       <div style={{ margin: '12px 120px' }} className="container-fluid">
-        <NavLink to={'/'} className="navbar-brand">
+        <NavLink title="EasyPrint Home" to={'/'} className="navbar-brand">
           <img src={logo} alt="logo" />
         </NavLink>
         
@@ -132,7 +146,7 @@ function HeaderMain({ trashCardData }) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ marginLeft: '50px', fontFamily: 'Inter' }}>
             {category.data && category.data.map((data2) => (
-              <li key={data2.id} className="nav-item ms-3 me-3">
+              <li title={data2.name} key={data2.id} className="nav-item ms-3 me-3">
                 <a
                   href={`/categories/${data2.id}`}
                   className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`}
@@ -142,7 +156,7 @@ function HeaderMain({ trashCardData }) {
                   {data2.name}
                 </a>
 
-                <div className={`language_list language_list_${data2.subcategory.id}`}>
+                <div title={data2.subcategory.name} className={`language_list language_list_${data2.subcategory.id}`}>
                   <NavLink to={`/categories/${data2.subcategory.id}`} className='language_item'>{data2.subcategory.name}</NavLink>
                 </div>
               </li>
@@ -162,7 +176,7 @@ function HeaderMain({ trashCardData }) {
               </center>
             </div>
             <div className="d-flex">
-              <button onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none'}}>
+              <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none'}}>
                 <img onClick={toggleLanguageDropdown} src={language} alt="user" />
               </button>
 
@@ -180,26 +194,26 @@ function HeaderMain({ trashCardData }) {
                   {data.data &&
                     data.data.language &&
                     data.data.language.map((lang) => (
-                      <div onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
+                      <div title={lang.name} onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
                         {lang.name}
                       </div>
                     ))}
                 </div>
               )}
 
-              <NavLink to={'/basket'} className='basket_counter_father'>
-                <div className='basket_counter'>{basket_count_localstorage}</div>
+              <NavLink title="Basket" to={'/basket'} className='basket_counter_father'>
+                <div title="Basket counter" className='basket_counter'>{basket_count_localstorage}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
               </NavLink>
 
               {localStorage.getItem('token') ? (
-                <NavLink to={'/profile'} style={{marginTop: '14px'}}>
+                <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px'}}>
                   <button style={{backgroundColor: 'transparent', border: 'none'}}>
                     <img src={user} alt="user" />
                   </button>                
                 </NavLink>
               ) : (
-                <button style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                <button title="Login or Register" style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
                   <img src={user} alt="user" />
                 </button>
               )}

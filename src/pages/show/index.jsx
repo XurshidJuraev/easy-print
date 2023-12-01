@@ -22,20 +22,27 @@ function ShowDetail() {
   const token = localStorage.getItem('token');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [sizeOptions, setSizeOptions] = useState([]);
+  const [sizeIdOptions, setSizeIdOptions] = useState([]);
   const [data, setData] = useState([]);
   const [colorOptions, setColorOptions] = useState([]);
+  const [colorIdOptions, setColorIdOptions] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [displayedItems, setDisplayedItems] = useState(8);
 
   useEffect(() => {
     if (dataBeck.size_by_color && dataBeck.size_by_color.length > 0) {
       const sizes = dataBeck.size_by_color.flatMap((size) => size.sizes.map((s) => s.name));
+      const sizeID = dataBeck.size_by_color.flatMap((size) => size.sizes.map((s) => s.id));
       setSizeOptions(sizes);
+      setSizeIdOptions(sizeID);
     }
 
     if (dataBeck.color_by_size && dataBeck.color_by_size.length > 0) {
       const colors = dataBeck.color_by_size.flatMap((color) => color.color.map((c) => c.name));
+      const colorsID = dataBeck.color_by_size.flatMap((color) => color.color.map((c) => c.id));
       setColorOptions(colors);
+      setColorIdOptions(colorsID);
     }
   }, [dataBeck]);
 
@@ -57,10 +64,6 @@ function ShowDetail() {
       setTrashCardData(savedCards);
     }
   }, []);
-
-  const addToBasket = (productData) => {
-    console.log('Adding to basket:', productData);
-  };
 
   useEffect(() => {
     addToBasket(selectedProduct);
@@ -108,6 +111,56 @@ function ShowDetail() {
     }
   };
 
+  const addToBasket = (productData) => {
+    if (productData) {
+      const colorId = colorIdOptions;
+      const sizeId = sizeIdOptions;
+  
+      const requestData = {
+        warehouse_product_id: productData.id,
+        quantity: 1,
+        color_id: colorId,
+        size_id: sizeId,
+        price: productData.price,
+      };
+
+      var myHeaders = new Headers();
+      myHeaders.append("language", "uz");
+      myHeaders.append("Accept", "application/json");
+      myHeaders.append("Authorization", `Bearer ${token}`);
+      myHeaders.append("Cookie", "laravel_session=Gl1cA1GwLBraAH4I8g6xCCzxtnLPqt14jgGRanpB");
+
+      var formdata = new FormData();
+      formdata.append("warehouse_product_id", productData.id);
+      formdata.append("quantity", 1);
+      formdata.append("color_id", colorId);
+      formdata.append("size_id", sizeId);
+      formdata.append("price", productData.price);
+
+      console.log("warehouse_product_id", productData.id);
+      console.log("quantity", '1');
+      console.log("color_id", colorId);
+      console.log("size_id", sizeId);
+      console.log("price", productData.price);
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+      };
+
+      fetch("http://admin.easyprint.uz/api/order/set-warehouse", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    }
+  };
+  
+  useEffect(() => {
+    addToBasket(selectedProduct);
+  }, [selectedProduct]);  
+
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
@@ -142,7 +195,7 @@ function ShowDetail() {
             <div className="d-flex">
               <div style={{marginRight: '83px'}}>
                 <p className='show_detail_size'>Размер</p>
-                <select className='show_detail_option'>
+                <select className='show_detail_option' value={sizeOptions[selectedSizeIndex]} onChange={(e) => {const index = sizeOptions.findIndex((size) => size === e.target.value);setSelectedSizeIndex(index);}}>
                   {sizeOptions.map((size) => (
                     <option key={size} value={size}>{size}</option>
                   ))}
@@ -167,7 +220,7 @@ function ShowDetail() {
               </div>
             </div>
 
-            <img style={{marginTop: '18px', marginRight: '12px'}} src={addToBasketImg} alt="addToBasket" />
+            <img style={{marginTop: '18px', marginRight: '12px'}} onClick={() => addToBasket(dataBeck)} src={addToBasketImg} alt="addToBasket" />
             <img style={{marginTop: '18px'}} src={order} alt="order" />
 
             <div style={{display: 'flex', marginTop: '32px'}}>

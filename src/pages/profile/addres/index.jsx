@@ -7,15 +7,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../main.css';
 import ProfileHeader from '../../../components/profile_header';
 import no_addres from '../../../layouts/images/address.svg';
+import axios from 'axios';
 
 function ProfileAddres() {
   const [trashCardData, setTrashCardData] = useState([]);
+  const [cities, setCities] = useState([]);
   const [formData, setFormData] = useState({
-    region: '',
-    city: '',
-    street: '',
-    zipCode: ''
+    city_id: '',
+    name: '',
+    postcode: '',
   });
+  const [data, setData] = useState([]);
+  const [dataGet, setDataGet] = useState([]);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -25,14 +29,52 @@ function ProfileAddres() {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const selectedRegion = e.target.value;
+    console.log('Selected Region:', selectedRegion);
+    setFormData({ ...formData, [e.target.name]: selectedRegion });
+  
+    const selectedRegionData = data.find((region) => region.region === selectedRegion);
+    console.log('Selected Region Data:', selectedRegionData);
+  
+    if (selectedRegionData) {
+      const selectedCities = selectedRegionData.cities || [];
+      console.log('Selected Cities:', selectedCities);
+      setCities(selectedCities);
+    } else {
+      console.error('No data found for the selected region');
+    }
+
+    const value = e.target.value;
+    const name = e.target.name;
+  
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('userLocation', JSON.stringify(formData));
-    toast.success('Malumotlar saqlandi!');
-  };
+
+    console.log(formData);
+  
+    // Backendga ma'lumotlarni yuborish
+    axios
+      .post(`${process.env.REACT_APP_TWO}/set-address`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        toast.success('Malumotlar saqlandi!');
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error('Xatolik yuz berdi. Malumotlar saqlanmadi.');
+      });
+  };  
 
   useEffect(() => {
     const savedFormData = JSON.parse(localStorage.getItem('userLocation'));
@@ -41,7 +83,51 @@ function ProfileAddres() {
     }
   }, []);
 
-  const address = JSON.parse(localStorage.getItem('userLocation'))
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_TWO}/get-districts`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      })
+      .then((response) => {
+        setData(response.data.data);
+        const initialRegion = response.data.data[0];
+        setFormData({
+          city_id: initialRegion.cities[0]?.id,
+          name: '',
+          postcode: ''
+        });
+        setCities(initialRegion.cities);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [token]);
+  
+  useEffect(() => {
+    if (formData.region) {
+      const selectedRegionData = data.find((region) => region.region === formData.region);
+      const selectedCities = selectedRegionData ? selectedRegionData.cities : [];
+      setCities(selectedCities);
+    }
+  }, [formData.region, data]);  
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/get-address`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json"
+      }
+    }).then((response) => {
+      setDataGet(response.data);
+    }).catch((error) => {
+      console.log(error);
+    });    
+  }, []);
 
   return (
     <>
@@ -55,35 +141,39 @@ function ProfileAddres() {
           <div className='info_profile'>
             <h3 className='user_name'>Мои адреса</h3>
 
-            {address ? (
-              <div>
-                <div style={{height: '400px', overflow: 'scroll'}}>
-                  <div className='user_address'>
-                    <div>
-                      {address.region}, {address.city}, {address.street}, {address.zipCode}
+            <div>
+              <div style={{height: '384px', overflow: 'scroll'}}>
+                {dataGet.status === true ? dataGet.data.map((data2) => {
+                  return (
+                    <div className='user_address mb-3' key={data2.id}>
+                      <div>
+                        {data2.name}, {data2.region.name}, {data2.city.name}, {data2.postcode}
+                      </div>
+                      
+                      <div>
+                        <button style={{backgroundColor: 'transparent', border: 'none'}} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M18.205 1.79505C17.6951 1.28594 17.004 1 16.2835 1C15.5629 1 14.8718 1.28594 14.362 1.79505L1 15.157V19H4.84299L18.205 5.63803C18.7139 5.12805 18.9997 4.43701 18.9997 3.71654C18.9997 2.99607 18.7139 2.30503 18.205 1.79505ZM4.22499 17.5H2.5V15.775L12.4825 5.80003L14.2075 7.52503L4.22499 17.5ZM17.1445 4.57754L15.2642 6.45778L13.543 4.73279L15.4225 2.85554C15.6512 2.62679 15.9615 2.49828 16.285 2.49828C16.6085 2.49828 16.9187 2.62679 17.1475 2.85554C17.3762 3.08429 17.5047 3.39454 17.5047 3.71804C17.5047 4.04154 17.3762 4.35179 17.1475 4.58054L17.1445 4.57754Z" fill="#4D646B"/>
+                          </svg>
+                        </button>
+                      </div>
                     </div>
-                    <div>
-
-                    <button style={{backgroundColor: 'transparent', border: 'none'}} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M18.205 1.79505C17.6951 1.28594 17.004 1 16.2835 1C15.5629 1 14.8718 1.28594 14.362 1.79505L1 15.157V19H4.84299L18.205 5.63803C18.7139 5.12805 18.9997 4.43701 18.9997 3.71654C18.9997 2.99607 18.7139 2.30503 18.205 1.79505ZM4.22499 17.5H2.5V15.775L12.4825 5.80003L14.2075 7.52503L4.22499 17.5ZM17.1445 4.57754L15.2642 6.45778L13.543 4.73279L15.4225 2.85554C15.6512 2.62679 15.9615 2.49828 16.285 2.49828C16.6085 2.49828 16.9187 2.62679 17.1475 2.85554C17.3762 3.08429 17.5047 3.39454 17.5047 3.71804C17.5047 4.04154 17.3762 4.35179 17.1475 4.58054L17.1445 4.57754Z" fill="#4D646B"/>
-                      </svg>
-                    </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{display: 'flex', justifyContent: 'end'}}>
-                  <button className='btn_profile'>Добавить адрес</button>
-                </div>
+                  );
+                }) : (
+                  <center style={{marginTop: '56px'}}>
+                    <img src={no_addres} alt="no_addres" />
+                    <p className='no_address_text'>Вы ещё не добавляли адрес</p>
+                    <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
+                  </center>
+                )}
               </div>
-            ) : (
-              <center style={{marginTop: '56px'}}>
-                <img src={no_addres} alt="no_addres" />
-                <p className='no_address_text'>Вы ещё не добавляли адрес</p>
+            </div>
+
+            {dataGet.status === true ? (
+              <div className='d-flex justify-content-end mt-4' style={{marginRight: '142px'}}>
                 <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
-              </center>
-            )}
+              </div>
+            ) : null}
 
             <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog">
@@ -93,61 +183,45 @@ function ProfileAddres() {
                       <h1 className="modal-title modal_title" id="exampleModalLabel">Ваш адрес</h1>
                     </center>
                   </div>
-                  <div className="modal-body">
+                  <div style={{padding: '48px'}} className="modal-body">
                     <form onSubmit={handleSubmit}>
                       <div className="d-flex align-items-center ms-4">
                         <p className='address_modal_text'>Область</p>
 
-                        <select name="region" className='input_profile' value={formData.region} onChange={handleChange}>
-                          <option disabled hidden value="">Область</option>
-                          <option value="Алмазарский район">Алмазарский район</option>
-                          <option value="Бектемирский район">Бектемирский район</option>
-                          <option value="Мирабадский район">Мирабадский район</option>
-                          <option value="Мирзо-Улугбекский район">Мирзо-Улугбекский район</option>
-                          <option value="Сергелийский район">Сергелийский район</option>
-                          <option value="Чиланзарский район">Чиланзарский район</option>
-                          <option value="Шайхантаурский район">Шайхантаурский район</option>
-                          <option value="Юнусабадский район">Юнусабадский район</option>
-                          <option value="Яккасарайский район">Яккасарайский район</option>
-                          <option value="Яшнабадский район">Яшнабадский район</option>
-                          <option value="Учтепинский район">Учтепинский район</option>
+                        <select className='input_profile' onChange={handleChange}>
+                          {data.map((region) => (
+                            <option key={region.id} value={region.region}>
+                              {region.region}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
                       <div className="d-flex align-items-center ms-5">
                         <p className='address_modal_text'>Город</p>
 
-                        <select name="city" className='input_profile' value={formData.city} onChange={handleChange}>
-                          <option disabled hidden value="">Город</option>
-                          <option value="Республика Каракалпакстан">Республика Каракалпакстан</option>
-                          <option value="Андижанская область">Андижанская область</option>
-                          <option value="Бухарская область">Бухарская область</option>
-                          <option value="Джизакская область">Джизакская область</option>
-                          <option value="Кашкадарьинская область">Кашкадарьинская область</option>
-                          <option value="Навоийская область">Навоийская область</option>
-                          <option value="Наманганская область">Наманганская область</option>
-                          <option value="Самаркандская область">Самаркандская область</option>
-                          <option value="Сурхандарьинская область">Сурхандарьинская область</option>
-                          <option value="Сырдарьинская область">Сырдарьинская область</option>
-                          <option value="Ташкентская область">Ташкентская область</option>
-                          <option value="Ферганская область">Ферганская область</option>
-                          <option value="Хорезмская область">Хорезмская область</option>
+                        <select name="city_id" className='input_profile' value={formData.city} onChange={handleChange}>
+                          {cities.map((city) => (
+                            <option key={city.id} value={city.id}>
+                              {city.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
                       <div className="d-flex align-items-center ms-4">
                         <p className='address_modal_text'>Ул. и дом</p>
 
-                        <input type="text" className='input_profile' placeholder="Дата рождения" onfocus="(this.type='date')" name="street" value={formData.street} onChange={handleChange} />
+                        <input type="text" className='input_profile' placeholder="Дата рождения" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
                       </div>
 
                       <div className="d-flex align-items-center ms-4">
                         <p style={{marginRight: '0px'}} className='address_modal_text'>Почтовый индекс</p>
 
-                        <input style={{marginRight: '40px'}} type="text" className='input_profile' placeholder="Дата рождения" name="zipCode" value={formData.zipCode} onChange={handleChange} />
+                        <input style={{marginRight: '40px'}} type="text" className='input_profile' placeholder="Дата рождения" name="postcode" value={formData.postcode} onChange={handleChange} />
                       </div>
 
-                      <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '138px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <button type="submit" className='btn_profile'>Добавить адрес</button>
                       </div>
                     </form>
