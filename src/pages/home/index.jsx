@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './main.css'
 import HeaderMain from '../../components/header'
 import HeroMain from '../../components/hero'
-import AdvantageMain from '../../components/advantage'
+import blueVerifed from '../../layouts/icons/blue_verifed.svg'
+import blueBuds from '../../layouts/icons/operator.svg'
+import blueTruck from '../../layouts/icons/truck.svg'
 import FooterMain from '../../components/footer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,6 +26,7 @@ function HomePage() {
   const [data, setData] = useState([]);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   function handleCardClick(imageSrc, name, price) {
     const currentTime = new Date();
@@ -85,6 +88,7 @@ function HomePage() {
       }
     }).then((response) => {
       setData(response.data);
+      console.log(response.data);
     }).catch((error) => {
       console.log(error);
     });    
@@ -105,7 +109,6 @@ function HomePage() {
       }
     }).then((response) => {
       setModalData(response.data.data);
-      console.log(response.data.data);
     }).catch((error) => {
       console.log(error);
     });
@@ -125,90 +128,142 @@ function HomePage() {
     }
   }, [data.data]);
 
+  useEffect(() => {
+    if (data.data && data.data.product_list) {
+      const intervalId = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % data.data.product_list.length);
+      }, 10000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [data.data]);
+
+  const currentProduct = data.data && data.data.product_list ? data.data.product_list[currentIndex] : null;
+
   return (
-    <>
+    <div style={{ backgroundColor: '#FFFFFF' }}>
       <HeaderMain trashCardData={trashCardData} />
       <HeroMain />
 
       <ToastContainer />
       
-      <section className='container' style={{marginTop: '24px', margin: '24px 100px'}}>
+      <section className='container' style={{margin: '24px 100px', marginTop: '-100px'}}>
         <h2 className='products_father_text mb-3'>Хиты Продаж</h2>
 
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
-          <div className="cards your_print">
-            <NavLink to={'/yourDesign'} className="image-container" style={{position: 'relative'}}>
-                <img src={your_design} alt="your_design" />
-                <div className="image-overlay">
-                  <div className="detail_back">
-                    <p className="overlay-text">Свой дизайн</p>
+        <div className='center' style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+            {currentProduct && (
+              <div key={currentProduct.id}>
+                <div style={{textDecoration: 'none'}} className="cards your_print">
+                  <NavLink to={'/yourDesign'} onClick={() => handleCardShow(`${currentProduct.images[0]}`, `${currentProduct.name}`, `${currentProduct.price}`, `${currentProduct.id}`)} className="clothes_fat">
+                    <div className="image-container" style={{position: 'relative'}}>
+                      <div>
+                        <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: currentProduct.discount ? 'block' : 'none'}}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
+                            <circle cx="75" cy="-31" r="74.5" fill="#FEF4EE" stroke="#F9D5BB"/>
+                          </svg>
+                          <div>
+                            <p className='discount'>-{currentProduct.discount}%</p>
+                          </div>
+                        </div>
+                        <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${currentProduct.images[0]}`} alt={currentProduct.name} />
+                      </div>
+                      
+                      <div className="image-overlay">
+                        <div className="detail_back">
+                          <p className="overlay-text">Свой дизайн</p>
+                        </div>
+                      </div>
+                    </div>
+                  </NavLink>
+
+                  <div className="d-flex mt-3">
+                    <div style={{textDecoration: 'none'}}>
+                      <p className='t-shirt_name' style={{width: '100%'}}>{currentProduct.name}</p>
+                      <p className='t-shirt_price'>От {currentProduct.price} сум</p>
+                    </div>
                   </div>
                 </div>
-              </NavLink>
-
-            <div className="d-flex justify-content-between mt-3">
-              <div>
-                <p className='t-shirt_name'>Одежда с вашим дизайном</p>
-                <p className='t-shirt_price'>От 120 000 сум</p>
               </div>
-            </div>
+            )}
+            
+            {data.data ? data.data.warehouse_product_list.slice(0, 3).map((data2) => (
+              <div key={data2.id}>
+                <div style={{textDecoration: 'none'}} className="cards">
+                  <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
+                    <div className="image-container" style={{position: 'relative'}}>
+                      <div>
+                        <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
+                            <circle cx="75" cy="-31" r="74.5" fill="#FEF4EE" stroke="#F9D5BB"/>
+                          </svg>
+                          <div>
+                            <p className='discount'>-{data2.discount}%</p>
+                          </div>
+                        </div>
+                        <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                      </div>
+
+                      <div className="image-overlay">
+                        <div className="detail_back">
+                          <p className="overlay-text">Посмотреть детали</p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+
+                  <div className="d-flex mt-3">
+                    <div style={{textDecoration: 'none'}}>
+                      <p className='t-shirt_name'>{data2.name}</p>
+                      <p className='t-shirt_price'>{data.price_discount ? <span>{data2.price_discount} сум</span> : `${data2.price} сум`}</p>
+                    </div>
+
+                    <div onClick={() => openModal({id: `${data2.id}`, imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )): null}
+
+            {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
+              <div key={data2.id} style={{marginTop: '48px'}}>
+                <div style={{textDecoration: 'none'}} className="cards">
+                  <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
+                    <div className="image-container" style={{position: 'relative'}}>
+                      <div>
+                        <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
+                            <circle cx="75" cy="-31" r="74.5" fill="#FEF4EE" stroke="#F9D5BB"/>
+                          </svg>
+                          <div>
+                            <p className='discount'>-{data2.discount}%</p>
+                          </div>
+                        </div>
+                        <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                      </div>
+                      <div className="image-overlay">
+                        <div className="detail_back">
+                          <p className="overlay-text">Посмотреть детали</p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+
+                  <div className="d-flex">
+                    <div>
+                      <p className='t-shirt_name' style={{marginTop: '5px'}} title={data2.name}>{data2.name}</p>
+                      <p className='t-shirt_price' style={{marginTop: '-5px'}} title={`${data2.price} сум`}>{data2.price} сум</p>
+                    </div>
+
+                    <div onClick={() => openModal({ imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`, id: `${data2.id}` })} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <img style={{ cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px' }} src={bag} alt="bag" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )): null}
           </div>
-
-          {data.data ? data.data.warehouse_product_list.slice(0, 3).map((data2) => (
-            <div key={data2.id}>
-              <div style={{textDecoration: 'none'}} className="cards">
-                <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
-                  <div className="image-container" style={{position: 'relative'}}>
-                    <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
-                    <div className="image-overlay">
-                      <div className="detail_back">
-                        <p className="overlay-text">Посмотреть детали</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-
-                <div className="d-flex mt-3">
-                  <div style={{textDecoration: 'none'}}>
-                    <p className='t-shirt_name'>{data2.name}</p>
-                    <p className='t-shirt_price'>{data2.price} сум</p>
-                  </div>
-
-                  <div onClick={() => openModal({id: `${data2.id}`, imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )): null}
-
-          {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
-            <div key={data2.id} className='mt-4'>
-              <div style={{textDecoration: 'none'}} className="cards">
-                <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
-                  <div className="image-container" style={{position: 'relative'}}>
-                    <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
-                    <div className="image-overlay">
-                      <div className="detail_back">
-                        <p className="overlay-text">Посмотреть детали</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-
-                <div className="d-flex">
-                  <div>
-                    <p className='t-shirt_name'>{data2.name}</p>
-                    <p className='t-shirt_price'>{data2.price} сум</p>
-                  </div>
-
-                  <div onClick={() => openModal({ imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`, id: `${data2.id}` })} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <img style={{ cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px' }} src={bag} alt="bag" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )): null}
         </div>
       </section>
 
@@ -290,9 +345,39 @@ function HomePage() {
         </div>
       </div>
 
-      <AdvantageMain />
+      <div>
+        <center style={{marginTop: '120px'}}>
+          <div className="container">
+            <h3 className='advantage_main_text'>Наше преимущество</h3>
+
+            <div className='d-flex justify-content-between'>
+              <div style={{backgroundColor: '#F8F8F8', width: '302px', height: '259px'}} className='advantage_cards'>
+                <img src={blueVerifed} alt="blueVerifed" />
+
+                <h3 className='advantage_theme'>Гарантия качества</h3>
+                <p className='advantage_text'>Качественные экологичные <br /> материалы</p>
+              </div>
+
+              <div style={{backgroundColor: '#F8F8F8', width: '302px', height: '259px'}} className='advantage_cards'>
+                <img src={blueTruck} alt="blueVerifed" />
+
+                <h3 className='advantage_theme'>Быстрая доставка</h3>
+                <p className='advantage_text'>Доставка по всему <br /> Узбекистану</p>
+              </div>
+
+              <div style={{backgroundColor: '#F8F8F8', width: '302px', height: '259px'}} className='advantage_cards'>
+                <img src={blueBuds} alt="blueVerifed" />
+
+                <h3 className='advantage_theme'>Сервис</h3>
+                <p className='advantage_text'>Лёгкий процесс оплаты, <br /> обмена и возврата</p>
+              </div>
+            </div>
+          </div>
+        </center>
+      </div>
+
       <FooterMain />
-    </>
+    </div>
   )
 }
 

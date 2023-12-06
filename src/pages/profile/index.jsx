@@ -13,7 +13,6 @@ import axios from 'axios';
 function Profile() {
   const [trashCardData, setTrashCardData] = useState([]);
   const [data, setData] = useState([]);
-  const email = localStorage.getItem('email');
   const [formData, setFormData] = useState({
     name: '',
     phoneNumber: '',
@@ -24,12 +23,11 @@ function Profile() {
   });
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    const savedCards = JSON.parse(localStorage.getItem('trashCard'));
-    if (savedCards) {
-      setTrashCardData(savedCards);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (savedCards) {
+  //     setTrashCardData(savedCards);
+  //   }
+  // }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,22 +35,22 @@ function Profile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('formData', JSON.stringify(formData));
+    // localStorage.setItem('formData', JSON.stringify(formData));
   };
 
-  useEffect(() => {
-    const savedEmail = localStorage.getItem('email');
-    if (savedEmail) {
-      setFormData({ ...formData, email: savedEmail });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedEmail = localStorage.getItem('email');
+  //   if (savedEmail) {
+  //     setFormData({ ...formData, email: savedEmail });
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const savedFormData = JSON.parse(localStorage.getItem('formData'));
-    if (savedFormData) {
-      setFormData(savedFormData);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedFormData = JSON.parse(localStorage.getItem('formData'));
+  //   if (savedFormData) {
+  //     setFormData(savedFormData);
+  //   }
+  // }, []);
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_TWO}/personal-information`, {
@@ -115,7 +113,7 @@ function Profile() {
 
     fetch(`${process.env.REACT_APP_TWO}/personal-information`, requestOptions)
       .then(response => response.text())
-      .then(result => {console.log(result); toast.success('Malumotlar backendga yuborildi!')})
+      .then(result => {console.log(result); toast.success('Malumotlar yuborildi!')})
       .catch(error => {console.log('error', error); toast.error('Xatolik yuz berdi. Malumotlar yuborilmadi.')});
   };
 

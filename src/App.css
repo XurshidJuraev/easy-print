@@ -30,6 +30,11 @@ body {
   background-color: #F8F8F8;
 }
 
+a:hover {
+  color: currentColor;
+  text-decoration: none;
+}
+
 .center {
   display: flex;
   justify-content: center;

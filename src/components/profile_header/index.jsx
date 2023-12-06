@@ -32,6 +32,10 @@ function ProfileHeader() {
     updateActiveTab();
   }, []);
 
+  useEffect(() => {
+    document.title = user_name ? (user_last_name ? `${user_name} ${user_last_name}` : `${user_name}`) : 'Easy Print';
+  }, []);
+
   return (
     <div className='profile_header'>
       <NavLink to={'/profile'} style={{textDecoration: 'none'}} className="d-flex">

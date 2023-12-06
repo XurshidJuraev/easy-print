@@ -50,34 +50,32 @@ function CategoryListByName() {
       <div className='container mt-5'>
         {data.data ? data.data.map(category => (
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}} key={category.category.id}>
-            {category.products.map(productList => (
-              productList.map(data2 => (
-                <div key={data2.id}>
-                  <a style={{textDecoration: 'none'}} className="cards">
-                    <a href={`/show/detail/${data2.id}`} className="clothes_fat">
-                      <div className="image-container" style={{position: 'relative'}}>
-                        <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
-                        <div className="image-overlay">
-                          <div className="detail_back">
-                            <p className="overlay-text">Посмотреть детали</p>
-                          </div>
+            {category.products.map(data2 => (
+              <div key={data2.id}>
+                <a style={{textDecoration: 'none'}} className="cards">
+                  <a href={`/show/detail/${data2.id}`} className="clothes_fat">
+                    <div className="image-container" style={{position: 'relative'}}>
+                      <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                      <div className="image-overlay">
+                        <div className="detail_back">
+                          <p className="overlay-text">Посмотреть детали</p>
                         </div>
-                      </div>
-                    </a>
-      
-                    <div className="d-flex mt-3">
-                      <div style={{textDecoration: 'none'}}>
-                        <p className='t-shirt_name'>{data2.name}</p>
-                        <p className='t-shirt_price'>{data2.price} сум</p>
-                      </div>
-      
-                      <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
                       </div>
                     </div>
                   </a>
-                </div>
-              ))
+    
+                  <div className="d-flex mt-3">
+                    <div style={{textDecoration: 'none'}}>
+                      <p className='t-shirt_name'>{data2.name}</p>
+                      <p className='t-shirt_price'>{data2.price} сум</p>
+                    </div>
+    
+                    <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <img style={{cursor: 'pointer', width: '52px', height: '36px', marginLeft: '11px', marginTop: '10px'}} src={bag} alt="bag" />
+                    </div>
+                  </div>
+                </a>
+              </div>
             ))}
           </div>
         )) : null}

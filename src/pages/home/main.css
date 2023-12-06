@@ -11,6 +11,8 @@
 .cards {
   width: 276px;
   height: 384px; 
+  position: relative;
+  z-index: 100;
 }
 
 .clothes_fat {
@@ -37,7 +39,7 @@
 
 .t-shirt_price {
   color: var(--primary-6, #32454B);
-  font-family: 'Inter';
+  font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -161,4 +163,18 @@
   line-height: 24px; /* 133.333% */
   border: none;
   margin-left: 15px;
+}
+
+.discount {
+  color: var(--secondary-50, #F19654);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 137.5% */
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: -37px;
+  left: 33px;
 }

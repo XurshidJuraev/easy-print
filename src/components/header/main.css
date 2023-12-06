@@ -9,6 +9,7 @@
   font-style: normal !important;
   font-weight: 500 !important;
   line-height: 20px !important; 
+  cursor: pointer !important;
 }
 
 .header_search {
@@ -137,7 +138,7 @@
   gap: 10px;
   align-self: stretch;
   border-radius: 12px;
-  background: var(--neutral-50, #ffffff);
+  background: var(--neutral-50, #e8e8e8);
   border: none;
   outline: none;
 }
@@ -180,7 +181,7 @@
 
 .language_item {
   display: flex;
-  width: 100px;
+  width: 130px;
   padding: 10px;
   justify-content: center;
   align-items: center;
@@ -189,6 +190,18 @@
   background: var(--White, #FFF);
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.language_list_31 {
+  margin-left: -37px;
+}
+
+.language_list_32 {
+  margin-left: -23px;
+}
+
+.language_list_33 {
+  margin-left: -41px;
 }
 
 .navbar {
@@ -201,7 +214,7 @@
 }
 
 .language_list {
-  opacity: 0;
+  display: none !important;
   transform: translateY(-10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   position: absolute;
@@ -211,11 +224,14 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease;
+  z-index: 200;
 }
 
 .nav-item:hover .language_list {
-  opacity: 1;
+  display: block !important;
   transform: translateY(0);
+  transition: all 0.3s ease;
 }
 
 .language_item {
@@ -226,4 +242,8 @@
 
 .nav-item {
   position: relative;
+}
+
+.password-error {
+  border: 1px solid #ff0000;
 }
