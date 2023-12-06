@@ -62,9 +62,9 @@ function Profile() {
       }
     }).then((response) => {
       const responseData = response.data.data;
-      localStorage.setItem('user_name', response.data.data.first_name);
-      localStorage.setItem('user_last_name', response.data.data.last_name);
-      localStorage.setItem('user_image', response.data.data.image);
+      localStorage.setItem('user_name', responseData.first_name === null ? '' : responseData.first_name);
+      localStorage.setItem('user_last_name', responseData.last_name === null ? '' : responseData.last_name);
+      localStorage.setItem('user_image', responseData.image === null ? '' : responseData.image);
       setData({
         id: responseData.id,
         name: responseData.first_name,
@@ -122,12 +122,15 @@ function Profile() {
   
     if (imageFile) {
       const blob = new Blob([imageFile]);
+      const imageUrl = URL.createObjectURL(blob);
+  
       setFormData((prevFormData) => ({
         ...prevFormData,
         img: blob,
+        imageUrl: imageUrl, // Add imageUrl to your state
       }));
     }
-  };
+  };  
 
   return (
     <>
@@ -143,14 +146,14 @@ function Profile() {
 
             <div className="d-flex">
               <img
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    borderRadius: '50%',
-                  }}
-                  src={formData.name ? formData.img : no_image}
-                  alt="no_image"
-                />
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                }}
+                src={formData.img ? formData.img : no_image}
+                alt="no_image"
+              />
 
               <label>
                 <input type="file" style={{ display: 'none' }} onChange={handleImageChange} accept="image/*" />
@@ -168,7 +171,7 @@ function Profile() {
 
                 <div>
                   <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName} onChange={handleChange} />
-                  <input type="mail" className='input_profile' placeholder='E-mail' name='email' value={formData.email} onChange={handleChange} />
+                  <input type="mail" className='input_profile' placeholder='E-mail' name='email' value={formData.email !== null ? formData.email : ''} onChange={handleChange} />
                   <select name="gender" className='input_profile' value={formData.gender} onChange={handleChange}>
                     <option disabled hidden value="">Пол</option>
                     <option value="1" selected={formData.gender === 1}>Мужской</option>

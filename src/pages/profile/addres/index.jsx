@@ -68,7 +68,6 @@ function ProfileAddres() {
         },
       })
       .then((response) => {
-        console.log(response.data);
         toast.success('Malumotlar saqlandi!');
       })
       .catch((error) => {
@@ -130,6 +129,25 @@ function ProfileAddres() {
     });    
   }, []);
 
+  const handleDeleteAddress = (id) => {
+    // Send a request to delete the address
+    axios
+      .delete(`${process.env.REACT_APP_TWO}/destroy-address?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      })
+      .then((response) => {
+        toast.success('Адрес успешно удален!');
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error('Ошибка при удалении адреса.');
+      });
+  };
+
   return (
     <>
       <HeaderMain trashCardData={trashCardData} />
@@ -158,7 +176,7 @@ function ProfileAddres() {
                           </svg>
                         </button>
                         
-                        <button style={{backgroundColor: 'transparent', border: 'none'}} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button onClick={() => handleDeleteAddress(data2.id)} style={{backgroundColor: 'transparent', border: 'none'}}>
                           <img src={delete_addres} alt="delete_addres" />
                         </button>
                       </div>

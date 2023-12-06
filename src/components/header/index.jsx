@@ -49,7 +49,6 @@ function HeaderMain({ trashCardData }) {
     })
       .then(response => response.json())
       .then(result => {
-        console.log(result.data.token);
         localStorage.setItem('token', result.data.token);
         setIsSuccesEntered(true); 
         setIsLoginEntered(false)
@@ -84,19 +83,9 @@ function HeaderMain({ trashCardData }) {
 
       fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
         .then(response => response.text())
-        .then(result => {console.log(JSON.parse(result)); setIsCodeEntered(true); setIsPhoneNumberEntered(false); setVerifyCode(JSON.parse(result).data.Verify_code);})
+        .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false); setVerifyCode(JSON.parse(result).data.Verify_code);})
         .catch(error => {console.log('error', JSON.parse(error)); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
   }
-
-  const handleSubmitRegisterIs = (evt) => {
-    evt.preventDefault();
-    setIsPhoneNumberEntered(true);
-  };
-  
-  const handleOpenPhoneNumberModal = () => {
-    setIsPhoneNumberEntered(true);
-  };
-
 
   const handleOpenCodeVerificationModal = (evt) => {
     evt.preventDefault();
@@ -116,7 +105,7 @@ function HeaderMain({ trashCardData }) {
         }),
       })
         .then(response => response.json())
-        .then(result => {console.log(result); localStorage.setItem('token', result.data.token); setIsCodeEntered(false); setIsRegisterEntered(true);})
+        .then(result => {localStorage.setItem('token', result.data.token); setIsCodeEntered(false); setIsRegisterEntered(true);})
         .catch(error => {console.log('error', error);});
     } else {
       console.log("Verification failed");
@@ -162,18 +151,12 @@ function HeaderMain({ trashCardData }) {
     fetch(`${process.env.REACT_APP_TWO}/register`, requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log(JSON.parse(result));
-        setIsRegisterEntered(false);  // Add this line to hide the register modal
+        setIsRegisterEntered(false);
         setIsSuccesEntered(true);
       })
       .catch(error => {
         console.log('error', JSON.parse(error));
       });
-  };  
-  
-  const handleOpenSuccessModal = () => {
-    setIsRegisterEntered(true);
-    setIsCodeEntered(false);
   };
 
   useEffect(() => {
