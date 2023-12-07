@@ -257,8 +257,19 @@ function ShowDetail() {
             <div key={data2.id}>
               <div style={{textDecoration: 'none'}} className="cards">
                 <a href={`/show/detail/${data2.id}`} className="clothes_fat">
-                  <div className="image-container" style={{position: 'relative'}}>
-                    <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                  <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
+                    <div>
+                      <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
+                          <circle cx="75" cy="-31" r="74.5" fill="#FEF4EE" stroke="#F9D5BB"/>
+                        </svg>
+                        <div>
+                          <p className='discount'>-{data2.discount}%</p>
+                        </div>
+                      </div>
+                      <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                    </div>
+
                     <div className="image-overlay">
                       <div className="detail_back">
                         <p className="overlay-text">Посмотреть детали</p>
@@ -270,7 +281,18 @@ function ShowDetail() {
                 <div className="d-flex mt-3">
                   <div style={{textDecoration: 'none'}}>
                     <p className='t-shirt_name'>{data2.name}</p>
-                    <p className='t-shirt_price'>{data2.price} сум</p>
+                    <p className='t-shirt_price'>
+                      {data2.price_discount ? 
+                        <span>
+                          <span className='discount_price'>{data2.price_discount} сум</span> 
+                          <del className='discount_price_del'>{data2.price} сум</del> 
+                        </span>
+                        : 
+                        <div>
+                          {data2.price} сум
+                        </div>
+                      }
+                    </p>
                   </div>
 
                   <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">

@@ -63,6 +63,7 @@
   justify-content: center;
   transition: all 0.3s ease;
   cursor: pointer;
+  z-index: 100;
 }
 
 .image-container {
@@ -177,4 +178,25 @@
   position: relative;
   top: -37px;
   left: 33px;
+}
+
+.discount_price {
+  color: var(--secondary-50, #F19654);
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 110% */
+  letter-spacing: -0.4px;
+}
+
+.discount_price_del {
+  color: var(--neutral-300, #B3B3B3);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 128.571% */
+  letter-spacing: -0.28px;
+  margin-left: 6px;
 }

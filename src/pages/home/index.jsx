@@ -86,6 +86,7 @@ function HomePage() {
         Accept: "application/json"
       }
     }).then((response) => {
+      console.log(response.data);
       setData(response.data);
     }).catch((error) => {
       console.log(error);
@@ -154,7 +155,7 @@ function HomePage() {
               <div key={currentProduct.id}>
                 <div style={{textDecoration: 'none'}} className="cards your_print">
                   <NavLink to={'/yourDesign'} onClick={() => handleCardShow(`${currentProduct.images[0]}`, `${currentProduct.name}`, `${currentProduct.price}`, `${currentProduct.id}`)} className="clothes_fat">
-                    <div className="image-container" style={{position: 'relative'}}>
+                    <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                       <div>
                         <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: currentProduct.discount ? 'block' : 'none'}}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
@@ -178,18 +179,29 @@ function HomePage() {
                   <div className="d-flex mt-3">
                     <div style={{textDecoration: 'none'}}>
                       <p className='t-shirt_name' style={{width: '100%'}}>{currentProduct.name}</p>
-                      <p className='t-shirt_price'>От {currentProduct.price} сум</p>
+                      <p className='t-shirt_price'>
+                        {currentProduct.price_discount ? 
+                          <span>
+                            <span className='discount_price'>{currentProduct.price_discount} сум</span> 
+                            <del className='discount_price_del'>{currentProduct.price} сум</del> 
+                          </span>
+                          : 
+                          <div>
+                            {currentProduct.price} сум
+                          </div>
+                        }
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             )}
-            
+
             {data.data ? data.data.warehouse_product_list.slice(0, 3).map((data2) => (
               <div key={data2.id}>
                 <div style={{textDecoration: 'none'}} className="cards">
                   <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
-                    <div className="image-container" style={{position: 'relative'}}>
+                    <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                       <div>
                         <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
@@ -213,7 +225,18 @@ function HomePage() {
                   <div className="d-flex mt-3">
                     <div style={{textDecoration: 'none'}}>
                       <p className='t-shirt_name'>{data2.name}</p>
-                      <p className='t-shirt_price'>{data.price_discount ? <span>{data2.price_discount} сум</span> : `${data2.price} сум`}</p>
+                      <p className='t-shirt_price'>
+                        {data2.price_discount ? 
+                          <span>
+                            <span className='discount_price'>{data2.price_discount} сум</span> 
+                            <del className='discount_price_del'>{data2.price} сум</del> 
+                          </span>
+                          : 
+                          <div>
+                            {data2.price} сум
+                          </div>
+                        }
+                      </p>
                     </div>
 
                     <div onClick={() => openModal({id: `${data2.id}`, imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -228,7 +251,7 @@ function HomePage() {
               <div key={data2.id} style={{marginTop: '48px'}}>
                 <div style={{textDecoration: 'none'}} className="cards">
                   <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
-                    <div className="image-container" style={{position: 'relative'}}>
+                    <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                       <div>
                         <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
@@ -251,7 +274,18 @@ function HomePage() {
                   <div className="d-flex">
                     <div>
                       <p className='t-shirt_name' style={{marginTop: '5px'}} title={data2.name}>{data2.name}</p>
-                      <p className='t-shirt_price' style={{marginTop: '-5px'}} title={`${data2.price} сум`}>{data2.price} сум</p>
+                      <p className='t-shirt_price'>
+                        {data2.price_discount ? 
+                          <span>
+                            <span className='discount_price'>{data2.price_discount} сум</span> 
+                            <del className='discount_price_del'>{data2.price} сум</del> 
+                          </span>
+                          : 
+                          <div>
+                            {data2.price} сум
+                          </div>
+                        }
+                      </p>
                     </div>
 
                     <div onClick={() => openModal({ imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`, id: `${data2.id}` })} data-bs-toggle="modal" data-bs-target="#exampleModal">
