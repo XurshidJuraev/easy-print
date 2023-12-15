@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import HeaderMain from '../../components/header'
 import AdvantageMain from '../../components/advantage';
 import FooterMain from '../../components/footer';
@@ -52,7 +52,7 @@ function CategoryListByName() {
             {category.products.map(data2 => (
               <div key={data2.id}>
                 <a style={{textDecoration: 'none'}} className="cards">
-                  <a href={`/show/detail/${data2.id}`} className="clothes_fat">
+                  <NavLink to={`/show/detail/${data2.id}`} className="clothes_fat">
                     <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                       <div>
                         <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
@@ -71,7 +71,7 @@ function CategoryListByName() {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </NavLink>
     
                   <div className="d-flex mt-3">
                     <div style={{textDecoration: 'none'}}>

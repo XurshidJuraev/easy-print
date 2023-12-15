@@ -10,7 +10,7 @@ import bag from '../../layouts/icons/active_bag_icon.svg'
 import './main.css'
 import 'react-toastify/dist/ReactToastify.css';
 import CardFour from '../../layouts/always'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -34,16 +34,12 @@ function ShowDetail() {
   useEffect(() => {
     if (dataBeck.size_by_color && dataBeck.size_by_color.length > 0) {
       const sizes = dataBeck.size_by_color.flatMap((size) => size.sizes.map((s) => s.name));
-      // const sizeID = dataBeck.size_by_color.flatMap((size) => size.sizes.map((s) => s.id));
       setSizeOptions(sizes);
-      // setSizeIdOptions(sizeID);
     }
 
     if (dataBeck.color_by_size && dataBeck.color_by_size.length > 0) {
       const colors = dataBeck.color_by_size.flatMap((color) => color.color.map((c) => c.name));
-      // const colorsID = dataBeck.color_by_size.flatMap((color) => color.color.map((c) => c.id));
       setColorOptions(colors);
-      // setColorIdOptions(colorsID);
     }
   }, [dataBeck]);
 
@@ -141,6 +137,7 @@ function ShowDetail() {
       formdata.append("color_id", colorId);
       formdata.append("size_id", sizeId);
       formdata.append("price", productData.price);
+      formdata.append("discount", dataBeck.discount ? dataBeck.discount : '0');
 
       var requestOptions = {
         method: 'POST',
@@ -280,7 +277,7 @@ function ShowDetail() {
           {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
             <div key={data2.id}>
               <div style={{textDecoration: 'none'}} className="cards">
-                <a href={`/show/detail/${data2.id}`} className="clothes_fat">
+                <NavLink to={`/show/detail/${data2.id}`} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                     <div>
                       <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
@@ -300,7 +297,7 @@ function ShowDetail() {
                       </div>
                     </div>
                   </div>
-                </a>
+                </NavLink>
 
                 <div className="d-flex mt-3">
                   <div style={{textDecoration: 'none'}}>

@@ -200,7 +200,7 @@ function HomePage() {
             {data.data ? data.data.warehouse_product_list.slice(0, 3).map((data2) => (
               <div key={data2.id}>
                 <div style={{textDecoration: 'none'}} className="cards">
-                  <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
+                  <NavLink to={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
                     <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                       <div>
                         <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
@@ -220,7 +220,7 @@ function HomePage() {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </NavLink>
 
                   <div className="d-flex mt-3">
                     <div style={{textDecoration: 'none'}}>
@@ -250,7 +250,7 @@ function HomePage() {
             {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
               <div key={data2.id} style={{marginTop: '48px'}}>
                 <div style={{textDecoration: 'none'}} className="cards">
-                  <a href={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
+                  <NavLink to={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
                     <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                       <div>
                         <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
@@ -269,7 +269,7 @@ function HomePage() {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </NavLink>
 
                   <div className="d-flex">
                     <div>

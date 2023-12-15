@@ -64,6 +64,9 @@
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.2px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .basket_card_edit {
