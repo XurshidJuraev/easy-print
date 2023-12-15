@@ -53,7 +53,7 @@ function HeroMain() {
           </div>
           <div>
             <div>
-              <img style={{ width: '371.112px', height: '334px', marginLeft: '300px', marginTop: '153px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
+              <img style={{ width: '312.112px', height: '334px', marginLeft: '337px', marginTop: '153px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
             </div>
 
             <div style={{ position: 'relative', marginTop: '-296px', right: '-18px', width: '940px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '270px' }}>

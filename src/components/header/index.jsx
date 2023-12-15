@@ -22,6 +22,7 @@ function HeaderMain({ trashCardData }) {
   const [isRegisterEntered, setIsRegisterEntered] = useState(false);
   const [isLoginEntered, setIsLoginEntered] = useState(false);
   const [verifyCode, setVerifyCode] = useState('');
+  const [bascent, setBascent] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isFirstEntered, setIsFirstEntered] = useState(false);
   const [isSuccesEntered, setIsSuccesEntered] = useState(false);
@@ -164,10 +165,11 @@ function HeaderMain({ trashCardData }) {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        token: token
       }
     }).then((response) => {
-      localStorage.setItem('basket_count', response.data.data.basket_count)
+      setBascent(response.data.data.basket_count)
       setData(response.data)
     }).catch((error) => {
       console.log(error)
@@ -266,7 +268,7 @@ function HeaderMain({ trashCardData }) {
                 {Array.isArray(data2.sub_category) && data2.sub_category.length > 0 ? (
                   <div className={`language_list language_list_${data2.id} ${activeLinkId === data2.id ? 'active' : ''}`}>
                     {data2.sub_category.map((data3) => (
-                      <a href={`/categories/${data3.id}`} className='language_item' key={data3.id}>
+                      <a title={data3.name} href={`/categories/${data3.id}`} className='language_item' key={data3.id}>
                         {data3.name}
                       </a>
                     ))}
@@ -315,7 +317,7 @@ function HeaderMain({ trashCardData }) {
               )}
 
               <NavLink title="Basket" to={'/basket'} className='basket_counter_father'>
-                <div title="Basket counter" className='basket_counter'>{basket_count_localstorage}</div>
+                <div title="Basket counter" className='basket_counter'>{bascent}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
               </NavLink>
 

@@ -182,12 +182,12 @@ function HomePage() {
                       <p className='t-shirt_price'>
                         {currentProduct.price_discount ? 
                           <span>
-                            <span className='discount_price'>{currentProduct.price_discount} сум</span> 
-                            <del className='discount_price_del'>{currentProduct.price} сум</del> 
+                            <span className='discount_price'>{Number(currentProduct.price_discount).toLocaleString('ru-RU')} сум</span> 
+                            <del className='discount_price_del'>{Number(currentProduct.price).toLocaleString('ru-RU')} сум</del> 
                           </span>
                           : 
                           <div>
-                            {currentProduct.price} сум
+                            {Number(currentProduct.price).toLocaleString('ru-RU')} сум
                           </div>
                         }
                       </p>
@@ -228,12 +228,12 @@ function HomePage() {
                       <p className='t-shirt_price'>
                         {data2.price_discount ? 
                           <span>
-                            <span className='discount_price'>{data2.price_discount} сум</span> 
-                            <del className='discount_price_del'>{data2.price} сум</del> 
+                            <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} сум</span> 
+                            <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} сум</del> 
                           </span>
                           : 
                           <div>
-                            {data2.price} сум
+                            {Number(data2.price).toLocaleString('ru-RU')} сум
                           </div>
                         }
                       </p>
@@ -277,12 +277,12 @@ function HomePage() {
                       <p className='t-shirt_price'>
                         {data2.price_discount ? 
                           <span>
-                            <span className='discount_price'>{data2.price_discount} сум</span> 
-                            <del className='discount_price_del'>{data2.price} сум</del> 
+                            <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} сум</span> 
+                            <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} сум</del> 
                           </span>
                           : 
                           <div>
-                            {data2.price} сум
+                            {Number(data2.price).toLocaleString('ru-RU')} сум
                           </div>
                         }
                       </p>
@@ -308,7 +308,7 @@ function HomePage() {
                   <div style={{padding: '80px 32px 0px 32px'}}>
                     <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
                     <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                    <p className='modal_price'>{modalData.price} сум</p>
+                    <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} сум</p>
 
                     <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                       <div class="dropdown">

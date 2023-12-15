@@ -136,6 +136,7 @@
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.2px;
+  min-width: 100px;
 }
 
 .basket_info1 {

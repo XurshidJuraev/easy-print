@@ -130,7 +130,6 @@ function ProfileAddres() {
   }, []);
 
   const handleDeleteAddress = (id) => {
-    // Send a request to delete the address
     axios
       .delete(`${process.env.REACT_APP_TWO}/destroy-address?id=${id}`, {
         headers: {

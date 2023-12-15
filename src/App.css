@@ -24,6 +24,16 @@
   --black: #000000;
 }
 
+::-moz-selection { /* Code for Firefox */
+  color: #ffffff;
+  background: #32444B;
+}
+
+::selection {
+  color: #ffffff;
+  background: #32444B;
+}
+
 body {
   margin: 0;
   padding: 0;

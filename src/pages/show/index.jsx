@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CardFour from '../../layouts/always'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
 
 function ShowDetail() {
   const params = useParams()
@@ -33,16 +34,16 @@ function ShowDetail() {
   useEffect(() => {
     if (dataBeck.size_by_color && dataBeck.size_by_color.length > 0) {
       const sizes = dataBeck.size_by_color.flatMap((size) => size.sizes.map((s) => s.name));
-      const sizeID = dataBeck.size_by_color.flatMap((size) => size.sizes.map((s) => s.id));
+      // const sizeID = dataBeck.size_by_color.flatMap((size) => size.sizes.map((s) => s.id));
       setSizeOptions(sizes);
-      setSizeIdOptions(sizeID);
+      // setSizeIdOptions(sizeID);
     }
 
     if (dataBeck.color_by_size && dataBeck.color_by_size.length > 0) {
       const colors = dataBeck.color_by_size.flatMap((color) => color.color.map((c) => c.name));
-      const colorsID = dataBeck.color_by_size.flatMap((color) => color.color.map((c) => c.id));
+      // const colorsID = dataBeck.color_by_size.flatMap((color) => color.color.map((c) => c.id));
       setColorOptions(colors);
-      setColorIdOptions(colorsID);
+      // setColorIdOptions(colorsID);
     }
   }, [dataBeck]);
 
@@ -111,24 +112,28 @@ function ShowDetail() {
     }
   };
 
+  const getColorId = (selectedColor) => {
+    const colorIndex = colorOptions.findIndex((color) => color === selectedColor);
+    return colorIdOptions[colorIndex];
+  };
+  
+  const getSizeId = (selectedSize) => {
+    const sizeIndex = sizeOptions.findIndex((size) => size === selectedSize);
+    return sizeIdOptions[sizeIndex];
+  };
+
   const addToBasket = (productData) => {
     if (productData) {
-      const colorId = colorIdOptions;
-      const sizeId = sizeIdOptions;
+      const selectedColor = dataBeck.color_by_size[selectedSizeIndex];
+      const selectedSize = dataBeck.size_by_color[selectedColorIndex];
   
-      const requestData = {
-        warehouse_product_id: productData.id,
-        quantity: 1,
-        color_id: colorId,
-        size_id: sizeId,
-        price: productData.price,
-      };
+      const colorId = selectedColor.color[0].id;
+      const sizeId = selectedSize.sizes[0].id;
 
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
-      myHeaders.append("Cookie", "laravel_session=Gl1cA1GwLBraAH4I8g6xCCzxtnLPqt14jgGRanpB");
 
       var formdata = new FormData();
       formdata.append("warehouse_product_id", productData.id);
@@ -136,12 +141,6 @@ function ShowDetail() {
       formdata.append("color_id", colorId);
       formdata.append("size_id", sizeId);
       formdata.append("price", productData.price);
-
-      console.log("warehouse_product_id", productData.id);
-      console.log("quantity", '1');
-      console.log("color_id", colorId);
-      console.log("size_id", sizeId);
-      console.log("price", productData.price);
 
       var requestOptions = {
         method: 'POST',
@@ -151,9 +150,20 @@ function ShowDetail() {
       };
 
       fetch("http://admin.easyprint.uz/api/order/set-warehouse", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+        .then(response => response.json())
+        .then(result => {
+            if(result.status === true) {
+            console.log(result); 
+            toast.success('Товар добавлен');
+          } else {
+            console.log(result);
+            toast.error('Товар не добавлен');
+          }}
+        )
+        .catch(error => {
+          console.log('error', JSON.parse(error)); 
+          toast.error('Товар не добавлен');
+        });
     }
   };
   
@@ -164,6 +174,7 @@ function ShowDetail() {
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
+      <ToastContainer />
 
       <div className="container">
         <h3 className='show_detail_title mb-3'>Детали товара</h3>
@@ -190,7 +201,20 @@ function ShowDetail() {
 
             <p className='show_detail_description'>{dataBeck.description ? dataBeck.description : 'Описание отсутствует или не найден'}</p>
 
-            <p className='show_detail_price'>{dataBeck.price ? `${dataBeck.price} сум` : 'Цена отсутствует или не найден'}</p>
+            <p className='show_detail_price'>
+              {dataBeck.price_discount ? 
+                <div>
+                  {Number(dataBeck.price_discount).toLocaleString('ru-RU')} сум
+                  <del className='show_detail_price_discount'>
+                    {Number(dataBeck.price).toLocaleString('ru-RU')} сум
+                  </del>
+                </div>
+                : 
+                <div>
+                  {dataBeck.price ? `${Number(dataBeck.price).toLocaleString('ru-RU')} сум` : 'Цена отсутствует или не найден'}
+                </div>
+              }
+            </p>
 
             <div className="d-flex">
               <div style={{marginRight: '83px'}}>
@@ -284,12 +308,12 @@ function ShowDetail() {
                     <p className='t-shirt_price'>
                       {data2.price_discount ? 
                         <span>
-                          <span className='discount_price'>{data2.price_discount} сум</span> 
-                          <del className='discount_price_del'>{data2.price} сум</del> 
+                          <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} сум</span> 
+                          <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} сум</del> 
                         </span>
                         : 
                         <div>
-                          {data2.price} сум
+                          {Number(data2.price).toLocaleString('ru-RU')} сум
                         </div>
                       }
                     </p>
