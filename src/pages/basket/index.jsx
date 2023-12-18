@@ -34,7 +34,7 @@ function Basket() {
   const token = localStorage.getItem('token');
 
   function handleCountChange(id, change, maxQuantity) {
-    const updatedTrashCardData = trashCardData.map((item) => {
+    const updatedTrashCardData = data.data.list.map((item) => {
       if (item.id === id) {
         const newCount = item.count + change;
         const updatedCount = newCount < 1 ? 1 : (newCount > maxQuantity ? maxQuantity : newCount);
@@ -42,9 +42,8 @@ function Basket() {
       }
       return item;
     });
-    setTrashCardData(updatedTrashCardData);
-    
-    localStorage.setItem('trashCard', JSON.stringify(updatedTrashCardData));
+  
+    setData({ ...data, data: { ...data.data, list: updatedTrashCardData } });
   }
 
   function applyPromoCode() {
@@ -229,44 +228,42 @@ function Basket() {
     let promoMessage = '';
     let promoColor = 'green';
 
-    axios.post(
-        `${process.env.REACT_APP_TWO}/order/add-coupon`,
-        { 
-          order_id: order_id,
-          coupon_name: promoCode
+    axios.post(`${process.env.REACT_APP_TWO}/order/add-coupon`, { 
+        order_id: order_id,
+        coupon_name: promoCode
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          lang: 'uz',
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-            lang: 'uz',
-          },
-        }
-      )
-      .then((response) => {
-        toast.success(`Введенный вами промокод ${promoCode} успешно введен.`);
-        promoMessage = `Введенный вами промокод ${promoCode} успешно введен.`;
-        setCoupon_price(response.data.data.coupon_price);
-        setOrder_id(response.data.data.id);
-        setGrant_total(response.data.data.grant_total);
-        setDiscount_price(response.data.data.discount_price);
-        setPrice(response.data.data.price);
-        setPromoMessage(promoMessage);
-        setPromoMessageColor(promoColor);
-      })
-      .catch((error) => {
-        console.error('Error:', error.response);
-        toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
-        promoMessage = `Введенный вами промокод ${promoCode} не сработал.`;
-        promoColor = 'red';
-        setPromoMessage(promoMessage);
-        setPromoMessageColor(promoColor);
-        setCoupon_price(localStorage.getItem('coupon_price'));
-        setOrder_id(localStorage.getItem('order_id'));
-        setGrant_total(localStorage.getItem('grant_total'));
-        setDiscount_price(localStorage.getItem('discount_price'));
-        setPrice(localStorage.getItem('price'));
-      });
+      }
+    )
+    .then((response) => {
+      toast.success(`Введенный вами промокод ${promoCode} успешно введен.`);
+      promoMessage = `Введенный вами промокод ${promoCode} успешно введен.`;
+      setCoupon_price(response.data.data.coupon_price);
+      setOrder_id(response.data.data.id);
+      setGrant_total(response.data.data.grant_total);
+      setDiscount_price(response.data.data.discount_price);
+      setPrice(response.data.data.price);
+      setPromoMessage(promoMessage);
+      setPromoMessageColor(promoColor);
+    })
+    .catch((error) => {
+      console.error('Error:', error.response);
+      toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
+      promoMessage = `Введенный вами промокод ${promoCode} не сработал.`;
+      promoColor = 'red';
+      setPromoMessage(promoMessage);
+      setPromoMessageColor(promoColor);
+      setCoupon_price(localStorage.getItem('coupon_price'));
+      setOrder_id(localStorage.getItem('order_id'));
+      setGrant_total(localStorage.getItem('grant_total'));
+      setDiscount_price(localStorage.getItem('discount_price'));
+      setPrice(localStorage.getItem('price'));
+    });
   } 
 
   return (
@@ -327,12 +324,7 @@ function Basket() {
                                   <div className="d-flex align-items-center" style={{marginTop: '-10px'}}>
                                     <div className='basket_card_size_color'></div>
                                       {colorOptions.map((color, index) => (
-                                        <div
-                                          key={index}
-                                          className="color_border me-2"
-                                          style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}}
-                                          onClick={() => setSelectedColorIndex(index)}
-                                        >
+                                        <div key={index} className="color_border me-2" style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}} onClick={() => setSelectedColorIndex(index)}>
                                           <div className="color" style={{backgroundColor: color}}></div>
                                         </div>
                                       ))}
@@ -346,11 +338,11 @@ function Basket() {
                                 <p className='basket_card_name'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
                               </a>
 
-                              <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '41px' }}>
+                              <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '60px' }}>
                                 <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} сум</p>
                               </a>
 
-                              <div className='d-flex basket_counter12' style={{marginRight: '105px'}}>
+                              <div className='d-flex basket_counter12' style={{marginRight: '80px'}}>
                                 <div>
                                   <div className='basket_card_count'>{item.quantity}</div>
                                 </div>
