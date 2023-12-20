@@ -173,8 +173,8 @@
 .basket_size_fat {
   position: relative;
   margin-top: -55px;
-  left: 278px;
-  top: 30px;
+  left: 50px;
+  top: 175px;
   margin-left: -70px;
   z-index: 110;
 }
@@ -491,4 +491,8 @@
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.08px;
+}
+
+.selected-color {
+  border: 2px solid #4D4D4D; /* Set the border style for the selected color */
 }

@@ -27,75 +27,46 @@ function Basket() {
   const [discount_price, setDiscount_price] = useState('');
   const [order_id, setOrder_id] = useState('');
   const [grant_total, setGrant_total] = useState('');
-  const [colorOptions, setColorOptions] = useState([]);
-  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
-  const [sizeOptions, setSizeOptions] = useState([]);
-  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const [colorOptions, setColorOptions] = useState({});
+  const [selectedSize, setSelectedSize] = useState('');
+  const [sizeOptions, setSizeOptions] = useState({});
   const token = localStorage.getItem('token');
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedColorId, setSelectedColorId] = useState('');
+  const [selectedSizeId, setSelectedSizeId] = useState('');
+  const [isSizeChange, setIsSizeChange] = useState(false);
 
-  function handleCountChange(id, change, maxQuantity) {
-    const updatedTrashCardData = data.data.list.map((item) => {
-      if (item.id === id) {
-        const newCount = item.count + change;
-        const updatedCount = newCount < 1 ? 1 : (newCount > maxQuantity ? maxQuantity : newCount);
-        return { ...item, count: updatedCount };
-      }
-      return item;
-    });
+  function handleCountChange(id, change, maxQuantity, selectedColor, selectedSize) {
+    setData((prevData) => {
+      const updatedList = prevData.data.list.map((item) => {
+        if (item.id === id) {
+          const newCount = item.quantity + change;
+          const updatedCount = Math.min(Math.max(newCount, 1), maxQuantity);
+          const updatedTotalPrice = item.price * updatedCount;
   
-    setData({ ...data, data: { ...data.data, list: updatedTrashCardData } });
+          // Agar item.discount_price mavjud bo'lsa, oxiridagi summadan discount_price ni ayirish
+          const finalTotalPrice = item.discount_price ? updatedTotalPrice - item.discount_price : updatedTotalPrice;
+  
+          return {
+            ...item,
+            quantity: updatedCount,
+            total_price: finalTotalPrice,
+            selectedColor: selectedColor,
+            selectedSize: selectedSize,
+          };
+        }
+        return item;
+      });
+  
+      return { ...prevData, data: { ...prevData.data, list: updatedList } };
+    }); 
+    const selectedSizeOptions = sizeOptions[id] || [];
+    const selectedSizeOption = selectedSizeOptions.find(size => size.name === selectedSize);
+
+    setSelectedColorId(selectedColor.id ? selectedColor.id : colorOptions[id][0].id);
+    setSelectedSizeId(selectedSizeOption.id ? selectedSizeOption.id : sizeOptions[id][0].id);
   }
 
-  function applyPromoCode() {
-    let promoMessage = '';
-    let promoColor = 'green';
-
-    console.log(
-      { 
-        order_id: order_id,
-        coupon_name: promoCode
-      }
-    );
-
-    axios.post(
-        `${process.env.REACT_APP_TWO}/order/add-coupon`,
-        { 
-          order_id: order_id,
-          coupon_name: promoCode
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-            lang: 'uz',
-          },
-        }
-      )
-      .then((response) => {
-        toast.success(`Введенный вами промокод ${promoCode} успешно введен.`);
-        promoMessage = `Введенный вами промокод ${promoCode} успешно введен.`;
-        setCoupon_price(response.data.coupon_price);
-        setOrder_id(response.data.id);
-        setGrant_total(response.data.grant_total);
-        setDiscount_price(response.data.discount_price);
-        setPrice(response.data.price);
-        setPromoMessage(promoMessage);
-        setPromoMessageColor(promoColor);
-      })
-      .catch((error) => {
-        console.error('Error:', error.response);
-        toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
-        promoMessage = `Введенный вами промокод ${promoCode} не сработал.`;
-        promoColor = 'red';
-        setPromoMessage(promoMessage);
-        setPromoMessageColor(promoColor);
-        setCoupon_price(localStorage.getItem('coupon_price'));
-        setOrder_id(localStorage.getItem('order_id'));
-        setGrant_total(localStorage.getItem('grant_total'));
-        setDiscount_price(localStorage.getItem('discount_price'));
-        setPrice(localStorage.getItem('price'));
-      });
-  } 
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -138,28 +109,38 @@ function Basket() {
   const navigate = useNavigate();
 
   function saveOrder() {
-    const order = {
-      id: new Date().getTime(),
-      date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString(),
-      userName: localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).name : "Foydalanuvchi nomi",
-      trashCard: trashCardData,
-      phoneNumber : localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).phoneNumber : "Foydalanuvchi raqami",
-      promoCode: promoCode,
-      totalAmount: calculateTotalPrice(trashCardData),
-      region: region,
-      city: city,
-      address: address,
-      productsTotal: calculateTotalPrice(trashCardData).toLocaleString('ru-RU') + ' сум',
-      deliveryCharge: '52 000 сум',
-      promoCodeAmount: (calculateTotalPrice(trashCardData) * discount / 100).toLocaleString('ru-RU') + ' сум',
-      total: (calculateTotalPrice(trashCardData) - (calculateTotalPrice(trashCardData) * discount / 100) + 52000).toLocaleString('ru-RU') + ' сум'
+    const apiData = {
+      data: data.data.list.map(item => ({
+        order_detail_id: item.id,
+        color_id: selectedColorId === '' ? colorOptions[item.id][0].id : selectedColorId,
+        size_id: selectedSizeId === '' ? sizeOptions[item.id][0].id : selectedSizeId,
+        quantity: item.quantity
+      })),
+      order_id: data.data.id
     };
-  
-    let orders = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders')) : [];
-    orders.push(order);
-    localStorage.setItem('orders', JSON.stringify(orders));
-    navigate('/orders');
+
+    console.log(apiData);
+    console.log(selectedColor, selectedSize);
+
+    var myHeaders = new Headers();
+    myHeaders.append("language", "uz");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: apiData,
+      redirect: 'follow'
+    };
+
+    fetch(`${process.env.REACT_APP_TWO}/order/connection/to_order`, requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(JSON.parse(result)))
+      .catch(error => console.log('error', JSON.parse(error)));
+
+    // navigate('/orders');
   }
 
   useEffect(() => {
@@ -181,21 +162,32 @@ function Basket() {
       setPrice(response.data.data.price);
       localStorage.setItem('price', response.data.data.price);
       setData(response.data);
-      console.log(response);
     }).catch((error) => {
       toast.error(error);
     });    
   }, []);
 
   useEffect(() => {
-    if (data.size_by_color && data.size_by_color.length > 0) {
-      const sizes = data.size_by_color.flatMap((size) => size.sizes.map((s) => s.name));
-      setSizeOptions(sizes);
-    }
+    if (data && data.data && data.data.list) {
+      const sizesOptions = {};
+      const colorsOptions = {};
   
-    if (data.color_by_size && data.color_by_size.length > 0) {
-      const colors = data.color_by_size.flatMap((color) => color.color.map((c) => c.name));
-      setColorOptions(colors);
+      data.data.list.forEach((item) => {
+        const sizes = Array.from(
+          new Set(item.size_by_color.flatMap((size) => size.sizes.map((s) => ({ id: s.id, name: s.name }))))
+        );
+        sizesOptions[item.id] = sizes;
+  
+        const colors = Array.from(
+          new Set(item.color_by_size.flatMap((color) => color.color.map((c) => ({ id: c.id, name: c.name }))))
+        );
+        colorsOptions[item.id] = colors;
+      });
+  
+      console.log(sizesOptions, colorsOptions);
+  
+      setSizeOptions(sizesOptions);
+      setColorOptions(colorsOptions);
     }
   }, [data]);
 
@@ -264,7 +256,7 @@ function Basket() {
       setDiscount_price(localStorage.getItem('discount_price'));
       setPrice(localStorage.getItem('price'));
     });
-  } 
+  }
 
   return (
     <div>
@@ -308,13 +300,63 @@ function Basket() {
                               <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none' }}>
                                 <img className='basket_card_img' src={item.images[0]} alt={item.name} />
                               </a>
+                            </div>
+
+                            <div>
+                              <div className="basket_info1">
+                                <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '110px' }}>
+                                  <p className='basket_card_name'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
+                                </a>
+
+                                <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '60px' }}>
+                                  <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} сум</p>
+                                </a>
+
+                                <div className='d-flex basket_counter12' style={{marginRight: item.discount_price === '0' ? `117px` : `80px`}}>
+                                  <div>
+                                    <div className='basket_card_count'>{item.quantity}</div>
+                                  </div>
+
+                                  <div className='d-flex flex-column'>
+                                    <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, 1, item.max_quantity)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 3C8.27408 2.99956 8.54556 3.04894 8.79882 3.1453C9.05208 3.24166 9.28214 3.38311 9.47577 3.5615L14.2006 7.90746C14.6308 8.30325 14.6308 8.98233 14.2005 9.37808C13.8182 9.72966 13.2303 9.72966 12.848 9.37808L8 4.91965L3.152 9.37811C2.76972 9.72967 2.18183 9.72967 1.79955 9.37811C1.36921 8.98236 1.36921 8.30326 1.79955 7.9075L6.52423 3.56246C6.71777 3.38389 6.94779 3.24228 7.20106 3.14575C7.45433 3.04922 7.72585 2.99969 8 3Z" fill="#999999"/>
+                                      </svg>
+                                    </button>
+
+                                    <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, -1, item.max_quantity)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 13C7.72592 13.0004 7.45444 12.9511 7.20118 12.8547C6.94792 12.7583 6.71786 12.6169 6.52423 12.4385L1.79945 8.09254C1.36915 7.69675 1.36918 7.01767 1.79951 6.62192C2.18181 6.27034 2.76973 6.27034 3.15203 6.62192L8 11.0803L12.848 6.62189C13.2303 6.27033 13.8182 6.27033 14.2004 6.62189C14.6308 7.01764 14.6308 7.69674 14.2004 8.0925L9.47577 12.4375C9.28223 12.6161 9.05221 12.7577 8.79894 12.8543C8.54567 12.9508 8.27415 13.0003 8 13Z" fill="#999999"/>
+                                      </svg>
+                                    </button>
+                                  </div>
+                                </div>
+
+                                <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: item.discount_price === '0' ? `49px` : `83px` }}>
+                                  <p className='basket_card_price_sale'>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} сум` : '0 сум'}</p>
+                                </a>
+
+                                <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none' }}>
+                                  <p className='basket_card_price' id='all_price'>{item.total_price ? `${Number(item.total_price).toLocaleString('ru-RU')}` : '0'} сум</p>
+                                </a>
+                              </div>
+
 
                               <div className='d-flex basket_size_fat'>
                                 <div className='d-flex'>
                                   <p className='basket_card_size'>Размер:</p>
-                                  <select style={{ border: 'none', outline: 'none' }} value={sizeOptions[selectedSizeIndex]} onChange={(e) => {const index = sizeOptions.findIndex((size) => size === e.target.value);setSelectedSizeIndex(index);}}>
-                                    {sizeOptions.length > 0 && sizeOptions.map((size) => (
-                                      <option key={size} value={size}>{size}</option>
+                                  <select
+                                    style={{ border: 'none', outline: 'none' }}
+                                    value={item.selectedSize || selectedSize}
+                                    onChange={(e) => {
+                                      setSelectedSize(e.target.value);
+                                      handleCountChange(item.id, 0, item.max_quantity, item.selectedColor, e.target.value);
+                                    }}
+                                  >
+                                    {sizeOptions[item.id] && sizeOptions[item.id].map((size) => (
+                                      <option key={size.id} value={size.name}>
+                                        {size.name}
+                                      </option>
                                     ))}
                                   </select>
                                 </div>
@@ -322,53 +364,22 @@ function Basket() {
                                 <div className='d-flex' style={{marginLeft: '48px'}}>
                                   <p className='basket_card_size'>Цвет:</p>
                                   <div className="d-flex align-items-center" style={{marginTop: '-10px'}}>
-                                    <div className='basket_card_size_color'></div>
-                                      {colorOptions.map((color, index) => (
-                                        <div key={index} className="color_border me-2" style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}} onClick={() => setSelectedColorIndex(index)}>
-                                          <div className="color" style={{backgroundColor: color}}></div>
-                                        </div>
-                                      ))}
+                                    {colorOptions[item.id] && colorOptions[item.id].map((color, index) => (
+                                      <div
+                                        key={index}
+                                        className={`color_border me-2 ${selectedColor === color ? 'selected-color' : ''}`}
+                                        style={{ borderColor: '#E6E6E6', cursor: 'pointer' }}
+                                        onClick={() => {
+                                          setSelectedColor(color);
+                                          handleCountChange(item.id, 0, item.max_quantity, color, item.selectedSize);
+                                        }}
+                                      >
+                                        <div className="color" style={{ backgroundColor: color.name }}></div>
+                                      </div>
+                                    ))}
                                   </div>
                                 </div>
                               </div>
-                            </div>
-
-                            <div className="basket_info1">
-                              <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '110px' }}>
-                                <p className='basket_card_name'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
-                              </a>
-
-                              <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '60px' }}>
-                                <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} сум</p>
-                              </a>
-
-                              <div className='d-flex basket_counter12' style={{marginRight: '80px'}}>
-                                <div>
-                                  <div className='basket_card_count'>{item.quantity}</div>
-                                </div>
-
-                                <div className='d-flex flex-column'>
-                                  <div className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, 1, item.max_quantity)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                      <path d="M8 3C8.27408 2.99956 8.54556 3.04894 8.79882 3.1453C9.05208 3.24166 9.28214 3.38311 9.47577 3.5615L14.2006 7.90746C14.6308 8.30325 14.6308 8.98233 14.2005 9.37808C13.8182 9.72966 13.2303 9.72966 12.848 9.37808L8 4.91965L3.152 9.37811C2.76972 9.72967 2.18183 9.72967 1.79955 9.37811C1.36921 8.98236 1.36921 8.30326 1.79955 7.9075L6.52423 3.56246C6.71777 3.38389 6.94779 3.24228 7.20106 3.14575C7.45433 3.04922 7.72585 2.99969 8 3Z" fill="#999999"/>
-                                    </svg>
-                                  </div>
-
-                                  <div className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, -1, item.max_quantity)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                      <path d="M8 13C7.72592 13.0004 7.45444 12.9511 7.20118 12.8547C6.94792 12.7583 6.71786 12.6169 6.52423 12.4385L1.79945 8.09254C1.36915 7.69675 1.36918 7.01767 1.79951 6.62192C2.18181 6.27034 2.76973 6.27034 3.15203 6.62192L8 11.0803L12.848 6.62189C13.2303 6.27033 13.8182 6.27033 14.2004 6.62189C14.6308 7.01764 14.6308 7.69674 14.2004 8.0925L9.47577 12.4375C9.28223 12.6161 9.05221 12.7577 8.79894 12.8543C8.54567 12.9508 8.27415 13.0003 8 13Z" fill="#999999"/>
-                                    </svg>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '83px' }}>
-                                <p className='basket_card_price_sale'>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} сум` : '0 сум'}</p>
-                              </a>
-
-                              <a href={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none' }}>
-                                <p className='basket_card_price' id='all_price'>{item.total_price ? `${Number(item.total_price).toLocaleString('ru-RU')}` : '0'} сум</p>
-                              </a>
                             </div>
                           </div>
 

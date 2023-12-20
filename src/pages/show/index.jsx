@@ -277,7 +277,7 @@ function ShowDetail() {
           {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
             <div key={data2.id}>
               <div style={{textDecoration: 'none'}} className="cards">
-                <NavLink to={`/show/detail/${data2.id}`} className="clothes_fat">
+                <a href={`/show/detail/${data2.id}`} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                     <div>
                       <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
@@ -297,7 +297,7 @@ function ShowDetail() {
                       </div>
                     </div>
                   </div>
-                </NavLink>
+                </a>
 
                 <div className="d-flex mt-3">
                   <div style={{textDecoration: 'none'}}>
