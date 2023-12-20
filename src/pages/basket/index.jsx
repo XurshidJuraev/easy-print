@@ -108,39 +108,41 @@ function Basket() {
 
   const navigate = useNavigate();
 
-  function saveOrder() {
-    const apiData = {
-      data: data.data.list.map(item => ({
-        order_detail_id: item.id,
-        color_id: selectedColorId === '' ? colorOptions[item.id][0].id : selectedColorId,
-        size_id: selectedSizeId === '' ? sizeOptions[item.id][0].id : selectedSizeId,
-        quantity: item.quantity
-      })),
-      order_id: data.data.id
-    };
+  async function saveOrder() {
+    try {
+      const apiData = {
+        data: data.data.list.map(item => ({
+          order_detail_id: item.id,
+          color_id: selectedColorId === '' ? colorOptions[item.id][0].id : selectedColorId,
+          size_id: selectedSizeId === '' ? sizeOptions[item.id][0].id : selectedSizeId,
+          quantity: item.quantity
+        })),
+        order_id: data.data.id
+      };
 
-    console.log(apiData);
-    console.log(selectedColor, selectedSize);
+      localStorage.setItem('order_id', data.data.id);
 
-    var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${token}`);
+      console.log(apiData);
+      console.log(selectedColor, selectedSize);
 
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: apiData,
-      redirect: 'follow'
-    };
+      const response = await axios.post(`${process.env.REACT_APP_TWO}/order/connection/to_order`, apiData, {
+        headers: {
+          'language': 'uz',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
 
-    fetch(`${process.env.REACT_APP_TWO}/order/connection/to_order`, requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(JSON.parse(result)))
-      .catch(error => console.log('error', JSON.parse(error)));
+      console.log(response.data.status);
 
-    // navigate('/orders');
+      if (response.data.status === true) {
+        navigate('/orders');
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   useEffect(() => {

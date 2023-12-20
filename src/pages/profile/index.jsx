@@ -65,6 +65,7 @@ function Profile() {
       localStorage.setItem('user_name', responseData.first_name === null ? '' : responseData.first_name);
       localStorage.setItem('user_last_name', responseData.last_name === null ? '' : responseData.last_name);
       localStorage.setItem('user_image', responseData.image === null ? '' : responseData.image);
+      localStorage.setItem('user_phone_number', responseData.phone_number === null ? '' : responseData.phone_number);
       setData({
         id: responseData.id,
         name: responseData.first_name,

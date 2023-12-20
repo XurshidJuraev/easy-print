@@ -57,7 +57,7 @@ function HeroMain() {
             </div>
 
             <div style={{ position: 'relative', marginTop: '-296px', right: '-18px', width: '940px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '270px' }}>
-              <Splide options={{ type: 'loop', arrows: false, autoplay: true, width: '840px', arrow: false, heightRatio: 0.5, pagination: false, focus: 'center', auto: true, interval: 7000, perPage: 3, pauseOnHover: false, }}>
+              <Splide options={{ type: 'loop', arrows: false, autoplay: true, width: '840px', arrow: false, heightRatio: 0.5, pagination: false, focus: 'center', auto: true, interval: 3000, perPage: 3, pauseOnHover: false, }}>
                 {data[currentIndex].carousel_image.map((imageUrl, index) => (
                   <SplideSlide key={index}>
                     <img src={imageUrl} alt={`carousel-image-${index}`} />
