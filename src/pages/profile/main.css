@@ -1,6 +1,6 @@
 .info_profile {
   width: 824px;
-  height: 600px;
+  min-height: 600px;
   flex-shrink: 0;
   background: var(--White, #ffffff);
   padding: 32px;

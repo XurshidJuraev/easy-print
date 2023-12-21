@@ -110,6 +110,10 @@
   line-height: normal;
   letter-spacing: -0.08px;
   text-transform: uppercase;
+  width: 20px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .order_name_color {
