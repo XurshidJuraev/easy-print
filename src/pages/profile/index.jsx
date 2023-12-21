@@ -114,7 +114,7 @@ function Profile() {
 
     fetch(`${process.env.REACT_APP_TWO}/personal-information`, requestOptions)
       .then(response => response.text())
-      .then(result => {console.log(result); toast.success('Malumotlar yuborildi!')})
+      .then(result => {toast.success('Malumotlar yuborildi!')})
       .catch(error => {console.log('error', error); toast.error('Xatolik yuz berdi. Malumotlar yuborilmadi.')});
   };
 

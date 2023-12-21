@@ -27,7 +27,6 @@ function MyOrders() {
 
   useEffect(() => {
     const ordersString = localStorage.getItem('orders');
-    console.log(JSON.parse(ordersString));
     try {
       const parsedOrders = ordersString ? JSON.parse(ordersString) : [];
       setOrders(parsedOrders);
@@ -51,7 +50,6 @@ function MyOrders() {
             Accept: "application/json"
           }
         });
-        console.log(response.data.data);
         setSale(response.data.data.coupon_price);
         setTotal(response.data.data.price);
         setDelivery(response.data.data.discount_price);
@@ -75,7 +73,6 @@ function MyOrders() {
             Accept: "application/json"
           }
         });
-        console.log(response.data.data);
         setAddress(response.data.data);
       } catch (error) {
         console.log(error);

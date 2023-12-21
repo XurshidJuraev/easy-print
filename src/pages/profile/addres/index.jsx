@@ -31,15 +31,12 @@ function ProfileAddres() {
 
   const handleChange = (e) => {
     const selectedRegion = e.target.value;
-    console.log('Selected Region:', selectedRegion);
     setFormData({ ...formData, [e.target.name]: selectedRegion });
   
     const selectedRegionData = data.find((region) => region.region === selectedRegion);
-    console.log('Selected Region Data:', selectedRegionData);
   
     if (selectedRegionData) {
       const selectedCities = selectedRegionData.cities || [];
-      console.log('Selected Cities:', selectedCities);
       setCities(selectedCities);
     } else {
       console.error('No data found for the selected region');
@@ -57,8 +54,6 @@ function ProfileAddres() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
-  
     // Backendga ma'lumotlarni yuborish
     axios
       .post(`${process.env.REACT_APP_TWO}/set-address`, formData, {

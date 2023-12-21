@@ -86,7 +86,6 @@ function HomePage() {
         Accept: "application/json"
       }
     }).then((response) => {
-      console.log(response.data);
       setData(response.data);
     }).catch((error) => {
       console.log(error);
@@ -117,13 +116,11 @@ function HomePage() {
     if (data.data && data.data.size_by_color && data.data.size_by_color.length > 0) {
       const sizes = data.data.size_by_color.flatMap((size) => size.sizes.map((s) => s.name));
       setSizeOptions(sizes);
-      console.log(sizes);
     }
   
     if (data.data && data.data.color_by_size && data.data.color_by_size.length > 0) {
       const colors = data.data.color_by_size.flatMap((color) => color.color.map((c) => c.name));
       setColorOptions(colors);
-      console.log(colors);
     }
   }, [data.data]);
 

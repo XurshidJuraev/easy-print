@@ -150,10 +150,8 @@ function ShowDetail() {
         .then(response => response.json())
         .then(result => {
             if(result.status === true) {
-            console.log(result); 
             toast.success('Товар добавлен');
           } else {
-            console.log(result);
             toast.error('Товар не добавлен');
           }}
         )

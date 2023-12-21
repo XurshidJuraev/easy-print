@@ -87,7 +87,7 @@ function YourDesign() {
   useEffect(() => {
     const savedTextData = JSON.parse(localStorage.getItem('textData'));
     if (savedTextData) {
-      console.log(savedTextData);
+      // console.log(savedTextData);
     }
   }, []);
 

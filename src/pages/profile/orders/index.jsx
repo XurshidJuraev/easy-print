@@ -32,7 +32,6 @@ function ProfileOrders() {
   }, []);
 
   const orders = JSON.parse(localStorage.getItem('Orders'))
-  console.log(orders)
 
   return (
     <>

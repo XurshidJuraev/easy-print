@@ -122,9 +122,6 @@ function Basket() {
 
       localStorage.setItem('order_id', data.data.id);
 
-      console.log(apiData);
-      console.log(selectedColor, selectedSize);
-
       const response = await axios.post(`${process.env.REACT_APP_TWO}/order/connection/to_order`, apiData, {
         headers: {
           'language': 'uz',
@@ -132,8 +129,6 @@ function Basket() {
           'Authorization': `Bearer ${token}`,
         },
       });
-
-      console.log(response.data.status);
 
       if (response.data.status === true) {
         navigate('/orders');
@@ -185,8 +180,6 @@ function Basket() {
         );
         colorsOptions[item.id] = colors;
       });
-  
-      console.log(sizesOptions, colorsOptions);
   
       setSizeOptions(sizesOptions);
       setColorOptions(colorsOptions);
