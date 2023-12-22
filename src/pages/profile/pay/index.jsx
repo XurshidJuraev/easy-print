@@ -9,6 +9,7 @@ import '../main.css';
 import ProfileHeader from '../../../components/profile_header';
 import no_addres from '../../../layouts/icons/payment.svg';
 import card from '../../../layouts/images/large_card.svg';
+import axios from 'axios';
 
 function ProfilePayment() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -17,6 +18,7 @@ function ProfilePayment() {
     cardNumber: '',
     cardDate: '',
   });
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -41,6 +43,24 @@ function ProfilePayment() {
   //     setFormData(savedFormData);
   //   }
   // }, []);
+
+  useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("language", localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'en');
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(`${process.env.REACT_APP_TWO}/get-cards`, requestOptions)
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }, []);
 
   const address = JSON.parse(localStorage.getItem('paymentDate'))
 
