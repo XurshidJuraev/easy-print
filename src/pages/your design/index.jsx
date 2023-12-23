@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import HeaderMain from '../../components/header'
 import './main.css';
@@ -36,6 +36,10 @@ function YourDesign() {
   const [rotation, setRotation] = useState(0);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedHeader, setSelectedHeader] = useState(null);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
 
   const handleImageClickHeader = (active) => {
     if (selectedHeader === active) {

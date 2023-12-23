@@ -26,10 +26,25 @@
   background-color: transparent;
   outline: none;
   width: 150px;
+  color: var(--Neutral-100, #E6E6E6);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+  letter-spacing: -0.08px;
+  padding-top: 5px;
 }
 
 .header_search_input::placeholder {
-  color: #CCC;
+  color: var(--Neutral-100, #E6E6E6);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+  letter-spacing: -0.08px;
+  padding-top: 5px;
 }
 
 .basket_counter_father {

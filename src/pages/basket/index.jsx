@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import HeaderMain from '../../components/header';
 import './main.css'
 import { ToastContainer, toast } from 'react-toastify';
@@ -18,9 +18,6 @@ function Basket() {
   const [discount, setDiscount] = useState(0);
   const [promoMessage, setPromoMessage] = useState('');
   const [promoMessageColor, setPromoMessageColor] = useState('green');
-  const [region, setRegion] = useState('');
-  const [city, setCity] = useState('');
-  const [address, setAddress] = useState('');
   const [data, setData] = useState([]);
   const [coupon_price, setCoupon_price] = useState('');
   const [price, setPrice] = useState('');
@@ -34,7 +31,10 @@ function Basket() {
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
-  const [isSizeChange, setIsSizeChange] = useState(false);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
 
   function handleCountChange(id, change, maxQuantity, selectedColor, selectedSize) {
     setData((prevData) => {
@@ -63,11 +63,10 @@ function Basket() {
     const selectedSizeOptions = sizeOptions[id] || [];
     const selectedSizeOption = selectedSizeOptions.find(size => size.name === selectedSize);
 
-    setSelectedColorId(selectedColor.id ? selectedColor.id : colorOptions[id][0].id);
-    setSelectedSizeId(selectedSizeOption.id ? selectedSizeOption.id : sizeOptions[id][0].id);
+    setSelectedColorId(selectedColor && selectedColor.id ? selectedColor.id : colorOptions[id][0].id);
+    setSelectedSizeId(selectedSizeOptions && selectedSizeOptions.id ? selectedSizeOptions.id : sizeOptions[id][0].id);
   }
-
-
+  
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
     if (savedCards) {
@@ -148,21 +147,45 @@ function Basket() {
         Accept: "application/json"
       }
     }).then((response) => {
-      setCoupon_price(response.data.data.coupon_price);
-      localStorage.setItem('coupon_price', response.data.data.coupon_price);
-      setOrder_id(response.data.data.id);
-      localStorage.setItem('order_id', response.data.data.id);
-      setGrant_total(response.data.data.grant_total);
-      localStorage.setItem('grant_total', response.data.data.grant_total);
-      setDiscount_price(response.data.data.discount_price);
-      localStorage.setItem('discount_price', response.data.data.discount_price);
-      setPrice(response.data.data.price);
-      localStorage.setItem('price', response.data.data.price);
-      setData(response.data);
+      if (response.data.status === false && response.data.message === "You do not have an order") {
+        // Agar serverdan kelgan javobda buyurtma (order) mavjud emas bo'lsa,
+        // local storage'dan avvalgi malumotlarni olish
+        const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
+        setTrashCardData(savedCards);
+        calculateTotalPrice(savedCards);
+        // Foydalanuvchiga xabar bering
+        toast.info('Sizda buyurtma (order) mavjud emas.');
+      } else if (response.data.status === false) {
+        // Agar serverdan kelgan javobda boshqa xatolik mavjud bo'lsa,
+        // local storage'dan avvalgi malumotlarni olish
+        const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
+        setTrashCardData(savedCards);
+        calculateTotalPrice(savedCards);
+        // Foydalanuvchiga xabar bering
+        toast.error('Serverdan xatolik yuzaga keldi.');
+      } else {
+        // Agar boshqa javob kelgan bo'lsa, ma'lumotlarni tavsiya etilgan usulda o'zgartirish
+        setCoupon_price(response.data.data.coupon_price);
+        localStorage.setItem('coupon_price', response.data.data.coupon_price);
+        setOrder_id(response.data.data.id);
+        localStorage.setItem('order_id', response.data.data.id);
+        setGrant_total(response.data.data.grant_total);
+        localStorage.setItem('grant_total', response.data.data.grant_total);
+        setDiscount_price(response.data.data.discount_price);
+        localStorage.setItem('discount_price', response.data.data.discount_price);
+        setPrice(response.data.data.price);
+        localStorage.setItem('price', response.data.data.price);
+        setData(response.data);
+      }
     }).catch((error) => {
-      toast.error(error);
+      // Agar so'rovni bajarishda xatolik yuz berib qolsa,
+      // local storage'dan malumotlarni olish va foydalanuvchiga xabar bering
+      const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
+      setTrashCardData(savedCards);
+      calculateTotalPrice(savedCards);
+      toast.error('Serverga so\'rov jo\'natishda xatolik yuz berdi.');
     });    
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (data && data.data && data.data.list) {
@@ -341,7 +364,7 @@ function Basket() {
                                 <div className='d-flex'>
                                   <p className='basket_card_size'>Размер:</p>
                                   <select
-                                    style={{ border: 'none', outline: 'none' }}
+                                    style={{ border: 'none', outline: 'none', background: 'transparent', marginTop: '-10px' }}
                                     value={item.selectedSize || selectedSize}
                                     onChange={(e) => {
                                       setSelectedSize(e.target.value);

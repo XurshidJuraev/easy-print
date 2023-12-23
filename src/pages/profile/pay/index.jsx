@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import HeaderMain from '../../../components/header'
 import AdvantageMain from '../../../components/advantage'
 import FooterMain from '../../../components/footer'
@@ -19,6 +19,10 @@ function ProfilePayment() {
     cardDate: '',
   });
   const token = localStorage.getItem('token');
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));

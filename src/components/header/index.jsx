@@ -21,7 +21,6 @@ function HeaderMain({ trashCardData }) {
   const [isCodeEntered, setIsCodeEntered] = useState(false);
   const [isRegisterEntered, setIsRegisterEntered] = useState(false);
   const [isLoginEntered, setIsLoginEntered] = useState(false);
-  const [verifyCode, setVerifyCode] = useState('');
   const [bascent, setBascent] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isFirstEntered, setIsFirstEntered] = useState(false);
@@ -84,7 +83,7 @@ function HeaderMain({ trashCardData }) {
 
       fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
         .then(response => response.text())
-        .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false); setVerifyCode(JSON.parse(result).data.Verify_code);})
+        .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false);})
         .catch(error => {console.log('error', JSON.parse(error)); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
   }
 
@@ -93,7 +92,6 @@ function HeaderMain({ trashCardData }) {
   
     const { code_verify } = evt.target.elements;
 
-    if (parseInt(code_verify.value) === parseInt(verifyCode)) {
       fetch(`${process.env.REACT_APP_TWO}/phone-verify`, {
         method: 'POST',
         headers: {
@@ -106,23 +104,13 @@ function HeaderMain({ trashCardData }) {
         }),
       })
         .then(response => response.json())
-        .then(result => {localStorage.setItem('token', result.data.token); setIsCodeEntered(false); setIsRegisterEntered(true);})
-        .catch(error => {console.log('error', error);});
-    } else {
-      console.log("Verification failed");
-    }
+        .then(result => {localStorage.setItem('token', result.data.token); setIsCodeEntered(false); setIsSuccesEntered(false); setIsRegisterEntered(true);})
+        .catch(error => {console.log('error', JSON.stringify(error)); setIsCodeEntered(true); setIsSuccesEntered(false); setIsRegisterEntered(false);});
   };
 
   const handleOpenRegisterModal = (evt) => {
-    if (evt) {
-      evt.preventDefault();
-      setIsSuccesEntered(false);
-      document.getElementById('get_success').style.display = 'none';
-    } else {
-      setIsSuccesEntered(false);
-      setIsRegisterEntered(true);
-      document.getElementById('get_success').style.display = 'none';
-    }
+    evt.preventDefault();
+    setIsSuccesEntered(false);
 
     if (registrationData.password !== registrationData.passwordConfirmation) {
       setPasswordsMatch(false);
@@ -175,8 +163,6 @@ function HeaderMain({ trashCardData }) {
       console.log(error)
     })
   }, []);
-
-  const basket_count_localstorage = localStorage.getItem('basket_count');
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_TWO}/get-categories`, {
@@ -372,7 +358,7 @@ function HeaderMain({ trashCardData }) {
                   <input name='phone' id='code_verify' className='register_input' type="text" placeholder='_ _ _ _ _ _' />
                 </label>
 
-                <button onClick={() => {handleOpenRegisterModal(); document.getElementById('get_code').style.display = 'none';}} className='register'>Подтвердить</button>
+                <button className='register'>Подтвердить</button>
               </form>
             </div>
 

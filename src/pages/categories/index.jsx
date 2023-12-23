@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import HeaderMain from '../../components/header'
 import AdvantageMain from '../../components/advantage';
@@ -12,6 +12,10 @@ function CategoryListByName() {
   const [selectedCard, setSelectedCard] = useState(null);
   const token = localStorage.getItem('token');
   const params = useParams()
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -51,7 +55,7 @@ function CategoryListByName() {
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}} key={category.category.id}>
             {category.products.map(data2 => (
               <div key={data2.id}>
-                <a style={{textDecoration: 'none'}} className="cards">
+                <div style={{textDecoration: 'none'}} className="cards">
                   <NavLink to={`/show/detail/${data2.id}`} className="clothes_fat">
                     <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                       <div>
@@ -109,7 +113,7 @@ function CategoryListByName() {
                     </button>
                     </div>
                   </div>
-                </a>
+                </div>
               </div>
             ))}
           </div>
