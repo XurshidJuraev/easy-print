@@ -262,3 +262,7 @@
 .password-error {
   border: 1px solid #ff0000;
 }
+
+.nav-link:hover, .language_item:hover {
+  opacity: 0.8;
+}
