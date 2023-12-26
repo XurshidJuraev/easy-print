@@ -254,9 +254,9 @@ function HeaderMain({ trashCardData }) {
                 {Array.isArray(data2.sub_category) && data2.sub_category.length > 0 ? (
                   <div className={`language_list language_list_${data2.id} ${activeLinkId === data2.id ? 'active' : ''}`}>
                     {data2.sub_category.map((data3) => (
-                      <a title={data3.name} href={`/categories/${data3.id}`} className='language_item' key={data3.id}>
+                      <NavLink title={data3.name} to={`/categories/${data3.id}`} className='language_item' key={data3.id}>
                         {data3.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 ) : null}
@@ -303,7 +303,7 @@ function HeaderMain({ trashCardData }) {
                 </div>
               )}
 
-              <NavLink title="Basket" to={'/basket'} className='basket_counter_father'>
+              <NavLink title="Basket" to={'/basket'} style={{paddingTop: bascent === 0 ? '9px' : 'none'}} className='basket_counter_father'>
                 <div title="Basket counter" className='basket_counter' style={{display: bascent === 0 ? 'none' : 'block'}}>{bascent}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
               </NavLink>
