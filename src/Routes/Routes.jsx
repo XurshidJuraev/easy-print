@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, HashRouter as Routes } from 'react-router-dom';
 import './App.css';
 
 // Главные страница
@@ -31,7 +31,7 @@ import CategoryListByName from '../pages/categories';
 function Routlar() {
   return (
     <div>
-      <Routes>
+      <Routes basename={process.env.REACT_APP_TWO}>
         <Route path='/' element={<HomePage />} />
 
         <Route path='/basket' element={<Basket />} />

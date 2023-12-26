@@ -12,7 +12,7 @@ function AdvantageMain() {
         <div className="container">
           <h3 className='advantage_main_text'>Наше преимущество</h3>
 
-          <div className='d-flex justify-content-between'>
+          <div className='d-flex justify-content-between' style={{width: '1200px'}}>
             <div className='advantage_cards'>
               <img src={blueVerifed} alt="blueVerifed" />
 

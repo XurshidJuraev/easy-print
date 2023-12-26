@@ -274,7 +274,7 @@ function ShowDetail() {
 
             <div style={{display: 'flex', marginTop: '32px'}}>
               <p className='show_detail_author'>Автор:</p>
-              <a className='show_detail_author_name' href="#">EasyPrint</a>
+              <a className='show_detail_author_name' href="#">{dataBeck.company_name}</a>
             </div>
 
             <div>
@@ -288,9 +288,9 @@ function ShowDetail() {
                 </div>
 
                 <div style={{marginLeft: '32px'}}>
-                  <p className='show_detail_title_info-text' style={{color: '#1A1A1A'}}>Хлопо</p>
-                  <p className='show_detail_title_info-text' style={{color: '#1A1A1A'}}>70% хлопок, 30% полиэстер</p>
-                  <p className='show_detail_title_info-text' style={{color: '#1A1A1A'}}>Узбекистан</p>
+                  <p className='show_detail_title_info-text' style={{color: '#1A1A1A'}}>{dataBeck.material_name ? dataBeck.material_name : 'Нет данных'}</p>
+                  <p className='show_detail_title_info-text' style={{color: '#1A1A1A'}}>{dataBeck.material_composition ? dataBeck.material_composition : 'Нет данных'}</p>
+                  <p className='show_detail_title_info-text' style={{color: '#1A1A1A'}}>{dataBeck.manufacturer_country ? dataBeck.manufacturer_country : 'Нет данных'}</p>
                 </div>
               </div>
             </div>
@@ -305,7 +305,7 @@ function ShowDetail() {
           {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
             <div key={data2.id}>
               <div style={{textDecoration: 'none'}} className="cards">
-                <NavLink to={`/show/detail/${data2.id}`} className="clothes_fat">
+                <a href={`/show/detail/${data2.id}`} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                     <div>
                       <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
@@ -325,7 +325,7 @@ function ShowDetail() {
                       </div>
                     </div>
                   </div>
-                </NavLink>
+                </a>
 
                 <div className="d-flex mt-3">
                   <div style={{textDecoration: 'none'}}>

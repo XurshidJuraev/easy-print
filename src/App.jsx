@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 
 // Главные страница
@@ -25,34 +25,31 @@ import ProfilePayment from './pages/profile/pay';
 // Показать детальный продукт
 import ShowDetail from './pages/show';
 
-
 import CategoryListByName from './pages/categories';
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
+    <Routes>
+      <Route path='/' element={<HomePage />} />
 
-        <Route path='/basket' element={<Basket />} />
+      <Route path='/basket' element={<Basket />} />
 
-        <Route path='/orders' element={<MyOrders />} />
+      <Route path='/orders' element={<MyOrders />} />
 
-        <Route path='/yourDesign' element={<YourDesign />} />
+      <Route path='/yourDesign' element={<YourDesign />} />
 
-        <Route path="/show/detail/:id" element={<ShowDetail />} />
+      <Route path="/show/detail/:id" element={<ShowDetail />} />
 
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/profile/addres' element={<ProfileAddres />} />
-        <Route path='/profile/orders' element={<ProfileOrders />} />
-        <Route path='/profile/payment' element={<ProfilePayment />} />
+      <Route path='/profile' element={<Profile />} />
+      <Route path='/profile/addres' element={<ProfileAddres />} />
+      <Route path='/profile/orders' element={<ProfileOrders />} />
+      <Route path='/profile/payment' element={<ProfilePayment />} />
 
-        {/* <Route path='/categories/:id/:name' element={<CategoryListByName />} /> */}
-        <Route path='/categories/:id' element={<CategoryListByName />} />
+      {/* <Route path='/categories/:id/:name' element={<CategoryListByName />} /> */}
+      <Route path='/categories/:id' element={<CategoryListByName />} />
 
-        <Route path='*' element={<Error404 />} />
-      </Routes>
-    </div>
+      <Route path='*' element={<Error404 />} />
+    </Routes>
   );
 }
 

@@ -226,6 +226,7 @@
   display: flex;
   /* justify-content: center; */
   align-items: center;
+  margin-top: 13px;
 }
 
 .add_basket_btn span {

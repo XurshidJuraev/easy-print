@@ -223,10 +223,10 @@
   background-color: #fff !important;
 }
 
-.language_item:hover {
+/* .language_item:hover {
   transform: scale(1.1);
   transition: all 0.2s ease;
-}
+} */
 
 .language_list {
   display: none !important;

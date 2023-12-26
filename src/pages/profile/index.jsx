@@ -9,6 +9,7 @@ import ProfileHeader from '../../components/profile_header';
 import no_image from '../../layouts/images/user.svg';
 import edit_image from '../../layouts/icons/edit_iamge.svg';
 import axios from 'axios';
+import InputMask from 'react-input-mask';
 
 function Profile() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -166,18 +167,20 @@ function Profile() {
               <div className="d-flex">
                 <div>
                   <input type="text" className='input_profile' placeholder='Имя' name="name" value={formData.name} onChange={handleChange} />
-                  <input type="tel" className='input_profile' placeholder='Номер телефона' name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
-                  <input type="text" className='input_profile' placeholder="Дата рождения" onfocus="(this.type='date')" name="birthDate" value={formData.birthDate} onChange={handleChange} />
+                  {/* <input type="text" className='input_profile' placeholder="Дата рождения" onfocus="(this.type='date')" name="birthDate" value={formData.birthDate} onChange={handleChange} /> */}
+                  <InputMask mask='9999.99.99' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
+                  <InputMask mask='+999 (99) 999-99-99' placeholder="Номер телефона" className='input_profile' value={formData.phoneNumber} name="phoneNumber" onChange={handleChange}></InputMask>
+                  {/* <input type="tel" className='input_profile' placeholder='Номер телефона' name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} /> */}
                 </div>
 
                 <div>
                   <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName} onChange={handleChange} />
-                  <input type="mail" className='input_profile' placeholder='E-mail' name='email' value={formData.email !== null ? formData.email : ''} onChange={handleChange} />
                   <select name="gender" className='input_profile' value={formData.gender} onChange={handleChange}>
                     <option disabled hidden value="">Пол</option>
                     <option value="1" selected={formData.gender === 1}>Мужской</option>
                     <option value="2" selected={formData.gender === 2}>Женский</option>
                   </select>
+                  <input type="mail" className='input_profile' placeholder='E-mail' name='email' value={formData.email !== null ? formData.email : ''} onChange={handleChange} />
                 </div>
               </div>
 

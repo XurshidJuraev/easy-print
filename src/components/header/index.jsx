@@ -290,6 +290,7 @@ function HeaderMain({ trashCardData }) {
                     position: 'absolute',
                     top: '70px',
                     right: '225px',
+                    boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',
                   }}
                 >
                   {data.data &&
@@ -303,7 +304,7 @@ function HeaderMain({ trashCardData }) {
               )}
 
               <NavLink title="Basket" to={'/basket'} className='basket_counter_father'>
-                <div title="Basket counter" className='basket_counter'>{bascent}</div>
+                <div title="Basket counter" className='basket_counter' style={{display: bascent === 0 ? 'none' : 'block'}}>{bascent}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
               </NavLink>
 

@@ -18,6 +18,12 @@ function ProfileAddres() {
     name: '',
     postcode: '',
   });
+  const [formErrors, setFormErrors] = useState({
+    region: false,
+    city_id: false,
+    name: false,
+    postcode: false,
+  });
   const [data, setData] = useState([]);
   const [dataGet, setDataGet] = useState([]);
   const token = localStorage.getItem('token');
@@ -45,7 +51,7 @@ function ProfileAddres() {
     } else {
       console.error('No data found for the selected region');
     }
-
+  
     const value = e.target.value;
     const name = e.target.name;
   
@@ -53,12 +59,23 @@ function ProfileAddres() {
       ...prevData,
       [name]: value,
     }));
+  
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: value.trim() === '',
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Backendga ma'lumotlarni yuborish
+
+    if (formData.city_id === '' || formData.name === '' || formData.postcode === '') {
+      toast.error('Barcha maydonlarni to\'ldiring!');
+      return;
+    }
+
     axios
       .post(`${process.env.REACT_APP_TWO}/set-address`, formData, {
         headers: {
@@ -197,19 +214,19 @@ function ProfileAddres() {
             ) : null}
 
             <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none'}}>
+              <div className="modal-dialog" style={{borderRadius: '24px', width: '520px'}}>
+                <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
+                  <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none', paddingTop: '48px'}}>
                     <center>
                       <h1 className="modal-title modal_title" id="exampleModalLabel">Ваш адрес</h1>
                     </center>
                   </div>
                   <div style={{padding: '48px'}} className="modal-body">
                     <form onSubmit={handleSubmit}>
-                      <div className="d-flex align-items-center ms-4">
+                      <div className="d-flex align-items-center mb-2 justify-content-between">
                         <p className='address_modal_text'>Область</p>
 
-                        <select className='input_profile' onChange={handleChange}>
+                        <select style={{border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px'}} className='input_profile' onChange={handleChange}>
                           {data.map((region) => (
                             <option key={region.id} value={region.region}>
                               {region.region}
@@ -218,10 +235,10 @@ function ProfileAddres() {
                         </select>
                       </div>
 
-                      <div className="d-flex align-items-center ms-5">
+                      <div className="d-flex align-items-center mb-2 justify-content-between">
                         <p className='address_modal_text'>Город</p>
 
-                        <select name="city_id" className='input_profile' value={formData.city} onChange={handleChange}>
+                        <select style={{border: formErrors.city_id ? '1px solid red' : 'none', margin: 'auto', marginLeft: '87px', width: '280px'}} name="city_id" className='input_profile' value={formData.city} onChange={handleChange}>
                           {cities.map((city) => (
                             <option key={city.id} value={city.id}>
                               {city.name}
@@ -230,16 +247,16 @@ function ProfileAddres() {
                         </select>
                       </div>
 
-                      <div className="d-flex align-items-center ms-4">
+                      <div className="d-flex align-items-center justify-content-between">
                         <p className='address_modal_text'>Ул. и дом</p>
 
-                        <input type="text" className='input_profile' placeholder="Дата рождения" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
+                        <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder="Дата рождения" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
                       </div>
 
-                      <div className="d-flex align-items-center ms-4">
-                        <p style={{marginRight: '0px'}} className='address_modal_text'>Почтовый индекс</p>
+                      <div className="d-flex align-items-center justify-content-between">
+                        <p style={{marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none'}} className='address_modal_text'>Почтовый индекс</p>
 
-                        <input style={{marginRight: '40px'}} type="text" className='input_profile' placeholder="Дата рождения" name="postcode" value={formData.postcode} onChange={handleChange} />
+                        <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Дата рождения" name="postcode" value={formData.postcode} onChange={handleChange} />
                       </div>
 
                       <div style={{ display: 'flex', justifyContent: 'center' }}>

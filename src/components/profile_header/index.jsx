@@ -123,7 +123,7 @@ function ProfileHeader() {
         <p className={isActive === 2 ? 'profile_header_text_active' : 'profile_header_text'}>Мои заказы</p>
       </NavLink>
 
-      <NavLink to={'/profile/payment'} onClick={() => toggleActive(3)} className={`d-flex profile_item ${isActive == 3 ? 'active' : ''}`} style={{marginTop: '18px', textDecoration: 'none'}}>
+      {/* <NavLink to={'/profile/payment'} onClick={() => toggleActive(3)} className={`d-flex profile_item ${isActive == 3 ? 'active' : ''}`} style={{marginTop: '18px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}
@@ -149,7 +149,7 @@ function ProfileHeader() {
         </svg>
 
         <p className={isActive === 3 ? 'profile_header_text_active' : 'profile_header_text'}>Способ оплаты</p>
-      </NavLink>
+      </NavLink> */}
     </div>
   )
 }

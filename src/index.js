@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, HashRouter, Switch } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <HashRouter>
+      {/* <Router> */}
+        <App />
+      {/* </Router> */}
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
