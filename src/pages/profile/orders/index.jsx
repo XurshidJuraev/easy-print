@@ -17,10 +17,6 @@ function ProfileOrders() {
   const [show, setShow] = useState([]);
   const token = localStorage.getItem('token');
 
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0)
-  });
-
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
     if (savedCards) {

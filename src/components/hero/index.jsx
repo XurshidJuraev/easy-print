@@ -41,7 +41,7 @@ function HeroMain() {
     <div>
       {data.length > 0 && (
         <div style={{ width: '100%', height: '900px' }} className='d-flex justify-content-between'>
-          <div style={{ paddingTop: '160px', paddingLeft: '120px' }}>
+          <div style={{ paddingTop: '120px', paddingLeft: '160px' }}>
             <h1 className='hero_title'>{data[currentIndex].title}</h1>
             <p className='hero_text'>{data[currentIndex].text}</p>
               <NavLink to={'/yourDesign'} className='hero_button'>
@@ -51,12 +51,13 @@ function HeroMain() {
                 </svg>
               </NavLink>
           </div>
+
           <div>
             <div>
-              <img style={{ width: '312.112px', height: '334px', marginLeft: '337px', marginTop: '153px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
+              <img style={{ width: '312.112px', height: '334px', marginLeft: '257px', marginTop: '153px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
             </div>
 
-            <div style={{ position: 'relative', marginTop: '-296px', right: '-18px', width: '940px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '270px' }}>
+            <div style={{ position: 'relative', marginTop: '-296px', right: '60px', width: '940px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '270px' }}>
               <Splide options={{ type: 'loop', arrows: false, autoplay: true, width: '840px', arrow: false, heightRatio: 0.5, pagination: false, focus: 'center', auto: true, interval: 3000, perPage: 3, pauseOnHover: false, }}>
                 {data[currentIndex].carousel_image.map((imageUrl, index) => (
                   <SplideSlide key={index}>

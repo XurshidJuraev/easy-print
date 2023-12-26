@@ -24,7 +24,7 @@ function HomePage() {
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [data, setData] = useState([]);
   const token = localStorage.getItem('token');
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -475,7 +475,7 @@ function HomePage() {
                       <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(count + 1)}>+</div>
                     </div>
 
-                    <div style={{marginTop: '50px'}}  className="d-flex">
+                    <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
                       <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); addToBasket(modalData)} }>
                         <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -495,7 +495,7 @@ function HomePage() {
                         </button>
                       </div>
 
-                      <div onClick={() => handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price)}>
+                      <div style={{marginTop: '12px'}} onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); addToBasket(modalData); navigate('/basket')}}>
                         <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
                           <span>Заказать сейчас </span>
 

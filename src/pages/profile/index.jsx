@@ -10,6 +10,7 @@ import no_image from '../../layouts/images/user.svg';
 import edit_image from '../../layouts/icons/edit_iamge.svg';
 import axios from 'axios';
 import InputMask from 'react-input-mask';
+import ReactInputDateMask from 'react-input-date-mask';
 
 function Profile() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -129,7 +130,7 @@ function Profile() {
       setFormData((prevFormData) => ({
         ...prevFormData,
         img: blob,
-        imageUrl: imageUrl, // Add imageUrl to your state
+        imageUrl: imageUrl,
       }));
     }
   };  
@@ -146,7 +147,7 @@ function Profile() {
           <div className='info_profile'>
             <h3 className='user_name'>Личная информация</h3>
 
-            <div className="d-flex">
+            <div className="d-flex" v-if="data != undefined">
               <img
                 style={{
                   width: '100px',
@@ -154,7 +155,7 @@ function Profile() {
                   borderRadius: '50%',
                 }}
                 src={formData.img ? formData.img : no_image}
-                alt="no_image"
+                alt={formData.name ? `${formData.name} ${formData.lastName}` : 'no_image'}
               />
 
               <label>
@@ -167,10 +168,8 @@ function Profile() {
               <div className="d-flex">
                 <div>
                   <input type="text" className='input_profile' placeholder='Имя' name="name" value={formData.name} onChange={handleChange} />
-                  {/* <input type="text" className='input_profile' placeholder="Дата рождения" onfocus="(this.type='date')" name="birthDate" value={formData.birthDate} onChange={handleChange} /> */}
-                  <InputMask mask='9999.99.99' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
+                  <InputMask mask='99.99.9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
                   <InputMask mask='+999 (99) 999-99-99' placeholder="Номер телефона" className='input_profile' value={formData.phoneNumber} name="phoneNumber" onChange={handleChange}></InputMask>
-                  {/* <input type="tel" className='input_profile' placeholder='Номер телефона' name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} /> */}
                 </div>
 
                 <div>
