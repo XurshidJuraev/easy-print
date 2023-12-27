@@ -32,9 +32,9 @@ function Basket() {
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
 
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0)
-  });
+  // useLayoutEffect(() => {
+  //   window.scrollTo(0, 0)
+  // });
 
   function handleCountChange(id, change, maxQuantity, selectedColor, selectedSize) {
     setData((prevData) => {
@@ -326,60 +326,41 @@ function Basket() {
                                   <p className='basket_card_name'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
                                 </NavLink>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '60px' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '60px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} сум</p>
                                 </NavLink>
 
-                                <div className='d-flex basket_counter12' style={{marginRight: item.discount_price === '0' ? `117px` : `80px`}}>
+                                <div className='d-flex' style={{marginRight: item.discount_price === '0' ? `117px` : `80px`}}>
+                                  <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, -1, item.max_quantity)}>
+                                    -
+                                  </button>
+
                                   <div>
                                     <div className='basket_card_count'>{item.quantity}</div>
                                   </div>
 
-                                  <div className='d-flex flex-column'>
-                                    <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, 1, item.max_quantity)}>
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M8 3C8.27408 2.99956 8.54556 3.04894 8.79882 3.1453C9.05208 3.24166 9.28214 3.38311 9.47577 3.5615L14.2006 7.90746C14.6308 8.30325 14.6308 8.98233 14.2005 9.37808C13.8182 9.72966 13.2303 9.72966 12.848 9.37808L8 4.91965L3.152 9.37811C2.76972 9.72967 2.18183 9.72967 1.79955 9.37811C1.36921 8.98236 1.36921 8.30326 1.79955 7.9075L6.52423 3.56246C6.71777 3.38389 6.94779 3.24228 7.20106 3.14575C7.45433 3.04922 7.72585 2.99969 8 3Z" fill="#999999"/>
-                                      </svg>
-                                    </button>
-
-                                    <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, -1, item.max_quantity)}>
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M8 13C7.72592 13.0004 7.45444 12.9511 7.20118 12.8547C6.94792 12.7583 6.71786 12.6169 6.52423 12.4385L1.79945 8.09254C1.36915 7.69675 1.36918 7.01767 1.79951 6.62192C2.18181 6.27034 2.76973 6.27034 3.15203 6.62192L8 11.0803L12.848 6.62189C13.2303 6.27033 13.8182 6.27033 14.2004 6.62189C14.6308 7.01764 14.6308 7.69674 14.2004 8.0925L9.47577 12.4375C9.28223 12.6161 9.05221 12.7577 8.79894 12.8543C8.54567 12.9508 8.27415 13.0003 8 13Z" fill="#999999"/>
-                                      </svg>
-                                    </button>
-                                  </div>
+                                  <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, 1, item.max_quantity)}>
+                                    +
+                                  </button>
                                 </div>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: item.discount_price === '0' ? `49px` : `83px` }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: item.discount_price === '0' ? `49px` : `83px`, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price_sale'>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} сум` : '0 сум'}</p>
                                 </NavLink>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price' id='all_price'>{item.total_price ? `${Number(item.total_price).toLocaleString('ru-RU')}` : '0'} сум</p>
                                 </NavLink>
                               </div>
 
 
-                              <div className='d-flex basket_size_fat'>
+                              <div className='basket_size_fat'>
                                 <div className='d-flex'>
-                                  <p className='basket_card_size'>Размер:</p>
-                                  <select
-                                    style={{ border: 'none', outline: 'none', background: 'transparent', marginTop: '-10px' }}
-                                    value={item.selectedSize || selectedSize}
-                                    onChange={(e) => {
-                                      setSelectedSize(e.target.value);
-                                      handleCountChange(item.id, 0, item.max_quantity, item.selectedColor, e.target.value);
-                                    }}
-                                  >
-                                    {sizeOptions[item.id] && sizeOptions[item.id].map((size) => (
-                                      <option key={size.id} value={size.name}>
-                                        {size.name}
-                                      </option>
-                                    ))}
-                                  </select>
+                                  <p className='basket_card_size'>Продавец:</p>
+                                  <p className='basket_card_size'>EasyPrint</p>
                                 </div>
 
-                                <div className='d-flex' style={{marginLeft: '48px'}}>
+                                <div className='d-flex'>
                                   <p className='basket_card_size'>Цвет:</p>
                                   <div className="d-flex align-items-center" style={{marginTop: '-10px'}}>
                                     {colorOptions[item.id] && colorOptions[item.id].map((color, index) => (
@@ -396,6 +377,24 @@ function Basket() {
                                       </div>
                                     ))}
                                   </div>
+                                </div>
+
+                                <div className='d-flex'>
+                                  <p className='basket_card_size'>Размер:</p>
+                                  <select
+                                    style={{ border: 'none', outline: 'none', background: 'transparent', marginTop: '-10px' }}
+                                    value={item.selectedSize || selectedSize}
+                                    onChange={(e) => {
+                                      setSelectedSize(e.target.value);
+                                      handleCountChange(item.id, 0, item.max_quantity, item.selectedColor, e.target.value);
+                                    }}
+                                  >
+                                    {sizeOptions[item.id] && sizeOptions[item.id].map((size) => (
+                                      <option key={size.id} value={size.name}>
+                                        {size.name}
+                                      </option>
+                                    ))}
+                                  </select>
                                 </div>
                               </div>
                             </div>

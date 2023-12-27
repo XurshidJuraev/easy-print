@@ -32,6 +32,7 @@ function ProfileOrders() {
         Accept: "application/json"
       }
     }).then((response) => {
+      console.log(response.data);
       setOrders(response.data);
     }).catch((error) => {
       console.log(error);
@@ -74,9 +75,9 @@ function ProfileOrders() {
             {orders.status === true ? (
               <div>
                 <div>
-                  {orders.status === true ? orders.data.map((order, index) => (
+                  {orders.data ? orders.data.map((order, index) => (
                     <div className="order_profile_fat">
-                      <h3 className='order_profile_title'>Номер заказа 11223344</h3>
+                      <h3 className='order_profile_title'>Номер заказа {order.code ? order.code : '12345678'}</h3>
 
                       <hr style={{ margin: '0' }} />
 
@@ -91,7 +92,7 @@ function ProfileOrders() {
 
                         <div style={{ marginLeft: 'auto' }}>
                           <div className="d-flex">
-                            <button className='btn_order_profile' style={{ background: order.status === 'Accepted' ? '#D8E6EA' : order.status === 'On_the_way' ? '#D8E6EA' : order.status === 'Finished' ? '#E6E6E6' : order.status === 'Cancelled' ? '#FFE7D6' : '#E6E6E6', color: order.status === 'Accepted' ? '#32454B' : order.status === 'On_the_way' ? '#32454B' : order.status === 'Finished' ? '#333333' : order.status === 'Cancelled' ? '#FF4A32' : '#333333' }}>{order.status}</button>
+                            <button className='btn_order_profile' style={{ background: order.status === 'Accepted' ? '#D8E6EA' : order.status === 'On_the_way' ? '#D8E6EA' : order.status === 'Finished' ? '#E6E6E6' : order.status === 'Cancelled' ? '#FFE7D6' : order.status === 'Basked' ? '#FFE7D6' : '#E6E6E6', color: order.status === 'Accepted' ? '#32454B' : order.status === 'On_the_way' ? '#32454B' : order.status === 'Finished' ? '#333333' : order.status === 'Cancelled' ? '#FF4A32' : '#333333' }}>{order.status}</button>
                             <p className='order_profile_opacity_text pt-1 ps-3'>{order.delivery_date ? order.delivery_date : 'Нет данных'}</p>
                           </div>
                           <p className='order_profile_text'>{order.delivery_date ? order.delivery_date : 'Нет данных'}</p>

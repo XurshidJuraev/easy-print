@@ -104,7 +104,7 @@ function MyOrders() {
                     <h3 className='order_subtitle' style={{marginTop: '48px'}}>Покупатель</h3>
 
                     <input className='order_info' value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') : 'Имя*'}/>
-                    <input className='order_info mt-4' value={localStorage.getItem('user_phone_number') ? `+${localStorage.getItem('user_phone_number')}` : 'Действующий номер телефона*'}/>
+                    <input className='order_info mt-4' value={localStorage.getItem('user_phone_number') ? `${localStorage.getItem('user_phone_number')}` : 'Действующий номер телефона*'}/>
                     
                     <h3 className='order_subtitle' style={{marginTop: '48px'}}>Адрес доставки</h3>
 

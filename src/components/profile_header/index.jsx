@@ -16,15 +16,15 @@ function ProfileHeader() {
 
   useEffect(() => {
     const updateActiveTab = () => {
-      const path = window.location.pathname;
+      const path = window.location.hash;
 
-      if (path === '/profile') {
+      if (path === '#/profile') {
         setIsActive(0);
-      } else if (path === '/profile/addres') {
+      } else if (path === '#/profile/addres') {
         setIsActive(1);
-      } else if (path === '/profile/orders') {
+      } else if (path === '#/profile/orders') {
         setIsActive(2);
-      } else if (path === '/profile/payment') {
+      } else if (path === '#/profile/payment') {
         setIsActive(3);
       }
     };

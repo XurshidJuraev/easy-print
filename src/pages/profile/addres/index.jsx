@@ -108,9 +108,7 @@ function ProfileAddres() {
       return;
     }
 
-    const apiUrl = editAddressId
-      ? `${process.env.REACT_APP_TWO}/edit-address`
-      : `${process.env.REACT_APP_TWO}/set-address`;
+    const apiUrl = editAddressId ? `${process.env.REACT_APP_TWO}/edit-address` : `${process.env.REACT_APP_TWO}/set-address`;
 
     axios
       .post(apiUrl, formData, {
@@ -121,7 +119,7 @@ function ProfileAddres() {
       })
       .then((response) => {
         toast.success('Malumotlar saqlandi!');
-        handleCloseModal(); // Reset form and close modal after successful operation
+        handleCloseModal();
         window.location.reload();
       })
       .catch((error) => {

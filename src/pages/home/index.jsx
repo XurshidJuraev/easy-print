@@ -97,8 +97,6 @@ function HomePage() {
     });    
   }, []);
 
-  console.log(data);
-
   function openModal(cardData) {
     console.log(colorOptions);
     console.log(sizeOptions);
