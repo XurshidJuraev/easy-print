@@ -239,10 +239,18 @@
   text-decoration: none;
 }
 
-.add_basket_btn:hover, .add_to_basket:hover {
+.add_basket_btn:hover, .add_to_basket:hover, .basket_promo_btn_price:hover {
   background-color: #F4AB76;
 }
 
-.add_basket_btn:active, .add_to_basket:active {
+.add_basket_btn:active, .add_to_basket:active, .basket_promo_btn_price:active {
   background-color: #C67B44;
+}
+
+.basket_promo_btn_price:hover {
+  background-color: #4D646B;
+}
+
+.basket_promo_btn_price:active {
+  background-color: #17262B;
 }

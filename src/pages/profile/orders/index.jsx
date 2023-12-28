@@ -76,7 +76,7 @@ function ProfileOrders() {
               <div>
                 <div>
                   {orders.data ? orders.data.map((order, index) => (
-                    <div className="order_profile_fat">
+                    <div key={index} className="order_profile_fat">
                       <h3 className='order_profile_title'>Номер заказа {order.code ? order.code : '12345678'}</h3>
 
                       <hr style={{ margin: '0' }} />

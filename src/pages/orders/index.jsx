@@ -12,6 +12,7 @@ import axios from 'axios';
 function MyOrders() {
   const [orders, setOrders] = useState([]);
   const [address, setAddress] = useState([]);
+  const [addressId, setAddressId] = useState();
   const [trashCardData, setTrashCardData] = useState([]);
   const [sale, setSale] = useState('');
   const [total, setTotal] = useState('');
@@ -78,6 +79,7 @@ function MyOrders() {
           }
         });
         setAddress(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         console.log(error);
       }
@@ -109,13 +111,13 @@ function MyOrders() {
                     <h3 className='order_subtitle' style={{marginTop: '48px'}}>Адрес доставки</h3>
 
                     {address && address.length > 0 ? (
-                      <div>
-                        {address.slice(0, 1).map((addr, index) => (
-                          <div className='order_info mt-2' key={index}>
-                            {`${addr.region.name}, ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
-                          </div>
+                      <select onChange={(e) => console.log(addressId)} className='order_info mt-2'>
+                        {address.map((addr, index) => (
+                          <option className='order_info mt-2' key={index}>
+                            {`${setAddressId(addr.region.id)}, ${addr.region.name} ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
+                          </option>
                         ))}
-                      </div>
+                      </select>
                     ) : (
                       <div className='order_info'>
                         Адрес*
