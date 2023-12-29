@@ -82,8 +82,6 @@ function ProfileAddres() {
     if (selectedRegionData) {
       const selectedCities = selectedRegionData.cities || [];
       setCities(selectedCities);
-    } else {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
 
     const value = e.target.value;
@@ -123,7 +121,6 @@ function ProfileAddres() {
         window.location.reload();
       })
       .catch((error) => {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
         toast.error('Xatolik yuz berdi. Malumotlar saqlanmadi.');
       });
   };

@@ -94,7 +94,7 @@ function ProfileOrders() {
                           </div>
                           <p className='order_profile_text'>{order.delivery_date ? order.delivery_date : 'Нет данных'}</p>
                           <p className='order_profile_text'>{order.delivery_date ? order.delivery_date : 'Нет данных'}</p>
-                          <p className='order_profile_text'>Ташкент, массив Буюк Ипак Йули, дом 31, 100000 </p>
+                          <p className='order_profile_text'>{order.address.region ? `${order.address.region} ${order.address.city} ${order.address.street}` : 'Нет данных'}</p>
                           <p className='order_profile_text'>{Number(order.all_price).toLocaleString('ru-RU')} сум</p>
                         </div>
                       </div>
