@@ -359,7 +359,7 @@ function ShowDetail() {
 
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
           {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
-            <div key={data2.id}>
+            <div key={data2.id} className='mt-5'>
               <div style={{textDecoration: 'none'}} className="cards">
                 <NavLink to={`/show/detail/${data2.id}`} className="clothes_fat">
                   <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
@@ -372,7 +372,7 @@ function ShowDetail() {
                           <p className='discount'>-{data2.discount}%</p>
                         </div>
                       </div>
-                      <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                      <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
                     </div>
 
                     <div className="image-overlay">

@@ -285,7 +285,7 @@ function ProfileAddres() {
             ) : null}
 
             <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog" style={{borderRadius: '24px', width: '520px'}}>
+              <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px', width: '520px'}}>
                 <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
                   <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none', paddingTop: '48px'}}>
                     <center>
@@ -321,17 +321,17 @@ function ProfileAddres() {
                       <div className="d-flex align-items-center justify-content-between">
                         <p className='address_modal_text'>Ул. и дом</p>
 
-                        <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder="Дата рождения" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
+                        <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder="Ул. и дом" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
                       </div>
 
                       <div className="d-flex align-items-center justify-content-between">
                         <p style={{marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none'}} className='address_modal_text'>Почтовый индекс</p>
 
-                        <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Дата рождения" name="postcode" value={formData.postcode} onChange={handleChange} />
+                        <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
                       </div>
 
-                      <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <button type="submit" className='btn_profile'>Добавить адрес</button>
+                      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+                        <button style={{width: '100%'}} type="submit" className='btn_profile'>Добавить адрес</button>
                       </div>
                     </form>
                   </div>

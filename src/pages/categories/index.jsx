@@ -43,6 +43,7 @@ function CategoryListByName() {
       }
     }).then((response) => {
       setData(response.data);
+      console.log(response.data);
     }).catch((error) => {
       toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
@@ -198,7 +199,7 @@ function CategoryListByName() {
                             <p className='discount'>-{data2.discount}%</p>
                           </div>
                         </div>
-                        <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                        <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
                       </div>
                       <div className="image-overlay">
                         <div className="detail_back">
