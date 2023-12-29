@@ -6,18 +6,21 @@ import trash from '../../layouts/icons/delete_product_basket.svg'
 import go_to_checkout from '../../layouts/icons/Go_to_checkout.svg'
 import return_to_cart from '../../layouts/icons/return_to_cart.svg'
 import './main.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 function MyOrders() {
   const [orders, setOrders] = useState([]);
   const [address, setAddress] = useState([]);
-  const [addressId, setAddressId] = useState();
+  const [addressId, setAddressId] = useState(null);
   const [trashCardData, setTrashCardData] = useState([]);
   const [sale, setSale] = useState('');
   const [total, setTotal] = useState('');
   const [delivery, setDelivery] = useState('');
   const [products_total, setProducts_total] = useState('');
+
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
@@ -36,8 +39,7 @@ function MyOrders() {
       const parsedOrders = ordersString ? JSON.parse(ordersString) : [];
       setOrders(parsedOrders);
     } catch (error) {
-      console.error('Orders ma\'lumotlari noto\'g\'ri formatda');
-      console.error(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
   }, []);
   const pay = JSON.parse(localStorage.getItem('paymentDate'))
@@ -61,7 +63,7 @@ function MyOrders() {
         setProducts_total(response.data.data.grant_total);
         setOrders(response.data.data);
       } catch (error) {
-        console.log(error);
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
     };
 
@@ -79,18 +81,60 @@ function MyOrders() {
           }
         });
         setAddress(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
-        console.log(error);
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
     };
 
     fetchData();
   }, [token]);
 
+  function saveOrder() {
+    var myHeaders = new Headers();
+    myHeaders.append("language", "uz");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var formdata = new FormData();
+    formdata.append("order_id", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+    formdata.append("address_id", addressId);
+    formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    formdata.append("payment_method", "1");
+    formdata.append("user_card_id", "1");
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        if (result.status === true) {
+          toast.success('Заказ успешно оформлен!');
+          setTimeout(() => {
+            navigate('/');
+          }, 1500);
+        } else {
+          toast.error('Заказ не был оформлен!');
+        }
+      })
+      .catch(error =>  toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'));
+  }
+
+  useEffect(() => {
+    if (address.length > 0 && addressId === null) {
+      setAddressId(address[0].id);
+    }
+  }, [address, addressId]);
+
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
+      <ToastContainer />
 
       {orders && orders.list && orders.list.length === 0 ? (
         <p>No orders available.</p>
@@ -111,10 +155,10 @@ function MyOrders() {
                     <h3 className='order_subtitle' style={{marginTop: '48px'}}>Адрес доставки</h3>
 
                     {address && address.length > 0 ? (
-                      <select onChange={(e) => console.log(addressId)} className='order_info mt-2'>
+                      <select onChange={(e) => setAddressId(e.target.value)} className='order_info mt-2'>
                         {address.map((addr, index) => (
-                          <option className='order_info mt-2' key={index}>
-                            {`${setAddressId(addr.region.id)}, ${addr.region.name} ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
+                          <option key={index} value={addr.id}>
+                            {`${addr.region.name} ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
                           </option>
                         ))}
                       </select>
@@ -197,7 +241,7 @@ function MyOrders() {
                     </div>
 
                     <div style={{display: 'flex', justifyContent: 'end', marginTop: '24px'}}>
-                      <img src={go_to_checkout} alt="go_to_checkout" />
+                      <img onClick={() => {saveOrder();}} src={go_to_checkout} alt="go_to_checkout" />
                     </div>
                   </div>
                 </div>

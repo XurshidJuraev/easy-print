@@ -69,10 +69,9 @@ function HomePage() {
         Accept: "application/json"
       }
     }).then((response) => {
-      const detailData = response.data.data;
-      console.log(detailData); // Log the response to check its structure
+      const resp = response
     }).catch((error) => {
-      console.log(error);
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }  
 
@@ -93,13 +92,11 @@ function HomePage() {
     }).then((response) => {
       setData(response.data);
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
   function openModal(cardData) {
-    console.log(colorOptions);
-    console.log(sizeOptions);
     setSelectedCard(cardData);
     const modal = document.getElementById('exampleModal');
     if (modal) {
@@ -115,7 +112,7 @@ function HomePage() {
     }).then((response) => {
       setModalData(response.data.data);
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -192,7 +189,7 @@ function HomePage() {
           }
         })
         .catch(error => {
-          console.log('error', JSON.parse(error));
+          toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
           toast.error('Товар не добавлен');
         });
     }

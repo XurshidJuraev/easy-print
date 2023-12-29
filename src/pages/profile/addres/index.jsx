@@ -39,7 +39,7 @@ function ProfileAddres() {
       if (selectedRegionData) {
         setCities(selectedRegionData.cities || []);
       } else {
-        console.error('No data found for the selected region');
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
   
       // Set the form data including region and city
@@ -83,7 +83,7 @@ function ProfileAddres() {
       const selectedCities = selectedRegionData.cities || [];
       setCities(selectedCities);
     } else {
-      console.error('No data found for the selected region');
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
 
     const value = e.target.value;
@@ -123,7 +123,7 @@ function ProfileAddres() {
         window.location.reload();
       })
       .catch((error) => {
-        console.error(error);
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
         toast.error('Xatolik yuz berdi. Malumotlar saqlanmadi.');
       });
   };
@@ -155,7 +155,7 @@ function ProfileAddres() {
         setCities(initialRegion.cities);
       })
       .catch((error) => {
-        console.log(error);
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   }, [token]);
   
@@ -177,7 +177,7 @@ function ProfileAddres() {
     }).then((response) => {
       setDataGet(response.data);
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -194,7 +194,6 @@ function ProfileAddres() {
         window.location.reload();
       })
       .catch((error) => {
-        console.error(error);
         toast.error('Ошибка при удалении адреса.');
       });
   };

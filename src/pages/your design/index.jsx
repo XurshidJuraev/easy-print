@@ -164,11 +164,6 @@ function YourDesign() {
     };
 
     image.src = URL.createObjectURL(event.target.files[0]);
-
-    // if (!canvas) {
-    //   console.error('Canvas element not found');
-    //   return;
-    // }
   };
 
   return (

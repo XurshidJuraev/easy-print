@@ -132,10 +132,10 @@ function Basket() {
       if (response.data.status === true) {
         navigate('/orders');
       } else {
-        console.log(response.data.message);
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
     } catch (error) {
-      console.error('Error:', error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
   }
 
@@ -262,7 +262,7 @@ function Basket() {
       setPromoMessageColor(promoColor);
     })
     .catch((error) => {
-      console.error('Error:', error.response);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
       promoMessage = `Введенный вами промокод ${promoCode} не сработал.`;
       promoColor = 'red';
@@ -352,7 +352,6 @@ function Basket() {
                                   <p className='basket_card_price' id='all_price'>{item.total_price ? `${Number(item.total_price).toLocaleString('ru-RU')}` : '0'} сум</p>
                                 </NavLink>
                               </div>
-
 
                               <div className='basket_size_fat'>
                                 <div className='d-flex'>

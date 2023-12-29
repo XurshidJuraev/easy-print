@@ -44,13 +44,11 @@ function CategoryListByName() {
     }).then((response) => {
       setData(response.data);
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
   function openModal(cardData) {
-    console.log(colorOptions);
-    console.log(sizeOptions);
     setSelectedCard(cardData);
     const modal = document.getElementById('exampleModal');
     if (modal) {
@@ -66,7 +64,7 @@ function CategoryListByName() {
     }).then((response) => {
       setModalData(response.data.data);
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -172,7 +170,7 @@ function CategoryListByName() {
           }
         })
         .catch(error => {
-          console.log('error', JSON.parse(error));
+          toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
           toast.error('Товар не добавлен');
         });
     }

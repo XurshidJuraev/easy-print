@@ -62,8 +62,7 @@ function ProfilePayment() {
 
     fetch(`${process.env.REACT_APP_TWO}/get-cards`, requestOptions)
       .then(response => response.json())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+      .catch(error => toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'));
   }, []);
 
   const address = JSON.parse(localStorage.getItem('paymentDate'))

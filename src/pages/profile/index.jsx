@@ -88,7 +88,7 @@ function Profile() {
         email: responseData.email
       });
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }, [token]);
 
@@ -117,7 +117,7 @@ function Profile() {
     fetch(`${process.env.REACT_APP_TWO}/personal-information`, requestOptions)
       .then(response => response.text())
       .then(result => {toast.success('Malumotlar yuborildi!')})
-      .catch(error => {console.log('error', error); toast.error('Xatolik yuz berdi. Malumotlar yuborilmadi.')});
+      .catch(error => { toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'); toast.error('Xatolik yuz berdi. Malumotlar yuborilmadi.')});
   };
 
   const handleImageChange = (e) => {

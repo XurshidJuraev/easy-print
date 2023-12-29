@@ -4,6 +4,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import './main.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 function HeroMain() {
   const [data, setData] = useState([]);
@@ -22,7 +23,7 @@ function HeroMain() {
         });
         setData(response.data.data);
       } catch (error) {
-        console.log(error);
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
     };
 
@@ -39,6 +40,7 @@ function HeroMain() {
 
   return (
     <div>
+      <ToastContainer />
       {data.length > 0 && (
         <div style={{ width: '100%', height: '900px' }} className='d-flex justify-content-between'>
           <div style={{ paddingTop: '120px', paddingLeft: '160px' }}>

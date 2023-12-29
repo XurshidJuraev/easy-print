@@ -32,10 +32,9 @@ function ProfileOrders() {
         Accept: "application/json"
       }
     }).then((response) => {
-      console.log(response.data);
       setOrders(response.data);
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -51,12 +50,10 @@ function ProfileOrders() {
   
     axios.get(`${process.env.REACT_APP_TWO}/order/get-order-detail-by-order-id?id=${id}`, requestOptions)
       .then((response) => {
-        console.log(response.data.data);
         setShow(response.data.data);
-        console.log(show);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   };  
 

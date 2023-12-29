@@ -9,6 +9,7 @@ import register_image from '../../layouts/images/43.svg'
 import verifed from '../../layouts/images/green_verifed.svg'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
 
 function HeaderMain({ trashCardData }) {
   const [data, setData] = useState([]);
@@ -54,7 +55,7 @@ function HeaderMain({ trashCardData }) {
         setIsLoginEntered(false)
         setPasswordsMatch(true);
       })
-      .catch(error => {console.log('error', error); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
+      .catch(error => {toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
   };  
 
   const handleSubmitRegister = (evt) => {
@@ -84,7 +85,7 @@ function HeaderMain({ trashCardData }) {
       fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
         .then(response => response.text())
         .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false);})
-        .catch(error => {console.log('error', JSON.parse(error)); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
+        .catch(error => {toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
   }
 
   const handleOpenCodeVerificationModal = (evt) => {
@@ -105,7 +106,7 @@ function HeaderMain({ trashCardData }) {
       })
         .then(response => response.json())
         .then(result => {localStorage.setItem('token', result.data.token); setIsCodeEntered(false); setIsSuccesEntered(false); setIsRegisterEntered(true);})
-        .catch(error => {console.log('error', JSON.stringify(error)); setIsCodeEntered(true); setIsSuccesEntered(false); setIsRegisterEntered(false);});
+        .catch(error => {toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(true); setIsSuccesEntered(false); setIsRegisterEntered(false);});
   };
 
   const handleOpenRegisterModal = (evt) => {
@@ -144,7 +145,7 @@ function HeaderMain({ trashCardData }) {
         setIsSuccesEntered(true);
       })
       .catch(error => {
-        console.log('error', JSON.parse(error));
+        toast.error('Регистрация не была оформлена.');
       });
   };
 
@@ -160,7 +161,7 @@ function HeaderMain({ trashCardData }) {
       setBascent(response.data.data.basket_count)
       setData(response.data)
     }).catch((error) => {
-      console.log(error)
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     })
   }, []);
 
@@ -174,7 +175,7 @@ function HeaderMain({ trashCardData }) {
     }).then((response) => {
       setCategory(response.data)
     }).catch((error) => {
-      console.log(error)
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     })
 
     setIsFirstEntered(true);
@@ -234,6 +235,7 @@ function HeaderMain({ trashCardData }) {
 
   return (
     <header style={{backgroundColor: '#ffffff'}} className="navbar navbar-expand-lg bg-body-tertiary">
+      <ToastContainer />
       <div style={{ margin: '12px 120px' }} className="container-fluid">
         <NavLink title="EasyPrint Home" to={'/'} className="navbar-brand">
           <img src={logo} alt="logo" />

@@ -85,7 +85,7 @@ function ShowDetail() {
       setSizeArray(response.data.data.size_by_color);
       setDataBeck(response.data.data);
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -99,13 +99,11 @@ function ShowDetail() {
     }).then((response) => {
       setData(response.data);
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
   function openModal(cardData) {
-    console.log(colorOptions);
-    console.log(sizeOptions);
     setSelectedCard(cardData);
     const modal = document.getElementById('exampleModal');
     if (modal) {
@@ -121,7 +119,7 @@ function ShowDetail() {
     }).then((response) => {
       setModalData(response.data.data);
     }).catch((error) => {
-      console.log(error);
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -158,13 +156,6 @@ function ShowDetail() {
         body: formdata,
         redirect: 'follow'
       };
-
-      console.log('warehouse_product_id:', productData.id,);
-      console.log('quantity:', 1);
-      console.log('color_id:', colorId);
-      console.log('size_id:', sizeId);
-      console.log('price:', productData.price);
-      console.log('discount:', dataBeck.discount ? dataBeck.discount : '0');
 
       const basketData = {
         warehouse_product_id: productData.id,
@@ -203,7 +194,6 @@ function ShowDetail() {
           }
         })
         .catch(error => {
-          console.log('error', JSON.parse(error));
           toast.error('Товар не добавлен');
         });
     }
@@ -292,19 +282,10 @@ function ShowDetail() {
                 <p className='show_detail_size'>Размер</p>
                 <select 
                   className='show_detail_option' 
-                  value={sizeOptions[selectedSizeIndex]} 
-                  // onChange={(e) => {
-                  //   const index = sizeOptions.findIndex((size) => size === e.target.value);
-                  //   setSelectedSizeIndex(index);
-                  //   colorArray.map((color) => {
-                  //     console.log(color.id);
-                  //   })
-                  // }}
-
+                  value={sizeOptions[selectedSizeIndex]}
                   onChange={(e) => {
                     const index = sizeOptions.findIndex((size) => size === e.target.value);
                     setSelectedSizeIndex(index);
-                    console.log(selectedSizeIndex);
                   }}
                   >
                   {sizeArray[selectedSizeIndex]?.sizes.map((size) => (
