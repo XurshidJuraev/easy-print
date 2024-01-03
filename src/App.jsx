@@ -38,15 +38,14 @@ function App() {
 
       <Route path='/yourDesign' element={<YourDesign />} />
 
-      <Route path="/show/detail/:id" element={<ShowDetail />} />
+      <Route path="/show/detail/:id/:name" element={<ShowDetail />} />
 
       <Route path='/profile' element={<Profile />} />
       <Route path='/profile/addres' element={<ProfileAddres />} />
       <Route path='/profile/orders' element={<ProfileOrders />} />
       <Route path='/profile/payment' element={<ProfilePayment />} />
 
-      {/* <Route path='/categories/:id/:name' element={<CategoryListByName />} /> */}
-      <Route path='/categories/:id' element={<CategoryListByName />} />
+      <Route path='/categories/:id/:name' element={<CategoryListByName />} />
 
       <Route path='*' element={<Error404 />} />
     </Routes>

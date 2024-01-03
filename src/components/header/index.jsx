@@ -256,7 +256,7 @@ function HeaderMain({ trashCardData }) {
                 {Array.isArray(data2.sub_category) && data2.sub_category.length > 0 ? (
                   <div className={`language_list language_list_${data2.id} ${activeLinkId === data2.id ? 'active' : ''}`}>
                     {data2.sub_category.map((data3) => (
-                      <NavLink title={data3.name} to={`/categories/${data3.id}`} className='language_item' key={data3.id}>
+                      <NavLink title={data3.name} to={`/categories/${data3.id}/${data3.name}`} className='language_item' key={data3.id}>
                         {data3.name}
                       </NavLink>
                     ))}

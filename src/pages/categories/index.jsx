@@ -23,7 +23,15 @@ function CategoryListByName() {
   const token = localStorage.getItem('token');
   const params = useParams()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    localStorage.setItem('selectedCategory', params.id);
+  })
+
+  if (params.id !== localStorage.getItem('selectedCategory')) {
+    window.location.reload();
+  }
+
+  useEffect(() => {
     window.scrollTo(0, 0)
   });
 
@@ -188,7 +196,7 @@ function CategoryListByName() {
             {category.products.map(data2 => (
               <div key={data2.id}>
                 <div style={{textDecoration: 'none'}} className="cards">
-                  <NavLink to={`/show/detail/${data2.id}`} className="clothes_fat">
+                  <NavLink to={`/show/detail/${data2.id}/${data2.name}`} className="clothes_fat">
                     <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                       <div>
                         <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
@@ -199,7 +207,8 @@ function CategoryListByName() {
                             <p className='discount'>-{data2.discount}%</p>
                           </div>
                         </div>
-                        <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                        {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
+                        <div style={{width: '276px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                       </div>
                       <div className="image-overlay">
                         <div className="detail_back">

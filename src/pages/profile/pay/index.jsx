@@ -20,7 +20,7 @@ function ProfilePayment() {
   });
   const token = localStorage.getItem('token');
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0)
   });
 

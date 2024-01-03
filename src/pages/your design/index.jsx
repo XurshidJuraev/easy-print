@@ -37,7 +37,7 @@ function YourDesign() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedHeader, setSelectedHeader] = useState(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0)
   });
 

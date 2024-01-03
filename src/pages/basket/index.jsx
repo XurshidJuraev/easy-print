@@ -32,9 +32,9 @@ function Basket() {
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
 
-  // useLayoutEffect(() => {
-  //   window.scrollTo(0, 0)
-  // });
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  });
 
   function handleCountChange(id, change, maxQuantity, selectedColor, selectedSize) {
     setData((prevData) => {
@@ -315,18 +315,18 @@ function Basket() {
                         <div key={item.id}>
                           <div className='d-flex basket_card'>
                             <div>
-                              <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none' }}>
+                              <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none' }}>
                                 <img className='basket_card_img' src={item.images[0]} alt={item.name} />
                               </NavLink>
                             </div>
 
                             <div>
                               <div className="basket_info1">
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '110px' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', marginRight: '110px' }}>
                                   <p className='basket_card_name'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
                                 </NavLink>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: '60px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', marginRight: '60px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} сум</p>
                                 </NavLink>
 
@@ -344,11 +344,11 @@ function Basket() {
                                   </button>
                                 </div>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', marginRight: item.discount_price === '0' ? `49px` : `83px`, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', marginRight: item.discount_price === '0' ? `49px` : `83px`, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price_sale'>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} сум` : '0 сум'}</p>
                                 </NavLink>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}` : ``} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price' id='all_price'>{item.total_price ? `${Number(item.total_price).toLocaleString('ru-RU')}` : '0'} сум</p>
                                 </NavLink>
                               </div>

@@ -22,7 +22,7 @@ function MyOrders() {
 
   const navigate = useNavigate();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0)
   });
 

@@ -28,7 +28,7 @@ function HomePage() {
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // useLayoutEffect(() => {
+  // useEffect(() => {
   //   window.scrollTo(0, 0)
   // });
 
@@ -246,7 +246,8 @@ function HomePage() {
                               <p className='discount'>-{currentProduct.discount}%</p>
                             </div>
                           </div>
-                          <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${currentProduct.images[0]}`} alt={currentProduct.name} />
+                          {/* <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${currentProduct.images[0]}`} alt={currentProduct.name} /> */}
+                          <div style={{width: '276px', height: '320px', backgroundImage: `url(${currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                         </div>
                         
                         <div className="image-overlay">
@@ -281,7 +282,7 @@ function HomePage() {
               {data.data ? data.data.warehouse_product_list.slice(0, 3).map((data2) => (
                 <div key={data2.id}>
                   <div style={{textDecoration: 'none'}} className="cards">
-                    <NavLink to={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
+                    <NavLink to={`/show/detail/${data2.id}/${data2.name}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
                       <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                         <div>
                           <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
@@ -292,7 +293,8 @@ function HomePage() {
                               <p className='discount'>-{data2.discount}%</p>
                             </div>
                           </div>
-                          <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                          {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
+                          <div style={{width: '276px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                         </div>
 
                         <div className="image-overlay">
@@ -346,7 +348,7 @@ function HomePage() {
               {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
                 <div key={data2.id} style={{marginTop: '48px'}}>
                   <div style={{textDecoration: 'none'}} className="cards">
-                    <NavLink to={`/show/detail/${data2.id}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
+                    <NavLink to={`/show/detail/${data2.id}/${data2.name}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
                       <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                         <div>
                           <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
@@ -357,7 +359,8 @@ function HomePage() {
                               <p className='discount'>-{data2.discount}%</p>
                             </div>
                           </div>
-                          <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} />
+                          {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
+                          <div style={{width: '276px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                         </div>
                         <div className="image-overlay">
                           <div className="detail_back">

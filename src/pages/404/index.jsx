@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 function Error404() {
   const [trashCardData, setTrashCardData] = useState([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0)
   });
 
