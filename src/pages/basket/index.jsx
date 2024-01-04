@@ -32,9 +32,9 @@ function Basket() {
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  });
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
+  // });
 
   function handleCountChange(id, change, maxQuantity, selectedColor, selectedSize) {
     setData((prevData) => {
@@ -43,10 +43,11 @@ function Basket() {
           const newCount = item.quantity + change;
           const updatedCount = Math.min(Math.max(newCount, 1), maxQuantity);
           const updatedTotalPrice = item.price * updatedCount;
-  
-          // Agar item.discount_price mavjud bo'lsa, oxiridagi summadan discount_price ni ayirish
-          const finalTotalPrice = item.discount_price ? updatedTotalPrice - item.discount_price : updatedTotalPrice;
-  
+
+          const finalTotalPrice = item.discount_price
+            ? updatedTotalPrice - item.discount_price
+            : updatedTotalPrice;
+
           return {
             ...item,
             quantity: updatedCount,
@@ -57,15 +58,16 @@ function Basket() {
         }
         return item;
       });
-  
-      return { ...prevData, data: { ...prevData.data, list: updatedList } };
-    }); 
-    const selectedSizeOptions = sizeOptions[id] || [];
-    const selectedSizeOption = selectedSizeOptions.find(size => size.name === selectedSize);
 
-    setSelectedColorId(selectedColor && selectedColor.id ? selectedColor.id : colorOptions[id][0].id);
-    setSelectedSizeId(selectedSizeOptions && selectedSizeOptions.id ? selectedSizeOptions.id : sizeOptions[id][0].id);
+      return { ...prevData, data: { ...prevData.data, list: updatedList } };
+    });
   }
+  
+  useEffect(() => {
+    const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
+    setTrashCardData(savedCards);
+    calculateTotalPrice(savedCards);
+  }, [selectedColorId, selectedSizeId]);
   
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -112,12 +114,14 @@ function Basket() {
       const apiData = {
         data: data.data.list.map(item => ({
           order_detail_id: item.id,
-          color_id: selectedColorId === '' ? colorOptions[item.id][0].id : selectedColorId,
-          size_id: selectedSizeId === '' ? sizeOptions[item.id][0].id : selectedSizeId,
+          color_id: selectedColorId !== '' ? selectedColorId : colorOptions,
+          size_id: selectedSizeId !== '' ? selectedSizeId : sizeOptions,
           quantity: item.quantity
         })),
         order_id: data.data.id
       };
+
+      console.log('apiData:', apiData);
 
       localStorage.setItem('order_id', data.data.id);
 
@@ -135,6 +139,7 @@ function Basket() {
         toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
     } catch (error) {
+      console.log(error);
       toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
   }
@@ -148,23 +153,16 @@ function Basket() {
       }
     }).then((response) => {
       if (response.data.status === false && response.data.message === "You do not have an order") {
-        // Agar serverdan kelgan javobda buyurtma (order) mavjud emas bo'lsa,
-        // local storage'dan avvalgi malumotlarni olish
         const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
         setTrashCardData(savedCards);
         calculateTotalPrice(savedCards);
-        // Foydalanuvchiga xabar bering
         toast.info('Sizda buyurtma (order) mavjud emas.');
       } else if (response.data.status === false) {
-        // Agar serverdan kelgan javobda boshqa xatolik mavjud bo'lsa,
-        // local storage'dan avvalgi malumotlarni olish
         const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
         setTrashCardData(savedCards);
         calculateTotalPrice(savedCards);
-        // Foydalanuvchiga xabar bering
         toast.error('Serverdan xatolik yuzaga keldi.');
       } else {
-        // Agar boshqa javob kelgan bo'lsa, ma'lumotlarni tavsiya etilgan usulda o'zgartirish
         setCoupon_price(response.data.data.coupon_price);
         localStorage.setItem('coupon_price', response.data.data.coupon_price);
         setOrder_id(response.data.data.id);
@@ -176,38 +174,16 @@ function Basket() {
         setPrice(response.data.data.price);
         localStorage.setItem('price', response.data.data.price);
         setData(response.data);
+        setSelectedColorId(response.data.data.list[0].color.id);
+        setSelectedSizeId(response.data.data.list[0].size.id);
       }
     }).catch((error) => {
-      // Agar so'rovni bajarishda xatolik yuz berib qolsa,
-      // local storage'dan malumotlarni olish va foydalanuvchiga xabar bering
       const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
       setTrashCardData(savedCards);
       calculateTotalPrice(savedCards);
       toast.error('Serverga so\'rov jo\'natishda xatolik yuz berdi.');
     });    
   }, [token]);
-
-  useEffect(() => {
-    if (data && data.data && data.data.list) {
-      const sizesOptions = {};
-      const colorsOptions = {};
-  
-      data.data.list.forEach((item) => {
-        const sizes = Array.from(
-          new Set(item.size_by_color.flatMap((size) => size.sizes.map((s) => ({ id: s.id, name: s.name }))))
-        );
-        sizesOptions[item.id] = sizes;
-  
-        const colors = Array.from(
-          new Set(item.color_by_size.flatMap((color) => color.color.map((c) => ({ id: c.id, name: c.name }))))
-        );
-        colorsOptions[item.id] = colors;
-      });
-  
-      setSizeOptions(sizesOptions);
-      setColorOptions(colorsOptions);
-    }
-  }, [data]);
 
   const handleDeleteAddress = (id) => {
     const order_detail_id = id;
@@ -356,13 +332,13 @@ function Basket() {
                               <div className='basket_size_fat'>
                                 <div className='d-flex'>
                                   <p className='basket_card_size'>Продавец:</p>
-                                  <p className='basket_card_size'>EasyPrint</p>
+                                  <p className='basket_card_size'>{item.company_name ? item.company_name : 'Название не найден'}</p>
                                 </div>
 
                                 <div className='d-flex'>
                                   <p className='basket_card_size'>Цвет:</p>
                                   <div className="d-flex align-items-center" style={{marginTop: '-10px', marginLeft: '39px'}}>
-                                      <div className={`color_border me-2 ${item.color}`} style={{ borderColor: '#E6E6E6', cursor: 'pointer' }}>
+                                      <div key={item.color.id} className={`color_border me-2 ${item.color}`} style={{ borderColor: '#E6E6E6', cursor: 'pointer' }}>
                                         <div className="color" style={{ backgroundColor: item.color.code }}></div>
                                       </div>
                                   </div>

@@ -306,6 +306,7 @@ function ShowDetail() {
                   value={sizeOptions[selectedSizeIndex]}
                   onChange={(e) => {
                     const index = sizeOptions.findIndex((size) => size === e.target.value);
+                    console.log(sizeArray[index]?.id);
                     setSelectedSizeIndex(index);
                   }}
                 >
