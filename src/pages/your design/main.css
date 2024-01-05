@@ -253,12 +253,12 @@
   letter-spacing: -0.08px;
 }
 
-.selected_header_drawing_active {
+.shirt_drawing_header_select:active {
   border: 1px solid var(--primary-6, #32454B);
   background: var(--primary-6, #32454B);
   color: #FFF;
 }
 
-.selected_header_drawing_active svg path {
+.shirt_drawing_header_select:active svg path {
   fill: var(--White, #FFF);
 }
