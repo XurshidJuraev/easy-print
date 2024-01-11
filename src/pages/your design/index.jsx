@@ -368,89 +368,85 @@ const YourDesign = () => {
               </defs>
             </svg>
 
-            {/* {isFrontView ? ( */}
-              <div style={{display: isFrontView ? 'block' : 'none'}} id="tshirt-div">
-                {/* <img id="tshirt-backgroundpicture" src={background} /> */}
-                <svg id="tshirt-backgroundpicture" width={width} height={height} viewBox="0 0 604 562" fill="none" style={{position: 'relative'}} xmlns="http://www.w3.org/2000/svg">
-                  <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1L378.706 6.1258L463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12V561H109.099V219.12L67.3343 236.595L2 141.206L140.525 36.7709L224.838 6.1258L238.94 1Z" fill={'white'}/>
-                  <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1M238.94 1C239.767 24.162 253.496 71.884 301.793 73.3642C322.193 73.7753 361.338 59.8781 364.646 1M238.94 1L224.838 6.1258M364.646 1L378.706 6.1258M463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12M463.888 37.1821L378.706 6.1258M463.888 37.1821C457.41 76.7905 454.46 168.794 494.488 219.12M494.488 219.12V561H109.099V219.12M109.099 219.12L67.3342 236.595L2 141.206L140.525 36.7709M109.099 219.12C149.457 170.439 146.866 77.3387 140.525 36.7709M140.525 36.7709L224.838 6.1258M378.706 6.1258C378.706 31.8279 363.323 86.4391 301.793 86.9324C277.781 87.1974 230.758 73.3806 224.838 6.1258" stroke="#666666" strokeWidth="1.5"/>
-                  <g filter="url(#filter0_i_492_1558)">
-                    <path d="M362.853 2.42342C312.917 41.4191 261.899 19.6435 240.69 2.46808C240.011 1.91829 238.996 2.42104 239.055 3.29262C239.223 5.76093 239.528 8.44604 239.991 11.279C243.999 35.7889 259.879 71.3662 301.789 73.3642C320.943 72.9781 356.624 61.4274 363.648 11.279C364.008 8.70691 364.293 6.03329 364.496 3.25443C364.56 2.38883 363.537 1.88924 362.853 2.42342Z" fill={'white'}/>
-                  </g>
-                  <path d="M362.853 2.42342C312.917 41.4191 261.899 19.6435 240.69 2.46808C240.011 1.91829 238.996 2.42104 239.055 3.29262C239.223 5.76093 239.528 8.44604 239.991 11.279C243.999 35.7889 259.879 71.3662 301.789 73.3642C320.943 72.9781 356.624 61.4274 363.648 11.279C364.008 8.70691 364.293 6.03329 364.496 3.25443C364.56 2.38883 363.537 1.88924 362.853 2.42342Z" stroke="#666666" strokeWidth="1.5"/>
-                  <path d="M239.768 12.1013C252.95 28.9589 318.106 51.5727 363.424 12.1013" stroke="#666666" strokeWidth="0.5" strokeDasharray="3 3" />
-                  <path d="M240.594 17.4464C253.642 34.7143 320.616 55.9531 362.992 17.4464" stroke="#666666" strokeWidth="0.5" strokeDasharray="3 3" />
-                  <g filter="url(#filter1_i_492_1558)">
-                    <path d="M239.768 10.4565C252.95 27.3141 318.106 49.9279 363.424 10.4565M241.81 19.9132C250.857 35.9485 322.964 56.9176 361.667 19.9132" stroke="#666666"/>
-                  </g>
-                  <path d="M23.5625 127L87.7812 226.4" stroke="#CCCCCC" strokeDasharray="4 4" />
-                  <path d="M19.8125 131.667L82.625 227.8" stroke="#CCCCCC" strokeDasharray="4 4"/>
-                  <path d="M579.031 126.067L514.812 225.467" stroke="#CCCCCC" strokeDasharray="4 4"/>
-                  <path d="M582.781 130.733L519.969 226.867" stroke="#CCCCCC" strokeDasharray="4 4"/>
-                  <path d="M110.75 545.133H492.781" stroke="#CCCCCC" strokeDasharray="4 4" />
-                  <path d="M110.75 539.533H492.781" stroke="#CCCCCC" strokeDasharray="4 4" />
-                  <defs>
-                    <filter id="filter0_i_492_1558" x="238.303" y="-1.54187" width="126.947" height="75.6564" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                      <feFlood floodOpacity={0} result="BackgroundImageFix" />
-                      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                      <feOffset dy={-3} />
-                      <feGaussianBlur stdDeviation={6} />
-                      <feComposite in2="hardAlpha" operator="arithmetic" k2={-1} k3={1} />
-                      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
-                      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_492_1558"/>
-                    </filter>
-                    <filter id="filter1_i_492_1558" x="239.373" y="7.07947" width="124.379" height="33.9486" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                      <feFlood floodOpacity={0} result="BackgroundImageFix" />
-                      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-                      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                      <feOffset dy={-3} />
-                      <feGaussianBlur stdDeviation={6} />
-                      <feComposite in2="hardAlpha" operator="arithmetic" k2={-1} k3={1} />
-                      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
-                      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_492_1558"/>
-                    </filter>
-                  </defs>
-                </svg>
+            <div style={{display: isFrontView ? 'block' : 'none'}} id="tshirt-div">
+              <svg id="tshirt-backgroundpicture" width={width} height={height} viewBox="0 0 604 562" fill="none" style={{position: 'relative'}} xmlns="http://www.w3.org/2000/svg">
+                <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1L378.706 6.1258L463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12V561H109.099V219.12L67.3343 236.595L2 141.206L140.525 36.7709L224.838 6.1258L238.94 1Z" fill={'white'}/>
+                <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1M238.94 1C239.767 24.162 253.496 71.884 301.793 73.3642C322.193 73.7753 361.338 59.8781 364.646 1M238.94 1L224.838 6.1258M364.646 1L378.706 6.1258M463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12M463.888 37.1821L378.706 6.1258M463.888 37.1821C457.41 76.7905 454.46 168.794 494.488 219.12M494.488 219.12V561H109.099V219.12M109.099 219.12L67.3342 236.595L2 141.206L140.525 36.7709M109.099 219.12C149.457 170.439 146.866 77.3387 140.525 36.7709M140.525 36.7709L224.838 6.1258M378.706 6.1258C378.706 31.8279 363.323 86.4391 301.793 86.9324C277.781 87.1974 230.758 73.3806 224.838 6.1258" stroke="#666666" strokeWidth="1.5"/>
+                <g filter="url(#filter0_i_492_1558)">
+                  <path d="M362.853 2.42342C312.917 41.4191 261.899 19.6435 240.69 2.46808C240.011 1.91829 238.996 2.42104 239.055 3.29262C239.223 5.76093 239.528 8.44604 239.991 11.279C243.999 35.7889 259.879 71.3662 301.789 73.3642C320.943 72.9781 356.624 61.4274 363.648 11.279C364.008 8.70691 364.293 6.03329 364.496 3.25443C364.56 2.38883 363.537 1.88924 362.853 2.42342Z" fill={'white'}/>
+                </g>
+                <path d="M362.853 2.42342C312.917 41.4191 261.899 19.6435 240.69 2.46808C240.011 1.91829 238.996 2.42104 239.055 3.29262C239.223 5.76093 239.528 8.44604 239.991 11.279C243.999 35.7889 259.879 71.3662 301.789 73.3642C320.943 72.9781 356.624 61.4274 363.648 11.279C364.008 8.70691 364.293 6.03329 364.496 3.25443C364.56 2.38883 363.537 1.88924 362.853 2.42342Z" stroke="#666666" strokeWidth="1.5"/>
+                <path d="M239.768 12.1013C252.95 28.9589 318.106 51.5727 363.424 12.1013" stroke="#666666" strokeWidth="0.5" strokeDasharray="3 3" />
+                <path d="M240.594 17.4464C253.642 34.7143 320.616 55.9531 362.992 17.4464" stroke="#666666" strokeWidth="0.5" strokeDasharray="3 3" />
+                <g filter="url(#filter1_i_492_1558)">
+                  <path d="M239.768 10.4565C252.95 27.3141 318.106 49.9279 363.424 10.4565M241.81 19.9132C250.857 35.9485 322.964 56.9176 361.667 19.9132" stroke="#666666"/>
+                </g>
+                <path d="M23.5625 127L87.7812 226.4" stroke="#CCCCCC" strokeDasharray="4 4" />
+                <path d="M19.8125 131.667L82.625 227.8" stroke="#CCCCCC" strokeDasharray="4 4"/>
+                <path d="M579.031 126.067L514.812 225.467" stroke="#CCCCCC" strokeDasharray="4 4"/>
+                <path d="M582.781 130.733L519.969 226.867" stroke="#CCCCCC" strokeDasharray="4 4"/>
+                <path d="M110.75 545.133H492.781" stroke="#CCCCCC" strokeDasharray="4 4" />
+                <path d="M110.75 539.533H492.781" stroke="#CCCCCC" strokeDasharray="4 4" />
+                <defs>
+                  <filter id="filter0_i_492_1558" x="238.303" y="-1.54187" width="126.947" height="75.6564" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity={0} result="BackgroundImageFix" />
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset dy={-3} />
+                    <feGaussianBlur stdDeviation={6} />
+                    <feComposite in2="hardAlpha" operator="arithmetic" k2={-1} k3={1} />
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
+                    <feBlend mode="normal" in2="shape" result="effect1_innerShadow_492_1558"/>
+                  </filter>
+                  <filter id="filter1_i_492_1558" x="239.373" y="7.07947" width="124.379" height="33.9486" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity={0} result="BackgroundImageFix" />
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset dy={-3} />
+                    <feGaussianBlur stdDeviation={6} />
+                    <feComposite in2="hardAlpha" operator="arithmetic" k2={-1} k3={1} />
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
+                    <feBlend mode="normal" in2="shape" result="effect1_innerShadow_492_1558"/>
+                  </filter>
+                </defs>
+              </svg>
 
-                <div style={{display: !textInputVisible ? 'block' : 'none'}}>
-                  <Reveal>
-                    <div className='circle_image' id='rotate'>
-                      <img onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} src={circle} alt="circle_image" />
-                    </div>
-
-                    <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px', transform: `rotate(${rotateDegree}deg)` }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
-
-                    <div className='size_image' id='size'>
-                      <img src={size_img} alt="size_image" />
-                    </div>
-
-                    <style>
-                      {`
-                        .add_text::placeholder {
-                          color: ${color};
-                        }
-                      `}
-                    </style>
-                  </Reveal>
-                </div>
-
-                <div style={{display: !photoInputVisible ? 'block' : 'none', border: !photoInputVisible ? '1px solid #C4D8FE' : 'none'}} id="drawingArea" className="drawing-area">
-                  <div className="canvas-container">
-                    <canvas id="tshirt-canvas" width="234" height="350"></canvas>
+              <div style={{display: !textInputVisible ? 'block' : 'none'}}>
+                <Reveal>
+                  <div className='circle_image' id='rotate'>
+                    <img onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} src={circle} alt="circle_image" />
                   </div>
-                </div>
+
+                  <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px', transform: `rotate(${rotateDegree}deg)` }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+
+                  <div className='size_image' id='size'>
+                    <img src={size_img} alt="size_image" />
+                  </div>
+
+                  <style>
+                    {`
+                      .add_text::placeholder {
+                        color: ${color};
+                      }
+                    `}
+                  </style>
+                </Reveal>
               </div>
 
-              <div style={{display: !isFrontView ? 'block' : 'none'}}>
-                <svg width={width} height={height} style={{ display: 'block' }} viewBox="0 0 604 562" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M239.156 1.186c20.395 17.504 73.583 41.698 125.266-.005a.51.51 0 01.491-.084l13.793 5.029 85.182 31.056L602 141.206l-65.334 94.978-42.178-17.064V561H109.099V219.12l-41.765 17.475L2 141.206 140.525 36.771l84.313-30.645L238.664 1.1a.489.489 0 01.492.086z" fill={'white'}/>
-                  <path d="M463.888 37.182L602 141.206l-65.334 94.978-42.178-17.064m-30.6-181.938L378.706 6.126l-13.793-5.029a.51.51 0 00-.491.084c-51.683 41.703-104.871 17.51-125.266.005a.489.489 0 00-.492-.086l-13.826 5.026-84.313 30.645m323.363.411c-6.478 39.608-9.428 131.612 30.6 181.938m0 0V561H109.099V219.12m0 0l-41.765 17.475L2 141.206 140.525 36.771M109.099 219.12c40.358-48.681 37.767-141.781 31.426-182.35" stroke="#666" strokeWidth={1.5}/>
-                  <path d="M24.5 127l64.219 99.4M20.75 131.667L83.563 227.8M579.969 126.067l-64.219 99.4M583.719 130.733l-62.813 96.134M111.688 545.133h382.031M111.688 539.533h382.031" stroke="#CCC" strokeDasharray="4 4"/>
-                </svg>
+              <div style={{display: !photoInputVisible ? 'block' : 'none', border: !photoInputVisible ? '1px solid #C4D8FE' : 'none'}} id="drawingArea" className="drawing-area">
+                <div className="canvas-container">
+                  <canvas id="tshirt-canvas" width="234" height="350"></canvas>
+                </div>
               </div>
-            {/* ) : (
-            )} */}
+            </div>
+
+            <div style={{display: !isFrontView ? 'block' : 'none'}}>
+              <svg width={width} height={height} style={{ display: 'block' }} viewBox="0 0 604 562" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M239.156 1.186c20.395 17.504 73.583 41.698 125.266-.005a.51.51 0 01.491-.084l13.793 5.029 85.182 31.056L602 141.206l-65.334 94.978-42.178-17.064V561H109.099V219.12l-41.765 17.475L2 141.206 140.525 36.771l84.313-30.645L238.664 1.1a.489.489 0 01.492.086z" fill={'white'}/>
+                <path d="M463.888 37.182L602 141.206l-65.334 94.978-42.178-17.064m-30.6-181.938L378.706 6.126l-13.793-5.029a.51.51 0 00-.491.084c-51.683 41.703-104.871 17.51-125.266.005a.489.489 0 00-.492-.086l-13.826 5.026-84.313 30.645m323.363.411c-6.478 39.608-9.428 131.612 30.6 181.938m0 0V561H109.099V219.12m0 0l-41.765 17.475L2 141.206 140.525 36.771M109.099 219.12c40.358-48.681 37.767-141.781 31.426-182.35" stroke="#666" strokeWidth={1.5}/>
+                <path d="M24.5 127l64.219 99.4M20.75 131.667L83.563 227.8M579.969 126.067l-64.219 99.4M583.719 130.733l-62.813 96.134M111.688 545.133h382.031M111.688 539.533h382.031" stroke="#CCC" strokeDasharray="4 4"/>
+              </svg>
+            </div>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
               <g opacity="0.5" clip-path="url(#clip0_492_1578)">
