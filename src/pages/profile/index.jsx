@@ -122,7 +122,7 @@ function Profile() {
 
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
-  
+
     if (imageFile) {
       const blob = new Blob([imageFile]);
       const imageUrl = URL.createObjectURL(blob);

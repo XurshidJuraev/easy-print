@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { BrowserRouter as Router, HashRouter, Switch } from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     <HashRouter>
       {/* <Router> */}
         <App />
       {/* </Router> */}
     </HashRouter>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root')
 );
