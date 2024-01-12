@@ -246,7 +246,7 @@ function ShowDetail() {
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
-      <ToastContainer />
+      {/* <ToastContainer /> */}
 
       <div className="container">
         <h3 className='show_detail_title mb-3'>Детали товара</h3>

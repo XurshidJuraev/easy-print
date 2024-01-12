@@ -255,7 +255,7 @@ function Basket() {
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
-      <ToastContainer />
+      {/* <ToastContainer /> */}
 
       <div className="container" style={{ marginTop: '32px'  }}>
         <div>

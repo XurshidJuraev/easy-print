@@ -33,7 +33,14 @@
   font-weight: 400;
   line-height: 30px; /* 187.5% */
   margin-left: -30px;
-  opacity: 0.8;
+  opacity: 0.7;
+  transition: all 0.1s ease;
+  cursor: pointer;
+}
+
+.footer_text:hover {
+  opacity: 1;
+  transition: all 0.1s ease;
 }
 
 .footer_laws {

@@ -690,12 +690,12 @@ const YourDesign = () => {
 
       {isColorChange && (
         <div style={{ position: 'relative', marginTop: '-680px', left: '35.9%', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
-          <div onClick={() => setIsColorChange(false)} className='shirt_drawing_header_select'>
+          {/* <div onClick={() => setIsColorChange(false)} className='shirt_drawing_header_select'>
             Цвет
             <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M8 5C8.27408 4.99956 8.54556 5.04894 8.79882 5.1453C9.05208 5.24166 9.28214 5.38311 9.47577 5.5615L14.2006 9.90746C14.6308 10.3033 14.6308 10.9823 14.2005 11.3781C13.8182 11.7297 13.2303 11.7297 12.848 11.3781L8 6.91965L3.152 11.3781C2.76972 11.7297 2.18183 11.7297 1.79955 11.3781C1.36921 10.9824 1.36921 10.3033 1.79955 9.9075L6.52423 5.56246C6.71777 5.38389 6.94779 5.24228 7.20106 5.14575C7.45433 5.04922 7.72585 4.99969 8 5Z" fill="#32454B"/>
             </svg>
-          </div>
+          </div> */}
 
           <div className='d-flex'>
             <div className='color_change_selector'>
@@ -715,12 +715,12 @@ const YourDesign = () => {
 
       {isSizeChange && (
         <div style={{ position: 'relative', marginTop: '-680px', left: '28%', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
-          <div onClick={() => setIsSizeChange(false)} className='shirt_drawing_header_select'>
+          {/* <div onClick={() => setIsSizeChange(false)} className='shirt_drawing_header_select'>
             Размер
             <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M8 3C8.27408 2.99956 8.54556 3.04894 8.79882 3.1453C9.05208 3.24166 9.28214 3.38311 9.47577 3.5615L14.2006 7.90746C14.6308 8.30325 14.6308 8.98233 14.2005 9.37808C13.8182 9.72966 13.2303 9.72966 12.848 9.37808L8 4.91965L3.152 9.37811C2.76972 9.72967 2.18183 9.72967 1.79955 9.37811C1.36921 8.98235 1.36921 8.30326 1.79955 7.9075L6.52423 3.56246C6.71777 3.38389 6.94779 3.24227 7.20106 3.14575C7.45433 3.04922 7.72585 2.99969 8 3Z" fill="#32454B"/>
             </svg>
-          </div>
+          </div> */}
 
           <div>
             <div className='d-flex'>
@@ -768,12 +768,12 @@ const YourDesign = () => {
 
       {isCategoryChange && (
         <div style={{ position: 'relative', marginTop: '-680px', left: '20.4%', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
-          <div onClick={() => setIsCategoryChange(false)} className='shirt_drawing_header_select'>
+          {/* <div onClick={() => setIsCategoryChange(false)} className='shirt_drawing_header_select'>
             Футболка
             <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M8 3C8.27408 2.99956 8.54556 3.04894 8.79882 3.1453C9.05208 3.24166 9.28214 3.38311 9.47577 3.5615L14.2006 7.90746C14.6308 8.30325 14.6308 8.98233 14.2005 9.37808C13.8182 9.72966 13.2303 9.72966 12.848 9.37808L8 4.91965L3.152 9.37811C2.76972 9.72967 2.18183 9.72967 1.79955 9.37811C1.36921 8.98235 1.36921 8.30326 1.79955 7.9075L6.52423 3.56246C6.71777 3.38389 6.94779 3.24227 7.20106 3.14575C7.45433 3.04922 7.72585 2.99969 8 3Z" fill="#32454B"/>
             </svg>
-          </div>
+          </div> */}
 
           <div className='category_change'>
             Футболка 
