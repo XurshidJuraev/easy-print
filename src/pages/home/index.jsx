@@ -24,6 +24,8 @@ function HomePage() {
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [data, setData] = useState([]);
   const token = localStorage.getItem('token');
+  const [sizeArray, setSizeArray] = useState([]);
+  const [colorArray, setColorArray] = useState([]);
   const navigate = useNavigate();
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -110,6 +112,8 @@ function HomePage() {
         Accept: "application/json"
       }
     }).then((response) => {
+      setColorArray(response.data.data.color_by_size);
+      setSizeArray(response.data.data.color_by_size);
       setModalData(response.data.data);
     }).catch((error) => {
       toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -426,7 +430,7 @@ function HomePage() {
                     <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} сум</p>
 
                     <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
-                      <div class="dropdown">
+                      {/* <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Размер <span style={{textTransform: 'uppercase', marginLeft: '12px'}}>{selectedSize} <span className='ms-1' style={{fontSize: '12px', marginTop: '-5px'}}>▼</span></span>
                         </button>
@@ -437,9 +441,44 @@ function HomePage() {
                             </li>
                           ))}
                         </ul>
+                      </div> */}
+
+                      <div className='d-flex' style={{marginRight: '83px'}}>
+                        <p>Размер</p>
+                        <select 
+                          // className='show_detail_option' 
+                          style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}}
+                          value={sizeOptions[selectedSizeIndex]}
+                          onChange={(e) => {
+                            const index = sizeOptions.findIndex((size) => size === e.target.value);
+                            console.log(sizeArray[index]?.id);
+                            setSelectedSizeIndex(index);
+                          }}
+                        >
+                          {sizeArray.map((size) => (
+                            <option key={size.id} value={size.name}>{size.name}</option>
+                          ))}
+                        </select>
                       </div>
 
-                      <div class="dropdown">
+                      <div className='d-flex'>
+                        <p>Цвет</p>
+
+                        <div style={{marginLeft: '12px'}} className="d-flex">
+                          {colorArray[selectedSizeIndex]?.color.map((color, index) => (
+                            <div
+                              key={index}
+                              className="color_border me-2"
+                              style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}}
+                              onClick={() => setSelectedColorIndex(index)}
+                            >
+                              <div className="color" style={{backgroundColor: color.code}}></div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* <div class="dropdown">
                         <button class="btn dropdown-toggle d-flex" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Цвет <div style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', marginLeft: '12px', marginRight: '12px', backgroundColor: selectedColorIndex[0]}}> <span style={{fontSize: '12px', marginTop: '-5px', marginLeft: '30px'}}>▼</span></div>
                         </button>
@@ -452,25 +491,27 @@ function HomePage() {
                             ))}
                           </div>
                         </ul>
-                      </div>
+                      </div> */}
                     </div>
 
                     <hr style={{color: '#CCCCCC'}} />
 
                     <div className="d-flex justify-content-between">
-                      <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(count - 1)}>-</div>
-                        <input
-                          type='number'
-                          style={{border: 'none', color: '#000', outline: 'none', width: '40px', textAlign: 'center'}}
-                          value={count}
-                          onChange={(e) => {
-                            const newValue = parseInt(e.target.value, 10);
-                            if (!isNaN(newValue)) {
-                              setCount(newValue);
-                            }
-                          }}
-                        />
-                      <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(count + 1)}>+</div>
+                      <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.max(1, count - 1))}>-</div>
+
+                      <input
+                        type='text'
+                        style={{border: 'none', color: '#000', outline: 'none', width: '40px', textAlign: 'center'}}
+                        value={count}
+                        onChange={(e) => {
+                          const newValue = parseInt(e.target.value, 10);
+                          if (!isNaN(newValue)) {
+                            setCount(Math.min(modalData.quantity, Math.max(1, newValue)));
+                          }
+                        }}
+                      />
+
+                      <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
                     </div>
 
                     <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">

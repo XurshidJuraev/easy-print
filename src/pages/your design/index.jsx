@@ -35,12 +35,14 @@ const YourDesign = () => {
   const [textInputValue, setTextInputValue] = useState('');
   const [fontSizePx, setFontSizePx] = useState('');
   const [imeyg, setImeyg] = useState('');
+  const [scale, setScale] = useState(10);
   const [showPicker, setShowPicker] = useState(false);
   const [rotateDegree, setRotateDegree] = useState(0);
   const [rotation, setRotation] = useState(0);
   const [selectedHeader, setSelectedHeader] = useState(null);
   const [canvas, setCanvas] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [radius, setRadius] = useState(0);
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -176,7 +178,6 @@ const YourDesign = () => {
   };
 
   useEffect(() => {
-    // Initialize canvas once on component mount
     setCanvas(new fabric.Canvas('tshirt-canvas'));
   }, []);
 
@@ -190,11 +191,62 @@ const YourDesign = () => {
     });
   };
 
-  const handleImageClick = (image) => {
+  const handleScaleChange = (event, newValue) => {
+    setScale(newValue);
+
+    var scaley = String(newValue).charAt(0)
+
+    if (scaley == 1) {
+      scaley = 0
+    } else if (scaley == 2) {
+      scaley = 1
+    } else if (scaley == 3) {
+      scaley = 2
+    } else if (scaley == 4) {
+      scaley = 3
+    } else if (scaley == 5) {
+      scaley = 4
+    } else if (scaley == 6) {
+      scaley = 5
+    } else if (scaley == 7) {
+      scaley = 6
+    } else if (scaley == 8) {
+      scaley = 7
+    } else if (scaley == 9) {
+      scaley = 8
+    } 
+
+    console.log(scaley);
+
+    if(newValue) {
+      document.querySelector('.drawing-area').style.transform = `scale(1.${scaley})`;
+    } else {
+      document.querySelector('.drawing-area').style.transform = `none`;
+    }
+  };
+
+  const handleRadiusChange = (value) => {
+    const newRadius = Math.max(0, Math.min(50, value));
+    setRadius(newRadius);
+  
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'image') {
+      activeObject.set({ borderRadius: newRadius });
+      canvas.renderAll();
+    }
+  };
+
+  const handleImageClick = (image, filter) => {
     if (selectedImage === image) {
       setSelectedImage(null);
     } else {
       setSelectedImage(image);
+    }
+
+    if(filter) {
+      document.querySelector('.lower-canvas').style.filter = filter;
+    } else {
+      document.querySelector('.lower-canvas').style.filter = 'none';
     }
   };
 
@@ -504,10 +556,20 @@ const YourDesign = () => {
                 <div style={{width: '250px', textAlign: 'left'}}>
                   <p className='layers_text_fat'>Масштаб</p>
 
-                  <Slider aria-label="Temperature" defaultValue={80} getAriaValueText={valuetext} valueLabelDisplay="auto" step={10} marks min={10} max={110} style={sliderStyle} color="primary"/>
+                  <Slider
+                    aria-label="Масштаб"
+                    value={scale}
+                    onChange={handleScaleChange}
+                    valueLabelDisplay="auto"
+                    step={10}
+                    marks
+                    min={10}
+                    max={90}
+                    color="primary"
+                  />
                 </div>
 
-                <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
+                {/* <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
                   <p className='layers_text_fat'>Скругление углов</p>
 
                   <div className='selcet_option_layer d-flex justify-content-between' style={{width: '76px', height: '40px', padding: '6px 8px'}}>
@@ -527,6 +589,28 @@ const YourDesign = () => {
                       </div>
                     </div>
                   </div>
+                </div> */}
+
+                <div style={{ width: '250px', textAlign: 'left', marginTop: '35px' }}>
+                  <p className='layers_text_fat'>Скругление углов</p>
+
+                  <div className='selcet_option_layer d-flex justify-content-between' style={{ width: '76px', height: '40px', padding: '6px 8px' }}>
+                    <span>{radius}%</span>
+
+                    <div>
+                      <div style={{ cursor: 'pointer' }} onClick={() => handleRadiusChange(radius + 1)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M6 3C6.20556 2.99967 6.40917 3.03671 6.59911 3.10898C6.78906 3.18125 6.96161 3.28733 7.10683 3.42112L10.6504 6.6806C10.9731 6.97744 10.9731 7.48675 10.6504 7.78356C10.3636 8.04724 9.9227 8.04724 9.63598 7.78356L6 4.43974L2.364 7.78358C2.07729 8.04725 1.63637 8.04725 1.34966 7.78359C1.02691 7.48677 1.02691 6.97745 1.34966 6.68063L4.89317 3.42184C5.03833 3.28792 5.21085 3.18171 5.4008 3.10931C5.59075 3.03692 5.79438 2.99977 6 3Z" fill="#4D646B" />
+                        </svg>
+                      </div>
+
+                      <div style={{ cursor: 'pointer' }} onClick={() => handleRadiusChange(radius - 1)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M6 9C5.79444 9.00033 5.59083 8.96329 5.40089 8.89102C5.21094 8.81875 5.03839 8.71267 4.89317 8.57888L1.34958 5.3194C1.02686 5.02256 1.02689 4.51325 1.34964 4.21644C1.63636 3.95276 2.0773 3.95276 2.36402 4.21644L6 7.56026L9.636 4.21642C9.92271 3.95275 10.3636 3.95275 10.6503 4.21641C10.9731 4.51323 10.9731 5.02255 10.6503 5.31937L7.10683 8.57816C6.96167 8.71208 6.78915 8.81829 6.5992 8.89069C6.40925 8.96308 6.20562 9.00023 6 9Z" fill="#4D646B" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
@@ -534,65 +618,65 @@ const YourDesign = () => {
 
                   <div className="d-flex">
                     <div className="center flex-column" style={{boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 1 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(1)}>
-                        <div style={{border: selectedImage === 1 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}} onClick={() => handleImageClick(1)}></div>
+                      <div style={{border: selectedImage === 1 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(1, 'none')}>
+                        <div style={{border: selectedImage === 1 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
                       </div>
                       <p>Оригинал</p>
                     </div>
 
                     <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 2 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(2)}>
-                        <div style={{border: selectedImage === 2 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}} onClick={() => handleImageClick(2)}></div>
+                      <div style={{border: selectedImage === 2 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(2, 'contrast(1.1) brightness(1.1) saturate(1.1)')}>
+                        <div style={{filter: 'contrast(1.1) brightness(1.1) saturate(1.1)', border: selectedImage === 2 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
                       </div>
-                      <p>Оригинал</p>
+                      <p>1977</p>
                     </div>
                   </div>
 
                   <div className="d-flex">
                     <div className="center flex-column" style={{boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 3 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(3)}>
-                        <div style={{border: selectedImage === 3 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}} onClick={() => handleImageClick(3)}></div>
+                      <div style={{border: selectedImage === 3 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(3, 'contrast(0.9) brightness(1.2) hue-rotate(-20deg) saturate(0.85)')}>
+                        <div style={{filter: 'contrast(0.9) brightness(1.2) hue-rotate(-20deg) saturate(0.85)',border: selectedImage === 3 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
                       </div>
-                      <p>Оригинал</p>
+                      <p>Aden</p>
                     </div>
 
                     <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 4 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(4)}>
-                        <div style={{border: selectedImage === 4 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}} onClick={() => handleImageClick(4)}></div>
+                      <div style={{border: selectedImage === 4 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(4, 'contrast(0.9) brightness(1.1) hue-rotate(-10deg) saturate(1.5)')}>
+                        <div style={{filter: 'contrast(0.9) brightness(1.1) hue-rotate(-10deg) saturate(1.5)', border: selectedImage === 4 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
                       </div>
-                      <p>Оригинал</p>
+                      <p>Amaro</p>
                     </div>
                   </div>
 
                   <div className="d-flex">
                     <div className="center flex-column" style={{boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 5 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(5)}>
-                        <div style={{border: selectedImage === 5 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}} onClick={() => handleImageClick(5)}></div>
+                      <div style={{border: selectedImage === 5 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(5, 'contrast(1.4) sepia(0.5)')}>
+                        <div style={{filter: 'contrast(1.4) sepia(0.5)', border: selectedImage === 5 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
                       </div>
-                      <p>Оригинал</p>
+                      <p>Brannan</p>
                     </div>
 
                     <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 6 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(6)}>
-                        <div style={{border: selectedImage === 6 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}} onClick={() => handleImageClick(6)}></div>
+                      <div style={{border: selectedImage === 6 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(6, 'contrast(1.2) saturate(1.35)')}>
+                        <div style={{filter: 'contrast(1.2) saturate(1.35)', border: selectedImage === 6 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
                       </div>
-                      <p>Оригинал</p>
+                      <p>Clarendon</p>
                     </div>
                   </div>
 
                   <div className="d-flex">
                     <div className="center flex-column" style={{boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 7 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(7)}>
-                        <div style={{border: selectedImage === 7 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}} onClick={() => handleImageClick(7)}></div>
+                      <div style={{border: selectedImage === 7 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(7, 'contrast(0.9) sepia(0.2)')}>
+                        <div style={{filter: 'contrast(0.9) sepia(0.2)', border: selectedImage === 7 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
                       </div>
-                      <p>Оригинал</p>
+                      <p>Early Bird</p>
                     </div>
 
                     <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 8 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(8)}>
-                        <div style={{border: selectedImage === 8 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}} onClick={() => handleImageClick(8)}></div>
+                      <div style={{border: selectedImage === 8 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(8, 'sepia(0.3) contrast(1.1) brightness(1.1) grayscale(1)')}>
+                        <div style={{filter: 'sepia(0.3) contrast(1.1) brightness(1.1) grayscale(1)', border: selectedImage === 8 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
                       </div>
-                      <p>Оригинал</p>
+                      <p>Inkwell</p>
                     </div>
                   </div>
                 </div>

@@ -121,14 +121,26 @@
 }
 
 .modal_info {
+  /* color: var(--neutral-600, #666);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.032px;
+  margin-top: 16px; */
   color: var(--neutral-600, #666);
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
+  line-height: 24px;
   letter-spacing: -0.032px;
   margin-top: 16px;
+  width: 336px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .modal_price {
