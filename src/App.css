@@ -27,11 +27,13 @@
 ::-moz-selection { /* Code for Firefox */
   color: #ffffff;
   background: #32444B;
+  transition: all 0.2s ease;
 }
 
 ::selection {
   color: #ffffff;
   background: #32444B;
+  transition: all 0.2s ease;
 }
 
 body {
