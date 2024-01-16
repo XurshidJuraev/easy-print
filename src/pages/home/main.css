@@ -23,7 +23,7 @@
 }
 
 .t-shirt_name {
-  color: var(--primary-8, #121E22);
+  color: var(--primary-8, #061127);
   font-family: 'Inter';
   font-size: 16px;
   font-style: normal;
@@ -38,7 +38,7 @@
 }
 
 .t-shirt_price {
-  color: var(--primary-6, #32454B);
+  color: var(--primary-6, #18356D);
   font-family: Inter;
   font-size: 20px;
   font-style: normal;
@@ -166,7 +166,7 @@
   align-items: center;
   gap: 16px;
   border-radius: 10px;
-  background: var(--primary-6, #32454B);
+  background: var(--primary-6, #3C7CFB);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.30);
   color: var(--White, #FFF);
   font-family: Inter;

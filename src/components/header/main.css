@@ -67,7 +67,7 @@
   align-items: center;
   flex-shrink: 0;
   border-radius: 9px;
-  background: #F19654;
+  background: #F94A4A;
   color: #FFF;
   font-family: Montserrat Alternates;
   font-size: 11px;
@@ -78,6 +78,18 @@
   z-index: 2;
   margin-left: 28px;
   margin-top: -8px;
+}
+
+.user_name_text {
+  color: var(--primary-93, #061127);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+  margin-top: 3px;
+  margin-left: 4px;
 }
 
 /* modal */
@@ -119,7 +131,7 @@
   letter-spacing: -0.16px;
   border: none;
   border-radius: 12px;
-  background: var(--primary-6, #32454B);
+  background: var(--primary-6, #3C7CFB);
   margin-top: 32px;
   margin-bottom: 16px;
   width: 100%;
@@ -132,7 +144,7 @@
   align-items: center;
   gap: 10px;
   align-self: stretch;
-  color: var(--primary-7, #17262B);
+  color: var(--primary-7, #3064CC);
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
@@ -141,7 +153,7 @@
   letter-spacing: -0.16px;
   border: none;
   border-radius: 12px;
-  background: var(--neutral-50, #ffffff);
+  background: var(--Neutral-50, #F8F8F8);
   width: 100%;
 }
 
@@ -180,7 +192,7 @@
 }
 
 .register_text_no_password {
-  color: #17262B;
+  color: #3064CC;
   font-family: Inter;
   font-size: 16px;
   font-style: normal;

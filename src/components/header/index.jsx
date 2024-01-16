@@ -139,13 +139,15 @@ function HeaderMain({ trashCardData }) {
     };
   
     fetch(`${process.env.REACT_APP_TWO}/register`, requestOptions)
-      .then(response => response.text())
+      .then(response => response.json())
       .then(result => {
         setIsRegisterEntered(false);
+        localStorage.setItem('user_name', result.data.user.first_name);
         setIsSuccesEntered(true);
       })
       .catch(error => {
         toast.error('Регистрация не была оформлена.');
+        console.log(error);
       });
   };
 
@@ -311,10 +313,11 @@ function HeaderMain({ trashCardData }) {
               </NavLink>
 
               {localStorage.getItem('token') ? (
-                <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px'}}>
-                  <button style={{backgroundColor: 'transparent', border: 'none'}}>
+                <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px', textDecoration: 'none'}}>
+                  <button style={{backgroundColor: 'transparent', position: 'absolute', border: 'none', display: 'flex', marginTop: '5px',}}>
                     <img src={user} alt="user" />
-                  </button>                
+                    <p className='user_name_text'>{localStorage.getItem('user_name')}</p>
+                  </button>
                 </NavLink>
               ) : (
                 <button title="Login or Register" style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">

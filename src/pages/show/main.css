@@ -1,5 +1,5 @@
 .show_detail_title {
-  color: #17262B;
+  color: #3064CC;
   font-family: Inter;
   font-size: 32px;
   font-style: normal;
@@ -248,9 +248,11 @@
 }
 
 .basket_promo_btn_price:hover {
-  background-color: #4D646B;
+  background-color: #6396FC;
+  color: white;
 }
 
 .basket_promo_btn_price:active {
-  background-color: #17262B;
+  background-color: #3064CC;
+  color: white;
 }

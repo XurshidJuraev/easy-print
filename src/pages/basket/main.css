@@ -105,7 +105,7 @@
   letter-spacing: -0.1px;
   width: 16px;
   height: 16px;
-  color: var(--Primary-7, #17262B);
+  color: var(--Primary-7, #3064CC);
   font-family: Inter;
   font-size: 24px;
   font-style: normal;
@@ -122,7 +122,7 @@
   align-items: center;
   gap: 10px;
   border-radius: 50px;
-  background: var(--Primary-5, #4D646B);
+  background: var(--Primary-5, #6396FC);
   color: var(--White, #FFF);
   font-family: Inter;
   font-size: 20px;
@@ -248,29 +248,29 @@
   align-items: center;
   gap: 16px;
   border-radius: 10px;
-  border: 1px solid var(--neutral-50, #ffffff);
-  background: var(--White, #FFF);
+  background: var(--White, #EBF2FF);
   box-shadow: 0px 0px 5px 1px rgba(14, 23, 26, 0.04);
   transition: all 0.3s ease;
-  color: var(--primary-5, #4D646B);
+  color: var(--primary-5, #3C7CFB);
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 133.333% */
+  line-height: 24px;
+  border: none;
 }
 
 .basket_promo_btn:hover {
   transition: all 0.3s ease;
   border-radius: 10px;
-  background: var(--primary-6, #32454B);
+  background: var(--primary-6, #3C7CFB);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
-  color: var(--White, #FFF);
+  color: var(--White, #EBF2FF);
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
+  line-height: 24px;
   letter-spacing: -0.036px;
 }
 
@@ -311,14 +311,15 @@
   align-items: center;
   gap: 16px;
   border-radius: 10px;
-  background: var(--primary-6, #32454B);
+  background: var(--primary-6, #3C7CFB);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.20);
   color: var(--White, #FFF);
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
+  text-decoration: none;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
+  line-height: 24px;
   letter-spacing: -0.036px;
   border: none;
   margin-top: 33px;

@@ -72,8 +72,8 @@ function ProfilePayment() {
       <HeaderMain trashCardData={trashCardData} />
       <ToastContainer />
 
-      <div className="container mt-5">
-        <div className="d-flex align-items-center justify-content-between">
+      <div className="container mt-5 center">
+        <div className="d-flex align-items-center justify-content-between" style={{width: '1200px'}}>
           <ProfileHeader />
 
           <div className='info_profile'>

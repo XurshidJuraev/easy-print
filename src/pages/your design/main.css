@@ -1,10 +1,10 @@
 .white_background {
   background-color: #ffffff;
-  width: 59%;
+  width: 57%;
   height: 100px;
   position: relative;
   margin-top: -99px;
-  margin-left: 303px;
+  margin-left: 331px;
   padding-top: 29px;
   padding-left: 640px;
 }
@@ -50,7 +50,7 @@
   border: 1px solid var(--neutral-100, #E6E6E6);
   background: var(--neutral-50, #ffffff);
   outline: none;
-  color: var(--primary-7, #17262B);
+  color: var(--primary-7, #18356D);
   font-family: Inter;
   font-size: 15.86px;
   font-style: normal;
@@ -155,7 +155,7 @@
 }
 
 .layers_text_value {
-  color: var(--White, #32454B);
+  color: var(--White, #17262B);
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
@@ -173,7 +173,7 @@
 .MuiSlider-valueLabelLabel {
   width: 42px !important;
   height: 38px !important;
-  color: var(--primary-7, #17262B) !important;
+  color: var(--primary-7, #3064CC) !important;
   font-family: Heebo !important;
   font-size: 12px !important;
   font-style: normal !important;
@@ -195,7 +195,7 @@
   border-radius: 4px;
   border: 1px solid var(--neutral-200, #CCC);
   background: var(--White, #FFF);
-  color: var(--primary-6, #32454B);
+  color: var(--primary-6, #17262B);
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
@@ -221,7 +221,7 @@
   background: var(--neutral-50, #F8F8F8);
   width: 52px;
   height: 43px;
-  color: var(--primary-6, #32454B);
+  color: var(--primary-6, #3C7CFB);
   font-family: Inter;
   font-size: 13px;
   font-style: normal;
@@ -256,8 +256,8 @@
 }
 
 .shirt_drawing_header_select:active {
-  border: 1px solid var(--primary-6, #32454B);
-  background: var(--primary-6, #32454B);
+  border: 1px solid var(--primary-6, #3C7CFB);
+  background: var(--primary-6, #3C7CFB);
   color: #FFF;
 }
 
