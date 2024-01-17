@@ -16,6 +16,10 @@ function Error404() {
   });
 
   useEffect(() => {
+    document.title = 'Не найдено';
+  }, []);
+
+  useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
     if (savedCards) {
       setTrashCardData(savedCards);

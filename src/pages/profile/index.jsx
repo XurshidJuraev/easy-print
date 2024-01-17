@@ -25,6 +25,10 @@ function Profile() {
   });
   const token = localStorage.getItem('token');
 
+  useEffect(() => {
+    document.title = 'Личная информация'
+  }, []);
+
   // useEffect(() => {
   //   if (savedCards) {
   //     setTrashCardData(savedCards);

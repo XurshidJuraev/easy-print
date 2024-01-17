@@ -36,6 +36,10 @@ function ShowDetail() {
     localStorage.setItem('selectedCategory', params.id);
   })
 
+  useEffect(() => {
+    document.title = 'Посмотреть продукт'
+  }, []);
+
   if (params.id !== localStorage.getItem('selectedCategory')) {
     setTimeout(() => {
       window.location.reload();

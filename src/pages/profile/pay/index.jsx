@@ -21,6 +21,10 @@ function ProfilePayment() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
+    document.title = 'Способ оплаты'
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0)
   });
 

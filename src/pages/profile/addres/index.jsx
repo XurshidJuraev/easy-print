@@ -29,6 +29,10 @@ function ProfileAddres() {
   const [dataGet, setDataGet] = useState([]);
   const token = localStorage.getItem('token');
 
+  useEffect(() => {
+    document.title = 'Мои адреса'
+  }, []);
+
   const handleEditAddress = (id) => {
     setEditAddressId(id);
   

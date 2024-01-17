@@ -34,6 +34,10 @@ function HomePage() {
   //   window.scrollTo(0, 0)
   // });
 
+  useEffect(() => {
+    document.title = 'Easy Print';
+  }, []);
+
   function handleCardClick(imageSrc, name, price) {
     const currentTime = new Date();
     const clickedCardData = {

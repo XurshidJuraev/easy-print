@@ -36,6 +36,10 @@ function Basket() {
   //   window.scrollTo(0, 0)
   // });
 
+  useEffect(() => {
+    document.title = 'Корзина';
+  }, []);
+
   function handleCountChange(id, change, maxQuantity, selectedColor, selectedSize) {
     setData((prevData) => {
       const updatedList = prevData.data.list.map((item) => {
@@ -162,7 +166,7 @@ function Basket() {
         const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
         setTrashCardData(savedCards);
         calculateTotalPrice(savedCards);
-        toast.error('Serverdan xatolik yuzaga keldi.');
+        // toast.error('Serverdan xatolik yuzaga keldi.');
       } else {
         setCoupon_price(response.data.data.coupon_price);
         localStorage.setItem('coupon_price', response.data.data.coupon_price);
@@ -182,7 +186,7 @@ function Basket() {
       const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
       setTrashCardData(savedCards);
       calculateTotalPrice(savedCards);
-      toast.error('Serverga so\'rov jo\'natishda xatolik yuz berdi.');
+      // toast.error('Serverga so\'rov jo\'natishda xatolik yuz berdi.');
     });    
   }, [token]);
 

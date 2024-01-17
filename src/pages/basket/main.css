@@ -122,7 +122,7 @@
   align-items: center;
   gap: 10px;
   border-radius: 50px;
-  background: var(--Primary-5, #6396FC);
+  background: var(--Primary-5, #3064CC);
   color: var(--White, #FFF);
   font-family: Inter;
   font-size: 20px;
@@ -232,7 +232,7 @@
   padding-bottom: 8px;
   margin-top: 8px;
   outline: none;
-  color: var(--neutral-300, #B3B3B3);
+  color: var(--neutral-300, #121E22);
   font-family: Inter;
   font-size: 16px;
   font-style: normal;

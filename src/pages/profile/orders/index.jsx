@@ -18,6 +18,10 @@ function ProfileOrders() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
+    document.title = 'Мои заказы'
+  }, []);
+
+  useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
     if (savedCards) {
       setTrashCardData(savedCards);

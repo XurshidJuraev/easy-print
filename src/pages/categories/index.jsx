@@ -29,6 +29,10 @@ function CategoryListByName() {
     localStorage.setItem('selectedCategory', params.id);
   })
 
+  useEffect(() => {
+    document.title = 'Категория';
+  }, []);
+
   if (params.id !== localStorage.getItem('selectedCategory')) {
     window.location.reload();
   }

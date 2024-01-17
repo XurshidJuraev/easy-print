@@ -52,6 +52,10 @@ const YourDesign = () => {
     window.scrollTo(0, 0)
   });
 
+  useEffect(() => {
+    document.title = 'Создайте свой собственный дизайн'
+  }, []);
+
   const handleCustomPictureChange = (e) => {
     const reader = new FileReader();
 

@@ -35,6 +35,10 @@ function MyOrders() {
     postcode: false,
   });
 
+  useEffect(() => {
+    document.title = 'Подтверждение заказа'
+  }, []);
+
   const handleCloseModal = () => {
     setFormData({
       city_id: '',

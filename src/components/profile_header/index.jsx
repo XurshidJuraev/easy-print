@@ -35,9 +35,9 @@ function ProfileHeader() {
     updateActiveTab();
   }, []);
 
-  useEffect(() => {
-    document.title = user_name ? (user_last_name ? `${user_name} ${user_last_name}` : `${user_name}`) : 'Easy Print';
-  }, []);
+  // useEffect(() => {
+  //   document.title = user_name ? (user_last_name ? `${user_name} ${user_last_name}` : `${user_name}`) : 'Easy Print';
+  // }, []);
 
   const handleLogout = () => {
     toast.success('Выход из вашей учетной записи успешно завершен!');
