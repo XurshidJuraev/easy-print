@@ -172,7 +172,7 @@ function Profile() {
                 </div>
 
                 <div>
-                  <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName} onChange={handleChange} />
+                  <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName ? formData.lastName : localStorage.getItem('user_last_name')} onChange={handleChange} />
                   <select name="gender" className='input_profile' value={formData.gender} onChange={handleChange}>
                     <option disabled hidden value="">Пол</option>
                     <option value="1" selected={formData.gender === 1}>Мужской</option>

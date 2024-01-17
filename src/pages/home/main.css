@@ -99,15 +99,15 @@
 .modal_image_fat {
   width: 500px;
   height: 579.71px;
-  background: #E9E9E9;
+  background: #EFEFEF;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .modal_image_fat img {
-  width: 471.014px;
-  height: 579.71px;
+  width: 400px;
+  height: 500px;
 }
 
 .modal_name {

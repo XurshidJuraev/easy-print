@@ -188,6 +188,7 @@ function HeaderMain({ trashCardData }) {
     setSelectedLanguage(selectedLang);
     localStorage.setItem('selectedLanguage', selectedLang);
     toggleLanguageDropdown();
+    window.location.reload();
   };  
 
   const toggleLanguageDropdown = () => {
@@ -282,7 +283,7 @@ function HeaderMain({ trashCardData }) {
             </div>
             <div className="d-flex">
               <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none'}}>
-                <img onClick={toggleLanguageDropdown} src={language} alt="user" />
+                <img style={{marginTop: '-2px'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
               </button>
 
               {showLanguageDropdown && (
@@ -295,6 +296,7 @@ function HeaderMain({ trashCardData }) {
                     top: '70px',
                     right: '225px',
                     boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',
+                    zIndex: '1000000000'
                   }}
                 >
                   {data.data &&
@@ -314,7 +316,7 @@ function HeaderMain({ trashCardData }) {
 
               {localStorage.getItem('token') ? (
                 <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px', textDecoration: 'none'}}>
-                  <button style={{backgroundColor: 'transparent', position: 'absolute', border: 'none', display: 'flex', marginTop: '5px',}}>
+                  <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-10px', border: 'none', display: 'flex', marginTop: '4px',}}>
                     <img src={user} alt="user" />
                     <p className='user_name_text'>{localStorage.getItem('user_name')}</p>
                   </button>
@@ -387,6 +389,22 @@ function HeaderMain({ trashCardData }) {
                         ...registrationData,
                         name: e.target.value,
                       })
+                    }
+                  />
+                </label>
+
+                <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                  <p className='register_in_text'>Фамилия</p>
+                  <input
+                    name='surname'
+                    className='register_input'
+                    type="text"
+                    placeholder='Ведите фамилию'
+                    onChange={(e) =>
+                      localStorage.setItem(
+                        'user_last_name',
+                        e.target.value
+                      )
                     }
                   />
                 </label>

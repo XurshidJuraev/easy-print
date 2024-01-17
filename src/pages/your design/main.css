@@ -151,11 +151,11 @@
   justify-content: space-between;
   align-items: center;
   border-radius: 6px;
-  background: #D8E6EA;
+  background: #EBF2FF;
 }
 
 .layers_text_value {
-  color: var(--White, #17262B);
+  color: var(--White, #18356D);
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
@@ -221,7 +221,7 @@
   background: var(--neutral-50, #F8F8F8);
   width: 52px;
   height: 43px;
-  color: var(--primary-6, #3C7CFB);
+  color: var(--primary-6, #18356D);
   font-family: Inter;
   font-size: 13px;
   font-style: normal;

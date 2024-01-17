@@ -49,7 +49,8 @@ function CategoryListByName() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': `${localStorage.getItem('selectedLanguage')}`
       }
     }).then((response) => {
       setData(response.data);
@@ -367,9 +368,9 @@ function CategoryListByName() {
       </div> */}
 
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content" style={{borderRadius: '0px'}}>
-            <div className="modal-body" style={{padding: '0'}}>
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div className="modal-content" style={{borderRadius: '0px', width: '871px !important'}}>
+            <div className="modal-body" style={{padding: '0', width: '871px !important'}}>
               {modalData && (
                 <div className='d-flex'>
                   <div style={{padding: '80px 32px 0px 32px'}}>
@@ -378,19 +379,6 @@ function CategoryListByName() {
                     <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} сум</p>
 
                     <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
-                      {/* <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Размер <span style={{textTransform: 'uppercase', marginLeft: '12px'}}>{selectedSize} <span className='ms-1' style={{fontSize: '12px', marginTop: '-5px'}}>▼</span></span>
-                        </button>
-                        <ul class="dropdown-menu" value={sizeOptions[selectedSizeIndex]} onChange={(e) => {const index = sizeOptions.findIndex((size) => size === e.target.value);setSelectedSizeIndex(index);}}>
-                          {sizeOptions.map((size, index) => (
-                            <li key={index} className='d-flex'>
-                              <div class="dropdown-item" style={{textTransform: 'uppercase'}} onClick={() => setSelectedSize(size)}>{size}</div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div> */}
-
                       <div className='d-flex' style={{marginRight: '83px'}}>
                         <p>Размер</p>
                         <select 
@@ -425,21 +413,6 @@ function CategoryListByName() {
                           ))}
                         </div>
                       </div>
-
-                      {/* <div class="dropdown">
-                        <button class="btn dropdown-toggle d-flex" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Цвет <div style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', marginLeft: '12px', marginRight: '12px', backgroundColor: selectedColorIndex[0]}}> <span style={{fontSize: '12px', marginTop: '-5px', marginLeft: '30px'}}>▼</span></div>
-                        </button>
-                        <ul class="dropdown-menu w-100 color_size">
-                          <div className='d-flex' style={{flexWrap: 'wrap'}}>
-                            {colorOptions.map((color, index) => (
-                              <li key={index} className='d-flex' style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}} onChange={(e) => {const index = colorOptions.findIndex((color) => color === e.target.value); setSelectedColorIndex(index);}}>
-                                <div class="dropdown-item m-2" style={{width: '23px', height: '23px', borderRadius: '50%', border: '0.5px solid #CCC', backgroundColor: color}} onClick={() => setSelectedColor(color)}></div> 
-                              </li>
-                            ))}
-                          </div>
-                        </ul>
-                      </div> */}
                     </div>
 
                     <hr style={{color: '#CCCCCC'}} />

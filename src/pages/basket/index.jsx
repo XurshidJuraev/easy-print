@@ -124,6 +124,7 @@ function Basket() {
       console.log('apiData:', apiData);
 
       localStorage.setItem('order_id', data.data.id);
+      localStorage.setItem('paymentDate', JSON.stringify({ price, coupon_price, discount_price, grant_total }));
 
       const response = await axios.post(`${process.env.REACT_APP_TWO}/order/connection/to_order`, apiData, {
         headers: {
@@ -213,6 +214,8 @@ function Basket() {
   function applyPromoCode() {
     let promoMessage = '';
     let promoColor = 'green';
+
+    console.log(order_id, promoCode);
 
     axios.post(`${process.env.REACT_APP_TWO}/order/add-coupon`, { 
         order_id: order_id,
@@ -380,7 +383,6 @@ function Basket() {
         </div>
 
         <NavLink to={'/'} style={{ textDecoration: 'none' }}>
-          {/* <img style={{marginTop: '32px'}} src={continue_shopping} alt="continue_shopping" /> */}
           <div style={{display: 'flex', justifyContent: 'flex-start'}}>
             <button style={{width: '323px'}} className='basket_promo_btn_price'>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

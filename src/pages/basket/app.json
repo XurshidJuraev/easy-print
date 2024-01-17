@@ -1,0 +1,30 @@
+{
+  "data": {
+    "id":60,
+    "coupon_price":null,
+    "price":"100000",
+    "discount_price":"0",
+    "grant_total":"100000",
+    "list": [{
+      "id":162,
+      "relation_type":"warehouse_product",
+      "relation_id":12,
+      "name":"Maula Футболка",
+      "price":"100000",
+      "discount":0,
+      "discount_price":"0",
+      "quantity":1,
+      "description":"null",
+      "images": [
+        "http://admin.easyprint.uz/storage/products/jkhvl2023-12-2912-10-00.jpg",
+        "http://admin.easyprint.uz/storage/products/cubvi2023-12-2912-10-00.jpg",
+        "http://admin.easyprint.uz/storage/products/lnymt2023-12-2912-10-00.jpg"
+      ],
+      "color_code":"#808080",
+      "color_name":"Grey",
+      "size_name":"XXXXL"
+    }]
+  },
+  "status":true,
+  "message":"success"
+}

@@ -4,7 +4,7 @@ import AdvantageMain from '../../components/advantage';
 import FooterMain from '../../components/footer';
 import trash from '../../layouts/icons/delete_product_basket.svg'
 import go_to_checkout from '../../layouts/icons/Go_to_checkout.svg'
-import return_to_cart from '../../layouts/icons/return_to_cart.svg'
+import cards from '../../layouts/images/cards.svg'
 import './main.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -19,6 +19,30 @@ function MyOrders() {
   const [total, setTotal] = useState('');
   const [delivery, setDelivery] = useState('');
   const [products_total, setProducts_total] = useState('');
+  const [editAddressId, setEditAddressId] = useState(null);
+  const [adrse, setAdrse] = useState('');
+  const [data, setData] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [formData, setFormData] = useState({
+    city_id: '',
+    name: '',
+    postcode: '',
+  });
+  const [formErrors, setFormErrors] = useState({
+    region: false,
+    city_id: false,
+    name: false,
+    postcode: false,
+  });
+
+  const handleCloseModal = () => {
+    setFormData({
+      city_id: '',
+      name: '',
+      postcode: '',
+    });
+    setEditAddressId(null);
+  };
 
   const navigate = useNavigate();
 
@@ -46,7 +70,10 @@ function MyOrders() {
 
   const token = localStorage.getItem('token');
   const order_id = localStorage.getItem('order_id');
-  
+
+  const paymentDate = localStorage.getItem('paymentDate')
+  const jsonPaymentDate = JSON.parse(paymentDate);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -62,6 +89,7 @@ function MyOrders() {
         setDelivery(response.data.data.discount_price);
         setProducts_total(response.data.data.grant_total);
         setOrders(response.data.data);
+        setAdrse(response.data.data.list.length)
       } catch (error) {
         toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
@@ -87,6 +115,30 @@ function MyOrders() {
     };
 
     fetchData();
+  }, [token]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_TWO}/get-districts`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      })
+      .then((response) => {
+        setData(response.data.data);
+        const initialRegion = response.data.data[0];
+        setFormData({
+          city_id: initialRegion.cities[0]?.id,
+          name: '',
+          postcode: ''
+        });
+        setCities(initialRegion.cities);
+      })
+      .catch((error) => {
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      });
   }, [token]);
 
   function saveOrder() {
@@ -125,11 +177,63 @@ function MyOrders() {
       .catch(error =>  toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'));
   }
 
+  const handleChange = (e) => {
+    const selectedRegion = e.target.value;
+    setFormData({ ...formData, [e.target.name]: selectedRegion });
+
+    const selectedRegionData = data.find((region) => region.region === selectedRegion);
+
+    if (selectedRegionData) {
+      const selectedCities = selectedRegionData.cities || [];
+      setCities(selectedCities);
+    }
+
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: value.trim() === '',
+    }));
+  };
+
   useEffect(() => {
     if (address.length > 0 && addressId === null) {
       setAddressId(address[0].id);
     }
   }, [address, addressId]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (formData.region === '' || formData.city_id === '' || formData.name === '' || formData.postcode === '') {
+      toast.warning('Обязательно заполните все детали. Пожалуйста, проверьте все и отправьте повторно. Или обновите страницу еще раз и повторите попытку.');
+      return;
+    }
+
+    const apiUrl = editAddressId ? `${process.env.REACT_APP_TWO}/edit-address` : `${process.env.REACT_APP_TWO}/set-address`;
+
+    axios
+      .post(apiUrl, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      })
+      .then((response) => {
+        toast.success('Malumotlar saqlandi!');
+        handleCloseModal();
+        window.location.reload();
+      })
+      .catch((error) => {
+        toast.error('Xatolik yuz berdi. Malumotlar saqlanmadi.');
+      });
+  };
 
   return (
     <div>
@@ -149,7 +253,7 @@ function MyOrders() {
 
                     <h3 className='order_subtitle' style={{marginTop: '48px'}}>Покупатель</h3>
 
-                    <input className='order_info' value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') : 'Имя*'}/>
+                    <input className='order_info' value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') + ' ' + localStorage.getItem('user_last_name') : 'Имя и Фамилия*'}/>
                     <input className='order_info mt-4' value={localStorage.getItem('user_phone_number') ? `${localStorage.getItem('user_phone_number')}` : 'Действующий номер телефона*'}/>
                     
                     <h3 className='order_subtitle' style={{marginTop: '48px'}}>Адрес доставки</h3>
@@ -167,76 +271,90 @@ function MyOrders() {
                         Адрес*
                       </div>
                     )}
-                    <center style={{marginTop: '28px'}}>
-                      <NavLink className={'addres_btn'} to={'/profile/addres'}>Добавить другой адрес</NavLink>
-                    </center>
-                    
-                    <h3 className='order_subtitle' style={{marginTop: '48px'}}>Выберите карту</h3>
 
-                    <div className='order_info'>{pay?.cardNumber ? (
-                      <>
-                        <>{pay.cardNumber.slice(0, 4)} </>
-                        <>{pay.cardNumber.slice(5, 9).replace(/./g, '*')} </>
-                        <>{pay.cardNumber.slice(9, 14).replace(/./g, '*')} </>
-                        <>{pay.cardNumber.slice(15, 19)}</>; <span>{pay?.cardName}</span>
-                      </>
-                    ) : 'Номер карты*'}
-                    </div>
                     <center style={{marginTop: '28px'}}>
-                      <NavLink className={'addres_btn'} to={'/profile/payment'}>Добавить карту</NavLink>
+                      <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>Добавить другой адрес</button>
                     </center>
+
+                    <h3 className='order_subtitle' style={{marginTop: '48px'}}>Способ получения</h3>
+
+                    <label className='order_info'>
+                      <input style={{cursor: 'pointer'}} checked type="radio" id="age1" name="age" value="30" />
+                      <label style={{cursor: 'pointer'}} for="age1">Пункт выдачи Easy Print</label>
+                    </label>
+
+                    <label className='order_info' style={{backgroundColor: 'transparent'}}>
+                      <input style={{cursor: 'pointer'}} checked type="radio" id="age1" name="aa" value="30" />
+                      <label style={{cursor: 'pointer'}} for="age1">Ташкентская область, город Ташкент</label>
+                    </label>
+
+                    <label className='order_info mt-2'>
+                      <input style={{cursor: 'pointer'}} type="radio" id="age2" name="age" value="60" />
+                      <label style={{cursor: 'pointer'}} for="age2">Доставка до дома</label>
+                    </label>
+
+                    <h3 className='order_subtitle' style={{marginTop: '48px'}}>Способ оплаты</h3>
+
+                    <label className='order_info'>
+                      <input style={{cursor: 'pointer'}} checked type="radio" id="card" name="pay" value="30" />
+                      <label style={{cursor: 'pointer'}} for="card">Картой онлайн</label>
+                    </label>
+
+                    <img src={cards} alt="cards" />
+
+                    <label className='order_info mt-2'>
+                      <input style={{cursor: 'pointer'}} type="radio" id="naxt" name="pay" value="60" />
+                      <label style={{cursor: 'pointer'}} for="naxt">Наличными, при получении</label>
+                    </label>
                   </div>
 
                   <div className='order_data'>
                     <h2 className='order_title ms-3'>Ваш заказ</h2>
                     <hr />
-                    {orders && orders.list && orders.list.map((item, itemIndex) => (
-                      <div key={itemIndex}>
-                        <div className='d-flex justify-content-between'>
-                          <div>
-                            {item.images && item.images[0] && (
-                              <img className='order_img' src={item.images[0]} alt={item.name} />
-                            )}
-                          </div>
-                          <div>
-                            <p className='order_name'>{item.name}</p>
-                            <div className='d-flex' style={{marginTop: '33px'}}>
-                              <div style={{marginTop: '13px'}}>
-                                <p className='order_name_tite'>Количество:</p>
-                                <p className='order_name_tite'>Размер:</p>
-                                <p className='order_name_tite'>Цвет:</p>
-                              </div>
 
-                              <div className='text-end center flex-column ms-2'>
-                                <p className='order_name_name'>{item.quantity}</p>
-                                <p className='order_name_name'>{item.size_name}</p>
-                                <div style={{backgroundColor: item.color_code}} className='order_name_color'></div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className='d-flex justify-content-space-between flex-column'>
-                            <p className='order_price'>{item.price} сум</p>
+                    <div className="accordion" style={{borderRadius: '12px', marginBottom: '20px'}} id="accordionExample">
+                      <div className="accordion-item" style={{borderRadius: '12px'}}>
+                        <h2 className="accordion-header">
+                          <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Товары {adrse}
+                          </button>
+                        </h2>
+                        <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample" >
+                          <div className="accordion-body">
+                            {orders && orders.list && orders.list.map((item, itemIndex) => (
+                              <div key={itemIndex}>
+                                <div className='d-flex'>
+                                  <div>
+                                    {item.images && item.images[0] && (
+                                      <img className='order_img' src={item.images[0]} alt={item.name} />
+                                    )}
+                                  </div>
 
-                            <img style={{marginTop: '130px'}} src={trash} alt="trash" />
+                                  <div style={{marginLeft: '12px'}}>
+                                    <p className='order_name'>{item.name}</p>
+                                    <p className='order_price'>{item.price} сум</p>
+                                  </div>
+                                </div>
+                                <hr />
+                              </div>
+                            ))}
                           </div>
                         </div>
-
-                        <hr />
                       </div>
-                    ))}
+                    </div>
 
                     <div className="basket_total" style={{width: '100%'}}>
                       <div>
                         <p className='basket_total_title' style={{marginBottom: '28px'}}>Итог товаров</p>
-                        <p className='basket_total_title' style={{marginBottom: '28px'}}>Промокоды</p>
+                        <p className='basket_total_title' style={{marginBottom: '28px'}}>Доставка</p>
                         <p className='basket_total_title' style={{marginBottom: '28px'}}>Скидки</p>
                         <p className='basket_total_title'>Итого</p>
                       </div>
                       <div style={{textAlign: 'right'}}>
-                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(products_total).toLocaleString('ru-RU')} сум</p>
-                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(delivery).toLocaleString('ru-RU')} сум</p>
-                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(sale).toLocaleString('ru-RU')} сум</p>
-                        <p className='basket_total_price'>{Number(total).toLocaleString('ru-RU')} сум</p>
+                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} сум</p>
+                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} сум</p>
+                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.coupon_price).toLocaleString('ru-RU')} сум</p>
+                        <p className='basket_total_price'>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} сум</p>
                       </div>
                     </div>
 
@@ -252,6 +370,61 @@ function MyOrders() {
           </div>
         </>
       )}
+
+      <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px', width: '520px'}}>
+          <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
+            <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none', paddingTop: '48px'}}>
+              <center>
+                <h1 className="modal-title modal_title" id="exampleModalLabel">Ваш адрес</h1>
+              </center>
+            </div>
+            <div style={{padding: '48px'}} className="modal-body">
+              <form onSubmit={handleSubmit}>
+                <div className="d-flex align-items-center mb-2 justify-content-between">
+                  <p className='address_modal_text'>Область</p>
+
+                  <select style={{border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px'}} className='input_profile' onChange={handleChange}>
+                    {data.map((region) => (
+                      <option key={region.id} value={region.region}>
+                        {region.region}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="d-flex align-items-center mb-2 justify-content-between">
+                  <p className='address_modal_text'>Город</p>
+
+                  <select style={{border: formErrors.city_id ? '1px solid red' : 'none', margin: 'auto', marginLeft: '87px', width: '280px'}} name="city_id" className='input_profile' value={formData.city} onChange={handleChange}>
+                    {cities.map((city) => (
+                      <option key={city.id} value={city.id}>
+                        {city.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="d-flex align-items-center justify-content-between">
+                  <p className='address_modal_text'>Ул. и дом</p>
+
+                  <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder="Ул. и дом" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
+                </div>
+
+                <div className="d-flex align-items-center justify-content-between">
+                  <p style={{marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none'}} className='address_modal_text'>Почтовый индекс</p>
+
+                  <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+                  <button style={{width: '100%'}} type="submit" className='btn_profile'>Добавить адрес</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="container">
         <NavLink to={'/'} className='basket_promo_btn_price'>
