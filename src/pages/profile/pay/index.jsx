@@ -54,7 +54,7 @@ function ProfilePayment() {
 
   useEffect(() => {
     var myHeaders = new Headers();
-    myHeaders.append("language", localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'en');
+    myHeaders.append("language", localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
 

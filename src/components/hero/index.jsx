@@ -18,7 +18,8 @@ function HeroMain() {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
-            Accept: "application/json"
+            Accept: "application/json",
+            'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
           }
         });
         setData(response.data.data);
@@ -56,7 +57,7 @@ function HeroMain() {
 
           <div>
             <div>
-              <img style={{ width: '312.112px', height: '334px', marginLeft: '257px', marginTop: '153px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
+              <img style={{ width: '334px', height: '372px', marginLeft: '240px', marginTop: '153px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
             </div>
 
             <div style={{ position: 'relative', marginTop: '-296px', right: '60px', width: '940px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '270px' }}>

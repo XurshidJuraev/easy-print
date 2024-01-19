@@ -41,9 +41,10 @@ function ShowDetail() {
   }, []);
 
   if (params.id !== localStorage.getItem('selectedCategory')) {
-    setTimeout(() => {
+    // setTimeout(() => {
+      window.scrollTo(0, 0);
       window.location.reload();
-    }, 300);
+    // }, 300);
   }
 
   const navigate = useNavigate();
@@ -67,14 +68,24 @@ function ShowDetail() {
   const handleNextImage = () => {
     if (dataBeck.images && dataBeck.images.length > 0) {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % dataBeck.images.length);
+      animateImage();
     }
   };
-
+  
   const handlePrevImage = () => {
     if (dataBeck.images && dataBeck.images.length > 0) {
       setCurrentImageIndex((prevIndex) => (prevIndex - 1 + dataBeck.images.length) % dataBeck.images.length);
+      animateImage();
     }
   };
+  
+  const animateImage = () => {
+    const image = document.querySelector('.img_card_detail img');
+    image.style.animation = 'none';
+    void image.offsetWidth;
+    image.style.animation = null;
+  };
+  
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -92,7 +103,8 @@ function ShowDetail() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setColorArray(response.data.data.color_by_size);
@@ -108,7 +120,8 @@ function ShowDetail() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setData(response.data);
@@ -128,7 +141,8 @@ function ShowDetail() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setModalData(response.data.data);
@@ -264,7 +278,7 @@ function ShowDetail() {
                     src={image}
                     alt={`Thumbnail ${index + 1}`}
                     className={index === currentImageIndex ? 'thumbnail-active' : 'thumbnail'}
-                    onClick={() => setCurrentImageIndex(index)}
+                    onClick={() => {setCurrentImageIndex(index); animateImage();}}
                   />
                 ))}
               </div>
@@ -362,7 +376,7 @@ function ShowDetail() {
 
               <div style={{display: 'flex', marginTop: '32px'}}>
                 <p className='show_detail_author'>Автор:</p>
-                <a className='show_detail_author_name' href="#">{dataBeck.company_name}</a>
+                <NavLink to={`/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink>
               </div>
             </div>
           </div>
@@ -494,7 +508,7 @@ function ShowDetail() {
                       </div>
                     </div>
 
-                    <hr style={{color: '#CCCCCC'}} />
+                    <hr style={{color: '#CCCCCC', marginTop: '-3px', marginBottom: '4px'}} />
 
                     <div className="d-flex justify-content-between">
                       <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.max(1, count - 1))}>-</div>

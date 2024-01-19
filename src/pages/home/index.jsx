@@ -5,6 +5,7 @@ import HeroMain from '../../components/hero'
 import blueVerifed from '../../layouts/icons/blue_verifed.svg'
 import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
+import your_design from '../../layouts/icons/your_design.svg'
 import FooterMain from '../../components/footer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -72,7 +73,8 @@ function HomePage() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       const resp = response
@@ -93,7 +95,8 @@ function HomePage() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setData(response.data);
@@ -113,7 +116,8 @@ function HomePage() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setColorArray(response.data.data.color_by_size);
@@ -255,7 +259,7 @@ function HomePage() {
                             </div>
                           </div>
                           {/* <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${currentProduct.images[0]}`} alt={currentProduct.name} /> */}
-                          <div style={{width: '276px', height: '320px', backgroundImage: `url(${currentProduct.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                          <div style={{width: '276px', height: '320px', backgroundImage: `url(${your_design})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                         </div>
                         
                         <div className="image-overlay">
@@ -268,7 +272,7 @@ function HomePage() {
 
                     <div className="d-flex mt-3">
                       <div style={{textDecoration: 'none'}}>
-                        <p className='t-shirt_name' style={{width: '100%'}}>{currentProduct.name}</p>
+                        <p className='t-shirt_name' style={{width: '100%'}}>Одежда с вашим дизайном</p>
                         <p className='t-shirt_price'>
                           {currentProduct.price_discount ? 
                             <span>
@@ -470,7 +474,7 @@ function HomePage() {
                       </div>
                     </div>
 
-                    <hr style={{color: '#CCCCCC'}} />
+                    <hr style={{color: '#CCCCCC', marginTop: '-3px', marginBottom: '4px'}} />
 
                     <div className="d-flex justify-content-between">
                       <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.max(1, count - 1))}>-</div>

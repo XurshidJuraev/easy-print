@@ -145,6 +145,8 @@
   line-height: normal;
   letter-spacing: -0.2px;
   min-width: 100px;
+  position: relative;
+  left: 40px;
 }
 
 .basket_info1 {
@@ -152,11 +154,13 @@
   position: relative;
   left: -26px;
   z-index: 100;
+  justify-content: space-between;
+  width: 930px;
 }
 
 .basket_card_size {
   color: var(--neutral-400, #999);
-  font-family: Inter;
+  font-family: 'Inter400';
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -178,7 +182,7 @@
 .basket_size_fat {
   position: relative;
   margin-top: -55px;
-  left: 50px;
+  left: 44px;
   top: 76px;
   margin-left: -70px;
   z-index: 110;
@@ -215,7 +219,7 @@
 
 .basket_promo_text {
   color: var(--neutral-400, #999);
-  font-family: Inter;
+  font-family: 'Inter400';
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -252,7 +256,7 @@
   box-shadow: 0px 0px 5px 1px rgba(14, 23, 26, 0.04);
   transition: all 0.3s ease;
   color: var(--primary-5, #3C7CFB);
-  font-family: Inter;
+  font-family: 'Inter400';
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -286,9 +290,18 @@
   justify-content: space-between;
 }
 
+.accordion-button:not(.collapsed), .accordion-item:first-of-type .accordion-button {
+  color: var(--Neutral-900, #1A1A1A);
+  font-family: 'Inter400';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px; /* 166.667% */
+}
+
 .basket_total_title {
   color: var(--neutral-600, #666);
-  font-family: Inter;
+  font-family: 'Inter500';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -297,7 +310,7 @@
 
 .basket_total_price {
   color: var(--neutral-800, #333);
-  font-family: Inter;
+  font-family: 'Inter500';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -491,7 +504,7 @@
 
 .basket_item {
   color: var(--neutral-400, #999);
-  font-family: Inter;
+  font-family: 'Inter400';
   font-size: 16px;
   font-style: normal;
   font-weight: 400;

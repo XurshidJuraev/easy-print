@@ -4,7 +4,7 @@
 
 .nav-link {
   color: var(--primary-8, #121E22) !important;
-  font-family: Inter !important;
+  font-family: 'Inter400' !important;
   font-size: 16px !important;
   font-style: normal !important;
   font-weight: 500 !important;
@@ -82,7 +82,7 @@
 
 .user_name_text {
   color: var(--primary-93, #061127);
-  font-family: Inter;
+  font-family: 'Inter400';
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -217,6 +217,12 @@
   background: var(--White, #FFF);
   cursor: pointer;
   transition: all 0.2s ease;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
 }
 
 .language_list_31 {
@@ -265,6 +271,8 @@
   margin-bottom: 8px;
   color: currentColor;
   text-decoration: none;
+  transition: all 0.1s ease;
+  border-radius: 0;
 }
 
 .nav-item {
@@ -275,6 +283,14 @@
   border: 1px solid #ff0000;
 }
 
-.nav-link:hover, .language_item:hover {
+.nav-link:hover {
   opacity: 0.8;
+}
+
+.language_item:hover {
+  /* border-bottom: 1px solid #000; */
+  /* transform: rotate(10deg); */
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.1s ease;
+  border-radius: 10px;
 }

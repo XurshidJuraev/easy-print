@@ -132,7 +132,7 @@ function Basket() {
 
       const response = await axios.post(`${process.env.REACT_APP_TWO}/order/connection/to_order`, apiData, {
         headers: {
-          'language': 'uz',
+          'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
           'Accept': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
@@ -154,7 +154,8 @@ function Basket() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       if (response.data.status === false && response.data.message === "You do not have an order") {
@@ -229,7 +230,7 @@ function Basket() {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
-          lang: 'uz',
+          lang: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
         },
       }
     )
@@ -305,15 +306,15 @@ function Basket() {
 
                             <div>
                               <div className="basket_info1">
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', marginRight: '110px' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none' }}>
                                   <p className='basket_card_name'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
                                 </NavLink>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', marginRight: '60px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} сум</p>
                                 </NavLink>
 
-                                <div className='d-flex' style={{marginRight: item.discount_price === '0' ? `117px` : `80px`}}>
+                                <div className='d-flex' style={{}}>
                                   <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, -1, item.max_quantity)}>
                                     -
                                   </button>
@@ -327,7 +328,7 @@ function Basket() {
                                   </button>
                                 </div>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', marginRight: item.discount_price === '0' ? `49px` : `83px`, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price_sale'>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} сум` : '0 сум'}</p>
                                 </NavLink>
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './main.css'
-import no_image from '../../layouts/images/user.png'
+import no_image from '../../layouts/images/user.svg'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

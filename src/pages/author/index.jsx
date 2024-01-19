@@ -1,41 +1,33 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { NavLink, useParams, useNavigate } from 'react-router-dom'
-import HeaderMain from '../../components/header'
-import AdvantageMain from '../../components/advantage';
-import FooterMain from '../../components/footer';
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useEffect, useState } from 'react'
+import './main.css'
+import { useParams, NavLink, useNavigate } from 'react-router-dom';
+import HeaderMain from '../../components/header';
+import Author_background_default from '../../layouts/images/Author_default.svg';
 import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import FooterMain from '../../components/footer';
+import AdvantageMain from '../../components/advantage';
 
-function CategoryListByName() {
+function AuthorPage() {
   const [trashCardData, setTrashCardData] = useState([]);
   const [data, setData] = useState([]);
-  const [modalData, setModalData] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [idCounter, setIdCounter] = useState(1);
-  const [count, setCount] = useState(1);
-  const [selectedSize, setSelectedSize] = useState('s');
-  const [sizeOptions, setSizeOptions] = useState([]);
-  const [colorOptions, setColorOptions] = useState([]);
-  const [selectedColor, setSelectedColor] = useState('#D9CCC6');
-  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
-  const navigate = useNavigate();
-  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-  const token = localStorage.getItem('token');
   const params = useParams()
-  const [sizeArray, setSizeArray] = useState([]);
+  const [displayedItems, setDisplayedItems] = useState(8);
+  const token = localStorage.getItem('token');
+  const [selectedCard, setSelectedCard] = useState(null);
   const [colorArray, setColorArray] = useState([]);
-
-  useEffect(() => {
-    localStorage.setItem('selectedCategory', params.id);
-  })
-
-  useEffect(() => {
-    document.title = 'Категория';
-  }, []);
-
-  if (params.id !== localStorage.getItem('selectedCategory')) {
-    window.location.reload();
-  }
+  const [sizeOptions, setSizeOptions] = useState([]);
+  const [idCounter, setIdCounter] = useState(1);
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
+  const [selectedSize, setSelectedSize] = useState('s');
+  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const [count, setCount] = useState(1);
+  const [modalData, setModalData] = useState([]);
+  const [selectedColor, setSelectedColor] = useState('#D9CCC6');
+  const [dataBeck, setDataBeck] = useState([]);
+  const [sizeArray, setSizeArray] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -49,7 +41,19 @@ function CategoryListByName() {
   }, []);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_TWO}/get-products-by-category?category_id=${params.id}`, {
+    localStorage.setItem('selectedCategory', params.id);
+  })
+
+  useEffect(() => {
+    document.title = 'Страница автора';
+  }, []);
+
+  if (params.id !== localStorage.getItem('selectedCategory')) {
+    window.location.reload();
+  }
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/get-warehouses`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -58,11 +62,85 @@ function CategoryListByName() {
       }
     }).then((response) => {
       setData(response.data);
-      console.log(response.data);
     }).catch((error) => {
       toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
+
+  const handleShowMore = () => {
+    if (data.data && data.data.warehouse_product_list.length > displayedItems) {
+      setDisplayedItems((prevDisplayedItems) => prevDisplayedItems + 8);
+    }
+  };
+
+  const addToBasket = (productData) => {
+    if (productData) {
+      const selectedColor = dataBeck.color_by_size[selectedSizeIndex];
+      const selectedSize = dataBeck.size_by_color[selectedColorIndex];
+  
+      const colorId = selectedColor.color[selectedColorIndex].id;
+      const sizeId = selectedSize.sizes[selectedSizeIndex].id;
+  
+      var myHeaders = new Headers();
+      myHeaders.append("language", "uz");
+      myHeaders.append("Accept", "application/json");
+      myHeaders.append("Authorization", `Bearer ${token}`);
+  
+      var formdata = new FormData();
+      formdata.append("warehouse_product_id", productData.id);
+      formdata.append("quantity", 1);
+      formdata.append("color_id", colorId);
+      formdata.append("size_id", sizeId);
+      formdata.append("price", productData.price);
+      formdata.append("discount", dataBeck.discount ? dataBeck.discount : '0');
+  
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+      };
+
+      const basketData = {
+        warehouse_product_id: productData.id,
+        quantity: 1,
+        color_id: colorId,
+        size_id: sizeId,
+        price: productData.price,
+        discount: dataBeck.discount ? dataBeck.discount : '0'
+      };
+
+      localStorage.setItem('basket', JSON.stringify(basketData));
+  
+      fetch("http://admin.easyprint.uz/api/order/set-warehouse", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.status === true) {
+            toast.success('Товар добавлен');
+          } else {
+            if (result.message === "Unauthenticated.") {
+              const basketData = {
+                warehouse_product_id: productData.id,
+                quantity: 1,
+                color_id: colorId,
+                size_id: sizeId,
+                price: productData.price,
+                discount: dataBeck.discount ? dataBeck.discount : '0'
+              };
+  
+              localStorage.setItem('basket', JSON.stringify(basketData));
+  
+              toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
+            } else {
+              toast.error('Товар не добавлен');
+            }
+          }
+        })
+        .catch(error => {
+          toast.error('Товар не добавлен');
+        });
+    }
+  };
 
   function openModal(cardData) {
     setSelectedCard(cardData);
@@ -114,97 +192,57 @@ function CategoryListByName() {
     //   position: toast.POSITION.TOP_RIGHT,
     //   autoClose: 2000,
     // });
-  }  
-
-  const addToBasket = (productData) => {
-    if (productData) {
-      const selectedColor = modalData.color_by_size[selectedSizeIndex];
-      const selectedSize = modalData.size_by_color[selectedColorIndex];
-  
-      const colorId = selectedColor.color[0].id;
-      const sizeId = selectedSize.sizes[0].id;
-  
-      var myHeaders = new Headers();
-      myHeaders.append("language", "uz");
-      myHeaders.append("Accept", "application/json");
-      myHeaders.append("Authorization", `Bearer ${token}`);
-  
-      var formdata = new FormData();
-      formdata.append("warehouse_product_id", productData.id);
-      formdata.append("quantity", 1);
-      formdata.append("color_id", colorId);
-      formdata.append("size_id", sizeId);
-      formdata.append("price", productData.price);
-      formdata.append("discount", modalData.discount ? modalData.discount : '0');
-  
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: formdata,
-        redirect: 'follow'
-      };
-      
-      const basketData = {
-        warehouse_product_id: productData.id,
-        quantity: 1,
-        color_id: colorId,
-        size_id: sizeId,
-        price: productData.price,
-        discount: modalData.discount ? modalData.discount : '0'
-      };
-
-      localStorage.setItem('basket', JSON.stringify(basketData));
-  
-      fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-          if (result.status === true) {
-            toast.success('Товар добавлен');
-          } else {
-            if (result.message === "Unauthenticated.") {
-              const basketData = {
-                warehouse_product_id: productData.id,
-                quantity: 1,
-                color_id: colorId,
-                size_id: sizeId,
-                price: productData.price,
-                discount: modalData.discount ? modalData.discount : '0'
-              };
-
-              localStorage.setItem('basket', JSON.stringify(basketData));
-
-              toast.warn('Вы еще не зарегистрированы. Товар добавлен в корзину.', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
-            } else {
-              toast.error('Товар не добавлен');
-            }
-          }
-        })
-        .catch(error => {
-          toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
-          toast.error('Товар не добавлен');
-        });
-    }
-  };
+  }
 
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
-      <ToastContainer />
 
-      <div className='container mt-5'>
-        {data.data ? data.data.map(category => (
-          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}} key={category.category.id}>
-            {category.products.map(data2 => (
-              <div key={data2.id}>
+      <div style={{width: '100%', height: '260px', backgroundImage: `url(${Author_background_default})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover'}}></div>
+
+      <div className="container">
+        <div className="d-flex">
+          <div className='author_detail'>
+            <div className='d-flex justify-content-end'>
+              <button style={{background: 'transparent', border: 'none'}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M18 16.08C17.24 16.08 16.56 16.38 16.04 16.85L8.91 12.7C8.96 12.47 9 12.24 9 12C9 11.76 8.96 11.53 8.91 11.3L15.96 7.19C16.5 7.69 17.21 8 18 8C19.66 8 21 6.66 21 5C21 3.34 19.66 2 18 2C16.34 2 15 3.34 15 5C15 5.24 15.04 5.47 15.09 5.7L8.04 9.81C7.5 9.31 6.79 9 6 9C4.34 9 3 10.34 3 12C3 13.66 4.34 15 6 15C6.79 15 7.5 14.69 8.04 14.19L15.16 18.35C15.11 18.56 15.08 18.78 15.08 19C15.08 20.61 16.39 21.92 18 21.92C19.61 21.92 20.92 20.61 20.92 19C20.92 17.39 19.61 16.08 18 16.08Z" fill="#3C7CFB"/>
+                </svg>
+              </button>
+            </div>
+
+            <center>
+              {/* <div className='user_avatar'></div> */}
+
+              {localStorage.getItem('user_image') ? (
+                <img className='user_avatar' src={localStorage.getItem('user_image')} alt={localStorage.getItem('user_name')} />
+              ) : (
+                <div className='user_avatar'></div>
+              )}
+
+              <h3 className='author_name'>{localStorage.getItem('user_name')} {localStorage.getItem('user_last_name')}</h3>
+              <p className='author_country'>🇺🇿 Uzbekistan</p>
+
+              <p className='author_list'>Всего принтов</p>
+              <p className='author_item'>{Number(100000).toLocaleString('ru-RU')}</p>
+
+              <p className='author_list'>Продано товаров</p>
+              <p className='author_item'>{Number(100000).toLocaleString('ru-RU')}</p>
+
+              <p className='author_list'>Дата регистрации</p>
+              <p className='author_item'>15.01.2024</p>
+
+              <button className='author_button'>Пожаловаться</button>
+            </center>
+          </div>
+
+          <h2 className='products_father_text mb-3 ms-5 mt-4'>Товары</h2>
+        </div>
+
+        <div className="container">
+          <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '-130px', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+            {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
+              <div key={data2.id} className='mt-5'>
                 <div style={{textDecoration: 'none'}} className="cards">
                   <NavLink to={`/show/detail/${data2.id}/${data2.name}`} className="clothes_fat">
                     <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
@@ -217,9 +255,9 @@ function CategoryListByName() {
                             <p className='discount'>-{data2.discount}%</p>
                           </div>
                         </div>
-                        {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
                         <div style={{width: '276px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                       </div>
+
                       <div className="image-overlay">
                         <div className="detail_back">
                           <p className="overlay-text">Посмотреть детали</p>
@@ -227,48 +265,54 @@ function CategoryListByName() {
                       </div>
                     </div>
                   </NavLink>
-    
+
                   <div className="d-flex mt-3">
                     <div style={{textDecoration: 'none'}}>
                       <p className='t-shirt_name'>{data2.name}</p>
                       <p className='t-shirt_price'>
                         {data2.price_discount ? 
                           <span>
-                            <span className='discount_price'>{data2.price_discount} сум</span> 
-                            <del className='discount_price_del'>{data2.price} сум</del> 
+                            <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} сум</span> 
+                            <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} сум</del> 
                           </span>
                           : 
                           <div>
-                            {data2.price} сум
+                            {Number(data2.price).toLocaleString('ru-RU')} сум
                           </div>
                         }
                       </p>
                     </div>
-    
-                    <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`, id: `${data2.id}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <button className='add_to_basket'>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <g clip-path="url(#clip0_2381_4754)">
-                          <path d="M17.5 5H15C15 3.67392 14.4732 2.40215 13.5355 1.46447C12.5979 0.526784 11.3261 0 10 0C8.67392 0 7.40215 0.526784 6.46447 1.46447C5.52678 2.40215 5 3.67392 5 5H2.5C1.83696 5 1.20107 5.26339 0.732233 5.73223C0.263392 6.20107 0 6.83696 0 7.5L0 15.8333C0.00132321 16.938 0.440735 17.997 1.22185 18.7782C2.00296 19.5593 3.062 19.9987 4.16667 20H15.8333C16.938 19.9987 17.997 19.5593 18.7782 18.7782C19.5593 17.997 19.9987 16.938 20 15.8333V7.5C20 6.83696 19.7366 6.20107 19.2678 5.73223C18.7989 5.26339 18.163 5 17.5 5ZM10 1.66667C10.8841 1.66667 11.7319 2.01786 12.357 2.64298C12.9821 3.2681 13.3333 4.11594 13.3333 5H6.66667C6.66667 4.11594 7.01786 3.2681 7.64298 2.64298C8.2681 2.01786 9.11594 1.66667 10 1.66667ZM18.3333 15.8333C18.3333 16.4964 18.0699 17.1323 17.6011 17.6011C17.1323 18.0699 16.4964 18.3333 15.8333 18.3333H4.16667C3.50363 18.3333 2.86774 18.0699 2.3989 17.6011C1.93006 17.1323 1.66667 16.4964 1.66667 15.8333V7.5C1.66667 7.27899 1.75446 7.06702 1.91074 6.91074C2.06702 6.75446 2.27899 6.66667 2.5 6.66667H5V8.33333C5 8.55435 5.0878 8.76631 5.24408 8.92259C5.40036 9.07887 5.61232 9.16667 5.83333 9.16667C6.05435 9.16667 6.26631 9.07887 6.42259 8.92259C6.57887 8.76631 6.66667 8.55435 6.66667 8.33333V6.66667H13.3333V8.33333C13.3333 8.55435 13.4211 8.76631 13.5774 8.92259C13.7337 9.07887 13.9457 9.16667 14.1667 9.16667C14.3877 9.16667 14.5996 9.07887 14.7559 8.92259C14.9122 8.76631 15 8.55435 15 8.33333V6.66667H17.5C17.721 6.66667 17.933 6.75446 18.0893 6.91074C18.2455 7.06702 18.3333 7.27899 18.3333 7.5V15.8333Z" fill="white"/>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_2381_4754">
-                            <rect width="20" height="20" fill="white"/>
-                          </clipPath>
-                        </defs>
-                      </svg>
 
-                      <svg style={{marginLeft: '-8px', marginRight: '2px'}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M13.3333 8.33334H8.66666V3.66666C8.66666 3.29847 8.36819 3 8 3C7.63181 3 7.33334 3.29847 7.33334 3.66666V8.33331H2.66666C2.29847 8.33334 2 8.63181 2 9C2 9.36819 2.29847 9.66666 2.66666 9.66666H7.33331V14.3333C7.33331 14.7015 7.63178 15 7.99997 15C8.36816 15 8.66662 14.7015 8.66662 14.3333V9.66666H13.3333C13.7015 9.66666 13.9999 9.36819 13.9999 9C14 8.63181 13.7015 8.33334 13.3333 8.33334Z" fill="white"/>
-                      </svg>
-                    </button>
+                    <div onClick={() => openModal({imageSrc: `${data2.images[0]}`, name: `${data2.name}`, price: `${data2.price}`, id: `${data2.id}`})} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <button className='add_to_basket'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                          <g clip-path="url(#clip0_2381_4754)">
+                            <path d="M17.5 5H15C15 3.67392 14.4732 2.40215 13.5355 1.46447C12.5979 0.526784 11.3261 0 10 0C8.67392 0 7.40215 0.526784 6.46447 1.46447C5.52678 2.40215 5 3.67392 5 5H2.5C1.83696 5 1.20107 5.26339 0.732233 5.73223C0.263392 6.20107 0 6.83696 0 7.5L0 15.8333C0.00132321 16.938 0.440735 17.997 1.22185 18.7782C2.00296 19.5593 3.062 19.9987 4.16667 20H15.8333C16.938 19.9987 17.997 19.5593 18.7782 18.7782C19.5593 17.997 19.9987 16.938 20 15.8333V7.5C20 6.83696 19.7366 6.20107 19.2678 5.73223C18.7989 5.26339 18.163 5 17.5 5ZM10 1.66667C10.8841 1.66667 11.7319 2.01786 12.357 2.64298C12.9821 3.2681 13.3333 4.11594 13.3333 5H6.66667C6.66667 4.11594 7.01786 3.2681 7.64298 2.64298C8.2681 2.01786 9.11594 1.66667 10 1.66667ZM18.3333 15.8333C18.3333 16.4964 18.0699 17.1323 17.6011 17.6011C17.1323 18.0699 16.4964 18.3333 15.8333 18.3333H4.16667C3.50363 18.3333 2.86774 18.0699 2.3989 17.6011C1.93006 17.1323 1.66667 16.4964 1.66667 15.8333V7.5C1.66667 7.27899 1.75446 7.06702 1.91074 6.91074C2.06702 6.75446 2.27899 6.66667 2.5 6.66667H5V8.33333C5 8.55435 5.0878 8.76631 5.24408 8.92259C5.40036 9.07887 5.61232 9.16667 5.83333 9.16667C6.05435 9.16667 6.26631 9.07887 6.42259 8.92259C6.57887 8.76631 6.66667 8.55435 6.66667 8.33333V6.66667H13.3333V8.33333C13.3333 8.55435 13.4211 8.76631 13.5774 8.92259C13.7337 9.07887 13.9457 9.16667 14.1667 9.16667C14.3877 9.16667 14.5996 9.07887 14.7559 8.92259C14.9122 8.76631 15 8.55435 15 8.33333V6.66667H17.5C17.721 6.66667 17.933 6.75446 18.0893 6.91074C18.2455 7.06702 18.3333 7.27899 18.3333 7.5V15.8333Z" fill="white"/>
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_2381_4754">
+                              <rect width="20" height="20" fill="white"/>
+                            </clipPath>
+                          </defs>
+                        </svg>
+
+                        <svg style={{marginLeft: '-8px', marginRight: '2px'}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M13.3333 8.33334H8.66666V3.66666C8.66666 3.29847 8.36819 3 8 3C7.63181 3 7.33334 3.29847 7.33334 3.66666V8.33331H2.66666C2.29847 8.33334 2 8.63181 2 9C2 9.36819 2.29847 9.66666 2.66666 9.66666H7.33331V14.3333C7.33331 14.7015 7.63178 15 7.99997 15C8.36816 15 8.66662 14.7015 8.66662 14.3333V9.66666H13.3333C13.7015 9.66666 13.9999 9.36819 13.9999 9C14 8.63181 13.7015 8.33334 13.3333 8.33334Z" fill="white"/>
+                        </svg>
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
+            )): null}
           </div>
-        )) : null}
+
+          {data.data && data.data.warehouse_product_list.length > displayedItems && (
+            <center className='mt-5'>
+              <button className='show_detail_button' onClick={handleShowMore}>Показать еще</button>
+            </center>
+          )}
+        </div>
       </div>
 
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -380,11 +424,11 @@ function CategoryListByName() {
           </div>
         </div>
       </div>
-      
+
       <AdvantageMain />
       <FooterMain />
     </div>
   )
 }
 
-export default CategoryListByName
+export default AuthorPage

@@ -85,7 +85,8 @@ function MyOrders() {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
-            Accept: "application/json"
+            Accept: "application/json",
+            'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
           }
         });
         setSale(response.data.data.coupon_price);
@@ -109,7 +110,8 @@ function MyOrders() {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
-            Accept: "application/json"
+            Accept: "application/json",
+            'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
           }
         });
         setAddress(response.data.data);
@@ -128,6 +130,7 @@ function MyOrders() {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
+          'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
         },
       })
       .then((response) => {
@@ -314,16 +317,15 @@ function MyOrders() {
 
                   <div className='order_data'>
                     <h2 className='order_title ms-3'>Ваш заказ</h2>
-                    <hr />
 
                     <div className="accordion" style={{borderRadius: '12px', marginBottom: '20px'}} id="accordionExample">
-                      <div className="accordion-item" style={{borderRadius: '12px'}}>
+                      <div className="accordion-item">
                         <h2 className="accordion-header">
                           <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Товары {adrse}
+                            Товары ({adrse})
                           </button>
                         </h2>
-                        <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample" >
+                        <div id="collapseOne" style={{borderRadius: '12px'}} className="accordion-collapse collapse show" data-bs-parent="#accordionExample" >
                           <div className="accordion-body">
                             {orders && orders.list && orders.list.map((item, itemIndex) => (
                               <div key={itemIndex}>

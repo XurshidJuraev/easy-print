@@ -4,8 +4,28 @@
 }
 
 @font-face {
+  font-family: 'Heebo500';
+  src: local('Heebo'), url(./layouts/fonts/Heebo/static/Heebo-Medium.ttf) format('woff');
+}
+
+@font-face {
   font-family: 'Inter';
   src: local('Inter'), url(./layouts/fonts/Inter/static/Inter-Medium.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Inter500';
+  src: local('Inter500'), url(./layouts/fonts/Inter/static/Inter-Medium.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Inter400';
+  src: local('Inter400'), url(./layouts/fonts/Inter/static/Inter-Regular.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Inter600';
+  src: local('Inter600'), url(./layouts/fonts/Inter/static/Inter-SemiBold.ttf) format('woff');
 }
 
 @font-face {
@@ -43,13 +63,13 @@
 
 ::-moz-selection { /* Code for Firefox */
   color: #ffffff;
-  background: #32444B;
+  background: #3C7CFB;
   transition: all 0.2s ease;
 }
 
 ::selection {
   color: #ffffff;
-  background: #32444B;
+  background: #3C7CFB;
   transition: all 0.2s ease;
 }
 

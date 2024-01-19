@@ -33,7 +33,8 @@ function ProfileOrders() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setOrders(response.data);
@@ -47,7 +48,7 @@ function ProfileOrders() {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'en',
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
         'Accept': 'application/json',
       },
     };

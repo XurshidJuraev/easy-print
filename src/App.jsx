@@ -25,7 +25,11 @@ import ProfilePayment from './pages/profile/pay';
 // Показать детальный продукт
 import ShowDetail from './pages/show';
 
+// Страница категорий
 import CategoryListByName from './pages/categories';
+
+// Автор
+import AuthorPage from './pages/author';
 
 function App() {
   return (
@@ -46,6 +50,8 @@ function App() {
       <Route path='/profile/payment' element={<ProfilePayment />} />
 
       <Route path='/categories/:id/:name' element={<CategoryListByName />} />
+
+      <Route path='/author/:id/:name' element={<AuthorPage />} />
 
       <Route path='*' element={<Error404 />} />
     </Routes>

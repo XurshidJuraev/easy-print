@@ -10,11 +10,9 @@ import no_image from '../../layouts/images/user.svg';
 import edit_image from '../../layouts/icons/edit_iamge.svg';
 import axios from 'axios';
 import InputMask from 'react-input-mask';
-import ReactInputDateMask from 'react-input-date-mask';
 
 function Profile() {
   const [trashCardData, setTrashCardData] = useState([]);
-  const [data, setData] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     phoneNumber: '',
@@ -29,12 +27,6 @@ function Profile() {
     document.title = 'Личная информация'
   }, []);
 
-  // useEffect(() => {
-  //   if (savedCards) {
-  //     setTrashCardData(savedCards);
-  //   }
-  // }, []);
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -44,56 +36,42 @@ function Profile() {
     // localStorage.setItem('formData', JSON.stringify(formData));
   };
 
-  // useEffect(() => {
-  //   const savedEmail = localStorage.getItem('email');
-  //   if (savedEmail) {
-  //     setFormData({ ...formData, email: savedEmail });
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const savedFormData = JSON.parse(localStorage.getItem('formData'));
-  //   if (savedFormData) {
-  //     setFormData(savedFormData);
-  //   }
-  // }, []);
-
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_TWO}/personal-information`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-        'language': `${localStorage.getItem('selectedLanguage')}`
-      }
-    }).then((response) => {
-      const responseData = response.data.data;
-      localStorage.setItem('user_name', responseData.first_name === null ? '' : responseData.first_name);
-      localStorage.setItem('user_last_name', responseData.last_name === null ? '' : responseData.last_name);
-      localStorage.setItem('user_image', responseData.image === null ? '' : responseData.image);
-      localStorage.setItem('user_phone_number', responseData.phone_number === null ? '' : responseData.phone_number);
-      setData({
-        id: responseData.id,
-        name: responseData.first_name,
-        lastName: responseData.last_name,
-        phoneNumber: responseData.phone_number,
-        gender: responseData.gender,
-        birthDate: responseData.birth_date,
-        img: responseData.image,
-        email: responseData.email
+    axios
+      .get(`${process.env.REACT_APP_TWO}/personal-information`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          language: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+        },
+      })
+      .then((response) => {
+        const responseData = response.data.data;
+  
+        setFormData({
+          name: responseData.first_name,
+          lastName: responseData.last_name,
+          phoneNumber: responseData.phone_number,
+          gender: responseData.gender,
+          birthDate: responseData.birth_date,
+          img: responseData.image,
+          email: responseData.email,
+        });
+
+        localStorage.setItem('user_image', responseData.image);
+        localStorage.setItem('user_phone_number', responseData.phone_number);
+        localStorage.setItem('user_last_name', responseData.last_name);
+  
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          img: responseData.image,
+          imageUrl: responseData.image,
+        }));
+      })
+      .catch((error) => {
+        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
-      setFormData({
-        name: responseData.first_name,
-        lastName: responseData.last_name,
-        phoneNumber: responseData.phone_number,
-        gender: responseData.gender,
-        birthDate: responseData.birth_date,
-        img: responseData.image,
-        email: responseData.email
-      });
-    }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
-    });
   }, [token]);
 
   const handleUpdateBackend = () => {
@@ -108,36 +86,86 @@ function Profile() {
     formdata.append("phone_number", formData.phoneNumber);
     formdata.append("gender", formData.gender);
     formdata.append("email", formData.email);
-    formdata.append("image", formData.img);
     formdata.append("birth_date", formData.birthDate);
+  
+    if (formData.img instanceof Blob) {
+      formdata.append("image", formData.img);
+    }
+
+    localStorage.setItem('user_name', formData.name);
 
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
       body: formdata,
-      redirect: 'follow'
+      redirect: 'follow',
     };
 
+    const savedImage = localStorage.getItem('user_image');
+
     fetch(`${process.env.REACT_APP_TWO}/personal-information`, requestOptions)
-      .then(response => response.text())
-      .then(result => {toast.success('Malumotlar yuborildi!')})
-      .catch(error => { toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'); toast.error('Xatolik yuz berdi. Malumotlar yuborilmadi.')});
+      .then((response) => response.text())
+      .then((result) => {
+        toast.success('Malumotlar yuborildi!');
+        setTimeout(() => {
+          axios
+            .get(`${process.env.REACT_APP_TWO}/personal-information`, {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+                language: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+              },
+            })
+            .then((response) => {
+              const responseData = response.data.data;
+
+              setFormData({
+                name: responseData.first_name,
+                lastName: responseData.last_name,
+                phoneNumber: responseData.phone_number,
+                gender: responseData.gender,
+                birthDate: responseData.birth_date,
+                img: responseData.image,
+                email: responseData.email,
+              });
+
+              localStorage.setItem('user_name', responseData.first_name);
+              localStorage.setItem('user_last_name', responseData.last_name);
+              localStorage.setItem('user_image', responseData.image);
+              localStorage.setItem('user_phone_number', responseData.phone_number);
+
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                img: savedImage,
+                imageUrl: savedImage,
+              }));
+
+              window.location.reload();
+            })
+            .catch((error) => {
+              toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+            });
+        }, 1000);
+      })
+      .catch((error) => {
+        toast.error('Xatolik yuz berdi. Malumotlar yuborilmadi.');
+      });
   };
 
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
-
+  
     if (imageFile) {
-      const blob = new Blob([imageFile]);
-      const imageUrl = URL.createObjectURL(blob);
+      const imageUrl = URL.createObjectURL(imageFile);
   
       setFormData((prevFormData) => ({
         ...prevFormData,
-        img: blob,
+        img: imageFile,
         imageUrl: imageUrl,
       }));
     }
-  };  
+  };
 
   return (
     <>
@@ -157,7 +185,7 @@ function Profile() {
                   height: '100px',
                   borderRadius: '50%',
                 }}
-                src={formData.img ? formData.img : no_image}
+                src={formData.imageUrl ? formData.imageUrl : no_image}
                 alt={formData.name ? `${formData.name} ${formData.lastName}` : 'no_image'}
               />
 

@@ -143,6 +143,7 @@ function ProfileAddres() {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
+          'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
         },
       })
       .then((response) => {
@@ -173,7 +174,8 @@ function ProfileAddres() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setDataGet(response.data);

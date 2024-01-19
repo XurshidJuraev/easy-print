@@ -36,6 +36,10 @@ function ShowDetail() {
     localStorage.setItem('selectedCategory', params.id);
   })
 
+  useEffect(() => {
+    document.title = 'Посмотреть продукт'
+  }, []);
+
   if (params.id !== localStorage.getItem('selectedCategory')) {
     setTimeout(() => {
       window.location.reload();
@@ -88,7 +92,8 @@ function ShowDetail() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setColorArray(response.data.data.color_by_size);
@@ -104,7 +109,8 @@ function ShowDetail() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setData(response.data);
@@ -124,7 +130,8 @@ function ShowDetail() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
       setModalData(response.data.data);
@@ -252,29 +259,31 @@ function ShowDetail() {
           <h3 className='show_detail_title' style={{margin: '0', marginBottom: '24px'}}>Детали товара</h3>
 
           <div className="d-flex">
-            <div className="image-thumbnails mt-3">
-              {dataBeck.images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={`Thumbnail ${index + 1}`}
-                  className={index === currentImageIndex ? 'thumbnail-active' : 'thumbnail'}
-                  onClick={() => setCurrentImageIndex(index)}
-                />
-              ))}
-            </div>
-            
+            {dataBeck.images && dataBeck.images.length > 0 && (
+              <div className="image-thumbnails">
+                {dataBeck.images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Thumbnail ${index + 1}`}
+                    className={index === currentImageIndex ? 'thumbnail-active' : 'thumbnail'}
+                    onClick={() => setCurrentImageIndex(index)}
+                  />
+                ))}
+              </div>
+            )}
+
             <div className="img_card_detail">
               {dataBeck.images && dataBeck.images.length > 0 && (
                 <img src={dataBeck.images[currentImageIndex]} alt={dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'} />
               )}
 
               <div className="d-flex justify-content-between" style={{width: '439.014px', marginLeft: '-50px', marginTop: '450px'}}>
-                <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handleNextImage}>
+                <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handlePrevImage}>
                   <img style={{ width: '48px', height: '48px' }} src={show_right} alt="show_right" />
                 </button>
 
-                <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handlePrevImage}>
+                <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handleNextImage}>
                   <img style={{ width: '48px', height: '48px' }} src={show_left} alt="show_left" />
                 </button>
               </div>
@@ -335,7 +344,7 @@ function ShowDetail() {
               </div>
 
               <div style={{margin: '24px 0px 14px 0px'}}>
-                <p className='show_detail_title_info-text'>Состав: 100% хлопок</p>
+                <p className='show_detail_title_info-text'>Состав: {dataBeck.composition ? dataBeck.composition : 'Состав отсутствует или не найден'}</p>
               </div>
 
               <div className="d-flex" style={{marginTop: '-14px'}}>
