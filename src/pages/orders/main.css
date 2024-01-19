@@ -119,6 +119,10 @@ input[type='radio']:checked:before {
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.1px;
+  /* white-space: nowrap; */
+  /* overflow: hidden !important; */
+  text-overflow: ellipsis;
+  width: 326px;
 }
 
 .order_name_tite {
@@ -140,7 +144,7 @@ input[type='radio']:checked:before {
   line-height: normal;
   letter-spacing: -0.08px;
   text-transform: uppercase;
-  width: 20px;
+  width: 40px;
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;

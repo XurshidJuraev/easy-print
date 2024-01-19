@@ -97,8 +97,8 @@ function ProfileOrders() {
                             <button className='btn_order_profile' style={{ background: order.status === 'Ordered' ? '#D8E5FE' : order.status === 'Performed' ? '#D8E5FE' : order.status === 'Canceled' ? '#FFE7D6' : order.status === 'Accepted_by_recipient' ? '#E6E6E6' : '#D8E5FE', color: order.status === 'Ordered' ? '#3064CC' : order.status === 'Performed' ? '#3064CC' : order.status === 'Canceled' ? '#FF4A32' : order.status === 'Accepted_by_recipient' ? '#333' : '#3064CC' }}>{order.status}</button>
                             <p className='order_profile_opacity_text pt-1 ps-3'>{order.delivery_date ? order.delivery_date : 'Нет данных'}</p>
                           </div>
-                          <p className='order_profile_text'>{order.delivery_date ? order.delivery_date : 'Нет данных'}</p>
-                          <p className='order_profile_text'>{order.delivery_date ? order.delivery_date : 'Нет данных'}</p>
+                          <p className='order_profile_text'>{order.order_date ? order.order_date : 'Нет данных'}</p>
+                          <p className='order_profile_text'>{order.delivery_date ? order.delivery_date : 'Я еще не получила заказ :('}</p>
                           <p className='order_profile_text'>{order.address ? `${order.address.region} ${order.address.city} ${order.address.street}` : 'Нет данных'}</p>
                           <p className='order_profile_text'>{Number(order.all_price).toLocaleString('ru-RU')} сум</p>
                         </div>
@@ -130,8 +130,8 @@ function ProfileOrders() {
                                             <p className='order_name_tite'>Размер:</p>
                                           </div>
                                           <div className='text-end center flex-column ms-2' style={{paddingTop: '14px'}}>
-                                            <p className='order_name_name'>{item.quantity}</p>
-                                            <p className='order_name_name'>{item.warehouse.size && item.warehouse.size.name}</p>
+                                            <p className='order_name_name' title={item.quantity}>{item.quantity}</p>
+                                            <p className='order_name_name' title={item.warehouse.size && item.warehouse.size.name}>{item.warehouse.size && item.warehouse.size.name}</p>
                                           </div>
                                         </div>
                                         <div className='d-flex' style={{marginTop: '66px', marginLeft: '46px'}}>
