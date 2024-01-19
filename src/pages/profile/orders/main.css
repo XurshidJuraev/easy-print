@@ -29,7 +29,7 @@
 
 .order_profile_opacity_text {
   color: var(--Neutral-600, #666);
-  font-family: Inter;
+  font-family: 'Inter400';
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -47,7 +47,7 @@
   background: var(--Neutral-100, #E6E6E6);
   border: none;
   color: var(--Neutral-800, #333);
-  font-family: Inter;
+  font-family: 'Inter400';
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
@@ -57,7 +57,7 @@
 
 .order_profile_text {
   color: var(--Neutral-900, #1A1A1A);
-  font-family: Inter;
+  font-family: 'Inter400';
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

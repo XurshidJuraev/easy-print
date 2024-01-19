@@ -92,9 +92,9 @@ function ProfileOrders() {
                           <p className='order_profile_opacity_text'>Сумма заказа:</p>
                         </div>
 
-                        <div style={{ marginLeft: 'auto' }}>
+                        <div style={{ marginLeft: '40px' }}>
                           <div className="d-flex">
-                            <button className='btn_order_profile' style={{ background: order.status === 'Accepted' ? '#D8E6EA' : order.status === 'On_the_way' ? '#D8E6EA' : order.status === 'Finished' ? '#E6E6E6' : order.status === 'Cancelled' ? '#FFE7D6' : order.status === 'Basked' ? '#FFE7D6' : '#E6E6E6', color: order.status === 'Accepted' ? '#32454B' : order.status === 'On_the_way' ? '#32454B' : order.status === 'Finished' ? '#333333' : order.status === 'Cancelled' ? '#FF4A32' : '#333333' }}>{order.status}</button>
+                            <button className='btn_order_profile' style={{ background: order.status === 'Ordered' ? '#D8E5FE' : order.status === 'Performed' ? '#D8E5FE' : order.status === 'Canceled' ? '#FFE7D6' : order.status === 'Accepted_by_recipient' ? '#E6E6E6' : '#D8E5FE', color: order.status === 'Ordered' ? '#3064CC' : order.status === 'Performed' ? '#3064CC' : order.status === 'Canceled' ? '#FF4A32' : order.status === 'Accepted_by_recipient' ? '#333' : '#3064CC' }}>{order.status}</button>
                             <p className='order_profile_opacity_text pt-1 ps-3'>{order.delivery_date ? order.delivery_date : 'Нет данных'}</p>
                           </div>
                           <p className='order_profile_text'>{order.delivery_date ? order.delivery_date : 'Нет данных'}</p>
