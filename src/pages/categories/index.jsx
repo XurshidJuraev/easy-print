@@ -5,6 +5,7 @@ import AdvantageMain from '../../components/advantage';
 import FooterMain from '../../components/footer';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import ToastComponent from '../../components/toast';
 
 function CategoryListByName() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -159,7 +160,22 @@ function CategoryListByName() {
         .then(response => response.json())
         .then(result => {
           if (result.status === true) {
-            toast.success('Товар добавлен');
+            toast(
+              <ToastComponent
+                image={productData.images[0] ? productData.images[0] : ''}
+                title={productData.name}
+                description={productData.description ? productData.description : 'Описание недоступно'}
+                link="/basket"
+                linkText="Перейти в корзину"
+                onClose={() => toast.dismiss()}
+              />,
+              {
+                position: "top-center",
+                autoClose: 3000,
+                draggable: true,
+                theme: "colored",
+              }
+            );
           } else {
             if (result.message === "Unauthenticated.") {
               const basketData = {

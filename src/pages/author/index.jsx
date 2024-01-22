@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import FooterMain from '../../components/footer';
 import AdvantageMain from '../../components/advantage';
+import ToastComponent from '../../components/toast';
 
 function AuthorPage() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -17,6 +18,7 @@ function AuthorPage() {
   const token = localStorage.getItem('token');
   const [selectedCard, setSelectedCard] = useState(null);
   const [colorArray, setColorArray] = useState([]);
+  const [author, setAuthor] = useState([]);
   const [sizeOptions, setSizeOptions] = useState([]);
   const [idCounter, setIdCounter] = useState(1);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
@@ -32,6 +34,22 @@ function AuthorPage() {
   useEffect(() => {
     window.scrollTo(0, 0)
   });
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/get-company-products?id=${params.id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+      }
+    }).then((response) => {
+      console.log(response.data.data[0]);
+      setAuthor(response.data.data[0]);
+    }).catch((error) => {
+      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+    });    
+  }, []);
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -116,7 +134,22 @@ function AuthorPage() {
         .then(response => response.json())
         .then(result => {
           if (result.status === true) {
-            toast.success('Товар добавлен');
+            toast(
+              <ToastComponent
+                image={productData.images[0] ? productData.images[0] : ''}
+                title={productData.name}
+                description={productData.description ? productData.description : 'Описание недоступно'}
+                link="/basket"
+                linkText="Перейти в корзину"
+                onClose={() => toast.dismiss()}
+              />,
+              {
+                position: "top-center",
+                autoClose: 3000,
+                draggable: true,
+                theme: "colored",
+              }
+            );
           } else {
             if (result.message === "Unauthenticated.") {
               const basketData = {
@@ -214,23 +247,23 @@ function AuthorPage() {
             <center>
               {/* <div className='user_avatar'></div> */}
 
-              {localStorage.getItem('user_image') ? (
-                <img className='user_avatar' src={localStorage.getItem('user_image')} alt={localStorage.getItem('user_name')} />
+              {author.avatar ? (
+                <img className='user_avatar' src={author.avatar} alt={localStorage.getItem('user_name')} />
               ) : (
                 <div className='user_avatar'></div>
               )}
 
-              <h3 className='author_name'>{localStorage.getItem('user_name')} {localStorage.getItem('user_last_name')}</h3>
-              <p className='author_country'>🇺🇿 Uzbekistan</p>
+              <h3 className='author_name'>{author.full_name}</h3>
+              <p className='author_country'>{author.country === 'Uzbekistan' ? '🇺🇿' : ''} {author.country}</p>
 
               <p className='author_list'>Всего принтов</p>
-              <p className='author_item'>{Number(100000).toLocaleString('ru-RU')}</p>
+              <p className='author_item'>{Number(author.total_prints).toLocaleString('ru-RU')}</p>
 
               <p className='author_list'>Продано товаров</p>
-              <p className='author_item'>{Number(100000).toLocaleString('ru-RU')}</p>
+              <p className='author_item'>{Number(author.total_solds).toLocaleString('ru-RU')}</p>
 
               <p className='author_list'>Дата регистрации</p>
-              <p className='author_item'>15.01.2024</p>
+              <p className='author_item'>{author.registration_date}</p>
 
               <button className='author_button'>Пожаловаться</button>
             </center>

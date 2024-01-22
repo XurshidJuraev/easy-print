@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
+import ToastComponent from '../../components/toast'
 
 function ShowDetail() {
   const params = useParams()
@@ -202,7 +203,22 @@ function ShowDetail() {
         .then(response => response.json())
         .then(result => {
           if (result.status === true) {
-            toast.success('Товар добавлен');
+            toast(
+              <ToastComponent
+                image={productData.images[0] ? productData.images[0] : ''}
+                title={productData.name}
+                description={productData.description ? productData.description : 'Описание недоступно'}
+                link="/basket"
+                linkText="Перейти в корзину"
+                onClose={() => toast.dismiss()}
+              />,
+              {
+                position: "top-center",
+                autoClose: 3000,
+                draggable: true,
+                theme: "colored",
+              }
+            );
           } else {
             if (result.message === "Unauthenticated.") {
               const basketData = {
