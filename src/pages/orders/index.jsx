@@ -176,6 +176,7 @@ function MyOrders() {
           toast.success('Заказ успешно оформлен!');
           setTimeout(() => {
             navigate('/');
+            localStorage.setItem('counterValue', 0);
           }, 1500);
         } else {
           toast.error('Заказ не был оформлен!');
@@ -325,7 +326,7 @@ function MyOrders() {
                             Товары ({adrse})
                           </button>
                         </h2>
-                        <div id="collapseOne" style={{borderRadius: '12px'}} className="accordion-collapse collapse show" data-bs-parent="#accordionExample" >
+                        <div id="collapseOne" style={{borderRadius: '12px'}} className="accordion-collapse collapse" data-bs-parent="#accordionExample" >
                           <div className="accordion-body">
                             {orders && orders.list && orders.list.map((item, itemIndex) => (
                               <div key={itemIndex}>

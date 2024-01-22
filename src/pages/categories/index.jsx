@@ -25,6 +25,21 @@ function CategoryListByName() {
   const params = useParams()
   const [sizeArray, setSizeArray] = useState([]);
   const [colorArray, setColorArray] = useState([]);
+  const [countHeader, setCountHeader] = useState(0);
+
+  useEffect(() => {
+    const storedCount = localStorage.getItem('counterValue');
+    if (storedCount) {
+      setCountHeader(Number(storedCount));
+    }
+  }, []);
+
+  const handleButtonClick = () => {
+    const newCount = Math.max(1, countHeader + 1);
+    setCountHeader(newCount);
+
+    localStorage.setItem('counterValue', newCount.toString());
+  };
 
   useEffect(() => {
     localStorage.setItem('selectedCategory', params.id);
@@ -356,7 +371,7 @@ function CategoryListByName() {
                     </div>
 
                     <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
-                      <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); addToBasket(modalData)} }>
+                      <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                         <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <g clip-path="url(#clip0_2381_4754)">
@@ -375,7 +390,7 @@ function CategoryListByName() {
                         </button>
                       </div>
 
-                      <div style={{marginTop: '12px'}} onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); addToBasket(modalData); navigate('/basket')}}>
+                      <div style={{marginTop: '12px'}} onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); navigate('/basket')}}>
                         <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
                           <span>Заказать сейчас </span>
 

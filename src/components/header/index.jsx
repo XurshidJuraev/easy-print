@@ -311,8 +311,8 @@ function HeaderMain({ trashCardData }) {
                 </div>
               )}
 
-              <NavLink title="Basket" to={'/basket'} style={{paddingTop: bascent === 0 ? '9px' : 'none'}} className='basket_counter_father'>
-                <div title="Basket counter" className='basket_counter' style={{display: bascent === 0 ? 'none' : 'block'}}>{bascent}</div>
+              <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none'}} className='basket_counter_father'>
+                <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'block'}}>{localStorage.getItem('counterValue')}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
               </NavLink>
 

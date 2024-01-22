@@ -32,6 +32,21 @@ function ShowDetail() {
   const [count, setCount] = useState(1);
   const [selectedSize, setSelectedSize] = useState('s');
   const [selectedColor, setSelectedColor] = useState('#D9CCC6');
+  const [countHeader, setCountHeader] = useState(0);
+
+  useEffect(() => {
+    const storedCount = localStorage.getItem('counterValue');
+    if (storedCount) {
+      setCountHeader(Number(storedCount));
+    }
+  }, []);
+
+  const handleButtonClick = () => {
+    const newCount = Math.max(1, countHeader + 1);
+    setCountHeader(newCount);
+
+    localStorage.setItem('counterValue', newCount.toString());
+  };
 
   useEffect(() => {
     localStorage.setItem('selectedCategory', params.id);
@@ -375,14 +390,14 @@ function ShowDetail() {
               </div>
 
               <div className="d-flex" style={{marginTop: '-14px'}}>
-                <button onClick={() => addToBasket(dataBeck)} className='add_basket_btn' style={{width: '266px', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
+                <button onClick={() => {addToBasket(dataBeck); handleButtonClick();}} className='add_basket_btn' style={{width: '266px', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M19.5 7H17C17 5.67392 16.4732 4.40215 15.5355 3.46447C14.5979 2.52678 13.3261 2 12 2C10.6739 2 9.40215 2.52678 8.46447 3.46447C7.52678 4.40215 7 5.67392 7 7H4.5C3.83696 7 3.20107 7.26339 2.73223 7.73223C2.26339 8.20107 2 8.83696 2 9.5L2 17.8333C2.00132 18.938 2.44073 19.997 3.22185 20.7782C4.00296 21.5593 5.062 21.9987 6.16667 22H17.8333C18.938 21.9987 19.997 21.5593 20.7782 20.7782C21.5593 19.997 21.9987 18.938 22 17.8333V9.5C22 8.83696 21.7366 8.20107 21.2678 7.73223C20.7989 7.26339 20.163 7 19.5 7ZM12 3.66667C12.8841 3.66667 13.7319 4.01786 14.357 4.64298C14.9821 5.2681 15.3333 6.11594 15.3333 7H8.66667C8.66667 6.11594 9.01786 5.2681 9.64298 4.64298C10.2681 4.01786 11.1159 3.66667 12 3.66667ZM20.3333 17.8333C20.3333 18.4964 20.0699 19.1323 19.6011 19.6011C19.1323 20.0699 18.4964 20.3333 17.8333 20.3333H6.16667C5.50363 20.3333 4.86774 20.0699 4.3989 19.6011C3.93006 19.1323 3.66667 18.4964 3.66667 17.8333V9.5C3.66667 9.27899 3.75446 9.06702 3.91074 8.91074C4.06702 8.75446 4.27899 8.66667 4.5 8.66667H7V10.3333C7 10.5543 7.0878 10.7663 7.24408 10.9226C7.40036 11.0789 7.61232 11.1667 7.83333 11.1667C8.05435 11.1667 8.26631 11.0789 8.42259 10.9226C8.57887 10.7663 8.66667 10.5543 8.66667 10.3333V8.66667H15.3333V10.3333C15.3333 10.5543 15.4211 10.7663 15.5774 10.9226C15.7337 11.0789 15.9457 11.1667 16.1667 11.1667C16.3877 11.1667 16.5996 11.0789 16.7559 10.9226C16.9122 10.7663 17 10.5543 17 10.3333V8.66667H19.5C19.721 8.66667 19.933 8.75446 20.0893 8.91074C20.2455 9.06702 20.3333 9.27899 20.3333 9.5V17.8333Z" fill="white"/>
                   </svg>
                   <span>Добавить в корзину</span>
                 </button>
 
-                <button className='hero_button' style={{width: '236px', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px'}}>
+                <button onClick={() => {addToBasket(dataBeck); handleButtonClick(); setTimeout(() => {navigate('/basket');}, 1000);}} className='hero_button' style={{width: '236px', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px'}}>
                   <span>Заказать сейчас</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                     <path d="M22.5 13.0039C22.4951 12.4774 22.2832 11.9741 21.91 11.6029L17.62 7.29979C17.4326 7.11341 17.1792 7.00879 16.915 7.00879C16.6508 7.00879 16.3974 7.11341 16.21 7.29979C16.1163 7.39282 16.0419 7.5035 15.9911 7.62545C15.9403 7.7474 15.9142 7.8782 15.9142 8.0103C15.9142 8.14241 15.9403 8.27321 15.9911 8.39516C16.0419 8.5171 16.1163 8.62778 16.21 8.72081L19.5 12.0032H3.5C3.23478 12.0032 2.98043 12.1086 2.79289 12.2963C2.60536 12.484 2.5 12.7385 2.5 13.0039C2.5 13.2693 2.60536 13.5238 2.79289 13.7115C2.98043 13.8992 3.23478 14.0046 3.5 14.0046H19.5L16.21 17.297C16.0217 17.4841 15.9154 17.7384 15.9144 18.004C15.9135 18.2695 16.018 18.5246 16.205 18.713C16.392 18.9015 16.6461 19.0078 16.9115 19.0088C17.1768 19.0097 17.4317 18.9051 17.62 18.718L21.91 14.4149C22.2856 14.0413 22.4978 13.5339 22.5 13.0039Z" fill="white"/>
@@ -545,7 +560,7 @@ function ShowDetail() {
                     </div>
 
                     <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
-                      <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); addToBasket(modalData)} }>
+                      <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                         <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <g clip-path="url(#clip0_2381_4754)">
@@ -564,7 +579,7 @@ function ShowDetail() {
                         </button>
                       </div>
 
-                      <div style={{marginTop: '12px'}} onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); addToBasket(modalData); navigate('/basket')}}>
+                      <div style={{marginTop: '12px'}} onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); navigate('/basket')}}>
                         <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
                           <span>Заказать сейчас </span>
 

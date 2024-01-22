@@ -17,6 +17,7 @@ function Basket() {
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [promoMessage, setPromoMessage] = useState('');
+  const [allProduct, setAllProduct] = useState('');
   const [promoMessageColor, setPromoMessageColor] = useState('green');
   const [data, setData] = useState([]);
   const [coupon_price, setCoupon_price] = useState('');
@@ -31,6 +32,35 @@ function Basket() {
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
+  const [countHeader, setCountHeader] = useState(0);
+  const [selectedAll, setSelectedAll] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+    const storedCount = localStorage.getItem('counterValue');
+    if (storedCount) {
+      setCountHeader(Number(storedCount));
+    }
+  }, []);
+  
+  
+  const decrementLocalStorageValue = (key) => {
+    const storedValue = localStorage.getItem(key);
+    const newValue = Math.max(0, Number(storedValue) - 1);
+  
+    if (newValue === 0) {
+      localStorage.setItem(key, '0');
+    } else {
+      localStorage.setItem(key, newValue.toString());
+    }
+  
+    return newValue;
+  };
+  
+  const handleDecrementButtonClick = () => {
+    const newCount = decrementLocalStorageValue('counterValue');
+    setCountHeader(newCount);
+  };
 
   // useEffect(() => {
   //   window.scrollTo(0, 0)
@@ -260,10 +290,26 @@ function Basket() {
     });
   }
 
+  useEffect(() => {
+    setAllProduct(data && data.data && data.data.list ? data.data.list.length : '')
+  });
+
+  const handleCheckboxChange = (id) => {
+    if (selectedItems.includes(id)) {
+      setSelectedItems((prevItems) => prevItems.filter((item) => item !== id));
+    } else {
+      setSelectedItems((prevItems) => [...prevItems, id]);
+    }
+  };
+  
+  const handleSelectAll = () => {
+    setSelectedAll((prev) => !prev);
+    setSelectedItems([]);
+  };
+
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
-      {/* <ToastContainer /> */}
 
       <div className="container" style={{ marginTop: '32px'  }}>
         <div>
@@ -292,16 +338,38 @@ function Basket() {
 
                 <hr />
 
-                <div>
+                {/* <label style={{cursor: 'pointer', marginLeft: '30px', marginTop: '-20px'}}>
+                  <input style={{position: 'relative', top: '20px', left: '-27px'}} type="checkbox" />
+                  <p className='basket_check'>Выбрать все</p>
+                </label> */}
+
+                <label style={{cursor: 'pointer', marginLeft: '30px', marginTop: '-20px'}}>
+                  <input
+                    style={{position: 'relative', top: '20px', left: '-27px'}}
+                    type="checkbox"
+                    checked={selectedAll}
+                    onChange={handleSelectAll}
+                  />
+                  <p className='basket_check'>Выбрать все</p>
+                </label>
+
+                <div style={{marginTop: '-20px'}}>
                   <div>
                     {data.data && data.data.list.map((item) => {
                       return (
                         <div key={item.id}>
                           <div className='d-flex basket_card'>
-                            <div>
+                            <div className='d-flex flex-column align-items-center'>
                               <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none' }}>
                                 <img className='basket_card_img' src={item.images[0]} alt={item.name} />
                               </NavLink>
+                              {/* <input style={{position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px'}} type="checkbox" /> */}
+                              <input
+                                style={{position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px'}}
+                                type="checkbox"
+                                checked={selectedItems.includes(item.id)}
+                                onChange={() => handleCheckboxChange(item.id)}
+                              />
                             </div>
 
                             <div>
@@ -372,7 +440,7 @@ function Basket() {
                             </div>
 
                             <div className='d-flex' style={{marginLeft: item.relation_type === 'warehouse_product' ? '148px' : '48px'}}>
-                              <NavLink onClick={() => handleDeleteAddress(item.id)} to={'#'}>
+                              <NavLink onClick={() => {handleDeleteAddress(item.id); handleDecrementButtonClick()}} to={'#'}>
                                 <img src={trash} alt={trash} />
                               </NavLink>
                             </div>
@@ -418,7 +486,7 @@ function Basket() {
                     <div style={{width: '540px'}}>
                       <div className="basket_total" style={{width: '540px'}}>
                         <div>
-                          <p className='basket_total_title' style={{marginBottom: '28px'}}>Итог товаров</p>
+                          <p className='basket_total_title' style={{marginBottom: '28px'}}>Итог товаров ({allProduct})</p>
                           <p className='basket_total_title' style={{marginBottom: '28px'}}>Промокоды</p>
                           <p className='basket_total_title' style={{marginBottom: '28px'}}>Скидки</p>
                           <p className='basket_total_title'>Итого</p>
