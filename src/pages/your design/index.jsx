@@ -141,7 +141,7 @@ const YourDesign = () => {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      console.log(response.data.data);
+      setCategorySize(response.data.data.category[0].sizes)
       setCategoryName(response.data.data);
     }).catch((error) => {
       toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -847,24 +847,19 @@ const YourDesign = () => {
         </div>
       </div>
 
-      {isColorChange && (
-        <div style={{ position: 'relative', marginTop: '-680px', left: '35.9%', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
-          <div className='d-flex' style={{cursor: 'pointer'}}>
-            <div className='color_change_selector'>
-              <div onClick={() => setShirtColor('#000000')} className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'black', border: '0.5px solid var(--neutral-200, #CCC)'}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill={shirtColor === '#000000' ? '#FFFFFF' : '#000000'} />
-                </svg>
+      {isCategoryChange && (
+        <div style={{ position: 'relative', marginTop: '-680px', left: '19.2%', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
+          <div>
+            {categoryName.category.map((cat, index) => (
+              <div key={index} onClick={() => { setCategory(cat.name); setCategorySize(cat.sizes); setCategoryIndex(index); }} className={`category_change ${categoryIndex === index ? 'selected' : ''}`}>
+                {cat.name}
+                {categoryIndex === index && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill="#32454B"/>
+                  </svg>
+                )}
               </div>
-            </div>
-
-            <div className='color_change_selector'>
-              <div onClick={() => setShirtColor('#FFFFFF')} className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'white', border: '0.5px solid var(--neutral-200, #CCC)'}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill={shirtColor === '#000000' ? '#FFFFFF' : '#000000'} />
-                </svg>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       )}
@@ -886,19 +881,24 @@ const YourDesign = () => {
         </div>
       )}
 
-      {isCategoryChange && (
-        <div style={{ position: 'relative', marginTop: '-680px', left: '19.2%', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
-          <div>
-            {categoryName.category.map((cat, index) => (
-              <div key={index} onClick={() => { setCategory(cat.name); setCategorySize(cat.sizes); setCategoryIndex(index); }} className={`category_change ${categoryIndex === index ? 'selected' : ''}`}>
-                {cat.name}
-                {categoryIndex === index && (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill="#32454B"/>
-                  </svg>
-                )}
+      {isColorChange && (
+        <div style={{ position: 'relative', marginTop: '-680px', left: '35.9%', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
+          <div className='d-flex' style={{cursor: 'pointer'}}>
+            <div className='color_change_selector'>
+              <div onClick={() => setShirtColor('#000000')} className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'black', border: '0.5px solid var(--neutral-200, #CCC)'}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill={shirtColor === '#000000' ? '#FFFFFF' : '#000000'} />
+                </svg>
               </div>
-            ))}
+            </div>
+
+            <div className='color_change_selector'>
+              <div onClick={() => setShirtColor('#FFFFFF')} className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'white', border: '0.5px solid var(--neutral-200, #CCC)'}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill={shirtColor === '#000000' ? '#FFFFFF' : '#000000'} />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       )}
