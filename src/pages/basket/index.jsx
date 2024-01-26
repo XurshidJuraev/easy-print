@@ -7,7 +7,6 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import pencil from '../../layouts/icons/edit_product_basket.svg'
 import trash from '../../layouts/icons/delete_product_basket.svg'
 import no_data from '../../layouts/images/no_trash.svg'
-import continue_shopping from '../../layouts/images/continue_shopping.svg'
 import AdvantageMain from '../../components/advantage';
 import FooterMain from '../../components/footer';
 import axios from 'axios';
@@ -26,15 +25,11 @@ function Basket() {
   const [order_id, setOrder_id] = useState('');
   const [grant_total, setGrant_total] = useState('');
   const [colorOptions, setColorOptions] = useState({});
-  const [selectedSize, setSelectedSize] = useState('');
   const [sizeOptions, setSizeOptions] = useState({});
   const token = localStorage.getItem('token');
-  const [selectedColor, setSelectedColor] = useState('');
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
   const [countHeader, setCountHeader] = useState(0);
-  const [selectedAll, setSelectedAll] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -42,7 +37,6 @@ function Basket() {
       setCountHeader(Number(storedCount));
     }
   }, []);
-  
   
   const decrementLocalStorageValue = (key) => {
     const storedValue = localStorage.getItem(key);
@@ -56,7 +50,7 @@ function Basket() {
   
     return newValue;
   };
-  
+
   const handleDecrementButtonClick = () => {
     const newCount = decrementLocalStorageValue('counterValue');
     setCountHeader(newCount);
@@ -102,27 +96,18 @@ function Basket() {
     setTrashCardData(savedCards);
     calculateTotalPrice(savedCards);
   }, [selectedColorId, selectedSizeId]);
-  
+
   useEffect(() => {
-    const savedCards = JSON.parse(localStorage.getItem('trashCard'));
+    const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
     if (savedCards) {
       setTrashCardData(savedCards);
+      calculateTotalPrice(savedCards);
     }
-  }, []);
-
-  useEffect(() => {
-    const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
-    setTrashCardData(savedCards);
-  }, []);
-
-  useEffect(() => {
-    const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
-    setTrashCardData(savedCards);
-    calculateTotalPrice(savedCards); // localstoragedan o'qib olgan malumotlar bilan hisoblash
+    handleSelectAll();
   }, []);
   
   function calculateTotalPrice(data) {
-    if (!data || data.length === 0) {
+    if (!data || !data.length || data.length === 0) {
       return 0;
     }
   
@@ -139,7 +124,7 @@ function Basket() {
     }
   
     return total;
-  }  
+  }
 
   const navigate = useNavigate();
 
@@ -290,21 +275,21 @@ function Basket() {
     });
   }
 
-  useEffect(() => {
-    setAllProduct(data && data.data && data.data.list ? data.data.list.length : '')
-  });
-
-  const handleCheckboxChange = (id) => {
-    if (selectedItems.includes(id)) {
-      setSelectedItems((prevItems) => prevItems.filter((item) => item !== id));
-    } else {
-      setSelectedItems((prevItems) => [...prevItems, id]);
-    }
-  };
-  
   const handleSelectAll = () => {
-    setSelectedAll((prev) => !prev);
-    setSelectedItems([]);
+    setData((prevData) => {
+      if (!prevData.data || !prevData.data.list) {
+        return prevData;
+      }
+  
+      const updatedList = prevData.data.list.map((item) => {
+        return {
+          ...item,
+          selected: !item.selected,
+        };
+      });
+  
+      return { ...prevData, data: { ...prevData.data, list: updatedList } };
+    });
   };
 
   return (
@@ -343,11 +328,10 @@ function Basket() {
                   <p className='basket_check'>Выбрать все</p>
                 </label> */}
 
-                <label style={{cursor: 'pointer', marginLeft: '30px', marginTop: '-20px'}}>
+                <label style={{ cursor: 'pointer', marginLeft: '30px', marginTop: '-20px' }}>
                   <input
-                    style={{position: 'relative', top: '20px', left: '-27px'}}
+                    style={{ position: 'relative', top: '20px', left: '-27px' }}
                     type="checkbox"
-                    checked={selectedAll}
                     onChange={handleSelectAll}
                   />
                   <p className='basket_check'>Выбрать все</p>
@@ -360,25 +344,25 @@ function Basket() {
                         <div key={item.id}>
                           <div className='d-flex basket_card'>
                             <div className='d-flex flex-column align-items-center'>
-                              <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none' }}>
-                                <img className='basket_card_img' src={item.images[0]} alt={item.name} />
+                              <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
+                                <div className='basket_card_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundColor: item.relation_type === 'product' ? '#ffffff' : '#E9E9E9', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                               </NavLink>
                               {/* <input style={{position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px'}} type="checkbox" /> */}
                               <input
-                                style={{position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px'}}
+                                style={{ position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px' }}
                                 type="checkbox"
-                                checked={selectedItems.includes(item.id)}
-                                onChange={() => handleCheckboxChange(item.id)}
+                                checked={data.data && data.data.list.every(item => item.selected)}
+                                onChange={handleSelectAll}
                               />
                             </div>
 
                             <div>
                               <div className="basket_info1">
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
                                   <p className='basket_card_name'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
                                 </NavLink>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} сум</p>
                                 </NavLink>
 
@@ -396,11 +380,11 @@ function Basket() {
                                   </button>
                                 </div>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price_sale'>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} сум` : '0 сум'}</p>
                                 </NavLink>
 
-                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : ``} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   <p className='basket_card_price' id='all_price'>{item.total_price ? `${Number(item.total_price).toLocaleString('ru-RU')}` : '0'} сум</p>
                                 </NavLink>
                               </div>
@@ -434,7 +418,7 @@ function Basket() {
 
                           <div className='d-flex basket_size_fat2'>
                             <div style={{display: item.relation_type === 'warehouse_product' ? 'none' : 'flex'}}>
-                              <NavLink to={'#'}>
+                              <NavLink to={'/yourDesign'}>
                                 <img src={pencil} alt={pencil} />
                               </NavLink>
                             </div>

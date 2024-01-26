@@ -9,8 +9,8 @@ const ToastComponent = ({ image, title, description, link, linkText, onClose }) 
     </div>
 
     <div style={{marginLeft: '12px'}}>
-      <h3 className='toast_title'>{title}</h3>
-      <p className='toast_description'>{description}</p>
+      <h3 className='toast_title'>Товар добавлен в корзину</h3>
+      <p className='toast_description'>{title}</p>
     </div>
 
     <div className='d-flex flex-column justify-content-between align-items-end' style={{position: 'relative', right: '-64px'}}>

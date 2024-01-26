@@ -262,6 +262,8 @@ function HomePage() {
 
   const currentProduct = data.data && data.data.product_list ? data.data.product_list[currentIndex] : null;
 
+  localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
+
   return (
     <div style={{ backgroundColor: '#FFFFFF' }}>
       <HeaderMain trashCardData={trashCardData} />

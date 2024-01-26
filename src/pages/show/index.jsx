@@ -8,7 +8,7 @@ import './main.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import ToastComponent from '../../components/toast'
 
 function ShowDetail() {
@@ -57,10 +57,8 @@ function ShowDetail() {
   }, []);
 
   if (params.id !== localStorage.getItem('selectedCategory')) {
-    // setTimeout(() => {
-      window.scrollTo(0, 0);
-      window.location.reload();
-    // }, 300);
+    window.location.reload();
+    window.scrollTo(0, 0);
   }
 
   const navigate = useNavigate();

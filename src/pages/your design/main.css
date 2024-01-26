@@ -206,7 +206,7 @@
 
 .modal_content_print {
   width: 900px !important;
-  height: 580px !important;
+  height: 650px !important;
 }
 
 .color_change_selector {
@@ -222,7 +222,7 @@
   width: 52px;
   height: 43px;
   color: var(--primary-6, #18356D);
-  font-family: Inter;
+  font-family: 'Inter400';
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -230,6 +230,33 @@
   letter-spacing: -0.13px;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+.color_change_selector_modal {
+  display: flex;
+  width: 80px;
+  height: 32px;
+  padding: 8px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: var(--Primary-7, #3064CC);
+  font-family: 'Inter400';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.14px;
+  text-transform: uppercase;
+  border: 1px solid var(--Neutral-200, #CCC);
+  background: var(--White, #FFF);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
 }
 
 .category_change {
@@ -243,7 +270,7 @@
   border-bottom: 0.2px solid var(--neutral-100, #E6E6E6);
   border-left: 1px solid var(--neutral-100, #E6E6E6);
   background: var(--White, #FFF);
-  width: 130px;
+  width: 150px;
   height: 36px;
   color: var(--primary-7, #17262B);
   font-family: Inter;
@@ -263,4 +290,14 @@
 
 .shirt_drawing_header_select:active svg path {
   fill: var(--White, #FFF);
+}
+
+.modal_size_title {
+  color: var(--Neutral-600, #666);
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.032px;
 }
