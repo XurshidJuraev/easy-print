@@ -197,6 +197,7 @@ function Basket() {
         setData(response.data);
         setSelectedColorId(response.data.data.list[0].color.id);
         setSelectedSizeId(response.data.data.list[0].size.id);
+        setAllProduct(response.data.data.list.length);
       }
     }).catch((error) => {
       const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
@@ -390,7 +391,7 @@ function Basket() {
                               </div>
 
                               <div className='basket_size_fat'>
-                                <div className='d-flex'>
+                                <div style={{display: 'flex'}}>
                                   <p className='basket_card_size'>Продавец:</p>
                                   <p className='basket_card_size'>{item.company_name ? item.company_name : 'Название не найден'}</p>
                                 </div>

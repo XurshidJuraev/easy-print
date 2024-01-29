@@ -46,7 +46,7 @@ function ProfileHeader() {
       localStorage.removeItem('user_image');
       localStorage.removeItem('user_phone_number');
       localStorage.removeItem('user_last_name');
-      localStorage.removeItem('token');
+      localStorage.removeItem('counterValue');
       navigate('/');
     }, 1000);
   };

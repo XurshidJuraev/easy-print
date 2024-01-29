@@ -238,28 +238,28 @@ const YourDesign = () => {
     setCanvas(new fabric.Canvas('tshirt-canvas'));
   }, []);
 
-  const handleScaleChange = (event, newValue) => {
+  const handleScaleChange = (newValue) => {
     setScale(newValue);
 
     var scaley = String(newValue).charAt(0)
 
-    if (scaley == 1) {
+    if (scaley === 1) {
       scaley = 0
-    } else if (scaley == 2) {
+    } else if (scaley === 2) {
       scaley = 1
-    } else if (scaley == 3) {
+    } else if (scaley === 3) {
       scaley = 2
-    } else if (scaley == 4) {
+    } else if (scaley === 4) {
       scaley = 3
-    } else if (scaley == 5) {
+    } else if (scaley === 5) {
       scaley = 4
-    } else if (scaley == 6) {
+    } else if (scaley === 6) {
       scaley = 5
-    } else if (scaley == 7) {
+    } else if (scaley === 7) {
       scaley = 6
-    } else if (scaley == 8) {
+    } else if (scaley === 8) {
       scaley = 7
-    } else if (scaley == 9) {
+    } else if (scaley === 9) {
       scaley = 8
     } 
 
@@ -514,28 +514,28 @@ const YourDesign = () => {
 
         <div className='shirt_drawing'>
           <div className="shirt_drawing_header">
-            <div onClick={() => {handleClickCategoryChange(); handleImageClickHeader(1)}} className={`shirt_drawing_header_select ${selectedHeader === 1 ? '' : ''}`}>
+            <div onClick={() => {handleClickCategoryChange(); handleImageClickHeader(1)}} style={{width: '138px'}} className={`shirt_drawing_header_select ${selectedHeader === 1 ? '' : ''}`}>
               Футболка
               <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 12C7.72592 12.0004 7.45444 11.9511 7.20118 11.8547C6.94792 11.7583 6.71786 11.6169 6.52423 11.4385L1.79945 7.09254C1.36915 6.69675 1.36918 6.01767 1.79951 5.62192C2.18181 5.27034 2.76973 5.27034 3.15203 5.62192L8 10.0803L12.848 5.62189C13.2303 5.27033 13.8182 5.27033 14.2004 5.62189C14.6308 6.01764 14.6308 6.69674 14.2004 7.0925L9.47577 11.4375C9.28223 11.6161 9.05221 11.7577 8.79894 11.8543C8.54567 11.9508 8.27415 12.0003 8 12Z" fill="#32454B"/>
               </svg>
             </div>
 
-            <div onClick={() => {handleClickSizeChange(); handleImageClickHeader(2)}} className={`shirt_drawing_header_select ${selectedHeader === 2 ? '' : ''}`}>
+            {/* <div onClick={() => {handleClickSizeChange(); handleImageClickHeader(2)}} className={`shirt_drawing_header_select ${selectedHeader === 2 ? '' : ''}`}>
               Размер
               <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 12C7.72592 12.0004 7.45444 11.9511 7.20118 11.8547C6.94792 11.7583 6.71786 11.6169 6.52423 11.4385L1.79945 7.09254C1.36915 6.69675 1.36918 6.01767 1.79951 5.62192C2.18181 5.27034 2.76973 5.27034 3.15203 5.62192L8 10.0803L12.848 5.62189C13.2303 5.27033 13.8182 5.27033 14.2004 5.62189C14.6308 6.01764 14.6308 6.69674 14.2004 7.0925L9.47577 11.4375C9.28223 11.6161 9.05221 11.7577 8.79894 11.8543C8.54567 11.9508 8.27415 12.0003 8 12Z" fill="#32454B"/>
               </svg>
-            </div>
+            </div> */}
 
-            <div onClick={() => {handleClickColorChange(); handleImageClickHeader(3)}} className={`shirt_drawing_header_select ${selectedHeader === 3 ? '' : ''}`}>
+            <div onClick={() => {handleClickColorChange(); handleImageClickHeader(3)}} style={{width: '101px'}} className={`shirt_drawing_header_select ${selectedHeader === 3 ? '' : ''}`}>
               Цвет
               <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 12C7.72592 12.0004 7.45444 11.9511 7.20118 11.8547C6.94792 11.7583 6.71786 11.6169 6.52423 11.4385L1.79945 7.09254C1.36915 6.69675 1.36918 6.01767 1.79951 5.62192C2.18181 5.27034 2.76973 5.27034 3.15203 5.62192L8 10.0803L12.848 5.62189C13.2303 5.27033 13.8182 5.27033 14.2004 5.62189C14.6308 6.01764 14.6308 6.69674 14.2004 7.0925L9.47577 11.4375C9.28223 11.6161 9.05221 11.7577 8.79894 11.8543C8.54567 11.9508 8.27415 12.0003 8 12Z" fill="#32454B"/>
               </svg>
             </div>
 
-            <div style={{width: '133.08px'}} onClick={() => {handleClickTrueFalse(); handleImageClickHeader(4)}}  className={`shirt_drawing_header_select ${selectedHeader === 4 ? '' : ''}`}>
+            <div style={{width: '157px'}} onClick={() => {handleClickTrueFalse(); handleImageClickHeader(4)}}  className={`shirt_drawing_header_select ${selectedHeader === 4 ? '' : ''}`}>
               {isFrontView ? 'Спереди' : 'Сзади'} 
               <svg style={{marginLeft: '10px'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M17.329 10C16.9907 9.9956 16.7044 10.2481 16.6676 10.5834C16.3554 14.2632 13.1099 16.9939 9.41861 16.6827C5.72731 16.3715 2.98803 13.1361 3.30025 9.45626C3.61247 5.77644 6.85792 3.04569 10.5492 3.35691C12.1474 3.49166 13.6443 4.19285 14.7684 5.33332H12.6805C12.3112 5.33332 12.0118 5.63179 12.0118 5.99997C12.0118 6.36816 12.3112 6.66663 12.6805 6.66663H15.4511C16.1368 6.66626 16.6926 6.11219 16.693 5.42863V2.66666C16.693 2.29847 16.3936 2 16.0243 2C15.6549 2 15.3555 2.29847 15.3555 2.66666V4.052C12.0548 1.11172 6.98798 1.39559 4.03852 4.68607C1.08905 7.97654 1.37381 13.0275 4.67456 15.9678C7.97531 18.9081 13.0421 18.6242 15.9916 15.3338C17.1381 14.0547 17.8413 12.4417 17.9971 10.7333C18.0314 10.3641 17.7591 10.0371 17.3887 10.0029C17.3689 10.001 17.349 10.0001 17.329 10Z" fill="#122956"/>
@@ -550,7 +550,7 @@ const YourDesign = () => {
                 onChange={handleCustomPictureChange}
                 style={{ display: 'none' }}
               />
-              <div className={`shirt_drawing_header_select ${selectedHeader === 5 ? '' : ''}`}>
+              <div className={`shirt_drawing_header_select ${selectedHeader === 5 ? '' : ''}`} style={{width: '92px'}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M14.9475 15.2091H16.6849L15.3924 20L0 15.7921L2.37516 6.9962V13.4432L2.06462 14.6008L14.2174 17.9214L14.9475 15.2091ZM8.66974 5.91466C9.36634 5.91466 9.92866 5.34854 9.92866 4.64723C9.92866 3.94592 9.36634 3.37981 8.66974 3.37981C7.97314 3.37981 7.41083 3.94592 7.41083 4.64723C7.41083 5.34854 7.97314 5.91466 8.66974 5.91466ZM20 2.53485V13.5192H4.05371V2.53485C4.05371 1.14068 5.18674 0 6.57155 0H17.4822C18.867 0 20 1.14068 20 2.53485ZM5.73227 2.53485V11.5505L12.2283 5.01056L14.9979 7.7989L18.3214 4.45289V2.53485C18.3214 2.07013 17.9438 1.6899 17.4822 1.6899H6.57155C6.10995 1.6899 5.73227 2.07013 5.73227 2.53485ZM18.3214 11.8293V6.84411L14.9979 10.1901L12.2283 7.40177L7.83047 11.8293H18.3214Z" fill="#122956"/>
                 </svg>
@@ -561,7 +561,7 @@ const YourDesign = () => {
               </div>
             </label>
 
-            <div onClick={() => {handleClick(); handleImageClickHeader(6)}} className={`shirt_drawing_header_select ${selectedHeader === 6 ? '' : ''}`}>
+            <div onClick={() => {handleClick(); handleImageClickHeader(6)}} style={{width: '92px'}} className={`shirt_drawing_header_select ${selectedHeader === 6 ? '' : ''}`}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M17.5 0H2.5C1.83696 0 1.20107 0.263392 0.732233 0.732233C0.263392 1.20107 0 1.83696 0 2.5L0 20H20V2.5C20 1.83696 19.7366 1.20107 19.2678 0.732233C18.7989 0.263392 18.163 0 17.5 0ZM18.3333 18.3333H1.66667V2.5C1.66667 2.27899 1.75446 2.06702 1.91074 1.91074C2.06702 1.75446 2.27899 1.66667 2.5 1.66667H17.5C17.721 1.66667 17.933 1.75446 18.0893 1.91074C18.2455 2.06702 18.3333 2.27899 18.3333 2.5V18.3333ZM5 5H15V8.33333H13.3333V6.66667H10.8333V13.3333H12.5V15H7.5V13.3333H9.16667V6.66667H6.66667V8.33333H5V5Z" fill="#122956"/>
               </svg>
@@ -571,16 +571,15 @@ const YourDesign = () => {
               </svg>
             </div>
 
-            <div onClick={() => {handleImageClickHeader(7)}} className={`shirt_drawing_header_select ${selectedHeader === 7 ? '' : ''}`}>
+            <div onClick={() => {handleImageClickHeader(7)}} style={{width: '192px'}} className={`shirt_drawing_header_select ${selectedHeader === 7 ? '' : ''}`}>
               Из библиотеки 
               <svg style={{marginLeft: '10px'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M14.9475 15.2091H16.6849L15.3924 20L0 15.7921L2.37516 6.9962V13.4432L2.06462 14.6008L14.2174 17.9214L14.9475 15.2091ZM8.66974 5.91466C9.36634 5.91466 9.92866 5.34854 9.92866 4.64723C9.92866 3.94592 9.36634 3.37981 8.66974 3.37981C7.97314 3.37981 7.41083 3.94592 7.41083 4.64723C7.41083 5.34854 7.97314 5.91466 8.66974 5.91466ZM20 2.53485V13.5192H4.05371V2.53485C4.05371 1.14068 5.18674 0 6.57155 0H17.4822C18.867 0 20 1.14068 20 2.53485ZM5.73227 2.53485V11.5505L12.2283 5.01056L14.9979 7.7989L18.3214 4.45289V2.53485C18.3214 2.07013 17.9438 1.6899 17.4822 1.6899H6.57155C6.10995 1.6899 5.73227 2.07013 5.73227 2.53485ZM18.3214 11.8293V6.84411L14.9979 10.1901L12.2283 7.40177L7.83047 11.8293H18.3214Z" fill="#122956"/>
               </svg>
             </div>
 
-            <div onClick={() => {handleImageClickHeader(8)}} className={`shirt_drawing_header_select ${selectedHeader === 8 ? '' : ''}`}>
+            <div onClick={() => {handleImageClickHeader(8)}} style={{width: '128px'}} className={`shirt_drawing_header_select ${selectedHeader === 8 ? '' : ''}`}>
               ИИ 
-
               <svg style={{marginLeft: '10px'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <g clip-path="url(#clip0_2718_2172)">
                   <path d="M11.7346 4.655L0.750475 15.6408C0.299158 16.1248 0.0533432 16.765 0.0648389 17.4266C0.0763346 18.0883 0.344242 18.7196 0.812099 19.1876C1.27996 19.6555 1.91122 19.9236 2.57284 19.9352C3.23446 19.9469 3.87477 19.7012 4.35881 19.25L15.3455 8.26583L11.7346 4.655ZM12.9888 8.26583L10.8338 10.4208L9.58381 9.16667L11.7388 7.01167L12.9888 8.26583ZM3.18048 18.0733C3.01201 18.2339 2.78821 18.3235 2.55548 18.3235C2.32274 18.3235 2.09894 18.2339 1.93048 18.0733C1.76499 17.9074 1.67205 17.6827 1.67205 17.4483C1.67205 17.214 1.76499 16.9892 1.93048 16.8233L8.40464 10.3483L9.65881 11.6025L3.18048 18.0733ZM17.778 12.19L20.0005 13.3017L17.778 14.4167L16.6671 16.635L15.5563 14.4167L13.3338 13.3017L15.5563 12.19L16.6671 9.96833L17.778 12.19ZM5.55631 4.44417L3.33381 3.33333L5.55631 2.2225L6.66714 0L7.77798 2.2225L10.0005 3.33333L7.77798 4.44417L6.66714 6.66667L5.55631 4.44417ZM16.1113 3.88917L14.1671 2.91667L16.1113 1.94417L17.0838 0L18.0563 1.94417L20.0005 2.91667L18.0563 3.88917L17.0838 5.83333L16.1113 3.88917Z" fill="#122956"/>
@@ -679,6 +678,29 @@ const YourDesign = () => {
                 <path d="M463.888 37.182L602 141.206l-65.334 94.978-42.178-17.064m-30.6-181.938L378.706 6.126l-13.793-5.029a.51.51 0 00-.491.084c-51.683 41.703-104.871 17.51-125.266.005a.489.489 0 00-.492-.086l-13.826 5.026-84.313 30.645m323.363.411c-6.478 39.608-9.428 131.612 30.6 181.938m0 0V561H109.099V219.12m0 0l-41.765 17.475L2 141.206 140.525 36.771M109.099 219.12c40.358-48.681 37.767-141.781 31.426-182.35" stroke="#666" strokeWidth={1.5}/>
                 <path d="M24.5 127l64.219 99.4M20.75 131.667L83.563 227.8M579.969 126.067l-64.219 99.4M583.719 130.733l-62.813 96.134M111.688 545.133h382.031M111.688 539.533h382.031" stroke="#CCC" strokeDasharray="4 4"/>
               </svg>
+
+              <div style={{display: !textInputVisible ? 'block' : 'none'}}>
+                <Reveal>
+
+                  <div style={{position: 'relative', top: '-300px', left: '200px'}}>
+                    <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                  </div>
+
+                  <style>
+                    {`
+                      .add_text::placeholder {
+                        color: ${color};
+                      }
+                    `}
+                  </style>
+                </Reveal>
+              </div>
+
+              <div style={{display: !photoInputVisible ? 'block' : 'none', border: !photoInputVisible ? 'none' : 'none'}} id="drawingArea" className="drawing-area">
+                <div className="canvas-container">
+                  <canvas id="tshirt-canvas" width="234" height="350"></canvas>
+                </div>
+              </div>
             </div>
 
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
@@ -864,25 +886,8 @@ const YourDesign = () => {
         </div>
       )}
 
-      {isSizeChange && (
-        <div style={{ position: 'relative', marginTop: '-680px', left: '28%', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
-          <div style={{width: '170px', display: 'flex', flexWrap: 'wrap'}}>
-            {categorySize.map(siz => (
-              <div key={siz.id} onClick={() => {setSize(siz.name); setSelectedSize(siz.id)}} className='color_change_selector' style={{width: '80px'}}>
-                {siz.name}
-                {size === siz.name && (
-                  <svg className='ms-1' xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill="#32454B" />
-                  </svg>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       {isColorChange && (
-        <div style={{ position: 'relative', marginTop: '-680px', left: '35.9%', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
+        <div style={{ position: 'relative', marginTop: '-680px', left: '29.1%', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
           <div className='d-flex' style={{cursor: 'pointer'}}>
             <div className='color_change_selector'>
               <div onClick={() => setShirtColor('#000000')} className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'black', border: '0.5px solid var(--neutral-200, #CCC)'}}>
@@ -920,13 +925,13 @@ const YourDesign = () => {
                     <span className='modal_size_title'>Размер:</span>
                     <div style={{display: 'flex', flexWrap: 'wrap', width: '600px'}}>
                       {categorySize.map(siz => (
-                        <div title={siz.name} key={siz.id} onClick={() => {setSize(siz.name); setSelectedSize(siz.id)}} className='color_change_selector_modal' style={{width: '80px'}}>
+                        <div title={siz.name} key={siz.id} onClick={() => {setSize(siz.name); setSelectedSize(siz.id)}} className='color_change_selector_modal' style={{width: '80px', borderColor: size === siz.name ? '#3C7CFB' : '#CCC'}}>
                           {siz.name}
-                          {size === siz.name && (
+                          {/* { && (
                             <svg className='ms-1' xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
                               <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill="#32454B" />
                             </svg>
-                          )}
+                          )} */}
                         </div>
                       ))}
                     </div>

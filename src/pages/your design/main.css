@@ -230,6 +230,7 @@
   letter-spacing: -0.13px;
   text-transform: uppercase;
   cursor: pointer;
+  text-align: center;
 }
 
 .color_change_selector_modal {
