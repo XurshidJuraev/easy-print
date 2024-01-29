@@ -55,7 +55,7 @@ function HeaderMain({ trashCardData }) {
         setIsLoginEntered(false)
         setPasswordsMatch(true);
       })
-      .catch(error => {toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
   };  
 
   const handleSubmitRegister = (evt) => {
@@ -85,7 +85,7 @@ function HeaderMain({ trashCardData }) {
       fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
         .then(response => response.text())
         .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false);})
-        .catch(error => {toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
+        .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
   }
 
   const handleOpenCodeVerificationModal = (evt) => {
@@ -106,7 +106,7 @@ function HeaderMain({ trashCardData }) {
       })
         .then(response => response.json())
         .then(result => {localStorage.setItem('token', result.data.token); setIsCodeEntered(false); setIsSuccesEntered(false); setIsRegisterEntered(true);})
-        .catch(error => {toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(true); setIsSuccesEntered(false); setIsRegisterEntered(false);});
+        .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(true); setIsSuccesEntered(false); setIsRegisterEntered(false);});
   };
 
   const handleOpenRegisterModal = (evt) => {
@@ -164,7 +164,7 @@ function HeaderMain({ trashCardData }) {
       setBascent(response.data.data.basket_count)
       setData(response.data)
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     })
   }, []);
 
@@ -179,7 +179,7 @@ function HeaderMain({ trashCardData }) {
     }).then((response) => {
       setCategory(response.data)
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     })
 
     setIsFirstEntered(true);

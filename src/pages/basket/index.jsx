@@ -66,6 +66,9 @@ function Basket() {
 
   function handleCountChange(id, change, maxQuantity, selectedColor, selectedSize) {
     setData((prevData) => {
+      if (!maxQuantity) {
+        maxQuantity = 9999;
+      }
       const updatedList = prevData.data.list.map((item) => {
         if (item.id === id) {
           const newCount = item.quantity + change;
@@ -90,7 +93,7 @@ function Basket() {
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
   }
-  
+
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
     setTrashCardData(savedCards);
@@ -156,11 +159,11 @@ function Basket() {
       if (response.data.status === true) {
         navigate('/orders');
       } else {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
     } catch (error) {
       console.log(error);
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
   }
 
@@ -182,7 +185,7 @@ function Basket() {
         const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
         setTrashCardData(savedCards);
         calculateTotalPrice(savedCards);
-        // toast.error('Serverdan xatolik yuzaga keldi.');
+        // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       } else {
         setCoupon_price(response.data.data.coupon_price);
         localStorage.setItem('coupon_price', response.data.data.coupon_price);
@@ -203,7 +206,7 @@ function Basket() {
       const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
       setTrashCardData(savedCards);
       calculateTotalPrice(savedCards);
-      // toast.error('Serverga so\'rov jo\'natishda xatolik yuz berdi.');
+      // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, [token]);
 
@@ -262,7 +265,7 @@ function Basket() {
       setPromoMessageColor(promoColor);
     })
     .catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
       promoMessage = `Введенный вами промокод ${promoCode} не сработал.`;
       promoColor = 'red';
@@ -382,7 +385,7 @@ function Basket() {
                                 </div>
 
                                 <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                  <p className='basket_card_price_sale'>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} сум` : '0 сум'}</p>
+                                  <p className='basket_card_price_sale' style={{left: item.discount_price ? '0px' : '40px'}}>{item.discount_price ? `${Number(item.discount_price).toLocaleString('ru-RU')} сум` : '0 сум'}</p>
                                 </NavLink>
 
                                 <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>

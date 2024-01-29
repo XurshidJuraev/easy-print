@@ -70,7 +70,7 @@ function Profile() {
         }));
       })
       .catch((error) => {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   }, [token]);
 
@@ -144,12 +144,12 @@ function Profile() {
               window.location.reload();
             })
             .catch((error) => {
-              toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+              toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
             });
         }, 1000);
       })
       .catch((error) => {
-        toast.error('Xatolik yuz berdi. Malumotlar yuborilmadi.');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   };
 

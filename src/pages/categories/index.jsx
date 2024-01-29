@@ -76,7 +76,7 @@ function CategoryListByName() {
       setData(response.data);
       console.log(response.data);
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -99,7 +99,7 @@ function CategoryListByName() {
       setColorArray(response.data.data.color_by_size);
       setSizeArray(response.data.data.color_by_size);
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -220,7 +220,7 @@ function CategoryListByName() {
           }
         })
         .catch(error => {
-          toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+          toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
           toast.error('Товар не добавлен');
         });
     }

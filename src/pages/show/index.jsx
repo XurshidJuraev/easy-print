@@ -125,7 +125,7 @@ function ShowDetail() {
       setSizeArray(response.data.data.color_by_size);
       setDataBeck(response.data.data);
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -140,7 +140,7 @@ function ShowDetail() {
     }).then((response) => {
       setData(response.data);
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -163,7 +163,7 @@ function ShowDetail() {
       setColorArray(response.data.data.color_by_size);
       setSizeArray(response.data.data.color_by_size);
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 

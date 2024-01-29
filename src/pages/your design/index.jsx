@@ -6,6 +6,8 @@ import './main2.css';
 import addToBasketImage from '../../layouts/icons/add_to_basket.svg'
 import frontImage from '../../layouts/images/front.png'
 import backImage from '../../layouts/images/back.png'
+import build_library_img from '../../layouts/images/bino_libraru.svg'
+import hand_library_img from '../../layouts/images/hand_library.svg'
 import backImageBlack from '../../layouts/images/back_black.png'
 import frontImageBlack from '../../layouts/images/black_front.png'
 import { Slider } from '@mui/material';
@@ -30,6 +32,7 @@ const YourDesign = () => {
   const [height, setHeight] = useState('562');
   const [isFrontView, setIsFrontView] = useState(true);
   const [isColorChange, setIsColorChange] = useState(false);
+  const [showLibrary, setShowLibrary] = useState(false);
   const [isSizeChange, setIsSizeChange] = useState(false);
   const [isCategoryChange, setIsCategoryChange] = useState(false);
   const [textInputVisible, setTextInputVisible] = useState(true);
@@ -80,31 +83,6 @@ const YourDesign = () => {
     document.title = 'Создайте свой собственный дизайн'
   }, []);
 
-  // const handleCustomPictureChange = (e) => {
-  //   const reader = new FileReader();
-
-  //   reader.onload = function (event) {
-  //     const imgObj = new Image();
-  //     imgObj.src = event.target.result;
-  //     setImeyg(imgObj.src);
-
-  //     imgObj.onload = function () {
-  //       const img = new fabric.Image(imgObj);
-
-  //       img.scaleToHeight(300);
-  //       img.scaleToWidth(300);
-  //       canvas.centerObject(img);
-  //       canvas.add(img);
-  //       canvas.renderAll();
-  //       setPhotoInputVisible(!photoInputVisible);
-  //     };
-  //   };
-
-  //   if (e.target.files[0]) {
-  //     reader.readAsDataURL(e.target.files[0]);
-  //   }
-  // };
-
   const handleCustomPictureChange = (e) => {
     const reader = new FileReader();
   
@@ -144,7 +122,7 @@ const YourDesign = () => {
       setCategorySize(response.data.data.category[0].sizes)
       setCategoryName(response.data.data);
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -410,6 +388,10 @@ const YourDesign = () => {
       .catch(error => console.log('error', error));
   };
 
+  const handleShowLibrary = () => {
+    setShowLibrary(!showLibrary);
+  };
+
   return (
     <div>
       <HeaderMain />
@@ -548,9 +530,9 @@ const YourDesign = () => {
                 accept="image/*"
                 id="tshirt-custompicture" 
                 onChange={handleCustomPictureChange}
-                style={{ display: 'none' }}
+                style={{ display: 'none', }}
               />
-              <div className={`shirt_drawing_header_select ${selectedHeader === 5 ? '' : ''}`} style={{width: '92px'}}>
+              <div className={`shirt_drawing_header_select ${selectedHeader === 5 ? '' : ''}`} style={{width: '92px', height: '35px'}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M14.9475 15.2091H16.6849L15.3924 20L0 15.7921L2.37516 6.9962V13.4432L2.06462 14.6008L14.2174 17.9214L14.9475 15.2091ZM8.66974 5.91466C9.36634 5.91466 9.92866 5.34854 9.92866 4.64723C9.92866 3.94592 9.36634 3.37981 8.66974 3.37981C7.97314 3.37981 7.41083 3.94592 7.41083 4.64723C7.41083 5.34854 7.97314 5.91466 8.66974 5.91466ZM20 2.53485V13.5192H4.05371V2.53485C4.05371 1.14068 5.18674 0 6.57155 0H17.4822C18.867 0 20 1.14068 20 2.53485ZM5.73227 2.53485V11.5505L12.2283 5.01056L14.9979 7.7989L18.3214 4.45289V2.53485C18.3214 2.07013 17.9438 1.6899 17.4822 1.6899H6.57155C6.10995 1.6899 5.73227 2.07013 5.73227 2.53485ZM18.3214 11.8293V6.84411L14.9979 10.1901L12.2283 7.40177L7.83047 11.8293H18.3214Z" fill="#122956"/>
                 </svg>
@@ -571,7 +553,7 @@ const YourDesign = () => {
               </svg>
             </div>
 
-            <div onClick={() => {handleImageClickHeader(7)}} style={{width: '192px'}} className={`shirt_drawing_header_select ${selectedHeader === 7 ? '' : ''}`}>
+            <div onClick={() => {handleShowLibrary(); handleImageClickHeader(7)}} style={{width: '192px'}} className={`shirt_drawing_header_select ${selectedHeader === 7 ? '' : ''}`}>
               Из библиотеки 
               <svg style={{marginLeft: '10px'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M14.9475 15.2091H16.6849L15.3924 20L0 15.7921L2.37516 6.9962V13.4432L2.06462 14.6008L14.2174 17.9214L14.9475 15.2091ZM8.66974 5.91466C9.36634 5.91466 9.92866 5.34854 9.92866 4.64723C9.92866 3.94592 9.36634 3.37981 8.66974 3.37981C7.97314 3.37981 7.41083 3.94592 7.41083 4.64723C7.41083 5.34854 7.97314 5.91466 8.66974 5.91466ZM20 2.53485V13.5192H4.05371V2.53485C4.05371 1.14068 5.18674 0 6.57155 0H17.4822C18.867 0 20 1.14068 20 2.53485ZM5.73227 2.53485V11.5505L12.2283 5.01056L14.9979 7.7989L18.3214 4.45289V2.53485C18.3214 2.07013 17.9438 1.6899 17.4822 1.6899H6.57155C6.10995 1.6899 5.73227 2.07013 5.73227 2.53485ZM18.3214 11.8293V6.84411L14.9979 10.1901L12.2283 7.40177L7.83047 11.8293H18.3214Z" fill="#122956"/>
@@ -716,157 +698,174 @@ const YourDesign = () => {
           </div>
         </div>
 
-        <div className='layers'>
-          <Reveal><p className='layers_text_fat'>Детали</p></Reveal>
-
-          {!textInputVisible ? (
+        {showLibrary ? (
+          <div className='layers'>
             <Reveal>
-              <div style={{marginTop: '-150px'}}>
-                <div style={{width: '250px', textAlign: 'left'}}>
-                  <p className='layers_text_fat'>Размер</p>
+              <p className='layers_text_fat'>Библиотека</p>
+            </Reveal>
 
-                  <Slider aria-label="Temperature" defaultValue={30} getAriaValueText={valuetext} valueLabelDisplay="auto" step={10} marks min={10} max={110} style={sliderStyle} color="primary"/>
-                </div>
+            <Reveal>
+              <div style={{marginTop: '-180px'}}>
+                <img style={{marginBottom: '24px'}} src={build_library_img} alt="build_library_img" />
+                <img src={hand_library_img} alt="build_library_img" />
 
-                <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
-                  <p className='layers_text_fat'>Шрифт</p>
-
-                  <select className='selcet_option_layer' style={{height: '40px'}}>
-                    <option value="Inter">Inter</option>
-                    <option value="Inter">Inter</option>
-                    <option value="Inter">Inter</option>
-                    <option value="Inter">Inter</option>
-                  </select>
-                </div>
-
-                <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
-                  <p className='layers_text_fat'>Текст</p>
-
-                  <textarea style={{padding: '12px', minHeight: '73px', outline: 'none'}} className='selcet_option_layer' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)} placeholder='Easy print'></textarea>
-                </div>
-
-                <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
-                  <p className='layers_text_fat'>Цвет</p>
-
-                  <div style={{width: '200px', height: '40px', padding: '16px'}} className='selcet_option_layer'>{color}</div>
-                  <SketchPicker color={color} onChange={(color) => {setColor(color.hex); localStorage.setItem('selectedColor', color.hex);}}  className={showPicker ? '' : 'hidden'} />
-                </div>
+                <button className='btn_library_disabled'>Выбрать</button>
               </div>
             </Reveal>
-          ) : (!photoInputVisible ? (
-            <Reveal>
-              <div style={{marginTop: '-150px'}}>
-                <div style={{width: '250px', textAlign: 'left'}}>
-                  <p className='layers_text_fat'>Масштаб</p>
+          </div>
+        ) : (
+          <div className='layers'>
+            <Reveal><p className='layers_text_fat'>Детали</p></Reveal>
 
-                  <Slider
-                    aria-label="Масштаб"
-                    value={scale}
-                    onChange={handleScaleChange}
-                    valueLabelDisplay="auto"
-                    step={10}
-                    marks
-                    min={10}
-                    max={90}
-                    color="primary"
-                  />
-                </div>
+            {!textInputVisible ? (
+              <Reveal>
+                <div style={{marginTop: '-150px'}}>
+                  <div style={{width: '250px', textAlign: 'left'}}>
+                    <p className='layers_text_fat'>Размер</p>
 
-                <div style={{ width: '250px', textAlign: 'left', marginTop: '35px' }}>
-                  <p className='layers_text_fat'>Скругление углов</p>
+                    <Slider aria-label="Temperature" defaultValue={30} getAriaValueText={valuetext} valueLabelDisplay="auto" step={10} marks min={10} max={110} style={sliderStyle} color="primary"/>
+                  </div>
 
-                  <div className='selcet_option_layer d-flex justify-content-between' style={{ width: '76px', height: '40px', padding: '6px 8px' }}>
-                    <span>{radius}%</span>
+                  <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
+                    <p className='layers_text_fat'>Шрифт</p>
 
-                    <div>
-                      <div style={{ cursor: 'pointer' }} onClick={() => handleRadiusChange(radius + 1)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M6 3C6.20556 2.99967 6.40917 3.03671 6.59911 3.10898C6.78906 3.18125 6.96161 3.28733 7.10683 3.42112L10.6504 6.6806C10.9731 6.97744 10.9731 7.48675 10.6504 7.78356C10.3636 8.04724 9.9227 8.04724 9.63598 7.78356L6 4.43974L2.364 7.78358C2.07729 8.04725 1.63637 8.04725 1.34966 7.78359C1.02691 7.48677 1.02691 6.97745 1.34966 6.68063L4.89317 3.42184C5.03833 3.28792 5.21085 3.18171 5.4008 3.10931C5.59075 3.03692 5.79438 2.99977 6 3Z" fill="#4D646B" />
-                        </svg>
-                      </div>
+                    <select className='selcet_option_layer' style={{height: '40px'}}>
+                      <option value="Inter">Inter</option>
+                      <option value="Inter">Inter</option>
+                      <option value="Inter">Inter</option>
+                      <option value="Inter">Inter</option>
+                    </select>
+                  </div>
 
-                      <div style={{ cursor: 'pointer' }} onClick={() => handleRadiusChange(radius - 1)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M6 9C5.79444 9.00033 5.59083 8.96329 5.40089 8.89102C5.21094 8.81875 5.03839 8.71267 4.89317 8.57888L1.34958 5.3194C1.02686 5.02256 1.02689 4.51325 1.34964 4.21644C1.63636 3.95276 2.0773 3.95276 2.36402 4.21644L6 7.56026L9.636 4.21642C9.92271 3.95275 10.3636 3.95275 10.6503 4.21641C10.9731 4.51323 10.9731 5.02255 10.6503 5.31937L7.10683 8.57816C6.96167 8.71208 6.78915 8.81829 6.5992 8.89069C6.40925 8.96308 6.20562 9.00023 6 9Z" fill="#4D646B" />
-                        </svg>
-                      </div>
-                    </div>
+                  <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
+                    <p className='layers_text_fat'>Текст</p>
+
+                    <textarea style={{padding: '12px', minHeight: '73px', outline: 'none'}} className='selcet_option_layer' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)} placeholder='Easy print'></textarea>
+                  </div>
+
+                  <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
+                    <p className='layers_text_fat'>Цвет</p>
+
+                    <div style={{width: '200px', height: '40px', padding: '16px'}} className='selcet_option_layer'>{color}</div>
+                    <SketchPicker color={color} onChange={(color) => {setColor(color.hex); localStorage.setItem('selectedColor', color.hex);}}  className={showPicker ? '' : 'hidden'} />
                   </div>
                 </div>
+              </Reveal>
+            ) : (!photoInputVisible ? (
+              <Reveal>
+                <div style={{marginTop: '-150px'}}>
+                  <div style={{width: '250px', textAlign: 'left'}}>
+                    <p className='layers_text_fat'>Масштаб</p>
 
-                <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
-                  <p className='layers_text_fat'>Фильтры</p>
+                    <Slider
+                      aria-label="Масштаб"
+                      value={scale}
+                      onChange={handleScaleChange}
+                      valueLabelDisplay="auto"
+                      step={10}
+                      marks
+                      min={10}
+                      max={90}
+                      color="primary"
+                    />
+                  </div>
 
-                  <div className="d-flex">
-                    <div className="center flex-column" style={{boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 1 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(1, 'none')}>
-                        <div style={{border: selectedImage === 1 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                  <div style={{ width: '250px', textAlign: 'left', marginTop: '35px' }}>
+                    <p className='layers_text_fat'>Скругление углов</p>
+
+                    <div className='selcet_option_layer d-flex justify-content-between' style={{ width: '76px', height: '40px', padding: '6px 8px' }}>
+                      <span>{radius}%</span>
+
+                      <div>
+                        <div style={{ cursor: 'pointer' }} onClick={() => handleRadiusChange(radius + 1)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M6 3C6.20556 2.99967 6.40917 3.03671 6.59911 3.10898C6.78906 3.18125 6.96161 3.28733 7.10683 3.42112L10.6504 6.6806C10.9731 6.97744 10.9731 7.48675 10.6504 7.78356C10.3636 8.04724 9.9227 8.04724 9.63598 7.78356L6 4.43974L2.364 7.78358C2.07729 8.04725 1.63637 8.04725 1.34966 7.78359C1.02691 7.48677 1.02691 6.97745 1.34966 6.68063L4.89317 3.42184C5.03833 3.28792 5.21085 3.18171 5.4008 3.10931C5.59075 3.03692 5.79438 2.99977 6 3Z" fill="#4D646B" />
+                          </svg>
+                        </div>
+
+                        <div style={{ cursor: 'pointer' }} onClick={() => handleRadiusChange(radius - 1)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M6 9C5.79444 9.00033 5.59083 8.96329 5.40089 8.89102C5.21094 8.81875 5.03839 8.71267 4.89317 8.57888L1.34958 5.3194C1.02686 5.02256 1.02689 4.51325 1.34964 4.21644C1.63636 3.95276 2.0773 3.95276 2.36402 4.21644L6 7.56026L9.636 4.21642C9.92271 3.95275 10.3636 3.95275 10.6503 4.21641C10.9731 4.51323 10.9731 5.02255 10.6503 5.31937L7.10683 8.57816C6.96167 8.71208 6.78915 8.81829 6.5992 8.89069C6.40925 8.96308 6.20562 9.00023 6 9Z" fill="#4D646B" />
+                          </svg>
+                        </div>
                       </div>
-                      <p>Оригинал</p>
-                    </div>
-
-                    <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 2 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(2, 'contrast(1.1) brightness(1.1) saturate(1.1)')}>
-                        <div style={{filter: 'contrast(1.1) brightness(1.1) saturate(1.1)', border: selectedImage === 2 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
-                      </div>
-                      <p>1977</p>
                     </div>
                   </div>
 
-                  <div className="d-flex">
-                    <div className="center flex-column" style={{boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 3 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(3, 'contrast(0.9) brightness(1.2) hue-rotate(-20deg) saturate(0.85)')}>
-                        <div style={{filter: 'contrast(0.9) brightness(1.2) hue-rotate(-20deg) saturate(0.85)',border: selectedImage === 3 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                  <div style={{width: '250px', textAlign: 'left', marginTop: '35px'}}>
+                    <p className='layers_text_fat'>Фильтры</p>
+
+                    <div className="d-flex">
+                      <div className="center flex-column" style={{boxSizing: 'border-box'}}>
+                        <div style={{border: selectedImage === 1 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(1, 'none')}>
+                          <div style={{border: selectedImage === 1 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                        </div>
+                        <p>Оригинал</p>
                       </div>
-                      <p>Aden</p>
+
+                      <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
+                        <div style={{border: selectedImage === 2 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(2, 'contrast(1.1) brightness(1.1) saturate(1.1)')}>
+                          <div style={{filter: 'contrast(1.1) brightness(1.1) saturate(1.1)', border: selectedImage === 2 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                        </div>
+                        <p>1977</p>
+                      </div>
                     </div>
 
-                    <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 4 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(4, 'contrast(0.9) brightness(1.1) hue-rotate(-10deg) saturate(1.5)')}>
-                        <div style={{filter: 'contrast(0.9) brightness(1.1) hue-rotate(-10deg) saturate(1.5)', border: selectedImage === 4 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                    <div className="d-flex">
+                      <div className="center flex-column" style={{boxSizing: 'border-box'}}>
+                        <div style={{border: selectedImage === 3 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(3, 'contrast(0.9) brightness(1.2) hue-rotate(-20deg) saturate(0.85)')}>
+                          <div style={{filter: 'contrast(0.9) brightness(1.2) hue-rotate(-20deg) saturate(0.85)',border: selectedImage === 3 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                        </div>
+                        <p>Aden</p>
                       </div>
-                      <p>Amaro</p>
-                    </div>
-                  </div>
 
-                  <div className="d-flex">
-                    <div className="center flex-column" style={{boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 5 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(5, 'contrast(1.4) sepia(0.5)')}>
-                        <div style={{filter: 'contrast(1.4) sepia(0.5)', border: selectedImage === 5 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                      <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
+                        <div style={{border: selectedImage === 4 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(4, 'contrast(0.9) brightness(1.1) hue-rotate(-10deg) saturate(1.5)')}>
+                          <div style={{filter: 'contrast(0.9) brightness(1.1) hue-rotate(-10deg) saturate(1.5)', border: selectedImage === 4 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                        </div>
+                        <p>Amaro</p>
                       </div>
-                      <p>Brannan</p>
-                    </div>
-
-                    <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 6 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(6, 'contrast(1.2) saturate(1.35)')}>
-                        <div style={{filter: 'contrast(1.2) saturate(1.35)', border: selectedImage === 6 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
-                      </div>
-                      <p>Clarendon</p>
-                    </div>
-                  </div>
-
-                  <div className="d-flex">
-                    <div className="center flex-column" style={{boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 7 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(7, 'contrast(0.9) sepia(0.2)')}>
-                        <div style={{filter: 'contrast(0.9) sepia(0.2)', border: selectedImage === 7 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
-                      </div>
-                      <p>Early Bird</p>
                     </div>
 
-                    <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
-                      <div style={{border: selectedImage === 8 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(8, 'sepia(0.3) contrast(1.1) brightness(1.1) grayscale(1)')}>
-                        <div style={{filter: 'sepia(0.3) contrast(1.1) brightness(1.1) grayscale(1)', border: selectedImage === 8 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                    <div className="d-flex">
+                      <div className="center flex-column" style={{boxSizing: 'border-box'}}>
+                        <div style={{border: selectedImage === 5 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(5, 'contrast(1.4) sepia(0.5)')}>
+                          <div style={{filter: 'contrast(1.4) sepia(0.5)', border: selectedImage === 5 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                        </div>
+                        <p>Brannan</p>
                       </div>
-                      <p>Inkwell</p>
+
+                      <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
+                        <div style={{border: selectedImage === 6 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(6, 'contrast(1.2) saturate(1.35)')}>
+                          <div style={{filter: 'contrast(1.2) saturate(1.35)', border: selectedImage === 6 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                        </div>
+                        <p>Clarendon</p>
+                      </div>
+                    </div>
+
+                    <div className="d-flex">
+                      <div className="center flex-column" style={{boxSizing: 'border-box'}}>
+                        <div style={{border: selectedImage === 7 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(7, 'contrast(0.9) sepia(0.2)')}>
+                          <div style={{filter: 'contrast(0.9) sepia(0.2)', border: selectedImage === 7 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                        </div>
+                        <p>Early Bird</p>
+                      </div>
+
+                      <div className="center flex-column" style={{marginLeft: '32px', boxSizing: 'border-box'}}>
+                        <div style={{border: selectedImage === 8 ? '1.5px solid #4D646B' : '', borderRadius: '12px'}} onClick={() => handleImageClick(8, 'sepia(0.3) contrast(1.1) brightness(1.1) grayscale(1)')}>
+                          <div style={{filter: 'sepia(0.3) contrast(1.1) brightness(1.1) grayscale(1)', border: selectedImage === 8 ? '3px solid #ffffff' : '', backgroundImage: `url(${imeyg})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px', width: '106px', height: '84px'}}></div>
+                        </div>
+                        <p>Inkwell</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Reveal>
-          ) : (
-            <Reveal><p className='layers_text'>Детали объектов будут отображаться здесь</p></Reveal>
-          ))}
-        </div>
+              </Reveal>
+            ) : (
+              <Reveal><p className='layers_text'>Детали объектов будут отображаться здесь</p></Reveal>
+            ))}
+          </div>
+        )}
       </div>
 
       {isCategoryChange && (
@@ -889,16 +888,16 @@ const YourDesign = () => {
       {isColorChange && (
         <div style={{ position: 'relative', marginTop: '-680px', left: '29.1%', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
           <div className='d-flex' style={{cursor: 'pointer'}}>
-            <div className='color_change_selector'>
-              <div onClick={() => setShirtColor('#000000')} className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'black', border: '0.5px solid var(--neutral-200, #CCC)'}}>
+            <div onClick={() => setShirtColor('#000000')} className='color_change_selector'>
+              <div className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'black', border: '0.5px solid var(--neutral-200, #CCC)'}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
                   <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill={shirtColor === '#000000' ? '#FFFFFF' : '#000000'} />
                 </svg>
               </div>
             </div>
 
-            <div className='color_change_selector'>
-              <div onClick={() => setShirtColor('#FFFFFF')} className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'white', border: '0.5px solid var(--neutral-200, #CCC)'}}>
+            <div onClick={() => setShirtColor('#FFFFFF')} className='color_change_selector'>
+              <div className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'white', border: '0.5px solid var(--neutral-200, #CCC)'}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
                   <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill={shirtColor === '#000000' ? '#FFFFFF' : '#000000'} />
                 </svg>

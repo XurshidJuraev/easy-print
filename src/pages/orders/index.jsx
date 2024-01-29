@@ -67,7 +67,7 @@ function MyOrders() {
       const parsedOrders = ordersString ? JSON.parse(ordersString) : [];
       setOrders(parsedOrders);
     } catch (error) {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
   }, []);
   const pay = JSON.parse(localStorage.getItem('paymentDate'))
@@ -96,7 +96,7 @@ function MyOrders() {
         setOrders(response.data.data);
         setAdrse(response.data.data.list.length)
       } catch (error) {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
     };
 
@@ -116,7 +116,7 @@ function MyOrders() {
         });
         setAddress(response.data.data);
       } catch (error) {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
     };
 
@@ -144,7 +144,7 @@ function MyOrders() {
         setCities(initialRegion.cities);
       })
       .catch((error) => {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   }, [token]);
 
@@ -182,7 +182,7 @@ function MyOrders() {
           toast.error('Заказ не был оформлен!');
         }
       })
-      .catch(error =>  toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'));
+      .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
   }
 
   const handleChange = (e) => {
@@ -239,7 +239,7 @@ function MyOrders() {
         window.location.reload();
       })
       .catch((error) => {
-        toast.error('Xatolik yuz berdi. Malumotlar saqlanmadi.');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   };
 

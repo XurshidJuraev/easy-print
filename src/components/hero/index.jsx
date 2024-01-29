@@ -24,7 +24,7 @@ function HeroMain() {
         });
         setData(response.data.data);
       } catch (error) {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
     };
 

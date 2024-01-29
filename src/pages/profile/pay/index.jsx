@@ -66,7 +66,7 @@ function ProfilePayment() {
 
     fetch(`${process.env.REACT_APP_TWO}/get-cards`, requestOptions)
       .then(response => response.json())
-      .catch(error => toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!'));
+      .catch(error => toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
   }, []);
 
   const address = JSON.parse(localStorage.getItem('paymentDate'))

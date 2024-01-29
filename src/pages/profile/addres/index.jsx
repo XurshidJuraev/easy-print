@@ -43,7 +43,7 @@ function ProfileAddres() {
       if (selectedRegionData) {
         setCities(selectedRegionData.cities || []);
       } else {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
   
       // Set the form data including region and city
@@ -125,7 +125,7 @@ function ProfileAddres() {
         window.location.reload();
       })
       .catch((error) => {
-        toast.error('Xatolik yuz berdi. Malumotlar saqlanmadi.');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   };
 
@@ -157,7 +157,7 @@ function ProfileAddres() {
         setCities(initialRegion.cities);
       })
       .catch((error) => {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   }, [token]);
   
@@ -180,7 +180,7 @@ function ProfileAddres() {
     }).then((response) => {
       setDataGet(response.data);
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 

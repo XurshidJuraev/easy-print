@@ -184,6 +184,11 @@
   color: #B3B3B3;
   font-size: 18px;
   margin-left: 10px;
+  font-family: 'Inter400';
+}
+
+.size_option, .selected_size {
+  transition: all 0.1s ease;
 }
 
 .add_basket_btn {

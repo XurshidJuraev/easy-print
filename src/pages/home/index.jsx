@@ -95,7 +95,7 @@ function HomePage() {
     }).then((response) => {
       const resp = response
     }).catch((error) => {
-        toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+        // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }  
 
@@ -117,7 +117,7 @@ function HomePage() {
     }).then((response) => {
       setData(response.data);
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, []);
 
@@ -140,7 +140,7 @@ function HomePage() {
       setSizeArray(response.data.data.color_by_size);
       setModalData(response.data.data);
     }).catch((error) => {
-      toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -232,7 +232,7 @@ function HomePage() {
           }
         })
         .catch(error => {
-          toast.error('Xatolik yuz berdi. Iltimos qaytadan urining!');
+          toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
           toast.error('Товар не добавлен');
         });
     }

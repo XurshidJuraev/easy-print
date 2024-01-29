@@ -146,7 +146,7 @@
   letter-spacing: -0.2px;
   min-width: 100px;
   position: relative;
-  left: 40px;
+  /* left: 40px; */
 }
 
 .basket_info1 {
