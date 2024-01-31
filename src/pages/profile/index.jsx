@@ -23,6 +23,8 @@ function Profile() {
   });
   const token = localStorage.getItem('token');
 
+  // localStorage.setItem('user_image', no_image);
+
   useEffect(() => {
     document.title = 'Личная информация'
   }, []);
@@ -62,6 +64,7 @@ function Profile() {
         localStorage.setItem('user_image', responseData.image);
         localStorage.setItem('user_phone_number', responseData.phone_number);
         localStorage.setItem('user_last_name', responseData.last_name);
+        console.log('responseData:', responseData);
   
         setFormData((prevFormData) => ({
           ...prevFormData,
@@ -87,10 +90,21 @@ function Profile() {
     formdata.append("gender", formData.gender);
     formdata.append("email", formData.email);
     formdata.append("birth_date", formData.birthDate);
-  
+    
+    // Check if the image is a Blob and append it to the FormData
     if (formData.img instanceof Blob) {
       formdata.append("image", formData.img);
     }
+
+    console.log('formData before check:', formData);
+
+    // for (const key in formData) {
+    //   if (formData[key] === null) {
+    //     toast.error(`Iltimos, barcha maydonlarni to'ldiring!`);
+    //     console.log('formData[key]:', formData[key]);
+    //     return;
+    //   }
+    // }
 
     localStorage.setItem('user_name', formData.name);
 
@@ -106,16 +120,18 @@ function Profile() {
     fetch(`${process.env.REACT_APP_TWO}/personal-information`, requestOptions)
       .then((response) => response.text())
       .then((result) => {
-        toast.success('Malumotlar yuborildi!');
+        toast.success(localStorage.getItem('selectedLanguage') === 'ru' ? 'Данные успешно обновлены!' : 'Ma`lumotlar muvaffaqiyatli yangilandi!');
+        console.log('update result:', result);
         setTimeout(() => {
           axios
             .get(`${process.env.REACT_APP_TWO}/personal-information`, {
               method: 'GET',
               headers: {
                 Authorization: `Bearer ${token}`,
+                'Access-Control-Allow-Origin': '*',
                 Accept: 'application/json',
                 language: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-              },
+              }
             })
             .then((response) => {
               const responseData = response.data.data;
@@ -142,9 +158,12 @@ function Profile() {
               }));
 
               window.location.reload();
+
+              console.log('responsedData:', responseData);
             })
             .catch((error) => {
               toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+              console.log('error:', error);
             });
         }, 1000);
       })

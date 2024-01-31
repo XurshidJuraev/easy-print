@@ -24,6 +24,7 @@ const YourDesign = () => {
   const [categoryName, setCategoryName] = useState([]);
   const [printImage, setPrintImage] = useState([]);
   const [categorySize, setCategorySize] = useState([]);
+  const [imageList, setImageList] = useState([]);
   const [color, setColor] = useState('#fff');
   const [size, setSize] = useState('xxs');
   const [category, setCategory] = useState('Футболка');
@@ -390,6 +391,20 @@ const YourDesign = () => {
 
   const handleShowLibrary = () => {
     setShowLibrary(!showLibrary);
+
+    axios.get(`${process.env.REACT_APP_TWO}/get-image`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+      }
+    }).then((response) => {
+      console.log(response.data.data);
+      setImageList(response.data.data);
+    }).catch((error) => {
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+    });    
   };
 
   return (
@@ -706,8 +721,12 @@ const YourDesign = () => {
 
             <Reveal>
               <div style={{marginTop: '-180px'}}>
-                <img style={{marginBottom: '24px'}} src={build_library_img} alt="build_library_img" />
-                <img src={hand_library_img} alt="build_library_img" />
+                {/* <img style={{marginBottom: '24px'}} src={build_library_img} alt="build_library_img" />
+                <img src={hand_library_img} alt="build_library_img" /> */}
+
+                {imageList.map((item, index) => (
+                  <img style={{width: '200px', height: '200px', borderRadius: '12px', marginBottom: '24px'}} key={index} src={item} alt="build_library_img" />
+                ))}
 
                 <button className='btn_library_disabled'>Выбрать</button>
               </div>

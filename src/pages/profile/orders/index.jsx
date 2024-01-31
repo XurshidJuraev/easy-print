@@ -56,6 +56,7 @@ function ProfileOrders() {
     axios.get(`${process.env.REACT_APP_TWO}/order/get-order-detail-by-order-id?id=${id}`, requestOptions)
       .then((response) => {
         setShow(response.data.data);
+        console.log(response.data.data);
       })
       .catch((error) => {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -119,27 +120,28 @@ function ProfileOrders() {
                                 <div key={idx}>
                                   <div className='d-flex justify-content-between'>
                                     <div>
-                                      <img className='order_img' src={item.warehouse.images && item.warehouse.images[0]} alt={item.warehouse.name} />
+                                      {/* <img style={{width: '104px', height: '120px'}} className='order_img' src={} alt={item.warehouse && item.warehouse.name ? item.warehouse.name : ''} /> */}
+                                      <div style={{width: '104px', height: '120px', backgroundImage: `url(${item.warehouse && item.warehouse.images && item.warehouse.images[0] ? item.warehouse.images[0] : item.image_front})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                                     </div>
-                                    <div>
-                                      <p className='order_name'>{item.warehouse.name}</p>
+                                    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                                      <p className='order_name'>{item.warehouse && item.warehouse.name ? item.warehouse.name : item.product.name}</p>
                                       <div className="d-flex">
-                                        <div className='d-flex' style={{marginTop: '33px'}}>
-                                          <div style={{marginTop: '13px'}}>
+                                        <div className='d-flex'>
+                                          <div>
                                             <p className='order_name_tite'>Количество:</p>
                                             <p className='order_name_tite'>Размер:</p>
                                           </div>
-                                          <div className='text-end center flex-column ms-2' style={{paddingTop: '14px'}}>
+                                          <div className='center flex-column ms-2'>
                                             <p className='order_name_name' title={item.quantity}>{item.quantity}</p>
-                                            <p className='order_name_name' title={item.warehouse.size && item.warehouse.size.name}>{item.warehouse.size && item.warehouse.size.name}</p>
+                                            <p className='order_name_name' title={item.warehouse && item.warehouse.size && item.warehouse.size.name ? item.warehouse.size.name : ''}>{item.warehouse && item.warehouse.size && item.warehouse.size.name ? item.warehouse.size.name : item.size.name}</p>
                                           </div>
                                         </div>
-                                        <div className='d-flex' style={{marginTop: '66px', marginLeft: '46px'}}>
-                                          <div style={{marginTop: '13px'}}>
+                                        <div className='center' style={{ marginLeft: '46px', alignItems: 'flex-end' }}>
+                                          <div>
                                             <p className='order_name_tite'>Цвет:</p>
                                           </div>
-                                          <div className='text-end center flex-column ms-2' style={{marginTop: '-6px'}}>
-                                            <div style={{backgroundColor: item.warehouse.color && item.warehouse.color.code}} className='order_name_color'></div>
+                                          <div className='text-end center flex-column ms-2' style={{position: 'relative', top: '-12px'}}>
+                                            <div style={{ backgroundColor: item.warehouse && item.warehouse.color && item.warehouse.color.code ? item.warehouse.color.code : item.color.code }} className='order_name_color'></div>
                                           </div>
                                         </div>
                                       </div>

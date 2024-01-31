@@ -46,7 +46,7 @@ function ProfileHeader() {
       localStorage.removeItem('user_image');
       localStorage.removeItem('user_phone_number');
       localStorage.removeItem('user_last_name');
-      localStorage.removeItem('counterValue');
+      localStorage.setItem('counterValue', '0');
       navigate('/');
     }, 1000);
   };
@@ -54,11 +54,11 @@ function ProfileHeader() {
   return (
     <div className='profile_header'>
       <NavLink to={'/profile'} style={{textDecoration: 'none'}} className="d-flex">
-        <img className='user_image' src={user_image ? user_image : no_image} alt={user_name} style={{borderRadius: '50%'}} />
-        <h3 title={user_name ? `${user_name} ${user_last_name}` : 'Без имени фамилия'} style={{marginLeft: '15px', marginTop: '2px'}} className='user_name'>{user_name ? `${user_name} ${user_last_name}` : 'Без имени фамилия'}</h3>
+        <img className='user_image' src={user_image === 'null' ? no_image : user_image} alt={user_name} style={{borderRadius: '50%'}} />
+        <h3 title={user_name ? `${user_name} ${user_last_name}` : 'Без имени фамилия'} style={{marginLeft: '15px', marginTop: '2px'}} className='user_name'>{user_name ? `${user_name} ${user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}</h3>
       </NavLink>
 
-      <NavLink to={'/profile'} onClick={() => toggleActive(0)} className={`d-flex profile_item ${isActive == 0 ? 'active' : ''}`} style={{marginTop: '65px', textDecoration: 'none'}}>
+      <NavLink to={'/profile'} onClick={() => toggleActive(0)} className={`d-flex profile_item ${isActive == 0 ? 'active' : ''}`} style={{marginTop: '29px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}

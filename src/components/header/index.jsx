@@ -33,6 +33,23 @@ function HeaderMain({ trashCardData }) {
     passwordConfirmation: '',
   });
 
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/profile-info`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+        token: token
+      }
+    }).then((response) => {
+      const basket_number = response.data.data.basket_count;
+      localStorage.setItem('counterValue', basket_number.toString());
+    }).catch((error) => {
+      localStorage.setItem('counterValue', '0');
+    })
+  }, []);
+
   const handleSubmitLogin = (evt) => {
     evt.preventDefault();
   

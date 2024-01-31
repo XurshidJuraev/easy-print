@@ -349,7 +349,7 @@ function Basket() {
                           <div className='d-flex basket_card'>
                             <div className='d-flex flex-column align-items-center'>
                               <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
-                                <div className='basket_card_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundColor: item.relation_type === 'product' ? '#ffffff' : '#E9E9E9', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
+                                <div className='basket_card_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundColor: item.relation_type === 'product' ? '#ffffff' : '#E9E9E9', backgroundSize: item.relation_type === 'product' ? 'contain' : 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                               </NavLink>
                               {/* <input style={{position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px'}} type="checkbox" /> */}
                               <input

@@ -95,6 +95,7 @@ function MyOrders() {
         setProducts_total(response.data.data.grant_total);
         setOrders(response.data.data);
         setAdrse(response.data.data.list.length)
+        console.log(response.data.data);
       } catch (error) {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
@@ -333,12 +334,13 @@ function MyOrders() {
                                 <div className='d-flex'>
                                   <div>
                                     {item.images && item.images[0] && (
-                                      <img className='order_img' src={item.images[0]} alt={item.name} />
+                                      // <img className='order_img' src={item.images[0]} alt={item.name} />
+                                      <div className='order_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundSize: item.relation_type === 'product' ? 'contain' : 'cover', backgroundColor: 'white', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                                     )}
                                   </div>
 
                                   <div style={{marginLeft: '12px'}}>
-                                    <p className='order_name'>{item.name}</p>
+                                    <p className='order_name'>{item.name ? item.name : ''}</p>
                                     <p className='order_price'>{item.price} сум</p>
                                   </div>
                                 </div>
