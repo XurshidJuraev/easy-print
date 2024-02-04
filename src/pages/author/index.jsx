@@ -87,7 +87,7 @@ function AuthorPage() {
 
   const handleShowMore = () => {
     if (data.data && data.data.warehouse_product_list.length > displayedItems) {
-      setDisplayedItems((prevDisplayedItems) => prevDisplayedItems + 8);
+      setDisplayedItems((prevDisplayedItems) => prevDisplayedItems + 12);
     }
   };
 
@@ -339,11 +339,7 @@ function AuthorPage() {
                   </div>
                 </div>
               )): null}
-            </div>
-          </div>
-
-          <div className="container" style={{marginTop: '120px'}}>
-            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '-130px', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+              
               {author.products ? author.products.warehouse_product_list.slice(0, displayedItems).map((data2) => (
                 <div key={data2.id} className='mt-5'>
                   <div style={{textDecoration: 'none'}} className="cards">

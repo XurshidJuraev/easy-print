@@ -366,3 +366,7 @@
   border: none;
   margin-top: 40px;
 }
+
+.selected-image_modal {
+  border: 2px solid var(--Primary-6, #6396FC);
+}

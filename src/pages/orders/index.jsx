@@ -23,6 +23,8 @@ function MyOrders() {
   const [adrse, setAdrse] = useState('');
   const [data, setData] = useState([]);
   const [cities, setCities] = useState([]);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
+  const [deliveryMethod, setDeliveryMethod] = useState('pickup');
   const [formData, setFormData] = useState({
     city_id: '',
     name: '',
@@ -50,9 +52,9 @@ function MyOrders() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  });
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
+  // });
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -285,24 +287,105 @@ function MyOrders() {
                       <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>Добавить другой адрес</button>
                     </center>
 
-                    <h3 className='order_subtitle' style={{marginTop: '48px'}}>Способ получения</h3>
+                    <h3 className='order_subtitle' style={{ marginTop: '48px' }}>Способ получения</h3>
 
                     <label className='order_info'>
-                      <input style={{cursor: 'pointer'}} checked type="radio" id="age1" name="age" value="30" />
-                      <label style={{cursor: 'pointer'}} for="age1">Пункт выдачи Easy Print</label>
+                      <input
+                        style={{ cursor: 'pointer' }}
+                        type="radio"
+                        id="pickup"
+                        name="deliveryMethod"
+                        value="pickup"
+                        checked={deliveryMethod === 'pickup'}
+                        onChange={() => setDeliveryMethod('pickup')}
+                      />
+                      <label style={{ cursor: 'pointer' }} htmlFor="pickup">Пункт выдачи Easy Print</label>
                     </label>
 
-                    <label className='order_info' style={{backgroundColor: 'transparent'}}>
-                      <input style={{cursor: 'pointer'}} checked type="radio" id="age1" name="aa" value="30" />
-                      <label style={{cursor: 'pointer'}} for="age1">Ташкентская область, город Ташкент</label>
-                    </label>
+                    {deliveryMethod === 'pickup' && (
+                      <label className='order_info' style={{ backgroundColor: 'transparent' }}>
+                        <input
+                          style={{ cursor: 'pointer' }}
+                          type="radio"
+                          id="tashkent"
+                          // name="deliveryMethod"
+                          value="tashkent"
+                          checked
+                          // onChange={() => setDeliveryMethod('tashkent')}
+                        />
+                        <label style={{ cursor: 'pointer' }} htmlFor="tashkent">Ташкентская область, город Ташкент</label>
+                      </label>
+                    )}
+
+                    {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
+                      <label className='order_info' style={{ backgroundColor: 'transparent', display: 'none' }}>
+                        <input
+                          style={{ cursor: 'pointer' }}
+                          type="radio"
+                          id="tashkent"
+                          name="deliveryMethod"
+                          value="tashkent"
+                          checked={deliveryMethod === 'tashkent'}
+                          onChange={() => setDeliveryMethod('tashkent')}
+                        />
+                        <label style={{ cursor: 'pointer' }} htmlFor="tashkent">Ташкентская область, город Ташкент</label>
+                      </label>
+                    )}
 
                     <label className='order_info mt-2'>
-                      <input style={{cursor: 'pointer'}} type="radio" id="age2" name="age" value="60" />
-                      <label style={{cursor: 'pointer'}} for="age2">Доставка до дома</label>
+                      <input
+                        style={{ cursor: 'pointer' }}
+                        type="radio"
+                        id="homeDelivery"
+                        name="deliveryMethod"
+                        value="homeDelivery"
+                        checked={deliveryMethod === 'homeDelivery'}
+                        onChange={() => setDeliveryMethod('homeDelivery')}
+                      />
+                      <label style={{ cursor: 'pointer' }} htmlFor="homeDelivery">Доставка до дома</label>
                     </label>
 
-                    <h3 className='order_subtitle' style={{marginTop: '48px'}}>Способ оплаты</h3>
+                    {deliveryMethod === 'pickup' && (
+                      <p className='order_text' style={{ display: 'none' }}>Цена доставки будет зависеть от расстояния до вашего адреса</p>
+                    )}
+
+                    {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
+                      <p className='order_text'>Цена доставки будет зависеть от расстояния до вашего адреса</p>
+                    )}
+
+                    <h3 className='order_subtitle' style={{ marginTop: '48px' }}>Способ оплаты</h3>
+
+                    <label className='order_info'>
+                      <input
+                        style={{ cursor: 'pointer' }}
+                        type="radio"
+                        id="card"
+                        name="pay"
+                        value="30"
+                        checked={selectedPaymentMethod === 'card'}
+                        onChange={() => setSelectedPaymentMethod('card')}
+                      />
+                      <label style={{ cursor: 'pointer' }} htmlFor="card">Картой онлайн</label>
+                    </label>
+
+                    {selectedPaymentMethod === 'card' && (
+                      <img src={cards} alt="cards" />
+                    )}
+
+                    <label className='order_info mt-2'>
+                      <input
+                        style={{ cursor: 'pointer' }}
+                        type="radio"
+                        id="naxt"
+                        name="pay"
+                        value="60"
+                        checked={selectedPaymentMethod === 'cash'}
+                        onChange={() => setSelectedPaymentMethod('cash')}
+                      />
+                      <label style={{ cursor: 'pointer' }} htmlFor="naxt">Наличными, при получении</label>
+                    </label>
+
+                    {/* <h3 className='order_subtitle' style={{marginTop: '48px'}}>Способ оплаты</h3>
 
                     <label className='order_info'>
                       <input style={{cursor: 'pointer'}} checked type="radio" id="card" name="pay" value="30" />
@@ -314,7 +397,7 @@ function MyOrders() {
                     <label className='order_info mt-2'>
                       <input style={{cursor: 'pointer'}} type="radio" id="naxt" name="pay" value="60" />
                       <label style={{cursor: 'pointer'}} for="naxt">Наличными, при получении</label>
-                    </label>
+                    </label> */}
                   </div>
 
                   <div className='order_data'>
@@ -361,7 +444,7 @@ function MyOrders() {
                       </div>
                       <div style={{textAlign: 'right'}}>
                         <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} сум</p>
-                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} сум</p>
+                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'Яндекс Go' : `${Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} сум`}</p>
                         <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.coupon_price).toLocaleString('ru-RU')} сум</p>
                         <p className='basket_total_price'>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} сум</p>
                       </div>

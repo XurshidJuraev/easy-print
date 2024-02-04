@@ -30,6 +30,7 @@ function Basket() {
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
   const [countHeader, setCountHeader] = useState(0);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -55,10 +56,6 @@ function Basket() {
     const newCount = decrementLocalStorageValue('counterValue');
     setCountHeader(newCount);
   };
-
-  // useEffect(() => {
-  //   window.scrollTo(0, 0)
-  // });
 
   useEffect(() => {
     document.title = 'Корзина';
@@ -133,13 +130,16 @@ function Basket() {
 
   async function saveOrder() {
     try {
+
+      const selectedItemsData = selectedItems.map(item => ({
+        order_detail_id: item.id,
+        color_id: selectedColorId !== '' ? selectedColorId : colorOptions,
+        size_id: selectedSizeId !== '' ? selectedSizeId : sizeOptions,
+        quantity: item.quantity
+      }));
+
       const apiData = {
-        data: data.data.list.map(item => ({
-          order_detail_id: item.id,
-          color_id: selectedColorId !== '' ? selectedColorId : colorOptions,
-          size_id: selectedSizeId !== '' ? selectedSizeId : sizeOptions,
-          quantity: item.quantity
-        })),
+        data: selectedItemsData,
         order_id: data.data.id
       };
 
@@ -155,6 +155,8 @@ function Basket() {
           'Authorization': `Bearer ${token}`,
         },
       });
+
+      console.log('response.data:', response.data);
 
       if (response.data.status === true) {
         navigate('/orders');
@@ -201,6 +203,7 @@ function Basket() {
         setSelectedColorId(response.data.data.list[0].color.id);
         setSelectedSizeId(response.data.data.list[0].size.id);
         setAllProduct(response.data.data.list.length);
+        localStorage.setItem('basketData', JSON.stringify(response.data.data.list));
       }
     }).catch((error) => {
       const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
@@ -284,17 +287,83 @@ function Basket() {
       if (!prevData.data || !prevData.data.list) {
         return prevData;
       }
-  
+
+      const allSelected = prevData.data.list.every(item => item.selected);
+
       const updatedList = prevData.data.list.map((item) => {
         return {
           ...item,
-          selected: !item.selected,
+          selected: !allSelected,
         };
       });
-  
+
+      const selectedItemsData = updatedList.filter(item => item.selected);
+      setSelectedItems(selectedItemsData);
+
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
   };
+
+  const handleSelectItem = (id) => {
+    setData((prevData) => {
+      if (!prevData.data || !prevData.data.list) {
+        return prevData;
+      }
+
+      const updatedList = prevData.data.list.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            selected: !item.selected,
+          };
+        }
+        return item;
+      });
+
+      return { ...prevData, data: { ...prevData.data, list: updatedList } };
+    });
+
+    setTrashCardData((prevTrashCardData) => {
+      const updatedTrashCardData = prevTrashCardData.filter(item => item.id !== id);
+      return updatedTrashCardData;
+    });
+
+    const selectedItem = data.data.list.find(item => item.id === id);
+    if (selectedItem) {
+      setSelectedItems((prevSelectedItems) => {
+        const isSelected = prevSelectedItems.some(item => item.id === id);
+        if (isSelected) {
+          return prevSelectedItems.filter(item => item.id !== id);
+        } else {
+          return [...prevSelectedItems, selectedItem];
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    const basketData = localStorage.getItem('basketData')
+    setSelectedItems(JSON.parse(basketData));
+    setData((prevData) => {
+      if (!prevData.data || !prevData.data.list) {
+        return prevData;
+      }
+
+      const allSelected = prevData.data.list.every(item => item.selected);
+
+      const updatedList = prevData.data.list.map((item) => {
+        return {
+          ...item,
+          selected: !allSelected,
+        };
+      });
+
+      const selectedItemsData = updatedList.filter(item => item.selected);
+      setSelectedItems(selectedItemsData);
+
+      return { ...prevData, data: { ...prevData.data, list: updatedList } };
+    });
+  }, [])
 
   return (
     <div>
@@ -327,15 +396,12 @@ function Basket() {
 
                 <hr />
 
-                {/* <label style={{cursor: 'pointer', marginLeft: '30px', marginTop: '-20px'}}>
-                  <input style={{position: 'relative', top: '20px', left: '-27px'}} type="checkbox" />
-                  <p className='basket_check'>Выбрать все</p>
-                </label> */}
-
                 <label style={{ cursor: 'pointer', marginLeft: '30px', marginTop: '-20px' }}>
                   <input
                     style={{ position: 'relative', top: '20px', left: '-27px' }}
                     type="checkbox"
+                    checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)}
+                    defaultChecked={true}
                     onChange={handleSelectAll}
                   />
                   <p className='basket_check'>Выбрать все</p>
@@ -351,12 +417,12 @@ function Basket() {
                               <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
                                 <div className='basket_card_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundColor: item.relation_type === 'product' ? '#ffffff' : '#E9E9E9', backgroundSize: item.relation_type === 'product' ? 'contain' : 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                               </NavLink>
-                              {/* <input style={{position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px'}} type="checkbox" /> */}
                               <input
                                 style={{ position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px' }}
                                 type="checkbox"
-                                checked={data.data && data.data.list.every(item => item.selected)}
-                                onChange={handleSelectAll}
+                                defaultChecked={true}
+                                checked={item.selected}
+                                onChange={() => handleSelectItem(item.id)}
                               />
                             </div>
 
