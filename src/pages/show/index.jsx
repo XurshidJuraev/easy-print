@@ -215,48 +215,48 @@ function ShowDetail() {
 
       console.log(basketData);
   
-      // fetch("http://admin.easyprint.uz/api/order/set-warehouse", requestOptions)
-      //   .then(response => response.json())
-      //   .then(result => {
-      //     if (result.status === true) {
-      //       toast(
-      //         <ToastComponent
-      //           image={productData.images[0] ? productData.images[0] : ''}
-      //           title={productData.name}
-      //           description={productData.description ? productData.description : 'Описание недоступно'}
-      //           link="/basket"
-      //           linkText="Перейти в корзину"
-      //           onClose={() => toast.dismiss()}
-      //         />,
-      //         {
-      //           position: "top-center",
-      //           autoClose: 3000,
-      //           draggable: true,
-      //           theme: "colored",
-      //         }
-      //       );
-      //     } else {
-      //       if (result.message === "Unauthenticated.") {
-      //         const basketData = {
-      //           warehouse_product_id: productData.id,
-      //           quantity: 1,
-      //           color_id: colorId,
-      //           size_id: sizeId,
-      //           price: productData.price,
-      //           discount: dataBeck.discount ? dataBeck.discount : '0'
-      //         };
+      fetch("http://admin.easyprint.uz/api/order/set-warehouse", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.status === true) {
+            toast(
+              <ToastComponent
+                image={productData.images[0] ? productData.images[0] : ''}
+                title={productData.name}
+                description={productData.description ? productData.description : 'Описание недоступно'}
+                link="/basket"
+                linkText="Перейти в корзину"
+                onClose={() => toast.dismiss()}
+              />,
+              {
+                position: "top-center",
+                autoClose: 3000,
+                draggable: true,
+                theme: "colored",
+              }
+            );
+          } else {
+            if (result.message === "Unauthenticated.") {
+              const basketData = {
+                warehouse_product_id: productData.id,
+                quantity: 1,
+                color_id: colorId,
+                size_id: sizeId,
+                price: productData.price,
+                discount: dataBeck.discount ? dataBeck.discount : '0'
+              };
   
-      //         localStorage.setItem('basket', JSON.stringify(basketData));
+              localStorage.setItem('basket', JSON.stringify(basketData));
   
-      //         toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
-      //       } else {
-      //         toast.error('Товар не добавлен');
-      //       }
-      //     }
-      //   })
-      //   .catch(error => {
-      //     toast.error('Товар не добавлен');
-      //   });
+              toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
+            } else {
+              toast.error('Товар не добавлен');
+            }
+          }
+        })
+        .catch(error => {
+          toast.error('Товар не добавлен');
+        });
     }
   };
   
