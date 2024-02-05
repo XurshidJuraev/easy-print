@@ -52,9 +52,9 @@ function MyOrders() {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0)
-  // });
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -97,7 +97,7 @@ function MyOrders() {
         setProducts_total(response.data.data.grant_total);
         setOrders(response.data.data);
         setAdrse(response.data.data.list.length)
-        console.log(response.data.data);
+        // console.log(response.data.data);
       } catch (error) {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }

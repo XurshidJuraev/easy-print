@@ -33,9 +33,9 @@ function HomePage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [countHeader, setCountHeader] = useState(0);
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0)
-  // });
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -479,7 +479,7 @@ function HomePage() {
                           value={sizeOptions[selectedSizeIndex]}
                           onChange={(e) => {
                             const index = sizeOptions.findIndex((size) => size === e.target.value);
-                            console.log(sizeArray[index]?.id);
+                            // console.log(sizeArray[index]?.id);
                             setSelectedSizeIndex(index);
                           }}
                         >

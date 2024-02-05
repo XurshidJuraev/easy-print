@@ -64,7 +64,7 @@ function Profile() {
         localStorage.setItem('user_image', responseData.image);
         localStorage.setItem('user_phone_number', responseData.phone_number);
         localStorage.setItem('user_last_name', responseData.last_name);
-        console.log('responseData:', responseData);
+        // console.log('responseData:', responseData);
   
         setFormData((prevFormData) => ({
           ...prevFormData,
@@ -96,7 +96,7 @@ function Profile() {
       formdata.append("image", formData.img);
     }
 
-    console.log('formData before check:', formData);
+    // console.log('formData before check:', formData);
 
     // for (const key in formData) {
     //   if (formData[key] === null) {
@@ -121,7 +121,7 @@ function Profile() {
       .then((response) => response.text())
       .then((result) => {
         toast.success(localStorage.getItem('selectedLanguage') === 'ru' ? 'Данные успешно обновлены!' : 'Ma`lumotlar muvaffaqiyatli yangilandi!');
-        console.log('update result:', result);
+        // console.log('update result:', result);
         setTimeout(() => {
           axios
             .get(`${process.env.REACT_APP_TWO}/personal-information`, {
@@ -159,7 +159,7 @@ function Profile() {
 
               window.location.reload();
 
-              console.log('responsedData:', responseData);
+              // console.log('responsedData:', responseData);
             })
             .catch((error) => {
               toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');

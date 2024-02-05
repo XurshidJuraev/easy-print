@@ -13,7 +13,7 @@ function Error404() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  });
+  }, []);
 
   useEffect(() => {
     document.title = 'Не найдено';

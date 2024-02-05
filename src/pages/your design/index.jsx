@@ -77,21 +77,31 @@ const YourDesign = () => {
   // Screenshots
   let [image, takeScreenshot] = useScreenshot()
   let [imageBack, takeScreenshotBack] = useScreenshot()
+  let [imageWhiteTShirt, takeScreenshotWhiteTShirt] = useScreenshot()
+  let [imageBackWhiteTShirt, takeScreenshotBackWhiteTShirt] = useScreenshot()
+  let [imageBlackHoodie, takeScreenshotBlackHoodie] = useScreenshot()
+  let [imageBackBlackHoodie, takeScreenshotBackBlackHoodie] = useScreenshot()
+  let [imageWhiteHoodie, takeScreenshotWhiteHoodie] = useScreenshot()
+  let [imageBackWhiteHoodie, takeScreenshotBackWhiteHoodie] = useScreenshot()
+  let [imageBlackSweatshot, takeScreenshotBlackSweatshot] = useScreenshot()
+  let [imageBackBlackSweatshot, takeScreenshotBackBlackSweatshot] = useScreenshot()
+  let [imageWhiteSweatshot, takeScreenshotWhiteSweatshot] = useScreenshot()
+  let [imageBackWhiteSweatshot, takeScreenshotBackWhiteSweatshot] = useScreenshot()
   // T-Shirt
   let getImage = () => takeScreenshot(ref.current)
   let getImageBack = () => takeScreenshotBack(refBack.current)
-  let getImageBlackTShirt = () => takeScreenshot(refBlackTShirt.current)
-  let getImageBackBlackTShirt = () => takeScreenshotBack(refBackBlackTShirt.current)
+  let getImageBlackTShirt = () => takeScreenshotWhiteTShirt(refBlackTShirt.current)
+  let getImageBackBlackTShirt = () => takeScreenshotBackWhiteTShirt(refBackBlackTShirt.current)
   // Hoodie
-  let getImageBlackHoodie = () => takeScreenshot(refBlackHoodie.current)
-  let getImageBackBlackHoodie = () => takeScreenshotBack(refBackBlackHoodie.current)
-  let getImageWhiteHoodie = () => takeScreenshot(refWhiteHoodie.current)
-  let getImageBackWhiteHoodie = () => takeScreenshotBack(refBackWhiteHoodie.current)
+  let getImageBlackHoodie = () => takeScreenshotBlackHoodie(refBlackHoodie.current)
+  let getImageBackBlackHoodie = () => takeScreenshotBackBlackHoodie(refBackBlackHoodie.current)
+  let getImageWhiteHoodie = () => takeScreenshotWhiteHoodie(refWhiteHoodie.current)
+  let getImageBackWhiteHoodie = () => takeScreenshotBackWhiteHoodie(refBackWhiteHoodie.current)
   // Sweatshot
-  let getImageBlackSweatshot = () => takeScreenshot(refBlackSweatshot.current)
-  let getImageBackBlackSweatshot = () => takeScreenshotBack(refBackBlackSweatshot.current)
-  let getImageWhiteSweatshot = () => takeScreenshot(refWhiteSweatshot.current)
-  let getImageBackWhiteSweatshot = () => takeScreenshotBack(refBackWhiteSweatshot.current)
+  let getImageBlackSweatshot = () => takeScreenshotBlackSweatshot(refBlackSweatshot.current)
+  let getImageBackBlackSweatshot = () => takeScreenshotBackBlackSweatshot(refBackBlackSweatshot.current)
+  let getImageWhiteSweatshot = () => takeScreenshotWhiteSweatshot(refWhiteSweatshot.current)
+  let getImageBackWhiteSweatshot = () => takeScreenshotBackWhiteSweatshot(refBackWhiteSweatshot.current)
   const [countHeader, setCountHeader] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
@@ -117,7 +127,7 @@ const YourDesign = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  });
+  }, []);
 
   useEffect(() => {
     document.title = 'Создайте свой собственный дизайн'
@@ -157,8 +167,8 @@ const YourDesign = () => {
       
       imgObj.src = selectedImage;
 
-      console.log(imgObj);
-      console.log(selectedImage);
+      // console.log(imgObj);
+      // console.log(selectedImage);
   
       imgObj.onload = function () {
         const img = new fabric.Image(imgObj);
@@ -169,11 +179,11 @@ const YourDesign = () => {
         canvas.add(img);
         canvas.renderAll();
         setPhotoInputVisible(!photoInputVisible);
-        console.log(imgObj);
+        // console.log(imgObj);
       };
     }
     
-    console.log(selectedImageIndex);
+    // console.log(selectedImageIndex);
   };
 
   useEffect(() => {
@@ -303,7 +313,7 @@ const YourDesign = () => {
       scaley = 8
     } 
 
-    console.log(scaley);
+    // console.log(scaley);
 
     if(newValue) {
       document.querySelector('.drawing-area').style.transform = `scale(1.${scaley})`;
@@ -427,9 +437,9 @@ const YourDesign = () => {
     formdata.append("image_back", backImageBlob);
     formdata.append("price", product_id.price);
 
-    console.log(printImage);
-    console.log(frontImageBlob);
-    console.log(backImageBlob);
+    // console.log(printImage);
+    // console.log(frontImageBlob);
+    // console.log(backImageBlob);
   
     var requestOptions = {
       method: 'POST',
@@ -489,7 +499,7 @@ const YourDesign = () => {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setImageList(response.data.data);
     }).catch((error) => {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');

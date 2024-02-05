@@ -33,7 +33,7 @@ function AuthorPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  });
+  }, []);
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_TWO}/get-company-products?id=${params.id}`, {
@@ -44,7 +44,7 @@ function AuthorPage() {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      console.log(response.data.data[0]);
+      // console.log(response.data.data[0]);
       setAuthor(response.data.data[0]);
     }).catch((error) => {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -435,7 +435,7 @@ function AuthorPage() {
                           value={sizeOptions[selectedSizeIndex]}
                           onChange={(e) => {
                             const index = sizeOptions.findIndex((size) => size === e.target.value);
-                            console.log(sizeArray[index]?.id);
+                            // console.log(sizeArray[index]?.id);
                             setSelectedSizeIndex(index);
                           }}
                         >

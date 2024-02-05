@@ -55,7 +55,7 @@ function CategoryListByName() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  });
+  }, []);
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
@@ -74,7 +74,7 @@ function CategoryListByName() {
       }
     }).then((response) => {
       setData(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     }).catch((error) => {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
@@ -322,7 +322,7 @@ function CategoryListByName() {
                           value={sizeOptions[selectedSizeIndex]}
                           onChange={(e) => {
                             const index = sizeOptions.findIndex((size) => size === e.target.value);
-                            console.log(sizeArray[index]?.id);
+                            // console.log(sizeArray[index]?.id);
                             setSelectedSizeIndex(index);
                           }}
                         >

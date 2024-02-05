@@ -143,7 +143,7 @@ function Basket() {
         order_id: data.data.id
       };
 
-      console.log('apiData:', apiData);
+      // console.log('apiData:', apiData);
 
       localStorage.setItem('order_id', data.data.id);
       localStorage.setItem('paymentDate', JSON.stringify({ price, coupon_price, discount_price, grant_total }));
@@ -156,10 +156,11 @@ function Basket() {
         },
       });
 
-      console.log('response.data:', response.data);
+      // console.log('response.data:', response.data);
 
       if (response.data.status === true) {
-        navigate('/orders');
+        // navigate('/orders');
+        window.location.href = '/#/orders';
       } else {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
@@ -242,7 +243,7 @@ function Basket() {
     let promoMessage = '';
     let promoColor = 'green';
 
-    console.log(order_id, promoCode);
+    // console.log(order_id, promoCode);
 
     axios.post(`${process.env.REACT_APP_TWO}/order/add-coupon`, { 
         order_id: order_id,
@@ -401,7 +402,7 @@ function Basket() {
                     style={{ position: 'relative', top: '20px', left: '-27px' }}
                     type="checkbox"
                     checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)}
-                    defaultChecked={true}
+                    // defaultChecked={true}
                     onChange={handleSelectAll}
                   />
                   <p className='basket_check'>Выбрать все</p>
@@ -420,7 +421,7 @@ function Basket() {
                               <input
                                 style={{ position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px' }}
                                 type="checkbox"
-                                defaultChecked={true}
+                                // defaultChecked={true}
                                 checked={item.selected}
                                 onChange={() => handleSelectItem(item.id)}
                               />

@@ -61,6 +61,10 @@ function ShowDetail() {
     window.scrollTo(0, 0);
   }
 
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
+  // }, []);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -509,7 +513,7 @@ function ShowDetail() {
                           value={sizeOptions[selectedSizeIndex]}
                           onChange={(e) => {
                             const index = sizeOptions.findIndex((size) => size === e.target.value);
-                            console.log(sizeArray[index]?.id);
+                            // console.log(sizeArray[index]?.id);
                             setSelectedSizeIndex(index);
                           }}
                         >

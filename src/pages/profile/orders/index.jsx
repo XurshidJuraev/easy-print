@@ -56,7 +56,7 @@ function ProfileOrders() {
     axios.get(`${process.env.REACT_APP_TWO}/order/get-order-detail-by-order-id?id=${id}`, requestOptions)
       .then((response) => {
         setShow(response.data.data);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       })
       .catch((error) => {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -100,7 +100,7 @@ function ProfileOrders() {
                           </div>
                           <p className='order_profile_text'>{order.order_date ? order.order_date : 'Нет данных'}</p>
                           <p className='order_profile_text'>{order.delivery_date ? order.delivery_date : 'Я еще не получила заказ :('}</p>
-                          <p className='order_profile_text'>{order.address ? `${order.address.region} ${order.address.city} ${order.address.street}` : 'Нет данных'}</p>
+                          <p className='order_profile_text'>{order.address ? `${order.address.region === null ? 'Пока нет данных :(' : order.address.region} ${order.address.city === null ? '' : order.address.city} ${order.address.street === null ? '' : order.address.street} ${order.address.house === null ? '' : order.address.house === undefined ? '' : order.address.house}` : 'Нет данных'}</p>
                           <p className='order_profile_text'>{Number(order.all_price).toLocaleString('ru-RU')} сум</p>
                         </div>
                       </div>

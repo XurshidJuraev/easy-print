@@ -68,7 +68,7 @@ function ProfileAddres() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  });
+  }, []);
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard'));
