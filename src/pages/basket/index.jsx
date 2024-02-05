@@ -66,30 +66,47 @@ function Basket() {
       if (!maxQuantity) {
         maxQuantity = 9999;
       }
+      let newGrantTotal = 0;
+      let newDiscountPrice = 0;
+  
       const updatedList = prevData.data.list.map((item) => {
-        if (item.id === id) {
+        if (item.id === id && item.selected) {
           const newCount = item.quantity + change;
           const updatedCount = Math.min(Math.max(newCount, 1), maxQuantity);
           const updatedTotalPrice = item.price * updatedCount;
-
+  
           const finalTotalPrice = item.discount_price
             ? updatedTotalPrice - item.discount_price
             : updatedTotalPrice;
-
-          return {
+  
+          const newItem = {
             ...item,
             quantity: updatedCount,
             total_price: finalTotalPrice,
             selectedColor: selectedColor,
             selectedSize: selectedSize,
           };
+  
+          return newItem;
         }
         return item;
       });
-
+  
+      updatedList.forEach((item) => {
+        newGrantTotal += item.total_price;
+        newDiscountPrice += item.discount_price ? item.discount_price * item.quantity : 0;
+      });
+  
+      const totalPriceArray = updatedList.map(item => item.total_price + (item.discount_price || 0));
+      const totalPriceSum = totalPriceArray.reduce((accumulator, totalPrice) => accumulator + totalPrice, 0);
+  
+      setGrant_total(newGrantTotal);
+      setDiscount_price(newDiscountPrice);
+      setPrice(totalPriceSum);
+  
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
-  }
+  }  
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
@@ -159,8 +176,8 @@ function Basket() {
       // console.log('response.data:', response.data);
 
       if (response.data.status === true) {
-        // navigate('/orders');
-        window.location.href = '/#/orders';
+        navigate('/orders');
+        // window.location.href = '/#/orders';
       } else {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
@@ -188,7 +205,6 @@ function Basket() {
         const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
         setTrashCardData(savedCards);
         calculateTotalPrice(savedCards);
-        // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       } else {
         setCoupon_price(response.data.data.coupon_price);
         localStorage.setItem('coupon_price', response.data.data.coupon_price);
@@ -210,7 +226,6 @@ function Basket() {
       const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
       setTrashCardData(savedCards);
       calculateTotalPrice(savedCards);
-      // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
   }, [token]);
 
@@ -242,8 +257,6 @@ function Basket() {
   function applyPromoCode() {
     let promoMessage = '';
     let promoColor = 'green';
-
-    // console.log(order_id, promoCode);
 
     axios.post(`${process.env.REACT_APP_TWO}/order/add-coupon`, { 
         order_id: order_id,
@@ -300,6 +313,18 @@ function Basket() {
 
       const selectedItemsData = updatedList.filter(item => item.selected);
       setSelectedItems(selectedItemsData);
+      setAllProduct(updatedList.length);
+      const totalAmount = selectedItemsData.reduce((accumulator, item) => accumulator + item.total_price, 0);
+      const totalPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.price), 0);
+      const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
+
+      setGrant_total(totalAmount);
+      setPrice(totalPrice);      
+      setDiscount_price(totalDiscountPrice);
+      
+      console.log(selectedItemsData.map(item => item.discount_price));
+
+      calculateTotalPrice(selectedItemsData);
 
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
@@ -310,7 +335,7 @@ function Basket() {
       if (!prevData.data || !prevData.data.list) {
         return prevData;
       }
-
+  
       const updatedList = prevData.data.list.map((item) => {
         if (item.id === id) {
           return {
@@ -320,15 +345,27 @@ function Basket() {
         }
         return item;
       });
-
+  
+      const selectedItemsData = updatedList.filter(item => item.selected);
+      setSelectedItems(selectedItemsData);
+  
+      const totalAmount = selectedItemsData.reduce((accumulator, item) => accumulator + item.total_price, 0);
+      const totalPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.price), 0);
+      const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
+      setAllProduct(selectedItemsData.length);
+      setGrant_total(totalAmount);
+      setPrice(totalPrice);      
+      setDiscount_price(totalDiscountPrice);
+      calculateTotalPrice(selectedItemsData);
+  
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
-
+  
     setTrashCardData((prevTrashCardData) => {
       const updatedTrashCardData = prevTrashCardData.filter(item => item.id !== id);
       return updatedTrashCardData;
     });
-
+  
     const selectedItem = data.data.list.find(item => item.id === id);
     if (selectedItem) {
       setSelectedItems((prevSelectedItems) => {
@@ -340,7 +377,11 @@ function Basket() {
         }
       });
     }
-  };
+  };  
+
+  useEffect(() => {
+    calculateTotalPrice(selectedItems);
+  }, [selectedItems]);
 
   useEffect(() => {
     const basketData = localStorage.getItem('basketData')
@@ -402,7 +443,6 @@ function Basket() {
                     style={{ position: 'relative', top: '20px', left: '-27px' }}
                     type="checkbox"
                     checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)}
-                    // defaultChecked={true}
                     onChange={handleSelectAll}
                   />
                   <p className='basket_check'>Выбрать все</p>
@@ -421,7 +461,6 @@ function Basket() {
                               <input
                                 style={{ position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px' }}
                                 type="checkbox"
-                                // defaultChecked={true}
                                 checked={item.selected}
                                 onChange={() => handleSelectItem(item.id)}
                               />
