@@ -33,6 +33,16 @@ function HeaderMain({ trashCardData }) {
     passwordConfirmation: '',
   });
 
+  let docTitle = document.title;
+
+  window.addEventListener('blur', () => {
+    document.title = localStorage.getItem('selectedLanguage') === 'ru' ? 'Вернуться снова! 🤗' : 'Come back! 🤗';
+  });
+
+  window.addEventListener('focus', () => {
+    document.title = docTitle;
+  });
+
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_TWO}/profile-info`, {
       method: 'GET',
