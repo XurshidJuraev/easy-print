@@ -1,6 +1,6 @@
 .author_detail {
-  width: 398px;
-  height: 550px;
+  width: 467px;
+  height: 327px;
   flex-shrink: 0;
   border-radius: 12px;
   background: var(--White, #FFF);
@@ -21,11 +21,11 @@
 .author_name {
   color: #000;
   font-family: Inter;
-  font-size: 28px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 34px; /* 121.429% */
-  letter-spacing: -0.504px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 34px;
+  letter-spacing: -0.018em;
+  text-align: left;  
   margin-top: 20px;
 }
 
@@ -50,7 +50,7 @@
   font-weight: 400;
   line-height: 20px; /* 125% */
   letter-spacing: -0.16px;
-  margin-top: 21px;
+  /* margin-top: 21px; */
 }
 
 .author_item {

@@ -238,7 +238,7 @@ function AuthorPage() {
       <div style={{width: '100%', height: '260px', backgroundImage: `url(${Author_background_default})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover'}}></div>
 
       <div className="container">
-        <div className="d-flex">
+        <div className="d-flex center">
           <div className='author_detail'>
             <div className='d-flex justify-content-end'>
               <button style={{background: 'transparent', border: 'none'}}>
@@ -248,34 +248,34 @@ function AuthorPage() {
               </button>
             </div>
 
-            <center>
-              {/* <div className='user_avatar'></div> */}
+            <div className="d-flex justify-content-between">
+              <div style={{width: '200px'}} className='d-flex flex-column center text-center'>
+                {author.avatar ? (
+                  <img className='user_avatar' src={author.avatar} alt={localStorage.getItem('user_name')} />
+                ) : (
+                  <div className='user_avatar'></div>
+                )}
 
-              {author.avatar ? (
-                <img className='user_avatar' src={author.avatar} alt={localStorage.getItem('user_name')} />
-              ) : (
-                <div className='user_avatar'></div>
-              )}
+                <h3 className='author_name'>{author.full_name}</h3>
+                <p className='author_country'>{author.country === 'Uzbekistan' ? '🇺🇿' : ''} {author.country}</p>
+                <button className='author_button'>Пожаловаться</button>
+              </div>
 
-              <h3 className='author_name'>{author.full_name}</h3>
-              <p className='author_country'>{author.country === 'Uzbekistan' ? '🇺🇿' : ''} {author.country}</p>
+              <div className='d-flex flex-column center text-center' style={{height: '172px'}}>
+                <p className='author_list'>Всего принтов</p>
+                <p className='author_item'>{Number(author.total_prints).toLocaleString('ru-RU')}</p>
 
-              <p className='author_list'>Всего принтов</p>
-              <p className='author_item'>{Number(author.total_prints).toLocaleString('ru-RU')}</p>
+                <p className='author_list'>Продано товаров</p>
+                <p className='author_item'>{Number(author.total_solds).toLocaleString('ru-RU')}</p>
 
-              <p className='author_list'>Продано товаров</p>
-              <p className='author_item'>{Number(author.total_solds).toLocaleString('ru-RU')}</p>
-
-              <p className='author_list'>Дата регистрации</p>
-              <p className='author_item'>{author.registration_date}</p>
-
-              <button className='author_button'>Пожаловаться</button>
-            </center>
+                <p className='author_list'>Дата регистрации</p>
+                <p className='author_item'>{author.registration_date}</p>
+              </div>
+            </div>
           </div>
-
-          <h2 className='products_father_text mb-3 ms-5 mt-4'>Товары</h2>
         </div>
 
+          {/* <h2 className='products_father_text mb-3 ms-5 mt-4'>Товары</h2> */}
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
           <div className="container">
             {isLoading ? (

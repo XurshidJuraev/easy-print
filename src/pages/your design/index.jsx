@@ -54,6 +54,7 @@ const YourDesign = () => {
   const [selectedHeader, setSelectedHeader] = useState(null);
   const [canvas, setCanvas] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [image2, setImage2] = useState(null);
   const [radius, setRadius] = useState(0);
   const canvasRef = useRef(null);
   const token = localStorage.getItem('token');
@@ -105,9 +106,6 @@ const YourDesign = () => {
   const [countHeader, setCountHeader] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
-  const {selectedObjects, editor, onReady} = useFabricJSEditor();
-  const [currentTab, setCurrentTab] = useState("settings");
-  const [lastTab, setLastTab] = useState("settings");
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -150,8 +148,12 @@ const YourDesign = () => {
         canvas.add(img);
         canvas.renderAll();
         setPhotoInputVisible(!photoInputVisible);
+        console.log(photoInputVisible);
+        setImage2(img);
       };
     };
+
+    console.log(reader);
 
     setPrintImage(e.target.files[0]);
   
@@ -184,6 +186,19 @@ const YourDesign = () => {
     }
     
     // console.log(selectedImageIndex);
+  };
+
+  const deleteImage = () => {
+    if (image2) {
+      canvas.remove(image2);
+      setImage2(null);
+      setPhotoInputVisible(photoInputVisible);
+      console.log(image2);
+      console.log(photoInputVisible);
+    } else {
+      console.log(image2);
+      console.log(photoInputVisible);
+    }
   };
 
   useEffect(() => {
@@ -612,7 +627,7 @@ const YourDesign = () => {
                     </defs>
                   </svg>
 
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <svg onClick={deleteImage} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <g clip-path="url(#clip0_519_4037)">
                       <path d="M18.3327 3.33333H14.166V1.66667C14.166 1.22464 13.9904 0.800716 13.6779 0.488155C13.3653 0.175595 12.9414 0 12.4993 0L7.49935 0C7.05732 0 6.6334 0.175595 6.32084 0.488155C6.00828 0.800716 5.83268 1.22464 5.83268 1.66667V3.33333H1.66602V5H3.33268V17.5C3.33268 18.163 3.59607 18.7989 4.06492 19.2678C4.53376 19.7366 5.16964 20 5.83268 20H14.166C14.8291 20 15.4649 19.7366 15.9338 19.2678C16.4026 18.7989 16.666 18.163 16.666 17.5V5H18.3327V3.33333ZM7.49935 1.66667H12.4993V3.33333H7.49935V1.66667ZM14.9993 17.5C14.9993 17.721 14.9116 17.933 14.7553 18.0893C14.599 18.2455 14.387 18.3333 14.166 18.3333H5.83268C5.61167 18.3333 5.39971 18.2455 5.24343 18.0893C5.08715 17.933 4.99935 17.721 4.99935 17.5V5H14.9993V17.5Z" fill="#18356D"/>
                       <path d="M9.16667 8.33337H7.5V15H9.16667V8.33337Z" fill="#32454B"/>
@@ -666,7 +681,6 @@ const YourDesign = () => {
               <input
                 type="file"
                 accept="image/*"
-                id="tshirt-custompicture" 
                 onChange={handleCustomPictureChange}
                 style={{ display: 'none', }}
               />
@@ -789,7 +803,14 @@ const YourDesign = () => {
 
                   <div style={{display: !photoInputVisible ? 'block' : 'none', border: !photoInputVisible ? 'none' : 'none'}} id="drawingArea" className="drawing-area">
                     <div className="canvas-container">
-                      <canvas id="tshirt-canvas" width="234" height="350"></canvas>
+                      <canvas 
+                      // ref={(c) => {
+                      //   if (c && !canvas) {
+                      //     const newCanvas = new fabric.Canvas(c);
+                      //     setCanvas(newCanvas);
+                      //   }
+                      // }} 
+                      id="tshirt-canvas" width={234} height={350} ></canvas>
                     </div>
                   </div>
                 </div>
@@ -1385,7 +1406,16 @@ const YourDesign = () => {
         <div style={{ position: 'relative', marginTop: '-680px', left: '19.2%', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
           <div>
             {categoryName.category.map((cat, index) => (
-              <div key={index} onClick={() => { setCategory(cat.name); setCategoryChange(cat.id); setCategoryChangeCheck(cat.id); setCategorySize(cat.sizes); setCategoryIndex(index); }} className={`category_change ${categoryIndex === index ? 'selected' : ''}`}>
+              <div key={index} onClick={() => {
+                  if (cat.type !== 'no active') {
+                    setCategory(cat.name);
+                    setCategoryChange(cat.id);
+                    setCategoryChangeCheck(cat.id);
+                    setCategorySize(cat.sizes);
+                    setCategoryIndex(index);
+                  }
+                }} className={`${cat.type === 'no active' ? 'category_change_disbaled' : `category_change ${categoryIndex === index ? 'selected' : ''}`} `}
+              >              
                 {cat.name}
                 {categoryIndex === index && (
                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">

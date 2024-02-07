@@ -652,40 +652,6 @@ function ShowDetail() {
                   }
                 </p>
 
-                {/* <div>
-                  <div style={{marginRight: '83px'}}>
-                    <p className='show_detail_size'>Размер</p>
-                    <div className='size_selection' style={{width: '350px'}}>
-                      {sizeArray.map((size, index) => (
-                        <div
-                          key={size.id}
-                          className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`}
-                          onClick={() => setSelectedSizeIndex(index)}
-                        >
-                          {size.name}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className='show_detail_size'>Цвет</p>
-
-                    <div className="d-flex">
-                      {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                        <div
-                          key={index}
-                          className="color_border me-4"
-                          style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}}
-                          onClick={() => setSelectedColorIndex(index)}
-                        >
-                          <div className="color" style={{backgroundColor: color.code}}></div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div> */}
-
                 <div>
                   <div style={{marginRight: '83px'}}>
                     <p className='show_detail_size'>Размер</p>
@@ -930,17 +896,15 @@ function ShowDetail() {
                           <div className='d-flex' style={{marginRight: '83px'}}>
                             <p>Размер</p>
                             <select 
-                              // className='show_detail_option' 
                               style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}}
                               value={sizeOptions[selectedSizeIndex]}
                               onChange={(e) => {
                                 const index = sizeOptions.findIndex((size) => size === e.target.value);
-                                // console.log(sizeArray[index]?.id);
                                 setSelectedSizeIndex(index);
                               }}
                             >
-                              {sizeArray.map((size) => (
-                                <option key={size.id} value={size.name}>{size.name}</option>
+                              {sizeArray.map((size, index) => (
+                                <option key={size.id} onClick={() => {setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId)}} value={size.name}>{size.name}</option>
                               ))}
                             </select>
                           </div>
@@ -952,9 +916,13 @@ function ShowDetail() {
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
                                 <div
                                   key={index}
-                                  className="color_border me-2"
+                                  className="color_border me-4"
                                   style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}}
-                                  onClick={() => setSelectedColorIndex(index)}
+                                  onClick={() => {
+                                    setSelectedColorIndex(index);
+                                    const selectedColorId = color.id;
+                                    setDefaultColor(selectedColorId)
+                                  }}
                                 >
                                   <div className="color" style={{backgroundColor: color.code}}></div>
                                 </div>
