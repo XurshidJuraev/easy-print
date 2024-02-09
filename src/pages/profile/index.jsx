@@ -57,20 +57,13 @@ function Profile() {
           phoneNumber: responseData.phone_number,
           gender: responseData.gender,
           birthDate: responseData.birth_date,
-          img: responseData.image,
+          imageUrl: responseData.image,
           email: responseData.email,
         });
 
         localStorage.setItem('user_image', responseData.image);
         localStorage.setItem('user_phone_number', responseData.phone_number);
         localStorage.setItem('user_last_name', responseData.last_name);
-        // console.log('responseData:', responseData);
-  
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          img: responseData.image,
-          imageUrl: responseData.image,
-        }));
       })
       .catch((error) => {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -90,23 +83,13 @@ function Profile() {
     formdata.append("gender", formData.gender);
     formdata.append("email", formData.email);
     formdata.append("birth_date", formData.birthDate);
-    
-    // Check if the image is a Blob and append it to the FormData
+
     if (formData.img instanceof Blob) {
       formdata.append("image", formData.img);
     }
 
-    // console.log('formData before check:', formData);
-
-    // for (const key in formData) {
-    //   if (formData[key] === null) {
-    //     toast.error(`Iltimos, barcha maydonlarni to'ldiring!`);
-    //     console.log('formData[key]:', formData[key]);
-    //     return;
-    //   }
-    // }
-
     localStorage.setItem('user_name', formData.name);
+    localStorage.setItem('user_image', formData.image);
 
     var requestOptions = {
       method: 'POST',
@@ -115,61 +98,23 @@ function Profile() {
       redirect: 'follow',
     };
 
-    const savedImage = localStorage.getItem('user_image');
+    console.log(formData);
 
-    fetch(`${process.env.REACT_APP_TWO}/personal-information`, requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        toast.success(localStorage.getItem('selectedLanguage') === 'ru' ? 'Данные успешно обновлены!' : 'Ma`lumotlar muvaffaqiyatli yangilandi!');
-        // console.log('update result:', result);
-        setTimeout(() => {
-          axios
-            .get(`${process.env.REACT_APP_TWO}/personal-information`, {
-              method: 'GET',
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'Access-Control-Allow-Origin': '*',
-                Accept: 'application/json',
-                language: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-              }
-            })
-            .then((response) => {
-              const responseData = response.data.data;
-
-              setFormData({
-                name: responseData.first_name,
-                lastName: responseData.last_name,
-                phoneNumber: responseData.phone_number,
-                gender: responseData.gender,
-                birthDate: responseData.birth_date,
-                img: responseData.image,
-                email: responseData.email,
-              });
-
-              localStorage.setItem('user_name', responseData.first_name);
-              localStorage.setItem('user_last_name', responseData.last_name);
-              localStorage.setItem('user_image', responseData.image);
-              localStorage.setItem('user_phone_number', responseData.phone_number);
-
-              setFormData((prevFormData) => ({
-                ...prevFormData,
-                img: savedImage,
-                imageUrl: savedImage,
-              }));
-
-              window.location.reload();
-
-              // console.log('responsedData:', responseData);
-            })
-            .catch((error) => {
-              toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-              console.log('error:', error);
-            });
-        }, 1000);
-      })
-      .catch((error) => {
-        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-      });
+    axios.post(`${process.env.REACT_APP_TWO}/personal-information`, formdata,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          lang: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+        },
+      }
+    )
+    .then((response) => {
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log('error:', error);
+    });
   };
 
   const handleImageChange = (e) => {
@@ -223,7 +168,7 @@ function Profile() {
                 </div>
 
                 <div>
-                  <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName ? formData.lastName : localStorage.getItem('user_last_name')} onChange={handleChange} />
+                  <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName} onChange={handleChange} />
                   <select name="gender" className='input_profile' value={formData.gender} onChange={handleChange}>
                     <option disabled hidden value="">Пол</option>
                     <option value="1" selected={formData.gender === 1}>Мужской</option>
