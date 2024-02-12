@@ -8,7 +8,7 @@ import './main.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import ToastComponent from '../../components/toast'
 import Placeholder from 'react-placeholder-loading';
 
@@ -263,6 +263,7 @@ function ShowDetail() {
         })
         .catch(error => {
           toast.error('Товар не добавлен');
+          console.log('error', error);
         });
     }
   };
@@ -303,6 +304,7 @@ function ShowDetail() {
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
+      <ToastContainer />
 
       <div className="container">
         <div className="card_detail">

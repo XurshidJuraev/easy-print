@@ -4,6 +4,7 @@ import './main.css'
 import logo from '../../layouts/icons/logo.svg'
 import instagram from '../../layouts/icons/instagram.svg'
 import telegram from '../../layouts/icons/telegram.svg'
+import { NavLink } from 'react-router-dom'
 
 function FooterMain() {
   return (
@@ -13,12 +14,12 @@ function FooterMain() {
           <h3 className='footer_title'>Информация</h3>
           <br />
 
-          <ul style={{listStyle: 'none'}}>
-            <li className='footer_text'>Доставка</li>
-            <li className='footer_text'>Оплата</li>
-            <li className='footer_text'>Обмен и возврат</li>
-            <li className='footer_text'>Как оформить заказ?</li>
-            <li className='footer_text'>Пользовательское <br /> соглашение</li>
+          <ul style={{listStyle: 'none', display: 'flex', flexDirection: 'column'}}>
+            <NavLink to={'/footer/delivery'} className='footer_text'>Доставка</NavLink>
+            <NavLink to={'/footer/pay'} className='footer_text'>Оплата</NavLink>
+            <NavLink to={'/footer/exchange'} className='footer_text'>Обмен и возврат</NavLink>
+            <NavLink to={'/footer/order'} className='footer_text'>Как оформить заказ?</NavLink>
+            <NavLink to={'/footer/terms'} className='footer_text'>Пользовательское <br /> соглашение</NavLink>
           </ul>
         </li>
 

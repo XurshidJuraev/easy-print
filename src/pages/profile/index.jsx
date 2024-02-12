@@ -110,7 +110,9 @@ function Profile() {
       }
     )
     .then((response) => {
-      window.location.reload();
+      if (response.data.status === true) {
+        window.location.reload();
+      }
     })
     .catch((error) => {
       console.log('error:', error);

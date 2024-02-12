@@ -31,6 +31,18 @@ import CategoryListByName from './pages/categories';
 // Автор
 import AuthorPage from './pages/author';
 
+// Футeр страниция 
+// -- Доставка
+import FooterDeliveryPage from './pages/footer page/information/delivery';
+// -- Оплата
+import FooterPayPage from './pages/footer page/information/pay';
+// -- Обмен и возврат
+import FooterExchangePage from './pages/footer page/information/exchange';
+// -- Oформить заказ?
+import FooterOrderPage from './pages/footer page/information/order';
+// -- Пользвательское соглашение
+import FooterTermsPage from './pages/footer page/information/terms';
+
 function App() {
   return (
     <Routes>
@@ -52,6 +64,16 @@ function App() {
       <Route path='/categories/:id/:name' element={<CategoryListByName />} />
 
       <Route path='/author/:id/:name' element={<AuthorPage />} />
+
+      <Route path='/footer/delivery' element={<FooterDeliveryPage />} />
+
+      <Route path='/footer/pay' element={<FooterPayPage />} />
+
+      <Route path='/footer/exchange' element={<FooterExchangePage />} />
+
+      <Route path='/footer/order' element={<FooterOrderPage />} />
+
+      <Route path='/footer/terms' element={<FooterTermsPage />} />
 
       <Route path='*' element={<Error404 />} />
     </Routes>

@@ -18,6 +18,9 @@ function MyOrders() {
   const [sale, setSale] = useState('');
   const [total, setTotal] = useState('');
   const [delivery, setDelivery] = useState('');
+  const [nullAddres, setNullAddres] = useState(false);
+  const [nullName, setNullName] = useState(false);
+  const [nullPhoneNumber, setNullPhoneNumber] = useState(false);
   const [products_total, setProducts_total] = useState('');
   const [editAddressId, setEditAddressId] = useState(null);
   const [adrse, setAdrse] = useState('');
@@ -72,7 +75,7 @@ function MyOrders() {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
   }, []);
-  const pay = JSON.parse(localStorage.getItem('paymentDate'))
+  // const pay = JSON.parse(localStorage.getItem('paymentDate'))
 
   const token = localStorage.getItem('token');
   const order_id = localStorage.getItem('order_id');
@@ -119,7 +122,7 @@ function MyOrders() {
         });
         setAddress(response.data.data);
       } catch (error) {
-        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+        console.log(error);
       }
     };
 
@@ -151,6 +154,12 @@ function MyOrders() {
       });
   }, [token]);
 
+  setTimeout(() => {
+    setNullAddres(false)
+    setNullName(false)
+    setNullPhoneNumber(false)
+  }, 5000);
+
   function saveOrder() {
     var myHeaders = new Headers();
     myHeaders.append("language", "uz");
@@ -160,12 +169,41 @@ function MyOrders() {
     var formdata = new FormData();
     formdata.append("order_id", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
     formdata.append("address_id", addressId);
+    if (addressId === null) {
+      toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы не можете отправить свой заказ. Потому что у тебя нет адреса. Выберите свой адрес и отправьте.' : `Buyurtmani yubora olmaysiz. Chunki sizda manzil yo'q. Manzilingizni tanlang va yuboring.`);
+      setNullAddres(true)
+      return;
+    } else {
+      formdata.append("address_id", addressId);
+    }
     formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    if (localStorage.getItem('user_name') === null) {
+      toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Похоже, ваше имя недоступно для подтверждения заказа. Пожалуйста, создайте себе имя на странице своего профиля.' : `Buyurtmani tasdiqlash uchun ismingiz mavjud emasga o'xshaydi. Iltimos, profil sahifangizda o'zingiz uchun nom yarating.`);
+      setNullName(true)
+      return;
+    } else {
+      formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    }
     formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    if (localStorage.getItem('user_phone_number') === null) {
+      toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш номер телефона для подтверждения заказа недоступен. Пожалуйста, подтвердите себя, добавив свой номер телефона на странице своего профиля.' : `Buyurtmani tasdiqlash uchun telefon raqamingiz mavjud emas. Profil sahifangizga telefon raqamingizni qoʻshish orqali oʻzingizni tasdiqlang.`);
+      setNullPhoneNumber(true)
+      return;
+    } else {
+      formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    }
     formdata.append("payment_method", "1");
     formdata.append("user_card_id", "1");
 
+    console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+    console.log("address_id:", addressId);
+    console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    console.log("payment_method:", "1");
+    console.log("user_card_id:", "1");
+
     var requestOptions = {
+      Accept: 'application/json',
       method: 'POST',
       headers: myHeaders,
       body: formdata,
@@ -186,6 +224,7 @@ function MyOrders() {
         }
       })
       .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
+      // .catch(error =>  console.log(error));
   }
 
   const handleChange = (e) => {
@@ -249,6 +288,7 @@ function MyOrders() {
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
+
       <ToastContainer />
 
       {orders && orders.list && orders.list.length === 0 ? (
@@ -264,28 +304,32 @@ function MyOrders() {
 
                     <h3 className='order_subtitle' style={{marginTop: '48px'}}>Покупатель</h3>
 
-                    <input className='order_info' value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') + ' ' + localStorage.getItem('user_last_name') : 'Имя и Фамилия*'}/>
-                    <input className='order_info mt-4' value={localStorage.getItem('user_phone_number') ? `${localStorage.getItem('user_phone_number')}` : 'Действующий номер телефона*'}/>
+                    <input className='order_info' style={{border: nullName === true ? '1px solid red' : 'none'}} value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') + ' ' + `${localStorage.getItem('user_last_name') ? localStorage.getItem('user_last_name') : ''}` : 'Имя и Фамилия*'}/>
+                    <input className='order_info mt-4' style={{border: nullPhoneNumber === true ? '1px solid red' : 'none'}} value={localStorage.getItem('user_phone_number') ? `${localStorage.getItem('user_phone_number')}` : 'Действующий номер телефона*'}/>
                     
-                    <h3 className='order_subtitle' style={{marginTop: '48px'}}>Адрес доставки</h3>
+                    {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
+                      <>
+                        <h3 className='order_subtitle' style={{marginTop: '48px'}}>Адрес доставки</h3>
 
-                    {address && address.length > 0 ? (
-                      <select onChange={(e) => setAddressId(e.target.value)} className='order_info mt-2'>
-                        {address.map((addr, index) => (
-                          <option key={index} value={addr.id}>
-                            {`${addr.region.name} ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      <div className='order_info'>
-                        Адрес*
-                      </div>
+                        {address && address.length > 0 ? (
+                          <select onChange={(e) => {setAddressId(e.target.value); setNullAddres(false)}} className='order_info mt-2'>
+                            {address.map((addr, index) => (
+                              <option key={index} value={addr.id}>
+                                {`${addr.region.name} ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <div style={{border: nullAddres === true ? '1px solid red' : 'none'}} className='order_info'>
+                            Адрес*
+                          </div>
+                        )}
+
+                        <center style={{marginTop: '28px'}}>
+                          <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>Добавить другой адрес</button>
+                        </center>
+                      </>
                     )}
-
-                    <center style={{marginTop: '28px'}}>
-                      <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>Добавить другой адрес</button>
-                    </center>
 
                     <h3 className='order_subtitle' style={{ marginTop: '48px' }}>Способ получения</h3>
 
@@ -384,20 +428,6 @@ function MyOrders() {
                       />
                       <label style={{ cursor: 'pointer' }} htmlFor="naxt">Наличными, при получении</label>
                     </label>
-
-                    {/* <h3 className='order_subtitle' style={{marginTop: '48px'}}>Способ оплаты</h3>
-
-                    <label className='order_info'>
-                      <input style={{cursor: 'pointer'}} checked type="radio" id="card" name="pay" value="30" />
-                      <label style={{cursor: 'pointer'}} for="card">Картой онлайн</label>
-                    </label>
-
-                    <img src={cards} alt="cards" />
-
-                    <label className='order_info mt-2'>
-                      <input style={{cursor: 'pointer'}} type="radio" id="naxt" name="pay" value="60" />
-                      <label style={{cursor: 'pointer'}} for="naxt">Наличными, при получении</label>
-                    </label> */}
                   </div>
 
                   <div className='order_data'>

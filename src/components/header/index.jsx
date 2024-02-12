@@ -267,7 +267,7 @@ function HeaderMain({ trashCardData }) {
 
   return (
     <header style={{backgroundColor: '#ffffff'}} className="navbar navbar-expand-lg bg-body-tertiary">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div style={{ margin: '12px 120px' }} className="container-fluid">
         <NavLink title="EasyPrint Home" to={'/'} className="navbar-brand">
           <img src={logo} alt="logo" />
@@ -315,22 +315,10 @@ function HeaderMain({ trashCardData }) {
                 <img style={{marginTop: '-2px'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
               </button>
 
+              <div onClick={toggleLanguageDropdown} style={{position: 'absolute', display: showLanguageDropdown === true ? 'block' : 'none', background: 'transparent', width: '100%', height: '100vh', top: '0', left: '0'}} className="color_background"></div>
               {showLanguageDropdown && (
-                <div
-                  value={selectedLanguage}
-                  style={{
-                    border: 'none',
-                    backgroundColor: 'white',
-                    position: 'absolute',
-                    top: '70px',
-                    right: '184px',
-                    boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',
-                    zIndex: '1000000000'
-                  }}
-                >
-                  {data.data &&
-                    data.data.language &&
-                    data.data.language.map((lang) => (
+                <div value={selectedLanguage} style={{border: 'none',backgroundColor: 'white',position: 'absolute',top: '70px',right: '184px',boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',zIndex: '1000000000'}}>
+                  {data.data && data.data.language && data.data.language.map((lang) => (
                       <div title={lang.name} onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
                         {lang.name}
                       </div>
