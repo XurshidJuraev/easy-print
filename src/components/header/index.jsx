@@ -268,7 +268,7 @@ function HeaderMain({ trashCardData }) {
   return (
     <header style={{backgroundColor: '#ffffff'}} className="navbar navbar-expand-lg bg-body-tertiary">
       {/* <ToastContainer /> */}
-      <div style={{ margin: '12px 120px' }} className="container-fluid">
+      <div style={{ margin: '12px 120px' }} className="container">
         <NavLink title="EasyPrint Home" to={'/'} className="navbar-brand">
           <img src={logo} alt="logo" />
         </NavLink>

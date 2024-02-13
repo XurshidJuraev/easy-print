@@ -176,7 +176,7 @@ function Basket() {
       });
 
       if (response.data.status === true) {
-        // navigate('/orders');
+        navigate('/orders');
         // window.location.href = '/#/orders';
       } else {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -368,6 +368,30 @@ function Basket() {
       return updatedTrashCardData;
     });
   };
+
+  useEffect(() => {
+    const basketData = localStorage.getItem('basketData')
+    setSelectedItems(JSON.parse(basketData));
+    setData((prevData) => {
+      if (!prevData.data || !prevData.data.list) {
+        return prevData;
+      }
+
+      const allSelected = prevData.data.list.every(item => item.selected);
+
+      const updatedList = prevData.data.list.map((item) => {
+        return {
+          ...item,
+          selected: !allSelected,
+        };
+      });
+
+      const selectedItemsData = updatedList.filter(item => item.selected);
+      setSelectedItems(selectedItemsData);
+
+      return { ...prevData, data: { ...prevData.data, list: updatedList } };
+    });
+  }, [])
 
   return (
     <div>

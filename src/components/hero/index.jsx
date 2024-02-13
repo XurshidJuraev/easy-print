@@ -118,9 +118,9 @@ function HeroMain() {
           </div>
         </>
       ) : (
-        <div>
+        <center>
           {data.length > 0 && (
-            <div style={{ width: '100%', height: '900px' }} className='d-flex justify-content-between'>
+            <div style={{ width: '1440px', height: '900px', textAlign: 'left' }} className='d-flex justify-content-between'>
               <div style={{ paddingTop: '120px', paddingLeft: '160px' }}>
                 <h1 className='hero_title'>{data[currentIndex].title}</h1>
                 <p className='hero_text'>{data[currentIndex].text}</p>
@@ -149,7 +149,7 @@ function HeroMain() {
               </div>
             </div>
           )}
-        </div>
+        </center>
       )}
     </div>
   );

@@ -867,7 +867,7 @@ const YourDesign = () => {
                     <Reveal>
 
                       <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                        <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                        <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                       </div>
 
                       <style>
@@ -905,7 +905,7 @@ const YourDesign = () => {
                     <Reveal>
 
                       <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                        <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                        <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                       </div>
 
                       <style>
@@ -940,7 +940,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -969,7 +969,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -998,7 +998,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -1029,7 +1029,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -1058,7 +1058,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -1087,7 +1087,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -1120,7 +1120,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -1149,7 +1149,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -1178,7 +1178,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -1209,7 +1209,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -1238,7 +1238,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>
@@ -1267,7 +1267,7 @@ const YourDesign = () => {
                         <Reveal>
 
                           <div style={{position: 'relative', top: '-300px', left: '200px'}}>
-                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)}/>
+                            <textarea style={{ color: color, fontSize: `${fontSizePx}px`, height: '50px' }} className='add_text' type="text" placeholder='Easy Print' value={textInputValue ? textInputValue : 'EasyPrint'} onChange={(e) => setTextInputValue(e.target.value)}/>
                           </div>
 
                           <style>

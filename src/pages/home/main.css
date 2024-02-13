@@ -14,6 +14,7 @@
   height: 384px; 
   position: relative;
   z-index: 100;
+  text-align: left;
 }
 
 .clothes_fat {

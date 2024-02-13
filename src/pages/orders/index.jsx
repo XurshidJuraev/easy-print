@@ -2,8 +2,11 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import HeaderMain from '../../components/header';
 import AdvantageMain from '../../components/advantage';
 import FooterMain from '../../components/footer';
-import trash from '../../layouts/icons/delete_product_basket.svg'
-import go_to_checkout from '../../layouts/icons/Go_to_checkout.svg'
+import double_order_header from '../../layouts/icons/for_a_double.svg'
+import double_order_header2 from '../../layouts/icons/for_a_double_one.svg'
+import lock_order_header from '../../layouts/icons/lock_order_header.svg'
+import order_modal_phone from '../../layouts/icons/order_modal_phone.svg'
+import order_modal_telegram from '../../layouts/icons/order_modal_telegram.svg'
 import cards from '../../layouts/images/cards.svg'
 import './main.css';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -289,6 +292,16 @@ function MyOrders() {
     <div>
       <HeaderMain trashCardData={trashCardData} />
 
+      <div className='white_background' style={{backgroundColor: '#ffffff', width: '77%', height: '100px', position: 'relative', marginTop: '-99px', marginLeft: '331px', paddingTop: '29px', paddingLeft: '200px', position: 'relative', zIndex: '100'}}>
+        <div className="d-flex">
+          <img style={{marginRight: '200px'}} src={lock_order_header} alt="lock_order_header" />
+          <NavLink to={'/footer/exchange'}>
+            <img style={{marginRight: '48px'}} src={double_order_header2} alt="double_order_header2" />
+          </NavLink>
+          <img style={{cursor: 'pointer'}} data-bs-toggle="modal" data-bs-target="#exampleModal2" src={double_order_header} alt="double_order_header" />
+        </div>
+      </div>
+
       <ToastContainer />
 
       {orders && orders.list && orders.list.length === 0 ? (
@@ -312,22 +325,30 @@ function MyOrders() {
                         <h3 className='order_subtitle' style={{marginTop: '48px'}}>Адрес доставки</h3>
 
                         {address && address.length > 0 ? (
-                          <select onChange={(e) => {setAddressId(e.target.value); setNullAddres(false)}} className='order_info mt-2'>
-                            {address.map((addr, index) => (
-                              <option key={index} value={addr.id}>
-                                {`${addr.region.name} ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <div style={{border: nullAddres === true ? '1px solid red' : 'none'}} className='order_info'>
-                            Адрес*
-                          </div>
-                        )}
+                          <>
+                            <select onChange={(e) => {setAddressId(e.target.value); setNullAddres(false)}} className='order_info mt-2'>
+                              {address.map((addr, index) => (
+                                <option key={index} value={addr.id}>
+                                  {`${addr.region.name} ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
+                                </option>
+                              ))}
+                            </select>
 
-                        <center style={{marginTop: '28px'}}>
-                          <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>Добавить другой адрес</button>
-                        </center>
+                            <center style={{marginTop: '28px'}}>
+                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>Добавить другой адрес</button>
+                            </center>
+                          </>
+                        ) : (
+                          <>
+                            <div data-bs-toggle="modal" data-bs-target="#exampleModal"  style={{border: nullAddres === true ? '1px solid red' : 'none'}} className='order_info'>
+                              Адрес*
+                            </div>
+
+                            <center style={{marginTop: '28px'}}>
+                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>Добавить адрес</button>
+                            </center>
+                          </>
+                        )}
                       </>
                     )}
 
@@ -357,7 +378,7 @@ function MyOrders() {
                           checked
                           // onChange={() => setDeliveryMethod('tashkent')}
                         />
-                        <label style={{ cursor: 'pointer' }} htmlFor="tashkent">Ташкентская область, город Ташкент</label>
+                        <label style={{ cursor: 'pointer', color: '#18356D' }} htmlFor="tashkent">город Ташкент, Юнусабадский район, массив киёт 51</label>
                       </label>
                     )}
 
@@ -436,7 +457,7 @@ function MyOrders() {
                     <div className="accordion" style={{borderRadius: '12px', marginBottom: '20px'}} id="accordionExample">
                       <div className="accordion-item">
                         <h2 className="accordion-header">
-                          <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <button style={{borderRadius: '12px'}} className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Товары ({adrse})
                           </button>
                         </h2>
@@ -474,8 +495,8 @@ function MyOrders() {
                       </div>
                       <div style={{textAlign: 'right'}}>
                         <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} сум</p>
-                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'Яндекс Go' : `${Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} сум`}</p>
-                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.coupon_price).toLocaleString('ru-RU')} сум</p>
+                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'Яндекс Go' : `0 сум`}</p>
+                        <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} сум</p>
                         <p className='basket_total_price'>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} сум</p>
                       </div>
                     </div>
@@ -543,6 +564,48 @@ function MyOrders() {
                   <button style={{width: '100%'}} type="submit" className='btn_profile'>Добавить адрес</button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px', width: '520px'}}>
+          <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
+            <div className="modal-header d-flex justify-content-between" style={{borderBottom: 'none', padding: '32px'}}>
+              <div className="d-flex mt-4 flex-column">
+                <h1 style={{fontFamily: 'Inter400', textAlign: 'left'}} className="modal-title modal_title" id="exampleModalLabel">Связаться с нами</h1>
+                <p className='address_modal_text'>Задайте вопрос нашим спецалистам в удобной вам форме</p>
+              </div>
+              <button style={{marginTop: '-120px'}} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div style={{padding: '32px'}} className="modal-body">
+              <div style={{marginTop: '-45px'}} className="d-flex">
+                <div>
+                  <img src={order_modal_telegram} alt="order_modal_telegram" />
+                </div>
+
+                <div>
+                  <h4 className='order_modal_body_title'>Telegram</h4>
+                  <p className='order_modal_body_text'>EasyPrint_Support_Bot</p>
+                </div>
+              </div>
+
+              <div className="d-flex mt-3">
+                <div>
+                  <img src={order_modal_phone} alt="order_modal_phone" />
+                </div>
+
+                <div>
+                  <NavLink to={"tel:+998990123456"} className='order_modal_body_title'>+998 99 012 34 56</NavLink>
+                  <p className='order_modal_body_text'>Бесплатный звонок по Узбекистану</p>
+                </div>
+              </div>
+
+              <h4 className='order_modal_body_title' style={{marginLeft: '0px', marginTop: '32px', fontSize: '16px'}}>Электронная почта поддержки:</h4>
+              <div style={{marginTop: '-4px', marginBottom: '50px'}}>
+                <NavLink to={"mailto:support@easyprint.com"} className='order_modal_body_text_link'>support@easyprint.com</NavLink>
+              </div>
             </div>
           </div>
         </div>
