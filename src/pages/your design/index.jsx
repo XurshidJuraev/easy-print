@@ -23,7 +23,7 @@ import { fabric } from "fabric";
 import {FabricJSCanvas, useFabricJSEditor} from "fabricjs-react";
 import { useScreenshot } from 'use-react-screenshot'
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import ToastComponent from '../../components/toast';
 
 const YourDesign = () => {
@@ -611,6 +611,8 @@ const YourDesign = () => {
   return (
     <div>
       <HeaderMain />
+      <ToastContainer />
+
       <div className='white_background'>
         <img onClick={() => {
             // T-shirt

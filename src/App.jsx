@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -42,43 +43,48 @@ import FooterExchangePage from './pages/footer page/information/exchange';
 import FooterOrderPage from './pages/footer page/information/order';
 // -- Пользвательское соглашение
 import FooterTermsPage from './pages/footer page/information/terms';
+import usePreventZoom from './components/zoom';
 
 function App() {
+
+  usePreventZoom();
   return (
-    <center style={{textAlign: 'left'}}>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
+    <div>
+      <center style={{textAlign: 'left'}}>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
 
-        <Route path='/basket' element={<Basket />} />
+          <Route path='/basket' element={<Basket />} />
 
-        <Route path='/orders' element={<MyOrders />} />
+          <Route path='/orders' element={<MyOrders />} />
 
-        <Route path='/yourDesign' element={<YourDesign />} />
+          <Route path='/yourDesign' element={<YourDesign />} />
 
-        <Route path="/show/detail/:id/:name" element={<ShowDetail />} />
+          <Route path="/show/detail/:id/:name" element={<ShowDetail />} />
 
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/profile/addres' element={<ProfileAddres />} />
-        <Route path='/profile/orders' element={<ProfileOrders />} />
-        <Route path='/profile/payment' element={<ProfilePayment />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/addres' element={<ProfileAddres />} />
+          <Route path='/profile/orders' element={<ProfileOrders />} />
+          <Route path='/profile/payment' element={<ProfilePayment />} />
 
-        <Route path='/categories/:id/:name' element={<CategoryListByName />} />
+          <Route path='/categories/:id/:name' element={<CategoryListByName />} />
 
-        <Route path='/author/:id/:name' element={<AuthorPage />} />
+          <Route path='/author/:id/:name' element={<AuthorPage />} />
 
-        <Route path='/footer/delivery' element={<FooterDeliveryPage />} />
+          <Route path='/footer/delivery' element={<FooterDeliveryPage />} />
 
-        <Route path='/footer/pay' element={<FooterPayPage />} />
+          <Route path='/footer/pay' element={<FooterPayPage />} />
 
-        <Route path='/footer/exchange' element={<FooterExchangePage />} />
+          <Route path='/footer/exchange' element={<FooterExchangePage />} />
 
-        <Route path='/footer/order' element={<FooterOrderPage />} />
+          <Route path='/footer/order' element={<FooterOrderPage />} />
 
-        <Route path='/footer/terms' element={<FooterTermsPage />} />
+          <Route path='/footer/terms' element={<FooterTermsPage />} />
 
-        <Route path='*' element={<Error404 />} />
-      </Routes>
-    </center>
+          <Route path='*' element={<Error404 />} />
+        </Routes>
+      </center>
+    </div>
   );
 }
 

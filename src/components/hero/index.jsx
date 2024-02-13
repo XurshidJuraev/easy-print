@@ -121,7 +121,7 @@ function HeroMain() {
         <center>
           {data.length > 0 && (
             <div style={{ width: '1440px', height: '900px', textAlign: 'left' }} className='d-flex justify-content-between'>
-              <div style={{ paddingTop: '120px', paddingLeft: '160px' }}>
+              <div style={{ paddingTop: '120px', paddingLeft: '130px' }}>
                 <h1 className='hero_title'>{data[currentIndex].title}</h1>
                 <p className='hero_text'>{data[currentIndex].text}</p>
                   <NavLink to={'/yourDesign'} className='hero_button'>

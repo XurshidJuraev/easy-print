@@ -1042,8 +1042,8 @@ function Basket() {
                                   </NavLink>
                                 </div>
 
-                                <div className='basket_size_fat'>
-                                  <div style={{display: 'flex'}}>
+                                <div className='basket_size_fat' style={{marginTop: item.company_name ? '-55px' : '-65px'}}>
+                                  <div style={{display: item.company_name ? 'flex' : 'none'}}>
                                     <p className='basket_card_size'>Продавец:</p>
                                     <p className='basket_card_size'>{item.company_name ? item.company_name : 'Название не найден'}</p>
                                   </div>
