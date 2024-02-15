@@ -620,10 +620,11 @@ function ShowDetail() {
 
               <div className="img_card_detail">
                 {dataBeck.images && dataBeck.images.length > 0 && (
-                  <img src={dataBeck.images[currentImageIndex]} alt={dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'} />
+                  // <img src={dataBeck.images[currentImageIndex]} alt={dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'} />
+                  <div style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                 )}
 
-                <div className="d-flex justify-content-between" style={{width: '439.014px', marginLeft: '-50px', marginTop: '450px'}}>
+                <div className="d-flex justify-content-between" style={{width: '491px', marginLeft: '-3px', marginTop: '450px'}}>
                   <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handlePrevImage}>
                     <img style={{ width: '48px', height: '48px' }} src={show_right} alt="show_right" />
                   </button>

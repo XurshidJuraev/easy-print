@@ -26,7 +26,7 @@
   align-items: center;
 }
 
-.img_card_detail img {
+.img_card_detail div {
   width: 500px;
   height: 580px;
   position: absolute;
@@ -336,6 +336,6 @@
   }
 }
 
-.img_card_detail img {
+.img_card_detail div {
   animation: imageAnimation 0.3s ease-in-out; /* Animatsiya davri va usuli */
 }

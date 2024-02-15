@@ -27,6 +27,9 @@ function MyOrders() {
   const [products_total, setProducts_total] = useState('');
   const [editAddressId, setEditAddressId] = useState(null);
   const [adrse, setAdrse] = useState('');
+  const [pickapAdrse, setPickapAdrse] = useState('');
+  const [pickapAdrseCheck, setPickapAdrseCheck] = useState('');
+  const [selectedPickapAdrs, setSelectedPickapAdrs] = useState(null);
   const [data, setData] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
@@ -133,6 +136,34 @@ function MyOrders() {
   }, [token]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/pick-up-point`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+          },
+        });
+        setPickapAdrse(response.data.data);
+        setPickapAdrseCheck(response.data.data[0].id);
+        if (response.data.data.length > 0) {
+          setSelectedPickapAdrs(response.data.data[0]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [token]);
+
+  const handlePickapAdrsChange = (index) => {
+    setSelectedPickapAdrs(pickapAdrse[index]);
+  };
+
+  useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_TWO}/get-districts`, {
         method: 'GET',
@@ -199,7 +230,7 @@ function MyOrders() {
     formdata.append("user_card_id", "1");
 
     console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    console.log("address_id:", addressId);
+    console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
     console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
     console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
     console.log("payment_method:", "1");
@@ -212,6 +243,8 @@ function MyOrders() {
       body: formdata,
       redirect: 'follow'
     };
+
+    console.log(requestOptions);
 
     fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
       .then(response => response.json())
@@ -227,7 +260,6 @@ function MyOrders() {
         }
       })
       .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
-      // .catch(error =>  console.log(error));
   }
 
   const handleChange = (e) => {
@@ -368,18 +400,23 @@ function MyOrders() {
                     </label>
 
                     {deliveryMethod === 'pickup' && (
-                      <label className='order_info' style={{ backgroundColor: 'transparent' }}>
-                        <input
-                          style={{ cursor: 'pointer' }}
-                          type="radio"
-                          id="tashkent"
-                          // name="deliveryMethod"
-                          value="tashkent"
-                          checked
-                          // onChange={() => setDeliveryMethod('tashkent')}
-                        />
-                        <label style={{ cursor: 'pointer', color: '#18356D' }} htmlFor="tashkent">город Ташкент, Юнусабадский район, массив киёт 51</label>
-                      </label>
+                      <div>
+                        {pickapAdrse && pickapAdrse.map((item, index) => (
+                          <label className='order_info' key={index} style={{ backgroundColor: 'transparent' }}>
+                            <input
+                              style={{ cursor: 'pointer' }}
+                              type="radio"
+                              id={`pickapAdrs_${index}`}
+                              value={index}
+                              checked={selectedPickapAdrs === item}
+                              onChange={() => {handlePickapAdrsChange(index); setPickapAdrseCheck(item.id)}}
+                            />
+                            <label style={{ cursor: 'pointer', color: '#18356D' }} htmlFor={`pickapAdrs_${index}`}>
+                              {item.region ? item.region : ''} {item.id ? '' : `${localStorage.getItem('selectedLanguage') === 'ru' ? 'Информация не найдена' : 'Malumot topilmadi'}`} {item.city ? item.city : ''} {item.name ? item.name : ''}
+                            </label>
+                          </label>
+                        ))}
+                      </div>
                     )}
 
                     {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
