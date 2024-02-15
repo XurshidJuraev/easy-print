@@ -71,14 +71,14 @@ function HomePageMobile() {
             <p className='advantage_text_mobile'>Качественные экологичные <br /> материалы</p>
           </div>
 
-          <div style={{backgroundColor: '#F8F8F8', padding: '40px 25px', width: '280px', height: '259px'}} className='advantage_cards'>
+          <div style={{backgroundColor: '#F8F8F8', padding: '40px 25px', width: '280px', height: '259px', marginTop: '-50px'}} className='advantage_cards'>
             <img src={blueTruck} alt="blueVerifed" />
 
             <h3 className='advantage_theme_mobile'>Быстрая доставка</h3>
             <p className='advantage_text_mobile'>Доставка по всему <br /> Узбекистану</p>
           </div>
 
-          <div style={{backgroundColor: '#F8F8F8', padding: '40px 25px', width: '280px', height: '259px'}} className='advantage_cards'>
+          <div style={{backgroundColor: '#F8F8F8', padding: '40px 25px', width: '280px', height: '259px', marginTop: '-50px'}} className='advantage_cards'>
             <img src={blueBuds} alt="blueVerifed" />
 
             <h3 className='advantage_theme_mobile'>Сервис</h3>

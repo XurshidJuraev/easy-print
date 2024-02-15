@@ -36,22 +36,24 @@ import FooterOrderPage from './pages/footer page/information/order';
 // -- Пользвательское соглашение
 import FooterTermsPage from './pages/footer page/information/terms';
 
+// Мобильная версия
 import HomePageMobile from './mobile/pages/home';
+// профиля страниция
+import AuthPageMobile from './mobile/pages/auth';
 
 function App() {
-  const navigate = useNavigate();
-  const screenWidth = window.screen.width;
+  // const navigate = useNavigate();
+  // const screenWidth = window.screen.width;
 
-  if (screenWidth < 600) {
-    navigate('/mobile');
-  }
+  // if (screenWidth < 600) {
+  //   navigate('/mobile');
+  // }
 
   return (
     <div>
       <center style={{textAlign: 'left'}}>
         <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/mobile' element={<HomePageMobile />} />
           <Route path='/basket' element={<Basket />} />
           <Route path='/orders' element={<MyOrders />} />
           <Route path='/yourDesign' element={<YourDesign />} />
@@ -68,6 +70,9 @@ function App() {
           <Route path='/footer/order' element={<FooterOrderPage />} />
           <Route path='/footer/terms' element={<FooterTermsPage />} />
           <Route path='*' element={<Error404 />} />
+          {/* Мобильная версия */}
+          <Route path='/mobile' element={<HomePageMobile />} />
+          <Route path='/mobile/auth' element={<AuthPageMobile />} />
         </Routes>
       </center>
     </div>

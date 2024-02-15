@@ -18,6 +18,7 @@
   letter-spacing: 0px;
   text-align: center;
   color: #B3B3B3;  
+  text-decoration: none;
 }
 
 .footer_bar_text_active {
@@ -28,4 +29,5 @@
   letter-spacing: 0px;
   text-align: center;
   color: #3064CC;  
+  text-decoration: none;
 }
