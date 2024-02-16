@@ -695,6 +695,11 @@ function ShowDetail() {
                       ))}
                     </div>
                   </div>
+
+                  <div className='d-flex'>
+                    <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
+                    <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{dataBeck.quantity}</p>
+                  </div>
                 </div>
 
                 <div style={{margin: '24px 0px 14px 0px'}}>
@@ -952,6 +957,11 @@ function ShowDetail() {
                           />
     
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
+                        </div>
+
+                        <div className='d-flex'>
+                          <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
+                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{modalData.quantity}</p>
                         </div>
     
                         <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">

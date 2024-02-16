@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import ToastComponent from '../../components/toast';
 import Placeholder from 'react-placeholder-loading';
+import './main.css';
 
 function CategoryListByName() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -16,6 +17,9 @@ function CategoryListByName() {
   const [idCounter, setIdCounter] = useState(1);
   const [count, setCount] = useState(1);
   const [selectedSize, setSelectedSize] = useState('s');
+  const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [subCategoryQuant, setSubCategoryQuant] = useState('');
   const [sizeOptions, setSizeOptions] = useState([]);
   const [selectedColor, setSelectedColor] = useState('#D9CCC6');
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
@@ -77,6 +81,9 @@ function CategoryListByName() {
     }).then((response) => {
       setData(response.data);
       setIsLoading(false);
+      setCategory(response.data.data[0].category.name);
+      setSubCategory(response.data.data[0].sub_category.name);
+      setSubCategoryQuant(response.data.data[0].products.length);
     }).catch((error) => {
       setIsLoading(false);
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -309,6 +316,19 @@ function CategoryListByName() {
           </>
         ) : (
           <>
+            <div style={{marginBottom: '28px'}}>
+              <p className='categories_title'>
+                {category}
+
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.5 15L12.5 10L7.5 5" stroke="#3C7CFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+
+                {subCategory}
+              </p>
+
+              <h3>{category} <span className='categories_quant'>{subCategoryQuant}</span></h3>
+            </div>
             {data.data ? data.data.map(category => (
               <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}} key={category.category.id}>
                 {category.products.map(data2 => (
@@ -527,6 +547,11 @@ function CategoryListByName() {
                           />
     
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
+                        </div>
+
+                        <div className='d-flex'>
+                          <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
+                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{modalData.quantity}</p>
                         </div>
     
                         <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">

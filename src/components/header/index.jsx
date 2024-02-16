@@ -94,25 +94,25 @@ function HeaderMain({ trashCardData }) {
 
     setPhoneNumber(cleanedPhone);
 
-      var myHeaders = new Headers();
-      myHeaders.append("language", "uz");
-      myHeaders.append("Accept", "application/json");
-      myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
+    var myHeaders = new Headers();
+    myHeaders.append("language", "uz");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
 
-      var formdata = new FormData();
-      formdata.append("phone", cleanedPhone);
+    var formdata = new FormData();
+    formdata.append("phone", cleanedPhone);
 
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: formdata,
-        redirect: 'follow'
-      };
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
 
-      fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
-        .then(response => response.text())
-        .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false);})
-        .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
+    fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
+      .then(response => response.text())
+      .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false);})
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
   }
 
   const handleOpenCodeVerificationModal = (evt) => {
