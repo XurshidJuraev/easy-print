@@ -43,6 +43,22 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
+    const checkScreenSize = () => {
+      if (window.innerWidth < 600) {
+        navigate('/mobile');
+      }
+    };
+
+    checkScreenSize();
+
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
+  useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
     if (storedCount) {
       setCountHeader(Number(storedCount));

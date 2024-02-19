@@ -9,10 +9,10 @@ import { NavLink } from 'react-router-dom';
 function FooterBarMobile() {
   return (
     <div className='footer_bar'>
-      <div style={{textDecoration: 'none'}} className='center flex-column'>
+      <NavLink to={'/mobile'} style={{textDecoration: 'none'}} className='center flex-column'>
         <img src={FooterHomeIcon} alt="FooterHomeIcon" />
         <p className='footer_bar_text_active'>Главная</p>
-      </div>
+      </NavLink>
 
       <div style={{textDecoration: 'none'}} className='center flex-column'>
         <img src={FooterYourDesignIcon} alt="FooterYourDesignIcon" />

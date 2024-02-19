@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
@@ -40,6 +40,9 @@ import FooterTermsPage from './pages/footer page/information/terms';
 import HomePageMobile from './mobile/pages/home';
 // профиля страниция
 import AuthPageMobile from './mobile/pages/auth';
+import ProfileMobile from './mobile/pages/profile';
+import ProfileMobileAddres from './mobile/pages/profile/addres';
+import ProfileMobileOrder from './mobile/pages/profile/order';
 
 function App() {
   // const navigate = useNavigate();
@@ -55,7 +58,7 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/basket' element={<Basket />} />
-          <Route path='/orders' element={<MyOrders />} />
+          <Route path='/checkout' element={<MyOrders />} />
           <Route path='/yourDesign' element={<YourDesign />} />
           <Route path="/show/detail/:id/:name" element={<ShowDetail />} />
           <Route path='/profile' element={<Profile />} />
@@ -73,6 +76,9 @@ function App() {
           {/* Мобильная версия */}
           <Route path='/mobile' element={<HomePageMobile />} />
           <Route path='/mobile/auth' element={<AuthPageMobile />} />
+          <Route path='/mobile/profile' element={<ProfileMobile />} />
+          <Route path='/mobile/profile/addres' element={<ProfileMobileAddres />} />
+          <Route path='/mobile/profile/checkout' element={<ProfileMobileOrder />} />
         </Routes>
       </center>
     </div>

@@ -23,8 +23,6 @@ function Profile() {
   });
   const token = localStorage.getItem('token');
 
-  // localStorage.setItem('user_image', no_image);
-
   useEffect(() => {
     document.title = 'Личная информация'
   }, []);
@@ -161,7 +159,7 @@ function Profile() {
               </label>
             </div>
 
-            <form onSubmit={(e) => { handleSubmit(e); handleUpdateBackend(); }}>
+            <form onSubmit={(e) => { handleSubmit(e); handleUpdateBackend();}}>
               <div className="d-flex">
                 <div>
                   <input type="text" className='input_profile' placeholder='Имя' name="name" value={formData.name} onChange={handleChange} />

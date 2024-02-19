@@ -1,0 +1,14 @@
+.order_name_mobile {
+  width: 176px;
+  height: 40px;  
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  text-align: left;  
+}
+
+.accordion_color {
+  background-color: #ffffff00 !important;
+}

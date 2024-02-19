@@ -118,6 +118,8 @@ function AuthPageMobile() {
     evt.preventDefault();
   
     const { user_email, user_password } = evt.target.elements;
+
+    const cleanedPhone = user_email.value.replace(/\D/g, '');
   
     fetch(`${process.env.REACT_APP_TWO}/login`, {
       method: 'POST',
@@ -125,7 +127,7 @@ function AuthPageMobile() {
         'Content-type': 'application/json',
       },
       body: JSON.stringify({
-        email: user_email.value.trim(),
+        email: cleanedPhone,
         password: user_password.value.trim(),
       }),
     })

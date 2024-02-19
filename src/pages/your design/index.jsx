@@ -523,6 +523,7 @@ const YourDesign = () => {
 
     var formdata = new FormData();
     formdata.append("product_id", product_id.id);
+    formdata.append("category_id", categoryChange);
     formdata.append("quantity", 1);
     formdata.append("color_id", shirtColor === '#000000' ? 3 : 4);
     formdata.append("size_id", selectedSize);

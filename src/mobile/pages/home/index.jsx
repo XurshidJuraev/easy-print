@@ -8,11 +8,13 @@ import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
 import axios from 'axios';
 import './main.css';
+import { useNavigate } from 'react-router-dom'
 
 function HomePageMobile() {
   const [data, setData] = useState(0);
   const token = localStorage.getItem('token');
-
+  const [category, setCategory] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_TWO}/get-warehouses`, {
@@ -30,9 +32,45 @@ function HomePageMobile() {
     });    
   }, []);
 
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/anime-category-size-color`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+      }
+    }).then((response) => {
+      setCategory(response.data.data.category);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, []);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      if (window.innerWidth < 600) {
+        navigate('/mobile');
+      }
+    };
+
+    checkScreenSize();
+
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
   return (
     <div style={{backgroundColor: '#ffffff'}}>
       <HeaderMainMobile />
+      <div style={{backgroundColor: 'white'}}>
+        {category && category.map((item, index) => (
+          <button className='header_button_mobile' key={index}>{item.name}</button>
+        ))}
+      </div>
       <HeroMainMobile />
 
       <center>

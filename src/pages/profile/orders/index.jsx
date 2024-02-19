@@ -56,7 +56,6 @@ function ProfileOrders() {
     axios.get(`${process.env.REACT_APP_TWO}/order/get-order-detail-by-order-id?id=${id}`, requestOptions)
       .then((response) => {
         setShow(response.data.data);
-        // console.log(response.data.data);
       })
       .catch((error) => {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');

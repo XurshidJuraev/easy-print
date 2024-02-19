@@ -25,7 +25,7 @@ function ProfileHeader() {
         setIsActive(0);
       } else if (path === '#/profile/addres') {
         setIsActive(1);
-      } else if (path === '#/profile/orders') {
+      } else if (path === '#/profile/checkout') {
         setIsActive(2);
       } else if (path === '#/profile/payment') {
         setIsActive(3);
@@ -34,10 +34,6 @@ function ProfileHeader() {
 
     updateActiveTab();
   }, []);
-
-  // useEffect(() => {
-  //   document.title = user_name ? (user_last_name ? `${user_name} ${user_last_name}` : `${user_name}`) : 'Easy Print';
-  // }, []);
 
   const handleLogout = () => {
     toast.success('Выход из вашей учетной записи успешно завершен!');
@@ -114,7 +110,7 @@ function ProfileHeader() {
         <p className={isActive === 1 ? 'profile_header_text_active' : 'profile_header_text'}>Мои адреса</p>
       </NavLink>
 
-      <NavLink to={'/profile/orders'} onClick={() => toggleActive(2)} className={`d-flex profile_item ${isActive == 2 ? 'active' : ''}`} style={{marginTop: '20px', textDecoration: 'none'}}>
+      <NavLink to={'/profile/checkout'} onClick={() => toggleActive(2)} className={`d-flex profile_item ${isActive == 2 ? 'active' : ''}`} style={{marginTop: '20px', textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={20}
