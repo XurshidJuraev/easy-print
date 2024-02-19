@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './main.css'
 import authImage from '../../layouts/images/43.svg'
 import verifed from '../../layouts/images/green_verifed.svg'
-import {useNavigate} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 function AuthPageMobile() {
@@ -114,10 +114,39 @@ function AuthPageMobile() {
       });
   };
 
+  const handleSubmitLogin = (evt) => {
+    evt.preventDefault();
+  
+    const { user_email, user_password } = evt.target.elements;
+  
+    fetch(`${process.env.REACT_APP_TWO}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: user_email.value.trim(),
+        password: user_password.value.trim(),
+      }),
+    })
+      .then(response => response.json())
+      .then(result => {
+        localStorage.setItem('token', result.data.token);
+        setSuccess_login(true); setLogin(false)
+      })
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setSuccess_login(false); setLogin(true);});
+  };  
+
   return (
     <>
       <center style={{display: first ? 'block' : 'none'}} id='first'>
-        <h2 className='auth_title'>Регистрация</h2>
+        <NavLink to={'/mobile'}>
+          <svg style={{position: 'absolute', left: '20px', top: '50px'}} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </NavLink>
+
+        <h2 className='auth_title' style={{marginTop: '100px'}}>Регистрация</h2>
         <p className='auth_text'>Зарегистрируйтесь если вы тут впервые</p>
         <img style={{width: '360px', height: '360px'}} src={authImage} alt="authImage" />
         <div className="center flex-column" style={{marginBottom: '50px'}}>
@@ -127,6 +156,12 @@ function AuthPageMobile() {
       </center>
 
       <center style={{display: register ? 'block' : 'none'}} id='register'>
+        <div onClick={() => {setRegister(false); setFirst(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
         <form onSubmit={(evt) => { handleSubmitRegister(evt) }}>
           <h2 style={{width: '343px'}} className='auth_title'>Ведите номер телефона</h2>
           <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
@@ -135,11 +170,17 @@ function AuthPageMobile() {
             <input name='phone' id='phone' className='register_input' type="text" placeholder='Введите номер телефона' />
           </label>
 
-          <button className='auth_button_reg' style={{marginTop: '320px'}}>Получить код</button>
+          <button className='auth_button_reg' style={{marginTop: '280px'}}>Получить код</button>
         </form>
       </center>
 
       <center style={{display: phone_confirm ? 'block' : 'none'}} id='phone_confirm'>
+        <div onClick={() => {setPhone_confirm(false); setRegister(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
         <form onSubmit={(evt) => { handleOpenCodeVerification(evt) }}>
           <h2 style={{width: '343px', marginBottom: '48px'}} className='auth_title'>Введите код подтверждения</h2>
           <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
@@ -153,6 +194,12 @@ function AuthPageMobile() {
       </center>
 
       <center style={{display: password ? 'block' : 'none'}} id='password'>
+        <div onClick={() => {setPassword(false); setRegister(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
         <h2 className='auth_title'>Регистрация</h2>
         <p className='auth_text'>Введите свои данные</p>
         <form onSubmit={(evt) => { handleAddPasword(evt) }}>
@@ -185,27 +232,45 @@ function AuthPageMobile() {
         {/* <button onClick={() => {setSuccess_reg(true); setPassword(false)}} className='auth_button_reg' style={{marginTop: '132px', marginBottom: '120px'}}>Подтвердить</button> */}
       </center>
 
-      <center  style={{display: login ? 'block' : 'none'}} id='login'>
-        <h2 className='auth_title'>Авторизация</h2>
-        <p className='auth_text'>Введите свои данные</p>
-        <label style={{width: '90%', display: 'grid', marginTop: '64px'}}>
-          <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Номер телефона</p>
-          <input className='register_input' type="text" placeholder='Введите номер телефона' />
-        </label>
-
-        <label style={{width: '90%', display: 'grid', marginTop: '32px'}}>
-          <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
-          <input className='register_input' type="text" placeholder='Введите пароль' />
-        </label>
-
-        <div style={{display: 'flex', justifyContent: 'right', marginRight: '26px', marginTop: '20px'}}>
-          <p>Забыли пароль?</p>
+      <center style={{display: login ? 'block' : 'none'}} id='login'>
+        <div onClick={() => {setLogin(false); setFirst(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
 
-        <button onClick={() => {setSuccess_login(true); setLogin(false)}} className='auth_button_reg' style={{marginTop: '48px'}}>Подтвердить</button>
+        <form onSubmit={handleSubmitLogin}>
+          <h2 className='auth_title'>Авторизация</h2>
+          <p className='auth_text'>Введите свои данные</p>
+          <label style={{width: '90%', display: 'grid', marginTop: '64px'}}>
+            <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Номер телефона</p>
+            <input name='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите номер телефона' />
+          </label>
+
+          <label style={{width: '90%', display: 'grid', marginTop: '32px'}}>
+            <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
+            <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите пароль' />
+          </label>
+
+          <div style={{display: 'flex', justifyContent: 'right', marginRight: '26px', marginTop: '20px'}}>
+            <p>Забыли пароль?</p>
+          </div>
+
+          {passwordsMatch ? null : (
+            <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
+          )}
+
+          <button className='auth_button_reg' style={{marginTop: '48px'}}>Подтвердить</button>
+        </form>
       </center>
 
       <center style={{display: success_reg ? 'block' : 'none'}} id='success_reg'>
+        <div onClick={() => {setSuccess_reg(false); setRegister(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
         <h2 style={{marginTop: '130px', textAlign: 'center'}} className='auth_title'>Отлично!</h2>
         <p style={{textAlign: 'center'}} className='auth_text'>Вы зарегистрировались успешно</p>
         <img style={{width: '100px', height: '100px', marginTop: '120px'}} src={verifed} alt="authImage" />
@@ -215,6 +280,12 @@ function AuthPageMobile() {
       </center>
 
       <center style={{display: success_login ? 'block' : 'none'}} id='success_login'>
+        <div onClick={() => {setSuccess_login(false); setLogin(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
         <h2 style={{marginTop: '130px', textAlign: 'center'}} className='auth_title'>Отлично!</h2>
         <p style={{textAlign: 'center'}} className='auth_text'>Вы вошли в свой личный кабинет</p>
         <img style={{width: '100px', height: '100px', marginTop: '120px'}} src={verifed} alt="authImage" />

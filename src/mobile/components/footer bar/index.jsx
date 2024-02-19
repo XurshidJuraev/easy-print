@@ -24,7 +24,7 @@ function FooterBarMobile() {
         <p className='footer_bar_text'>Корзина</p>
       </div>
 
-      <NavLink to={'/mobile/auth'} style={{textDecoration: 'none'}} className='center flex-column'>
+      <NavLink to={localStorage.getItem('token') ? '/mobile/profile' : '/mobile/auth'} style={{textDecoration: 'none'}} className='center flex-column'>
         <img src={FooterProfileIcon} alt="FooterProfileIcon" />
         <p className='footer_bar_text'>Профиль</p>
       </NavLink>
