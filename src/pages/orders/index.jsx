@@ -5,6 +5,9 @@ import FooterMain from '../../components/footer';
 import double_order_header from '../../layouts/icons/for_a_double.svg'
 import double_order_header2 from '../../layouts/icons/for_a_double_one.svg'
 import lock_order_header from '../../layouts/icons/lock_order_header.svg'
+import ulanish from '../../layouts/icons/ulanish.svg'
+import qaytarib_olish from '../../layouts/icons/qaytarib_olish.svg'
+import qollab_quvvatlash from '../../layouts/icons/qolab_quvvatlash.svg'
 import order_modal_phone from '../../layouts/icons/order_modal_phone.svg'
 import order_modal_telegram from '../../layouts/icons/order_modal_telegram.svg'
 import cards from '../../layouts/images/cards.svg'
@@ -326,11 +329,23 @@ function MyOrders() {
 
       <div className='white_background' style={{backgroundColor: '#ffffff', width: '77%', height: '100px', position: 'relative', marginTop: '-99px', marginLeft: '331px', paddingTop: '29px', paddingLeft: '200px', position: 'relative', zIndex: '100'}}>
         <div className="d-flex">
-          <img style={{marginRight: '200px'}} src={lock_order_header} alt="lock_order_header" />
+          {
+            localStorage.getItem('selectedLanguage') === 'ru' ? 
+              <img style={{marginRight: '200px'}} src={lock_order_header} alt="lock_order_header" /> :
+              <img style={{marginRight: '200px'}} src={ulanish} alt="lock_order_header" />
+          }
           <NavLink to={'/footer/exchange'}>
-            <img style={{marginRight: '48px'}} src={double_order_header2} alt="double_order_header2" />
+            {
+              localStorage.getItem('selectedLanguage') === 'ru' ?
+                <img style={{marginRight: '48px'}} src={double_order_header2} alt="double_order_header2" /> :
+                <img style={{marginRight: '48px'}} src={qaytarib_olish} alt="double_order_header2" />
+            }
           </NavLink>
-          <img style={{cursor: 'pointer'}} data-bs-toggle="modal" data-bs-target="#exampleModal2" src={double_order_header} alt="double_order_header" />
+          {
+            localStorage.getItem('selectedLanguage') === 'ru' ?
+              <img style={{cursor: 'pointer'}} data-bs-toggle="modal" data-bs-target="#exampleModal2" src={double_order_header} alt="double_order_header" /> :
+              <img style={{cursor: 'pointer'}} data-bs-toggle="modal" data-bs-target="#exampleModal2" src={qollab_quvvatlash} alt="double_order_header" />
+          }
         </div>
       </div>
 
@@ -345,16 +360,16 @@ function MyOrders() {
               <div className='basket_wrapper' style={{ marginTop: '48px' }}>
                 <div className="d-flex justify-content-between">
                   <div>
-                    <h2 className='order_title'>Оформление заказа</h2>
+                    <h2 className='order_title' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '40px' : '32px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Оформление заказа' : 'Buyurtmani rasmiylashtirish'}</h2>
 
-                    <h3 className='order_subtitle' style={{marginTop: '48px'}}>Покупатель</h3>
+                    <h3 className='order_subtitle' style={{marginTop: '48px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Покупатель' : 'Buyurtma qabul qiluvchi:'}</h3>
 
                     <input className='order_info' style={{border: nullName === true ? '1px solid red' : 'none'}} value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') + ' ' + `${localStorage.getItem('user_last_name') ? localStorage.getItem('user_last_name') : ''}` : 'Имя и Фамилия*'}/>
-                    <input className='order_info mt-4' style={{border: nullPhoneNumber === true ? '1px solid red' : 'none'}} value={localStorage.getItem('user_phone_number') ? `${localStorage.getItem('user_phone_number')}` : 'Действующий номер телефона*'}/>
+                    <input className='order_info mt-4' style={{border: nullPhoneNumber === true ? '1px solid red' : 'none'}} value={localStorage.getItem('user_phone_number') === null ? `${localStorage.getItem('user_phone_number')}` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Действующий номер телефона*' : `Joriy telefon raqami*`} />
                     
                     {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
                       <>
-                        <h3 className='order_subtitle' style={{marginTop: '48px'}}>Адрес доставки</h3>
+                        <h3 className='order_subtitle' style={{marginTop: '48px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес доставки' : 'Yetkazib berish manzili:'}</h3>
 
                         {address && address.length > 0 ? (
                           <>
@@ -367,24 +382,24 @@ function MyOrders() {
                             </select>
 
                             <center style={{marginTop: '28px'}}>
-                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>Добавить другой адрес</button>
+                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить другой адрес' : 'Boshqa manzil kiritsh'}</button>
                             </center>
                           </>
                         ) : (
                           <>
                             <div data-bs-toggle="modal" data-bs-target="#exampleModal"  style={{border: nullAddres === true ? '1px solid red' : 'none'}} className='order_info'>
-                              Адрес*
+                              {localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес*' : 'Yetkazib berish*'}
                             </div>
 
                             <center style={{marginTop: '28px'}}>
-                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>Добавить адрес</button>
+                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить адрес' : 'Manzil qo\'shish'}</button>
                             </center>
                           </>
                         )}
                       </>
                     )}
 
-                    <h3 className='order_subtitle' style={{ marginTop: '48px' }}>Способ получения</h3>
+                    <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ получения' : 'Qabul qilish usuli:'}</h3>
 
                     <label className='order_info'>
                       <input
@@ -396,28 +411,8 @@ function MyOrders() {
                         checked={deliveryMethod === 'pickup'}
                         onChange={() => setDeliveryMethod('pickup')}
                       />
-                      <label style={{ cursor: 'pointer' }} htmlFor="pickup">Пункт выдачи Easy Print</label>
+                      <label style={{ cursor: 'pointer' }} htmlFor="pickup">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пункт выдачи Easy Print' : 'Easy Print topshirish punkti'}</label>
                     </label>
-
-                    {deliveryMethod === 'pickup' && (
-                      <div>
-                        {pickapAdrse && pickapAdrse.map((item, index) => (
-                          <label className='order_info' key={index} style={{ backgroundColor: 'transparent' }}>
-                            <input
-                              style={{ cursor: 'pointer' }}
-                              type="radio"
-                              id={`pickapAdrs_${index}`}
-                              value={index}
-                              checked={selectedPickapAdrs === item}
-                              onChange={() => {handlePickapAdrsChange(index); setPickapAdrseCheck(item.id)}}
-                            />
-                            <label style={{ cursor: 'pointer', color: '#18356D' }} htmlFor={`pickapAdrs_${index}`}>
-                              {item.region ? item.region : ''} {item.id ? '' : `${localStorage.getItem('selectedLanguage') === 'ru' ? 'Информация не найдена' : 'Malumot topilmadi'}`} {item.city ? item.city : ''} {item.name ? item.name : ''}
-                            </label>
-                          </label>
-                        ))}
-                      </div>
-                    )}
 
                     {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
                       <label className='order_info' style={{ backgroundColor: 'transparent', display: 'none' }}>
@@ -444,18 +439,39 @@ function MyOrders() {
                         checked={deliveryMethod === 'homeDelivery'}
                         onChange={() => setDeliveryMethod('homeDelivery')}
                       />
-                      <label style={{ cursor: 'pointer' }} htmlFor="homeDelivery">Доставка до дома</label>
+                      <label style={{ cursor: 'pointer' }} htmlFor="homeDelivery">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Доставка до дома' : 'Kuryer orqali eshikkacha'}</label>
                     </label>
 
                     {deliveryMethod === 'pickup' && (
-                      <p className='order_text' style={{ display: 'none' }}>Цена доставки будет зависеть от расстояния до вашего адреса</p>
+                      <div>
+                        <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Выберите пункт выдачи' : 'Topshirish punkti tanlang'}</h3>
+                        {pickapAdrse && pickapAdrse.map((item, index) => (
+                          <label className='order_info' key={index} style={{ backgroundColor: 'transparent' }}>
+                            <input
+                              style={{ cursor: 'pointer', position: 'absolute' }}
+                              type="radio"
+                              id={`pickapAdrs_${index}`}
+                              value={index}
+                              checked={selectedPickapAdrs === item}
+                              onChange={() => {handlePickapAdrsChange(index); setPickapAdrseCheck(item.id)}}
+                            />
+                            <label style={{ cursor: 'pointer', color: '#18356D', marginLeft: '30px' }} htmlFor={`pickapAdrs_${index}`}>
+                              {item.region ? item.region : ''} {item.id ? '' : `${localStorage.getItem('selectedLanguage') === 'ru' ? 'Информация не найдена' : 'Malumot topilmadi'}`} {item.city ? item.city : ''} {item.name ? item.name : ''}
+                            </label>
+                          </label>
+                        ))}
+                      </div>
                     )}
+
+                    {/* {deliveryMethod === 'pickup' && (
+                      <p className='order_text' style={{ display: 'none' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цена доставки будет зависеть от расстояния до вашего адреса' : `Yetkazib berish narxi sizning manzilingizgacha bo'lgan masofaga bog'liq bo'ladi`}</p>
+                    )} */}
 
                     {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
-                      <p className='order_text'>Цена доставки будет зависеть от расстояния до вашего адреса</p>
+                      <p className='order_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цена доставки будет зависеть от расстояния до вашего адреса' : `Yetkazib berish narxi sizning manzilingizgacha bo'lgan masofaga bog'liq bo'ladi`}</p>
                     )}
 
-                    <h3 className='order_subtitle' style={{ marginTop: '48px' }}>Способ оплаты</h3>
+                    <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ оплаты' : 'To\'lov turi'}</h3>
 
                     <label className='order_info'>
                       <input
@@ -467,7 +483,7 @@ function MyOrders() {
                         checked={selectedPaymentMethod === 'card'}
                         onChange={() => setSelectedPaymentMethod('card')}
                       />
-                      <label style={{ cursor: 'pointer' }} htmlFor="card">Картой онлайн</label>
+                      <label style={{ cursor: 'pointer' }} htmlFor="card">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Картой онлайн' : 'Karta orqali onlayn'}</label>
                     </label>
 
                     {selectedPaymentMethod === 'card' && (
@@ -484,18 +500,18 @@ function MyOrders() {
                         checked={selectedPaymentMethod === 'cash'}
                         onChange={() => setSelectedPaymentMethod('cash')}
                       />
-                      <label style={{ cursor: 'pointer' }} htmlFor="naxt">Наличными, при получении</label>
+                      <label style={{ cursor: 'pointer' }} htmlFor="naxt">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наличными, при получении' : 'Naqd pul yoki karta orqali qabul qilganda'}</label>
                     </label>
                   </div>
 
                   <div className='order_data'>
-                    <h2 className='order_title ms-3'>Ваш заказ</h2>
+                    <h2 className='order_title mb-3' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '40px' : '32px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш заказ' : 'Buyurtmangiz'}</h2>
 
                     <div className="accordion" style={{borderRadius: '12px', marginBottom: '20px'}} id="accordionExample">
                       <div className="accordion-item">
                         <h2 className="accordion-header">
                           <button style={{borderRadius: '12px'}} className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Товары ({adrse})
+                            {localStorage.getItem('selectedLanguage') === 'ru' ? 'Товары' : 'Buyurtmadagi mahsulotlar'} ({adrse})
                           </button>
                         </h2>
                         <div id="collapseOne" style={{borderRadius: '12px'}} className="accordion-collapse collapse" data-bs-parent="#accordionExample" >
@@ -525,10 +541,10 @@ function MyOrders() {
 
                     <div className="basket_total" style={{width: '100%'}}>
                       <div>
-                        <p className='basket_total_title' style={{marginBottom: '28px'}}>Итог товаров</p>
-                        <p className='basket_total_title' style={{marginBottom: '28px'}}>Доставка</p>
-                        <p className='basket_total_title' style={{marginBottom: '28px'}}>Скидки</p>
-                        <p className='basket_total_title'>Итого</p>
+                        <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami maxsulotlar'}</p>
+                        <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Доставка' : 'Yetkazib berish'}</p>
+                        <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидки' : 'Chegirmalar'}</p>
+                        <p className='basket_total_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итого' : 'Jami'}</p>
                       </div>
                       <div style={{textAlign: 'right'}}>
                         <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} сум</p>
@@ -540,7 +556,7 @@ function MyOrders() {
 
                     <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
                       <button style={{width: '550px', margin: '0', textAlign: 'center', padding: '0'}} onClick={() => {saveOrder();}} className='hero_button center'>
-                        Оформить заказ
+                        {localStorage.getItem('selectedLanguage') === 'ru' ? 'Оформить заказ' : 'Buyurtmani rasmiylashtirish'}
                       </button>
                     </div>
                   </div>
@@ -611,8 +627,8 @@ function MyOrders() {
           <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
             <div className="modal-header d-flex justify-content-between" style={{borderBottom: 'none', padding: '32px'}}>
               <div className="d-flex mt-4 flex-column">
-                <h1 style={{fontFamily: 'Inter400', textAlign: 'left'}} className="modal-title modal_title" id="exampleModalLabel">Связаться с нами</h1>
-                <p className='address_modal_text'>Задайте вопрос нашим спецалистам в удобной вам форме</p>
+                <h1 style={{fontFamily: 'Inter400', textAlign: 'left'}} className="modal-title modal_title" id="exampleModalLabel">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Связаться с нами' : 'Biz bilan bogʻlanish'}</h1>
+                <p className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Задайте вопрос нашим спецалистам в удобной вам форме' : 'Mutaxassislarimizga sizga qulay ijtimoiy tarmoq chati yoki telefon orqali savol bering:'}</p>
               </div>
               <button style={{marginTop: '-120px'}} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -635,11 +651,11 @@ function MyOrders() {
 
                 <div>
                   <NavLink to={"tel:+998990123456"} className='order_modal_body_title'>+998 99 012 34 56</NavLink>
-                  <p className='order_modal_body_text'>Бесплатный звонок по Узбекистану</p>
+                  <p className='order_modal_body_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Бесплатный звонок по Узбекистану' : 'O`zbekiston bo`ylab'}</p>
                 </div>
               </div>
 
-              <h4 className='order_modal_body_title' style={{marginLeft: '0px', marginTop: '32px', fontSize: '16px'}}>Электронная почта поддержки:</h4>
+              <h4 className='order_modal_body_title' style={{marginLeft: '0px', marginTop: '32px', fontSize: '16px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Электронная почта поддержки:' : `Qo'llab-quvvatlash elektron manzili:`}</h4>
               <div style={{marginTop: '-4px', marginBottom: '50px'}}>
                 <NavLink to={"mailto:support@easyprint.com"} className='order_modal_body_text_link'>support@easyprint.com</NavLink>
               </div>
@@ -653,7 +669,7 @@ function MyOrders() {
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M2 10.9961C2.00487 11.5226 2.21684 12.0259 2.59 12.3971L6.88 16.7002C7.06736 16.8866 7.32082 16.9912 7.585 16.9912C7.84919 16.9912 8.10264 16.8866 8.29 16.7002C8.38373 16.6072 8.45812 16.4965 8.50889 16.3746C8.55966 16.2526 8.5858 16.1218 8.5858 15.9897C8.5858 15.8576 8.55966 15.7268 8.50889 15.6048C8.45812 15.4829 8.38373 15.3722 8.29 15.2792L5 11.9968L21 11.9968C21.2652 11.9968 21.5196 11.8914 21.7071 11.7037C21.8946 11.516 22 11.2615 22 10.9961C22 10.7307 21.8946 10.4762 21.7071 10.2885C21.5196 10.1008 21.2652 9.99538 21 9.99538L5 9.99538L8.29 6.70301C8.4783 6.51589 8.58462 6.26159 8.58556 5.99603C8.58649 5.73048 8.48198 5.47543 8.295 5.28699C8.10802 5.09855 7.8539 4.99216 7.58854 4.99122C7.32317 4.99028 7.06831 5.09487 6.88 5.28198L2.59 9.58508C2.21441 9.9587 2.00223 10.4661 2 10.9961Z" fill="white"/>
           </svg>
-          Вернуться в корзину
+          {localStorage.getItem('selectedLanguage') === 'ru' ? 'Вернуться в корзину' : 'Savatga qaytish'}
         </NavLink>
       </div>
 

@@ -99,28 +99,28 @@ function HomePageMobile() {
       </center>
 
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <h3 className='advantage_main_text_mobile'>Наше преимущество</h3>
+        <h3 className='advantage_main_text_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наше преимущество' : 'Bizning ustunligimiz'}</h3>
 
         <div className='d-flex justify-content-between flex-column'>
           <div style={{backgroundColor: '#F8F8F8', padding: '40px 25px', width: '280px', height: '259px'}} className='advantage_cards'>
             <img src={blueVerifed} alt="blueVerifed" />
 
-            <h3 className='advantage_theme_mobile'>Гарантия качества</h3>
-            <p className='advantage_text_mobile'>Качественные экологичные <br /> материалы</p>
+            <h3 className='advantage_theme_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Гарантия качества' : 'Sifat kafolati'}</h3>
+            <p className='advantage_text_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? `Качественные экологичные материалы` : `Yuqori sifatli ekologik toza materiallar`}</p>
           </div>
 
           <div style={{backgroundColor: '#F8F8F8', padding: '40px 25px', width: '280px', height: '259px', marginTop: '-50px'}} className='advantage_cards'>
             <img src={blueTruck} alt="blueVerifed" />
 
-            <h3 className='advantage_theme_mobile'>Быстрая доставка</h3>
-            <p className='advantage_text_mobile'>Доставка по всему <br /> Узбекистану</p>
+            <h3 className='advantage_theme_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Быстрая доставка' : 'Tez yetkazib berish'}</h3>
+            <p className='advantage_text_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? `Доставка по всему Узбекистану` : `O'zbekiston bo'ylab yetkazib berish`}</p>
           </div>
 
           <div style={{backgroundColor: '#F8F8F8', padding: '40px 25px', width: '280px', height: '259px', marginTop: '-50px'}} className='advantage_cards'>
             <img src={blueBuds} alt="blueVerifed" />
 
-            <h3 className='advantage_theme_mobile'>Сервис</h3>
-            <p className='advantage_text_mobile'>Лёгкий процесс оплаты, <br /> обмена и возврата</p>
+            <h3 className='advantage_theme_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Сервис' : 'Xizmat'}</h3>
+            <p className='advantage_text_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? `Лёгкий процесс оплаты, обмена и возврата` : `Oson to'lov, almashtirish va qaytarish jarayoni`}</p>
           </div>
         </div>
       </div>

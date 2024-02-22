@@ -24,7 +24,7 @@ function FooterOrderPage() {
           </div>
 
           <div style={{width: '1000px', marginLeft: '80px', marginBottom: '400px'}}>
-            <h1 className='footer_delivery_title'>Как оформить заказ?</h1>
+            <h1 className='footer_delivery_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Как оформить заказ?' : 'Buyurtmani qanday joylashtirish mumkin?'}</h1>
 
             <img style={{position: 'relative', left: '-240px', marginTop: '46px', zIndex: '10'}} src={AllInstructor} alt="AllInstructor" />
           </div>

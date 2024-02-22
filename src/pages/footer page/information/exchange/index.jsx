@@ -23,32 +23,32 @@ function FooterExchangePage() {
           </div>
 
           <div style={{width: '1000px', marginLeft: '80px', marginBottom: '400px'}}>
-            <h1 className='footer_delivery_title'>Обмен и возврат</h1>
-            <p className='footer_delivery_text' style={{marginBottom: '6px', marginTop: '10px', fontFamily: 'Inter600'}}><b>Если вы получили товар ненадлежащего качества:</b></p>
-            <p className='footer_delivery_text'>Мы приносим свои извинения и готовы обменять вам товар или вернуть деньги.</p>
+            <h1 className='footer_delivery_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обмен и возврат' : 'Almashtirish va qaytarish'}</h1>
+            <p className='footer_delivery_text' style={{marginBottom: '6px', marginTop: '10px', fontFamily: 'Inter600'}}><b>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Если вы получили товар ненадлежащего качества:' : `Agar siz sifatsiz mahsulot olgan bo'lsangiz:`}</b></p>
+            <p className='footer_delivery_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Мы приносим свои извинения и готовы обменять вам товар или вернуть деньги.' : `Biz uzr so'raymiz va mahsulotingizni almashtirishga yoki pulingizni qaytarishga tayyormiz.`}</p>
 
             <ul>
-              <li className='exchange_item' style={{color: '#3C7CFB'}}>Заполните форму</li>
-              <li className='exchange_item'>В течение 5 дней мы обязательно свяжемся с вами, заменим товар или вернем деньги.</li>
-              <li className='exchange_item'>Обращения принимаются в течение 14 дней с момента получения заказа.</li>
+              <li className='exchange_item' style={{color: '#3C7CFB'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Заполните форму' : `Shaklni to'ldiring`}</li>
+              <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В течение 5 дней мы обязательно свяжемся с вами, заменим товар или вернем деньги.' : `Biz 5 kun ichida siz bilan bog'lanamiz va mahsulotni almashtiramiz yoki pulingizni qaytarib beramiz.`}</li>
+              <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обращения принимаются в течение 14 дней с момента получения заказа.' : `Arizalar buyurtma olingan kundan boshlab 14 kun ichida qabul qilinadi.`}</li>
             </ul>
 
-            <p className='footer_delivery_text'>Все расходы по обмену и возврату бракованного товара мы берем на себя.</p>
+            <p className='footer_delivery_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Все расходы по обмену и возврату бракованного товара мы берем на себя.' : `Biz nuqsonli tovarlarni almashtirish va qaytarish uchun barcha xarajatlarni o'z zimmamizga olamiz.`}</p>
 
-            <p className='footer_delivery_text' style={{marginBottom: '20px', marginTop: '24px', fontFamily: 'Inter600'}}><b>Если вы ошиблись выбором:</b></p>
+            <p className='footer_delivery_text' style={{marginBottom: '20px', marginTop: '24px', fontFamily: 'Inter600'}}><b>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Если вы ошиблись выбором:' : `Agar siz noto'g'ri tanlov qilsangiz:`}</b></p>
 
             <ul>
-              <li className='exchange_item' style={{color: '#3C7CFB'}}>Заполните форму</li>
-              <li className='exchange_item'>В течение 5 дней мы обязательно свяжемся с вами и согласуем процедуру обмена.</li>
-              <li className='exchange_item'>Обращения принимаются в течение 7 дней с момента получения заказа.</li>
+              <li className='exchange_item' style={{color: '#3C7CFB'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Заполните форму' : `Shaklni to'ldiring`}</li>
+              <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В течение 5 дней мы обязательно свяжемся с вами и согласуем процедуру обмена.' : `Biz 5 kun ichida siz bilan bog'lanamiz va almashish tartibini kelishib olamiz.`}</li>
+              <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обращения принимаются в течение 7 дней с момента получения заказа.' : `Arizalar buyurtma olingan kundan boshlab 7 kun ichida qabul qilinadi.`}</li>
             </ul>
 
-            <p className='footer_delivery_text' style={{marginBottom: '20px', marginTop: '24px', fontFamily: 'Inter600'}}><b>Если вы передумали:</b></p>
+            <p className='footer_delivery_text' style={{marginBottom: '20px', marginTop: '24px', fontFamily: 'Inter600'}}><b>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Если вы передумали:' : `Agar fikringizni o'zgartirsangiz:`}</b></p>
 
             <ul>
-              <li className='exchange_item'>Напишите нам в телеграм: @<span style={{color: '#3C7CFB'}}>easyprint.uz</span> и в теме письма укажите номер Вашего заказа</li>
-              <li className='exchange_item'>Мы свяжемся с вами и вернем деньги.</li>
-              <li className='exchange_item'>Обращения принимаются в течение 7 дней с момента получения заказа.</li>
+              <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Напишите нам в телеграм:' : `Bizga telegram orqali yozing:`} @<span style={{color: '#3C7CFB'}}>easyprint.uz</span> {localStorage.getItem('selectedLanguage') === 'ru' ? 'и в теме письма укажите номер Вашего заказа' : `va mavzu satrida buyurtma raqamingizni ko'rsating`}</li>
+              <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Мы свяжемся с вами и вернем деньги.' : `Biz siz bilan bog'lanamiz va pulingizni qaytarib beramiz.`}</li>
+              <li className='exchange_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обращения принимаются в течение 7 дней с момента получения заказа.' : `Arizalar buyurtma olingan kundan boshlab 7 kun ichida qabul qilinadi.`}</li>
             </ul>
 
             {/* <h4 className='footer_delivery_subtitle mt-4'>Банковские карты</h4>

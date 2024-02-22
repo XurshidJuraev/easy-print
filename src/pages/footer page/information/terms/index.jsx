@@ -23,7 +23,7 @@ function FooterTermsPage() {
           </div>
 
           <div style={{width: '1000px', marginLeft: '80px', marginBottom: '400px'}}>
-            <h1 className='footer_delivery_title'>Пользвательское соглашение</h1>
+            <h1 className='footer_delivery_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пользвательское соглашение' : 'Foydalanuvchi shartnomasi'}</h1>
             <p className='footer_delivery_text'>
               Договор возмездного оказания услуг (бытового подряда) по изготовлению текстильных изделий по индивидуальному заказу и по оказанию услуг по нанесению изображений на основы в Сервисе vsemayki.ru (Оферта)
               <br />В настоящей Оферте, если контекст не требует иного, нижеприведенные термины имеют следующие значения:

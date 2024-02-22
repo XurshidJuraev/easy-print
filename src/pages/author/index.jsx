@@ -259,18 +259,18 @@ function AuthorPage() {
 
                   <h3 className='author_name'>{author.full_name}</h3>
                   <p className='author_country'>{author.country === 'Uzbekistan' ? '🇺🇿' : ''} {author.country}</p>
-                  <button className='author_button'>Пожаловаться</button>
+                  <button className='author_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пожаловаться' : 'Shikoyat'}</button>
                 </div>
 
                 <div className='d-flex flex-column center text-center' style={{height: '172px', marginLeft: '40px', marginTop: '50px'}}>
-                  <h3 className='author_item mb-4'>Информация</h3>
-                  <p className='author_list'>Всего принтов</p>
+                  <h3 className='author_item mb-4'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Информация' : 'Ma`lumot'}</h3>
+                  <p className='author_list'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Всего принтов' : 'Jami nashrlar'}</p>
                   <p className='author_item'>{Number(author.total_prints).toLocaleString('ru-RU')}</p>
 
-                  <p className='author_list'>Продано товаров</p>
+                  <p className='author_list'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Продано товаров' : 'Sotilgan mahsulotlar'}</p>
                   <p className='author_item'>{Number(author.total_solds).toLocaleString('ru-RU')}</p>
 
-                  <p className='author_list'>Дата регистрации</p>
+                  <p className='author_list'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Дата регистрации' : `Ro'yxatga olingan sana`}</p>
                   <p className='author_item'>{author.registration_date}</p>
                 </div>
               </div>

@@ -7,6 +7,7 @@ import user from '../../layouts/icons/User.svg'
 import language from '../../layouts/icons/language.svg'
 import register_image from '../../layouts/images/43.svg'
 import verifed from '../../layouts/images/green_verifed.svg'
+import language_verifed from '../../layouts/icons/language_verifed.svg'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
@@ -311,7 +312,7 @@ function HeaderMain({ trashCardData }) {
               </center>
             </div>
             <div className="d-flex">
-              <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none'}}>
+              <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none', position: 'relative', zIndex: '100'}}>
                 <img style={{marginTop: '-2px'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
               </button>
 
@@ -321,6 +322,7 @@ function HeaderMain({ trashCardData }) {
                   {data.data && data.data.language && data.data.language.map((lang) => (
                       <div title={lang.name} onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
                         {lang.name}
+                        {lang.code === localStorage.getItem('selectedLanguage') ? <img src={language_verifed} alt="language_verifed" /> : null}
                       </div>
                     ))}
                 </div>

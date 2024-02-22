@@ -2,8 +2,6 @@ import React from 'react'
 import './main.css'
 
 import logo from '../../layouts/icons/logo.svg'
-import instagram from '../../layouts/icons/instagram.svg'
-import telegram from '../../layouts/icons/telegram.svg'
 import { NavLink } from 'react-router-dom'
 
 function FooterMain() {
@@ -11,50 +9,50 @@ function FooterMain() {
     <footer className='footer'>
       <ul style={{listStyle: 'none', display: 'flex', justifyContent: 'space-between', margin: '0 120px 0 120px', paddingTop: '60px'}}>
         <li>
-          <h3 className='footer_title'>Информация</h3>
+          <h3 className='footer_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Информация' : 'Ma`lumot'}</h3>
           <br />
 
           <ul style={{listStyle: 'none', display: 'flex', flexDirection: 'column'}}>
-            <NavLink to={'/footer/delivery'} className='footer_text'>Доставка</NavLink>
-            <NavLink to={'/footer/pay'} className='footer_text'>Оплата</NavLink>
-            <NavLink to={'/footer/exchange'} className='footer_text'>Обмен и возврат</NavLink>
-            <NavLink to={'/footer/order'} className='footer_text'>Как оформить заказ?</NavLink>
-            <NavLink to={'/footer/terms'} className='footer_text'>Пользовательское <br /> соглашение</NavLink>
+            <NavLink to={'/footer/delivery'} className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Доставка' : 'Yetkazib berish'}</NavLink>
+            <NavLink to={'/footer/pay'} className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Оплата' : 'To`lov'}</NavLink>
+            <NavLink to={'/footer/exchange'} className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Обмен и возврат' : 'Almashtirish va qaytarish'}</NavLink>
+            <NavLink to={'/footer/order'} className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Как оформить заказ?' : 'Buyurtmani qanday joylashtirish mumkin?'}</NavLink>
+            <NavLink to={'/footer/terms'} className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пользовательское соглашение' : 'Foydalanuvchi shartnomasi'}</NavLink>
           </ul>
         </li>
 
         <li>
-          <h3 className='footer_title'>Сотрудничество</h3>
+          <h3 className='footer_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Сотрудничество' : 'Hamkorlik'}</h3>
           <br />
 
           <ul style={{listStyle: 'none'}}>
-            <li className='footer_text'>Корпоративным клиентам</li>
-            <li className='footer_text'>Блогерам</li>
-            <li className='footer_text'>Дизайнерам</li>
-            <li className='footer_text'>Производителям</li>
+            <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Корпоративным клиентам' : 'Korporativ mijozlarga'}</li>
+            <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Блогерам' : 'Blogerlar uchun'}</li>
+            <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Дизайнерам' : 'Dizaynerlar uchun'}</li>
+            <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Производителям' : 'Ishlab chiqaruvchilar uchun'}</li>
           </ul>
         </li>
 
         <li>
-          <h3 className='footer_title'>О компании</h3>
+          <h3 className='footer_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'О нас' : 'Biz haqimizda'}</h3>
           <br />
 
           <ul style={{listStyle: 'none'}}>
-            <li className='footer_text'>О нас</li>
-            <li className='footer_text'>Вакансии</li>
-            <li className='footer_text'>Блог EasyPrint</li>
-            <li className='footer_text'>Контакты</li>
+            <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'О нас' : 'Biz haqimizda'}</li>
+            <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вакансии' : `Bo'sh ish o'rinlari`}</li>
+            <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Блог EasyPrint' : `EasyPrint blogi`}</li>
+            <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Контакты' : 'Kontaktlar'}</li>
           </ul>
         </li>
 
         <li>
-          <h3 className='footer_title'>Связаться с нами</h3>
+          <h3 className='footer_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Связаться с нами' : `Biz bilan bog'lanish`}</h3>
           <br />
 
           <ul style={{listStyle: 'none'}}>
             <li className='footer_text'><a href="mailto:easyprintuz@gmail.com">easyprintuz@gmail.com</a></li>
             <li className='footer_text'><a href="tel:+998974179000">+998 97 417 90 00</a></li>
-            <li className='footer_text'>г. Ташкент, Инжобод 32</li>
+            <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'г. Ташкент, Инжобод 32' : 'Toshkent sh. Injobod 32'}</li>
           </ul>
         </li>
       </ul>
@@ -69,7 +67,7 @@ function FooterMain() {
         </li>
 
         <li className='footer_text_data'>
-          © {(new Date().getFullYear())} Easy Print, Все права защищены.
+          © {(new Date().getFullYear())} Easy Print, {localStorage.getItem('selectedLanguage') === 'ru' ? 'Все права защищены' : 'Barcha huquqlar himoyalangan'}
         </li>
 
         <li>

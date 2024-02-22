@@ -63,7 +63,7 @@ function App() {
           <Route path="/show/detail/:id/:name" element={<ShowDetail />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/profile/addres' element={<ProfileAddres />} />
-          <Route path='/profile/orders' element={<ProfileOrders />} />
+          <Route path='/profile/checkout' element={<ProfileOrders />} />
           <Route path='/profile/payment' element={<ProfilePayment />} />
           <Route path='/categories/:id/:name' element={<CategoryListByName />} />
           <Route path='/author/:id/:name' element={<AuthorPage />} />

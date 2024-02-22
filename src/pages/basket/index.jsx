@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import pencil from '../../layouts/icons/edit_product_basket.svg'
 import trash from '../../layouts/icons/delete_product_basket.svg'
+import pencil_uz from '../../layouts/icons/edit_text_uz.svg'
+import trash_uz from '../../layouts/icons/delete_text_uz.svg'
 import no_data from '../../layouts/images/no_trash.svg'
 import AdvantageMain from '../../components/advantage';
 import FooterMain from '../../components/footer';
@@ -959,7 +961,7 @@ function Basket() {
             {!data.data || data.data.list.length === 0 ? (
               <>
                 <div className='basket_wrapper' style={{height: '600px', paddingBottom: '20px'}}>
-                  <h3 style={{marginLeft: '24px'}} className='basket_big_title mt-3'>Корзина</h3>
+                  <h3 style={{marginLeft: '24px'}} className='basket_big_title mt-3'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Корзина' : 'Savatingiz'}</h3>
                   <center style={{marginTop: '115px'}}>
                     <img className='mt-3' src={no_data} alt="no_data" />
                   </center>
@@ -969,13 +971,13 @@ function Basket() {
               <>
                 <div className='basket_wrapper' style={{paddingBottom: '90px'}}>
                   <div className='mt-3 d-flex justify-content-between'>
-                    <h3 style={{marginLeft: '24px'}} className='basket_big_title'>Корзина</h3>
+                    <h3 style={{marginLeft: '24px'}} className='basket_big_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Корзина' : 'Savatingiz'}</h3>
 
                     <div className='d-flex justify-content-between' style={{width: '571px', marginRight: '74px'}}>
-                      <p className='basket_item'>Цена</p>
-                      <p className='basket_item'>Количество</p>
-                      <p className='basket_item'>Скидка</p>
-                      <p className='basket_item'>Сумма</p>
+                      <p className='basket_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цена' : 'Narxi'}</p>
+                      <p className='basket_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Количество' : 'Miqdori'}</p>
+                      <p className='basket_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидка' : 'Chegirma'}</p>
+                      <p className='basket_item'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Сумма' : 'Umumiy narx'}</p>
                     </div>
                   </div>
 
@@ -988,7 +990,7 @@ function Basket() {
                       checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)}
                       onChange={handleSelectAll}
                     />
-                    <p className='basket_check'>Выбрать все</p>
+                    <p className='basket_check'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Выбрать все' : 'Hammasini tanlang'}</p>
                   </label>
 
                   <div style={{marginTop: '-20px'}}>
@@ -1044,12 +1046,12 @@ function Basket() {
 
                                 <div className='basket_size_fat' style={{marginTop: item.company_name ? '-55px' : '-65px'}}>
                                   <div style={{display: item.company_name ? 'flex' : 'none'}}>
-                                    <p className='basket_card_size'>Продавец:</p>
+                                    <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Продавец' : 'Sotuvchi'}:</p>
                                     <p className='basket_card_size'>{item.company_name ? item.company_name : 'Название не найден'}</p>
                                   </div>
 
                                   <div className='d-flex'>
-                                    <p className='basket_card_size'>Цвет:</p>
+                                    <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цвет' : 'Rang'}:</p>
                                     <div className="d-flex align-items-center" style={{marginTop: '-10px', marginLeft: '39px'}}>
                                         <div key={item.color.id} className={`color_border me-2 ${item.color}`} style={{ borderColor: '#E6E6E6', cursor: 'pointer' }}>
                                           <div className="color" style={{ backgroundColor: item.color.code }}></div>
@@ -1058,7 +1060,7 @@ function Basket() {
                                   </div>
 
                                   <div className='d-flex'>
-                                    <p className='basket_card_size'>Размер:</p>
+                                    <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Размер' : `O'lchami`}:</p>
                                     <div style={{ border: 'none', outline: 'none', background: 'transparent', marginTop: '6px', marginLeft: '22px' }}>
                                       {item.size.name}
                                     </div>
@@ -1072,13 +1074,15 @@ function Basket() {
                             <div className='d-flex basket_size_fat2'>
                               <div style={{display: item.relation_type === 'warehouse_product' ? 'none' : 'flex'}}>
                                 <NavLink to={'/yourDesign'}>
-                                  <img src={pencil} alt={pencil} />
+                                  {
+                                    localStorage.getItem('selectedLanguage') === 'ru' ? <img src={pencil} alt={pencil} /> : <img src={pencil_uz} alt={pencil_uz} />
+                                  }
                                 </NavLink>
                               </div>
 
                               <div className='d-flex' style={{marginLeft: item.relation_type === 'warehouse_product' ? '148px' : '48px'}}>
                                 <NavLink onClick={() => {handleDeleteAddress(item.id); handleDecrementButtonClick()}} to={'#'}>
-                                  <img src={trash} alt={trash} />
+                                  {localStorage.getItem('selectedLanguage') === 'ru' ? <img src={trash} alt={trash} /> : <img src={trash_uz} alt={trash_uz} />}
                                 </NavLink>
                               </div>
                             </div>
@@ -1094,11 +1098,11 @@ function Basket() {
 
           <div>
             <div style={{display: 'flex', justifyContent: 'flex-start'}}>
-              <NavLink to={'/'} style={{width: '323px', textDecoration: 'none'}} className='basket_promo_btn_price'>
+              <NavLink to={'/'} style={{minWidth: '323px', textDecoration: 'none'}} className='basket_promo_btn_price'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M2 10.9961C2.00487 11.5226 2.21684 12.0259 2.59 12.3971L6.88 16.7002C7.06736 16.8866 7.32082 16.9912 7.585 16.9912C7.84919 16.9912 8.10264 16.8866 8.29 16.7002C8.38373 16.6072 8.45812 16.4965 8.50889 16.3746C8.55966 16.2526 8.5858 16.1218 8.5858 15.9897C8.5858 15.8576 8.55966 15.7268 8.50889 15.6048C8.45812 15.4829 8.38373 15.3722 8.29 15.2792L5 11.9968L21 11.9968C21.2652 11.9968 21.5196 11.8914 21.7071 11.7037C21.8946 11.516 22 11.2615 22 10.9961C22 10.7307 21.8946 10.4762 21.7071 10.2885C21.5196 10.1008 21.2652 9.99538 21 9.99538L5 9.99538L8.29 6.70301C8.4783 6.51589 8.58462 6.26159 8.58556 5.99603C8.58649 5.73048 8.48198 5.47543 8.295 5.28699C8.10802 5.09855 7.8539 4.99216 7.58854 4.99122C7.32317 4.99028 7.06831 5.09487 6.88 5.28198L2.59 9.58508C2.21441 9.9587 2.00223 10.4661 2 10.9961Z" fill="white"/>
                 </svg>
-                Продолжить покупки
+                {localStorage.getItem('selectedLanguage') === 'ru' ? 'Продолжить покупки' : 'Xarid qilishda davom etish'}
               </NavLink>
             </div>
           </div>
@@ -1110,23 +1114,23 @@ function Basket() {
                 <div className="basket_wrapper" style={{marginTop: '36px', paddingBottom: '30px'}}>
                   <div className="d-flex justify-content-between">
                       <div style={{width: '400px'}}>
-                        <h3 className='basket_promo_title'>Промокод</h3>
-                        <p className='basket_promo_text' style={{width: '400px'}}>Введите промокод чтобы активировать скидку</p>
-                        <input className='basket_promo' style={{width: '400px'}} type="text" placeholder='Введите промокод' value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
+                        <h3 className='basket_promo_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокод' : 'Promokod'}</h3>
+                        <p className='basket_promo_text' style={{width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод чтобы активировать скидку' : 'Chegirmani faollashtirish uchun reklama kodini kiriting'}</p>
+                        <input className='basket_promo' style={{width: '400px'}} type="text" placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод' : 'Kupon kodini kiriting'} value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
                         <p style={{ color: promoMessageColor }} className='basket_promo_text'>{promoMessage}</p>
-                        <p className='basket_promo_text' style={{marginTop: '32px', width: '400px'}}>*Вы можете использовать только один промокод в одном заказе</p>
+                        <p className='basket_promo_text' style={{marginTop: '32px', width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? '*Вы можете использовать только один промокод в одном заказе' : '*Har bir buyurtma uchun faqat bitta promokoddan foydalanishingiz mumkin'}</p>
                         <center style={{marginTop: '27px', width: '100%'}}>
-                          <button style={{width: '100%'}} onClick={applyPromoCode} className='basket_promo_btn'>Применить</button>
+                          <button style={{width: '100%'}} onClick={applyPromoCode} className='basket_promo_btn'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Применить' : `Qo'llash`}</button>
                         </center>
                       </div>
                       
                       <div style={{width: '540px'}}>
                         <div className="basket_total" style={{width: '540px'}}>
                           <div>
-                            <p className='basket_total_title' style={{marginBottom: '28px'}}>Итог товаров ({allProduct})</p>
-                            <p className='basket_total_title' style={{marginBottom: '28px'}}>Промокоды</p>
-                            <p className='basket_total_title' style={{marginBottom: '28px'}}>Скидки</p>
-                            <p className='basket_total_title'>Итого</p>
+                            <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})</p>
+                            <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокоды' : 'Promo kodlar'}</p>
+                            <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидка' : 'Chegirmalar'}</p>
+                            <p className='basket_total_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог' : 'Jami'}</p>
                           </div>
                           <div style={{textAlign: 'right'}}>
                             <p className='basket_total_price' style={{marginBottom: '28px'}}>{price ? `${Number(price).toLocaleString('ru-RU')} сум` : '0 сум'}</p>
@@ -1138,7 +1142,7 @@ function Basket() {
 
                         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
                           <button className='basket_promo_btn_price' onClick={() => {saveOrder();}}>
-                            Перейти к оформлению 
+                            {localStorage.getItem('selectedLanguage') === 'ru' ? 'Перейти к оформлению ' : 'Rasmiylashtirishga o`tish'}
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                               <path d="M22 13.0039C21.9951 12.4774 21.7832 11.9741 21.41 11.6029L17.12 7.29979C16.9326 7.11341 16.6792 7.00879 16.415 7.00879C16.1508 7.00879 15.8974 7.11341 15.71 7.29979C15.6163 7.39282 15.5419 7.5035 15.4911 7.62545C15.4403 7.7474 15.4142 7.8782 15.4142 8.0103C15.4142 8.14241 15.4403 8.27321 15.4911 8.39516C15.5419 8.5171 15.6163 8.62778 15.71 8.72081L19 12.0032H3C2.73478 12.0032 2.48043 12.1086 2.29289 12.2963C2.10536 12.484 2 12.7385 2 13.0039C2 13.2693 2.10536 13.5238 2.29289 13.7115C2.48043 13.8992 2.73478 14.0046 3 14.0046H19L15.71 17.297C15.5217 17.4841 15.4154 17.7384 15.4144 18.004C15.4135 18.2695 15.518 18.5246 15.705 18.713C15.892 18.9015 16.1461 19.0078 16.4115 19.0088C16.6768 19.0097 16.9317 18.9051 17.12 18.718L21.41 14.4149C21.7856 14.0413 21.9978 13.5339 22 13.0039Z" fill="white"/>
                             </svg>
