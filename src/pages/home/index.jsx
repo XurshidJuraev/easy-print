@@ -44,7 +44,7 @@ function HomePage() {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      if (window.innerWidth < 800) {
+      if (window.screen.width < 800) {
         navigate('/mobile');
       }
     };
