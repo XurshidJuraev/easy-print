@@ -6,13 +6,30 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './main.css';
 import Image404 from '../../layouts/images/404.svg'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function Error404() {
   const [trashCardData, setTrashCardData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0)
+  }, []);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      if (window.screen.width < 800) {
+        navigate('/mobile/404');
+      }
+    };
+
+    checkScreenSize();
+
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
   }, []);
 
   useEffect(() => {

@@ -47,6 +47,8 @@ import ProfileMobileOrder from './mobile/pages/profile/order';
 import BasketMobile from './mobile/pages/basket';
 // Мои заказы страниция
 import OrderMobile from './mobile/pages/order';
+// 404 Не Найдено
+import MobileNotFound from './mobile/pages/404';
 
 function App() {
   // const navigate = useNavigate();
@@ -85,6 +87,7 @@ function App() {
           <Route path='/mobile/profile/checkout' element={<ProfileMobileOrder />} />
           <Route path='/basket/mobile' element={<BasketMobile />} />
           <Route path='/mobile/checkout' element={<OrderMobile />} />
+          <Route path='/mobile/404' element={<MobileNotFound />} />
         </Routes>
       </center>
     </div>
