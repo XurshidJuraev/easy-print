@@ -27,6 +27,10 @@ function ProfileMobileAddres() {
   const [dataGet, setDataGet] = useState([]);
   const token = localStorage.getItem('token');
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
   const handleEditAddress = (id) => {
     setEditAddressId(id);
   

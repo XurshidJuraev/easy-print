@@ -17,6 +17,10 @@ function HomePageMobile() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
+  useEffect(() => {
     axios.get(`${process.env.REACT_APP_TWO}/get-warehouses`, {
       method: 'GET',
       headers: {

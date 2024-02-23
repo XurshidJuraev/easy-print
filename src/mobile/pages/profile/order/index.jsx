@@ -14,6 +14,10 @@ function ProfileMobileOrder() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
+  useEffect(() => {
     axios.get(`${process.env.REACT_APP_TWO}/order/get-my-orders`, {
       method: 'GET',
       headers: {
@@ -114,7 +118,7 @@ function ProfileMobileOrder() {
                                         <div style={{width: '130px', height: '180px', backgroundColor: '#F6F6F6', backgroundImage: `url(${item.warehouse && item.warehouse.images && item.warehouse.images[0] ? item.warehouse.images[0] : item.image_front})`, borderRadius: '8px', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                                       </div>
 
-                                      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                                      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '12px'}}>
                                         <p className='order_name_mobile'>{item.warehouse && item.warehouse.name ? item.warehouse.name : item.product.name}</p>
                                         <div className="d-flex">
                                           <div className='d-flex'>

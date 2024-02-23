@@ -19,10 +19,10 @@ function FooterBarMobile() {
         <p className='footer_bar_text'>Дизайн</p>
       </div>
 
-      <div style={{textDecoration: 'none'}} className='center flex-column'>
+      <NavLink to={'/basket/mobile'} style={{textDecoration: 'none'}} className='center flex-column'>
         <img src={FooterBasketIcon} alt="FooterBasketIcon" />
         <p className='footer_bar_text'>Корзина</p>
-      </div>
+      </NavLink>
 
       <NavLink to={localStorage.getItem('token') ? '/mobile/profile' : '/mobile/auth'} style={{textDecoration: 'none'}} className='center flex-column'>
         <img src={FooterProfileIcon} alt="FooterProfileIcon" />

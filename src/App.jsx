@@ -43,6 +43,10 @@ import AuthPageMobile from './mobile/pages/auth';
 import ProfileMobile from './mobile/pages/profile';
 import ProfileMobileAddres from './mobile/pages/profile/addres';
 import ProfileMobileOrder from './mobile/pages/profile/order';
+// Корзина
+import BasketMobile from './mobile/pages/basket';
+// Мои заказы страниция
+import OrderMobile from './mobile/pages/order';
 
 function App() {
   // const navigate = useNavigate();
@@ -79,6 +83,8 @@ function App() {
           <Route path='/mobile/profile' element={<ProfileMobile />} />
           <Route path='/mobile/profile/addres' element={<ProfileMobileAddres />} />
           <Route path='/mobile/profile/checkout' element={<ProfileMobileOrder />} />
+          <Route path='/basket/mobile' element={<BasketMobile />} />
+          <Route path='/mobile/checkout' element={<OrderMobile />} />
         </Routes>
       </center>
     </div>

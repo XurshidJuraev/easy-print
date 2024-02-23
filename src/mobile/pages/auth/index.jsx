@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './main.css'
 import authImage from '../../layouts/images/43.svg'
 import verifed from '../../layouts/images/green_verifed.svg'
@@ -21,6 +21,10 @@ function AuthPageMobile() {
     passwordConfirmation: '',
   });
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
 
   const navigate = useNavigate();
 
