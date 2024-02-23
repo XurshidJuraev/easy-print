@@ -37,7 +37,7 @@ function HeaderMain({ trashCardData }) {
   let docTitle = document.title;
 
   window.addEventListener('blur', () => {
-    document.title = localStorage.getItem('selectedLanguage') === 'ru' ? 'Вернуться снова! 🤗' : 'Come back! 🤗';
+    document.title = localStorage.getItem('selectedLanguage') === 'ru' ? 'Вернуться снова! 🤗' : 'Yana qaytib keling! 🤗';
   });
 
   window.addEventListener('focus', () => {

@@ -636,7 +636,7 @@ const YourDesign = () => {
 
       <div className="d-flex">
         <div className='layers'>
-          <Reveal><p className='layers_text_fat'>Слои</p></Reveal>
+          <Reveal><p className='layers_text_fat'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Слои' : 'Qatlamlar'}</p></Reveal>
 
           {!textInputVisible ? (
             <Reveal>
@@ -725,14 +725,14 @@ const YourDesign = () => {
               </div>
             </Reveal>
           ) : (
-            <Reveal><p className='layers_text'>Добавленные объекты будут отображаться здесь</p></Reveal>
+            <Reveal><p className='layers_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавленные объекты будут отображаться здесь' : `Qo'shilgan ob'ektlar bu yerda ko'rsatiladi`}</p></Reveal>
           ))}
         </div>
 
         <div className='shirt_drawing'>
           <div className="shirt_drawing_header">
             <div onClick={() => {handleClickCategoryChange(); handleImageClickHeader(1)}} style={{width: '138px'}} className={`shirt_drawing_header_select`}>
-              Футболка
+              {categoryChange === 31 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка' : 'Futbolka' : categoryChange === 32 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Свитшот' : 'Svitter' : categoryChange === 33 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Худи' : 'Xudi' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка' : 'Futbolka'} 
               <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 12C7.72592 12.0004 7.45444 11.9511 7.20118 11.8547C6.94792 11.7583 6.71786 11.6169 6.52423 11.4385L1.79945 7.09254C1.36915 6.69675 1.36918 6.01767 1.79951 5.62192C2.18181 5.27034 2.76973 5.27034 3.15203 5.62192L8 10.0803L12.848 5.62189C13.2303 5.27033 13.8182 5.27033 14.2004 5.62189C14.6308 6.01764 14.6308 6.69674 14.2004 7.0925L9.47577 11.4375C9.28223 11.6161 9.05221 11.7577 8.79894 11.8543C8.54567 11.9508 8.27415 12.0003 8 12Z" fill="#32454B"/>
               </svg>
@@ -753,7 +753,7 @@ const YourDesign = () => {
             </div>
 
             <div style={{width: '157px'}} onClick={() => {handleClickTrueFalse(); handleImageClickHeader(4)}}  className={`shirt_drawing_header_select`}>
-              {isFrontView ? 'Сзади' : 'Спереди'} 
+              {isFrontView ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Сзади' : 'Orqa' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Спереди' : 'Oldi'} 
               <svg style={{marginLeft: '10px'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M17.329 10C16.9907 9.9956 16.7044 10.2481 16.6676 10.5834C16.3554 14.2632 13.1099 16.9939 9.41861 16.6827C5.72731 16.3715 2.98803 13.1361 3.30025 9.45626C3.61247 5.77644 6.85792 3.04569 10.5492 3.35691C12.1474 3.49166 13.6443 4.19285 14.7684 5.33332H12.6805C12.3112 5.33332 12.0118 5.63179 12.0118 5.99997C12.0118 6.36816 12.3112 6.66663 12.6805 6.66663H15.4511C16.1368 6.66626 16.6926 6.11219 16.693 5.42863V2.66666C16.693 2.29847 16.3936 2 16.0243 2C15.6549 2 15.3555 2.29847 15.3555 2.66666V4.052C12.0548 1.11172 6.98798 1.39559 4.03852 4.68607C1.08905 7.97654 1.37381 13.0275 4.67456 15.9678C7.97531 18.9081 13.0421 18.6242 15.9916 15.3338C17.1381 14.0547 17.8413 12.4417 17.9971 10.7333C18.0314 10.3641 17.7591 10.0371 17.3887 10.0029C17.3689 10.001 17.349 10.0001 17.329 10Z" fill="#122956"/>
               </svg>
@@ -788,14 +788,14 @@ const YourDesign = () => {
             </div>
 
             <div onClick={() => {handleShowLibrary(); handleImageClickHeader(7)}} style={{width: '192px'}} className={`shirt_drawing_header_select`}>
-              Из библиотеки 
+              {localStorage.getItem('selectedLanguage') === 'ru' ? 'Из библиотеки' : 'Namunalar'}
               <svg style={{marginLeft: '10px'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M14.9475 15.2091H16.6849L15.3924 20L0 15.7921L2.37516 6.9962V13.4432L2.06462 14.6008L14.2174 17.9214L14.9475 15.2091ZM8.66974 5.91466C9.36634 5.91466 9.92866 5.34854 9.92866 4.64723C9.92866 3.94592 9.36634 3.37981 8.66974 3.37981C7.97314 3.37981 7.41083 3.94592 7.41083 4.64723C7.41083 5.34854 7.97314 5.91466 8.66974 5.91466ZM20 2.53485V13.5192H4.05371V2.53485C4.05371 1.14068 5.18674 0 6.57155 0H17.4822C18.867 0 20 1.14068 20 2.53485ZM5.73227 2.53485V11.5505L12.2283 5.01056L14.9979 7.7989L18.3214 4.45289V2.53485C18.3214 2.07013 17.9438 1.6899 17.4822 1.6899H6.57155C6.10995 1.6899 5.73227 2.07013 5.73227 2.53485ZM18.3214 11.8293V6.84411L14.9979 10.1901L12.2283 7.40177L7.83047 11.8293H18.3214Z" fill="#122956"/>
               </svg>
             </div>
 
             <div onClick={() => {handleImageClickHeader(8)}} style={{width: '128px'}} className={`shirt_drawing_header_select`}>
-              ИИ 
+              {localStorage.getItem('selectedLanguage') === 'ru' ? 'ИИ' : 'SI'} 
               <svg style={{marginLeft: '10px'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <g clip-path="url(#clip0_2718_2172)">
                   <path d="M11.7346 4.655L0.750475 15.6408C0.299158 16.1248 0.0533432 16.765 0.0648389 17.4266C0.0763346 18.0883 0.344242 18.7196 0.812099 19.1876C1.27996 19.6555 1.91122 19.9236 2.57284 19.9352C3.23446 19.9469 3.87477 19.7012 4.35881 19.25L15.3455 8.26583L11.7346 4.655ZM12.9888 8.26583L10.8338 10.4208L9.58381 9.16667L11.7388 7.01167L12.9888 8.26583ZM3.18048 18.0733C3.01201 18.2339 2.78821 18.3235 2.55548 18.3235C2.32274 18.3235 2.09894 18.2339 1.93048 18.0733C1.76499 17.9074 1.67205 17.6827 1.67205 17.4483C1.67205 17.214 1.76499 16.9892 1.93048 16.8233L8.40464 10.3483L9.65881 11.6025L3.18048 18.0733ZM17.778 12.19L20.0005 13.3017L17.778 14.4167L16.6671 16.635L15.5563 14.4167L13.3338 13.3017L15.5563 12.19L16.6671 9.96833L17.778 12.19ZM5.55631 4.44417L3.33381 3.33333L5.55631 2.2225L6.66714 0L7.77798 2.2225L10.0005 3.33333L7.77798 4.44417L6.66714 6.66667L5.55631 4.44417ZM16.1113 3.88917L14.1671 2.91667L16.1113 1.94417L17.0838 0L18.0563 1.94417L20.0005 2.91667L18.0563 3.88917L17.0838 5.83333L16.1113 3.88917Z" fill="#122956"/>
@@ -1331,7 +1331,7 @@ const YourDesign = () => {
           </div>
         ) : (
           <div className='layers'>
-            <Reveal><p className='layers_text_fat'>Детали</p></Reveal>
+            <Reveal><p className='layers_text_fat'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Детали' : 'Tafsilotlar'}</p></Reveal>
 
             {!textInputVisible ? (
               <Reveal>
@@ -1478,7 +1478,7 @@ const YourDesign = () => {
                 </div>
               </Reveal>
             ) : (
-              <Reveal><p className='layers_text'>Детали объектов будут отображаться здесь</p></Reveal>
+              <Reveal><p className='layers_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Детали объектов будут отображаться здесь' : `Ob'ekt tafsilotlari bu yerda ko'rsatiladi`}</p></Reveal>
             ))}
           </div>
         )}
