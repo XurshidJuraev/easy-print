@@ -1,7 +1,7 @@
 .splide__arrow {
-  width: 60px !important;
-  height: 60px !important;
-  padding: 14px !important;
+  width: 7.281553398058253vh !important;
+  height: 7.281553398058253vh !important;
+  padding: 1.6990291262135921vh !important;
   border-radius: 50px !important;
   background: #FFF !important;
   box-shadow: 0px 4px 12px 0px rgba(145, 132, 109, 0.20) !important;
@@ -18,7 +18,7 @@
 .hero_title {
   color: #17262B;
   font-family: 'Inter500';
-  font-size: 48px;
+  font-size: 5.825242718446602vh;
   font-style: normal;
   font-weight: 500;
   line-height: 52px; /* 108.333% */
@@ -28,13 +28,13 @@
 .hero_text {
   color: var(--neutral-600, #666);
   font-family: 'Inter400';
-  font-size: 18px;
+  font-size: 2.1844660194174756vh;
   font-style: normal;
   font-weight: 400;
   line-height: 24px; /* 133.333% */
   letter-spacing: -0.09px;
-  width: 480px;
-  margin-top: 32px;
+  width: 58.25242718446602vh;
+  margin-top: 3.883495145631068vh;
 }
 
 .hero_button {
@@ -48,23 +48,23 @@
   border: none;
   color: var(--White, #FFF);
   font-family: Inter;
-  font-size: 18px;
+  font-size: 2.1844660194174756vh;
   font-style: normal;
   font-weight: 500;
   line-height: 24px; /* 133.333% */
   text-decoration: none;
-  width: 331px;
-  height: 64px;
-  margin-left: 40px;
-  margin-top: 160px;
+  width: 40.16990291262136vh;
+  height: 7.766990291262136vh;
+  margin-left: 4.854368932038835vh;
+  margin-top: 19.41747572815534vh;
   transition: all 0.3s ease;
-  padding: 20px 0px 0px 30px;
+  padding: 2.4271844660194173vh 0px 0px 3.6407766990291264vh;
 }
 
 .hero_button span {
   color: var(--White, #FFF);
   font-family: Inter;
-  font-size: 18px;
+  font-size: 2.1844660194174756vh;
   font-style: normal;
   font-weight: 500;
   line-height: 24px; /* 133.333% */
@@ -72,7 +72,7 @@
 }
 
 .hero_button:hover svg {
-  margin-left: 10px;
+  margin-left: 1.2135922330097086vh;
   transition: 0.3s;
 }
 
@@ -109,8 +109,8 @@
 }
 
 .d-flex .center-image {
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 36.407766990291265vh;
+  max-height: 36.407766990291265vh;
   transition: transform 0.5s ease-in-out;
 }
 
@@ -121,7 +121,7 @@
 
 .splide__slide {
   opacity: 0.6;
-  height: 270px;
+  height: 32.76699029126213vh;
   display: flex;
   justify-content: center;
   align-items: center;

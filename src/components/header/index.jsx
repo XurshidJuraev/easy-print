@@ -267,88 +267,80 @@ function HeaderMain({ trashCardData }) {
   });
 
   return (
-    <header style={{backgroundColor: '#ffffff'}} className="navbar navbar-expand-lg bg-body-tertiary">
-      {/* <ToastContainer /> */}
-      <div style={{ margin: '12px 120px' }} className="container">
-        <NavLink title="EasyPrint Home" to={'/'} className="navbar-brand">
-          <img src={logo} alt="logo" />
+    <header style={{backgroundColor: '#ffffff'}}>
+      <center style={{textAlign: 'left'}} className="d-flex align-items-center justify-content-center">
+        <NavLink title="EasyPrint Home" to={'/'}>
+          <img className='header_logo' style={{marginTop: '3.1553398058252426vh', marginBottom: '3.1553398058252426vh'}} src={logo} alt="logo" />
         </NavLink>
-        
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon" />
-        </button>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ marginLeft: '50px', fontFamily: 'Inter' }}>
-            {category.data && category.data.length > 0 && category.data[0].map((data2) => (
-              <li title={data2.name} key={data2.id} className="nav-item ms-3 me-3">
-                <div className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`} onMouseEnter={() => setActiveLinkId(data2.id)} onMouseLeave={() => setActiveLinkId(null)}>
-                  {data2.name}
+        <ul className="d-flex" style={{ marginLeft: '6.067961165048544vh', marginTop: '2.368932038834951vh', listStyle: 'none', fontFamily: 'Inter' }}>
+          {category.data && category.data.length > 0 && category.data[0].map((data2) => (
+            <li title={data2.name} key={data2.id} className="nav-item ms-3 me-3">
+              <div className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`} onMouseEnter={() => setActiveLinkId(data2.id)} onMouseLeave={() => setActiveLinkId(null)}>
+                {data2.name}
+              </div>
+
+              {Array.isArray(data2.sub_category) && data2.sub_category.length > 0 ? (
+                <div className={`language_list language_list_${data2.id} ${activeLinkId === data2.id ? 'active' : ''}`}>
+                  {data2.sub_category.map((data3) => (
+                    <NavLink title={data3.name} to={`/categories/${data3.id}/${data3.name}`} className='language_item' key={data3.id}>
+                      {data3.name}
+                    </NavLink>
+                  ))}
                 </div>
+              ) : null}
+            </li>
+          ))}
+        </ul>
 
-                {Array.isArray(data2.sub_category) && data2.sub_category.length > 0 ? (
-                  <div className={`language_list language_list_${data2.id} ${activeLinkId === data2.id ? 'active' : ''}`}>
-                    {data2.sub_category.map((data3) => (
-                      <NavLink title={data3.name} to={`/categories/${data3.id}/${data3.name}`} className='language_item' key={data3.id}>
-                        {data3.name}
-                      </NavLink>
-                    ))}
-                  </div>
-                ) : null}
-              </li>
-            ))}
-          </ul>
+        <div className="d-flex">
+          <div style={{marginTop: '2.12621359223301vh', marginLeft: '12.135922330097088vh'}} className='header_search'>
+            <center>
+              <input className="header_search_input" type="search" placeholder="Поиск..." aria-label="Поиск..." />
+              <img className='header_search_icon' src={search} alt="search" />
+            </center>
+          </div>
 
-          <div className="d-flex">
-            <div className='header_search'>
-              <center>
-                <input
-                  className="header_search_input"
-                  type="search"
-                  placeholder="Поиск..."
-                  aria-label="Поиск..."
-                />
-                <img src={search} alt="search" />
-              </center>
-            </div>
-            <div className="d-flex">
-              <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none', position: 'relative', zIndex: '100'}}>
-                <img style={{marginTop: '-2px'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
+          <div style={{marginTop: '1.1553398058252426vh'}} className="d-flex">
+            <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none', position: 'relative', zIndex: '100'}}>
+              <img className='language_icon' style={{marginTop: '-0.24271844660194175vh'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
+            </button>
+
+            <div onClick={toggleLanguageDropdown} style={{position: 'absolute', display: showLanguageDropdown === true ? 'block' : 'none', background: 'transparent', width: '100%', height: '100vh', top: '0', left: '0'}} className="color_background"></div>
+
+            {showLanguageDropdown && (
+              <div value={selectedLanguage} style={{border: 'none',backgroundColor: 'white',position: 'absolute',top: '70px',right: '184px',boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',zIndex: '1000000000'}}>
+                {data.data && data.data.language && data.data.language.map((lang) => (
+                    <div title={lang.name} onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
+                      {lang.name}
+                      {lang.code === localStorage.getItem('selectedLanguage') ? <img src={language_verifed} alt="language_verifed" /> : null}
+                    </div>
+                  ))}
+              </div>
+            )}
+
+            <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none'}} className='basket_counter_father'>
+              <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'block'}}>{localStorage.getItem('counterValue')}</div>
+              <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}>
+                <img className='language_icon' src={bag} alt="bag" />
               </button>
+            </NavLink>
 
-              <div onClick={toggleLanguageDropdown} style={{position: 'absolute', display: showLanguageDropdown === true ? 'block' : 'none', background: 'transparent', width: '100%', height: '100vh', top: '0', left: '0'}} className="color_background"></div>
-              {showLanguageDropdown && (
-                <div value={selectedLanguage} style={{border: 'none',backgroundColor: 'white',position: 'absolute',top: '70px',right: '184px',boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',zIndex: '1000000000'}}>
-                  {data.data && data.data.language && data.data.language.map((lang) => (
-                      <div title={lang.name} onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
-                        {lang.name}
-                        {lang.code === localStorage.getItem('selectedLanguage') ? <img src={language_verifed} alt="language_verifed" /> : null}
-                      </div>
-                    ))}
-                </div>
-              )}
-
-              <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none'}} className='basket_counter_father'>
-                <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'block'}}>{localStorage.getItem('counterValue')}</div>
-                <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}><img src={bag} alt="bag" /></button>
-              </NavLink>
-
-              {localStorage.getItem('token') ? (
-                <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px', textDecoration: 'none'}}>
-                  <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-10px', border: 'none', display: 'flex', marginTop: '4px',}}>
-                    <img src={user} alt="user" />
-                    <p className='user_name_text'>{localStorage.getItem('user_name')}</p>
-                  </button>
-                </NavLink>
-              ) : (
-                <button title="Login or Register" style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                  <img src={user} alt="user" />
+            {localStorage.getItem('token') ? (
+              <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px', textDecoration: 'none'}}>
+                <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-10px', border: 'none', display: 'flex', marginTop: '4px',}}>
+                  <img className='language_icon' src={user} alt="user" />
+                  <p className='user_name_text'>{localStorage.getItem('user_name')}</p>
                 </button>
-              )}
-            </div>
+              </NavLink>
+            ) : (
+              <button title="Login or Register" style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                <img className='language_icon' src={user} alt="user" />
+              </button>
+            )}
           </div>
         </div>
-      </div>
+      </center>
 
       <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex={1}>
         <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>

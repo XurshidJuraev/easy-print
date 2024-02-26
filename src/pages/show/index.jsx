@@ -660,15 +660,7 @@ function ShowDetail() {
                     <p className='show_detail_size'>Размер</p>
                     <div className='size_selection' style={{width: '350px'}}>
                       {sizeArray.map((size, index) => (
-                        <div
-                          key={size.id}
-                          className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`}
-                          onClick={() => {
-                            setSelectedSizeIndex(index);
-                            const selectedSizeId = size.id;
-                            setDefaultSize(selectedSizeId)
-                          }}
-                        >
+                        <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId) }}>
                           {size.name}
                         </div>
                       ))}
@@ -680,16 +672,7 @@ function ShowDetail() {
 
                     <div className="d-flex">
                       {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                        <div
-                          key={index}
-                          className="color_border me-4"
-                          style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}}
-                          onClick={() => {
-                            setSelectedColorIndex(index);
-                            const selectedColorId = color.id;
-                            setDefaultColor(selectedColorId)
-                          }}
-                        >
+                        <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#3C7CFB' : '#E6E6E6', cursor: 'pointer'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setDefaultColor(selectedColorId) }}>
                           <div className="color" style={{backgroundColor: color.code}}></div>
                         </div>
                       ))}

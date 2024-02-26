@@ -1,22 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import default_ads from '../../layouts/images/Author_default.svg';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 function AdsSlider() {
-  const slideImages = [
-    {
-      url: default_ads,
-      link: 'https://apple.com'
-    },
-    {
-      url: default_ads,
-      link: 'https://apple.com'
-    },
-    {
-      url: default_ads,
-      link: 'https://apple.com'
-    },
-  ];
+  const [slider, setSlider] = useState([]);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/get-advertising`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+        token: token
+      }
+    }).then((response) => {
+      console.log(response.data.data);
+      setSlider(response.data.data);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }, []);
   
   useEffect(() => {
     const carouselInterval = setInterval(() => {
@@ -40,10 +46,12 @@ function AdsSlider() {
         <div className="slide-container" style={{ textAlign: 'center' }}>
           <div id="carouselExampleControlsNoTouching" className="carousel slide" data-bs-touch="false">
             <div className="carousel-inner">
-              {slideImages.map((slideImage, index) => (
+              {slider.map((slideImage, index) => (
                 <div style={{marginBottom: '80px', marginTop: '20px'}} className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index} data-index={index}>
-                  <NavLink target='_blank' to={slideImage.link}>
-                    <img style={{ borderRadius: '12px' }} src={slideImage.url} className="d-block w-100" alt="..." />
+                  <NavLink target='_blank' to={`https://${slideImage.url}`}>
+                    <center>
+                      <div style={{backgroundImage: `url(${slideImage.image})`, filter: 'drop-shadow(0px 0px 8px rgb(15,124,244))', backgroundSize: 'cover', width: '98%', height: '260px', borderRadius: '12px', backgroundRepeat: 'no-repeat'}}></div>
+                    </center>
                   </NavLink>
                 </div>
               ))}

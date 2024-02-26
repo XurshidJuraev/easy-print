@@ -120,8 +120,8 @@ function HeroMain() {
       ) : (
         <center>
           {data.length > 0 && (
-            <div style={{ width: '1440px', height: '900px', textAlign: 'left' }} className='d-flex justify-content-between'>
-              <div style={{ paddingTop: '120px', paddingLeft: '130px' }}>
+            <div style={{ width: '174.75728155339806vh', height: '109.22330097087378vh', textAlign: 'left' }} className='d-flex justify-content-between'>
+              <div style={{ paddingTop: '14.563106796116505vh', paddingLeft: '15.776699029126213vh' }}>
                 <h1 className='hero_title'>{data[currentIndex].title}</h1>
                 <p className='hero_text'>{data[currentIndex].text}</p>
                   <NavLink to={'/yourDesign'} className='hero_button'>
@@ -134,11 +134,11 @@ function HeroMain() {
 
               <div>
                 <div>
-                  <img style={{ width: '334px', height: '372px', marginLeft: '240px', marginTop: '153px' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
+                  <img style={{ width: '40.53398058252427vh', height: '45.14563106796116vh', marginLeft: '29.12621359223301vh', marginTop: '18.567961165048544vh' }} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
                 </div>
 
-                <div style={{ position: 'relative', marginTop: '-296px', right: '60px', width: '940px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '270px' }}>
-                  <Splide options={{ type: 'loop', arrows: false, autoplay: true, width: '840px', arrow: false, heightRatio: 0.5, pagination: false, focus: 'center', auto: true, interval: 3000, perPage: 3, pauseOnHover: false, }}>
+                <div style={{ position: 'relative', marginTop: '-35.922330097087375vh', right: '7.281553398058253vh', width: '114.07766990291262vh', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '32.76699029126213vh' }}>
+                  <Splide options={{ type: 'loop', arrows: false, autoplay: true, width: '101.94174757281553vh', arrow: false, heightRatio: 0.5, pagination: false, focus: 'center', auto: true, interval: 3000, perPage: 3, pauseOnHover: false, }}>
                     {data[currentIndex].carousel_image.map((imageUrl, index) => (
                       <SplideSlide key={index}>
                         <img src={imageUrl} alt={`carousel-image-${index}`} />
