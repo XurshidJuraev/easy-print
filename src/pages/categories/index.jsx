@@ -187,8 +187,6 @@ function CategoryListByName() {
         redirect: 'follow'
       };
 
-      console.log(defaultSize, defaultColor, colorId, sizeId);
-      
       const basketData = {
         warehouse_product_id: productData.id,
         quantity: 1,

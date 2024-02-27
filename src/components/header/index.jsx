@@ -8,7 +8,7 @@ import language from '../../layouts/icons/language.svg'
 import register_image from '../../layouts/images/43.svg'
 import verifed from '../../layouts/images/green_verifed.svg'
 import language_verifed from '../../layouts/icons/language_verifed.svg'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 
@@ -33,6 +33,23 @@ function HeaderMain({ trashCardData }) {
     password: '',
     passwordConfirmation: '',
   });
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const checkScreenSize = () => {
+  //     if (window.screen.width < 800) {
+  //       navigate('/mobile');
+  //     }
+  //   };
+
+  //   checkScreenSize();
+
+  //   window.addEventListener('resize', checkScreenSize);
+
+  //   return () => {
+  //     window.removeEventListener('resize', checkScreenSize);
+  //   };
+  // }, []);
 
   let docTitle = document.title;
 
@@ -60,6 +77,10 @@ function HeaderMain({ trashCardData }) {
       localStorage.setItem('counterValue', '0');
     })
   }, []);
+
+  if (!localStorage.getItem('selectedLanguage')) {
+    localStorage.setItem('selectedLanguage', 'ru')
+  }
 
   const handleSubmitLogin = (evt) => {
     evt.preventDefault();

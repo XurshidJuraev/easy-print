@@ -208,8 +208,6 @@ function HomePage() {
 
       localStorage.setItem('basket', JSON.stringify(basketData));
 
-      console.log(defaultSize, defaultColor, colorId, sizeId);
-  
       fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
         .then(response => response.json())
         .then(result => {
