@@ -93,7 +93,7 @@ function HomePageMobile() {
 
               <div className="d-flex">
                 <div>
-                  <p className='home_card_price'>{Number(data2.price).toLocaleString('ru-RU')} сум</p>
+                  <p className='home_card_price'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
                   <p className='home_card_title' title={data2.name}>{data2.name}</p>
                 </div>
               </div>

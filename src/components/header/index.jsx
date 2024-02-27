@@ -327,8 +327,8 @@ function HeaderMain({ trashCardData }) {
             </NavLink>
 
             {localStorage.getItem('token') ? (
-              <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px', textDecoration: 'none'}}>
-                <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-10px', border: 'none', display: 'flex', marginTop: '4px',}}>
+              <NavLink title="Profile" to={'/profile'} style={{marginTop: '1.6990291262135921vh', textDecoration: 'none'}}>
+                <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-1.2135922330097086vh', border: 'none', display: 'flex', marginTop: '0.4854368932038835vh',}}>
                   <img className='language_icon' src={user} alt="user" />
                   <p className='user_name_text'>{localStorage.getItem('user_name')}</p>
                 </button>

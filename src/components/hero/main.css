@@ -2,7 +2,7 @@
   width: 7.281553398058253vh !important;
   height: 7.281553398058253vh !important;
   padding: 1.6990291262135921vh !important;
-  border-radius: 50px !important;
+  border-radius: 6.067961165048544vh !important;
   background: #FFF !important;
   box-shadow: 0px 4px 12px 0px rgba(145, 132, 109, 0.20) !important;
 }
@@ -21,8 +21,8 @@
   font-size: 5.825242718446602vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 52px; /* 108.333% */
-  letter-spacing: -0.096px;
+  line-height: 6.310679611650485vh; /* 108.333% */
+  letter-spacing: -0.011650485436893204vh;
 }
 
 .hero_text {
@@ -31,27 +31,27 @@
   font-size: 2.1844660194174756vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 133.333% */
-  letter-spacing: -0.09px;
+  line-height: 2.912621359223301vh; /* 133.333% */
+  letter-spacing: -0.010922330097087379vh;
   width: 58.25242718446602vh;
   margin-top: 3.883495145631068vh;
 }
 
 .hero_button {
-  border-radius: 12px;
+  border-radius: 1.4563106796116505vh;
   background: var(--primary-6, #3C7CFB);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.30);
   display: flex;
   /* justify-content: center;
   align-items: center; */
-  gap: 16px;
+  gap: 1.941747572815534vh;
   border: none;
   color: var(--White, #FFF);
   font-family: Inter;
   font-size: 2.1844660194174756vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
+  line-height: 2.912621359223301vh; /* 133.333% */
   text-decoration: none;
   width: 40.16990291262136vh;
   height: 7.766990291262136vh;
@@ -67,7 +67,7 @@
   font-size: 2.1844660194174756vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
+  line-height: 2.912621359223301vh; /* 133.333% */
   text-decoration: none;
 }
 

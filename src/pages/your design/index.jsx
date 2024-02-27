@@ -614,25 +614,27 @@ const YourDesign = () => {
       <HeaderMain />
       <ToastContainer />
 
-      <div className='white_background'>
-        <img onClick={() => {
-            // T-shirt
-            getImageBack();
-            getImage();
-            // getImageBlackTShirt();
-            // getImageBackBlackTShirt();
-            // // Hoodie
-            // getImageBlackHoodie();
-            // getImageBackBlackHoodie();
-            // getImageWhiteHoodie();
-            // getImageBackWhiteHoodie();
-            // // Sweatshot
-            // getImageBlackSweatshot();
-            // getImageBackBlackSweatshot();
-            // getImageWhiteSweatshot();
-            // getImageBackWhiteSweatshot();
-          }} style={{cursor: 'pointer'}} className='addToBasket_image' data-bs-target="#exampleModalToggle5" data-bs-toggle="modal" src={addToBasketImage} alt="addToBasketImage" />
-      </div>
+      <center>
+        <div className='white_background'>
+          <img onClick={() => {
+              // T-shirt
+              getImageBack();
+              getImage();
+              // getImageBlackTShirt();
+              // getImageBackBlackTShirt();
+              // // Hoodie
+              // getImageBlackHoodie();
+              // getImageBackBlackHoodie();
+              // getImageWhiteHoodie();
+              // getImageBackWhiteHoodie();
+              // // Sweatshot
+              // getImageBlackSweatshot();
+              // getImageBackBlackSweatshot();
+              // getImageWhiteSweatshot();
+              // getImageBackWhiteSweatshot();
+            }} style={{cursor: 'pointer'}} className='addToBasket_image' data-bs-target="#exampleModalToggle5" data-bs-toggle="modal" src={addToBasketImage} alt="addToBasketImage" />
+        </div>
+      </center>
 
       <div className="d-flex">
         <div className='layers'>
@@ -733,21 +735,21 @@ const YourDesign = () => {
           <div className="shirt_drawing_header">
             <div onClick={() => {handleClickCategoryChange(); handleImageClickHeader(1)}} style={{width: '16.74757281553398vh'}} className={`shirt_drawing_header_select`}>
               {categoryChange === 31 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка' : 'Futbolka' : categoryChange === 32 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Свитшот' : 'Svitter' : categoryChange === 33 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Худи' : 'Xudi' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка' : 'Futbolka'} 
-              <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" style={{width: '1.941747572815534vh', height: '1.941747572815534vh'}} viewBox="0 0 16 16" fill="none">
                 <path d="M8 12C7.72592 12.0004 7.45444 11.9511 7.20118 11.8547C6.94792 11.7583 6.71786 11.6169 6.52423 11.4385L1.79945 7.09254C1.36915 6.69675 1.36918 6.01767 1.79951 5.62192C2.18181 5.27034 2.76973 5.27034 3.15203 5.62192L8 10.0803L12.848 5.62189C13.2303 5.27033 13.8182 5.27033 14.2004 5.62189C14.6308 6.01764 14.6308 6.69674 14.2004 7.0925L9.47577 11.4375C9.28223 11.6161 9.05221 11.7577 8.79894 11.8543C8.54567 11.9508 8.27415 12.0003 8 12Z" fill="#32454B"/>
               </svg>
             </div>
 
             <div onClick={() => {handleClickColorChange(); handleImageClickHeader(3)}} style={{width: '12.257281553398059vh'}} className={`shirt_drawing_header_select`}>
               Цвет
-              <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" style={{width: '1.941747572815534vh', height: '1.941747572815534vh'}} viewBox="0 0 16 16" fill="none">
                 <path d="M8 12C7.72592 12.0004 7.45444 11.9511 7.20118 11.8547C6.94792 11.7583 6.71786 11.6169 6.52423 11.4385L1.79945 7.09254C1.36915 6.69675 1.36918 6.01767 1.79951 5.62192C2.18181 5.27034 2.76973 5.27034 3.15203 5.62192L8 10.0803L12.848 5.62189C13.2303 5.27033 13.8182 5.27033 14.2004 5.62189C14.6308 6.01764 14.6308 6.69674 14.2004 7.0925L9.47577 11.4375C9.28223 11.6161 9.05221 11.7577 8.79894 11.8543C8.54567 11.9508 8.27415 12.0003 8 12Z" fill="#32454B"/>
               </svg>
             </div>
 
             <div style={{width: '19.053398058252426vh'}} onClick={() => {handleClickTrueFalse(); handleImageClickHeader(4)}}  className={`shirt_drawing_header_select`}>
               {isFrontView ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Сзади' : 'Orqa' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Спереди' : 'Oldi'} 
-              <svg style={{marginLeft: '1.2135922330097086vh'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <svg style={{marginLeft: '1.2135922330097086vh', width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
                 <path d="M17.329 10C16.9907 9.9956 16.7044 10.2481 16.6676 10.5834C16.3554 14.2632 13.1099 16.9939 9.41861 16.6827C5.72731 16.3715 2.98803 13.1361 3.30025 9.45626C3.61247 5.77644 6.85792 3.04569 10.5492 3.35691C12.1474 3.49166 13.6443 4.19285 14.7684 5.33332H12.6805C12.3112 5.33332 12.0118 5.63179 12.0118 5.99997C12.0118 6.36816 12.3112 6.66663 12.6805 6.66663H15.4511C16.1368 6.66626 16.6926 6.11219 16.693 5.42863V2.66666C16.693 2.29847 16.3936 2 16.0243 2C15.6549 2 15.3555 2.29847 15.3555 2.66666V4.052C12.0548 1.11172 6.98798 1.39559 4.03852 4.68607C1.08905 7.97654 1.37381 13.0275 4.67456 15.9678C7.97531 18.9081 13.0421 18.6242 15.9916 15.3338C17.1381 14.0547 17.8413 12.4417 17.9971 10.7333C18.0314 10.3641 17.7591 10.0371 17.3887 10.0029C17.3689 10.001 17.349 10.0001 17.329 10Z" fill="#122956"/>
               </svg>
             </div>
@@ -756,36 +758,36 @@ const YourDesign = () => {
               <input type="file" accept="image/*" onChange={handleCustomPictureChange} style={{ display: 'none', }} />
 
               <div className={`shirt_drawing_header_select`} style={{width: '11.16504854368932vh', height: '4.247572815533981vh'}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" style={{width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} viewBox="0 0 20 20" fill="none">
                   <path d="M14.9475 15.2091H16.6849L15.3924 20L0 15.7921L2.37516 6.9962V13.4432L2.06462 14.6008L14.2174 17.9214L14.9475 15.2091ZM8.66974 5.91466C9.36634 5.91466 9.92866 5.34854 9.92866 4.64723C9.92866 3.94592 9.36634 3.37981 8.66974 3.37981C7.97314 3.37981 7.41083 3.94592 7.41083 4.64723C7.41083 5.34854 7.97314 5.91466 8.66974 5.91466ZM20 2.53485V13.5192H4.05371V2.53485C4.05371 1.14068 5.18674 0 6.57155 0H17.4822C18.867 0 20 1.14068 20 2.53485ZM5.73227 2.53485V11.5505L12.2283 5.01056L14.9979 7.7989L18.3214 4.45289V2.53485C18.3214 2.07013 17.9438 1.6899 17.4822 1.6899H6.57155C6.10995 1.6899 5.73227 2.07013 5.73227 2.53485ZM18.3214 11.8293V6.84411L14.9979 10.1901L12.2283 7.40177L7.83047 11.8293H18.3214Z" fill="#122956"/>
                 </svg>
 
-                <svg style={{marginLeft: '0.970873786407767vh'}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" style={{width: '1.941747572815534vh', marginLeft: '0.970873786407767vh', height: '1.941747572815534vh'}} viewBox="0 0 16 16" fill="none">
                   <path d="M14.2223 7.22225H8.77779V1.77777C8.77779 1.34821 8.42957 1 8.00002 1C7.57047 1 7.22225 1.34821 7.22225 1.77777V7.22221H1.77777C1.34821 7.22225 1 7.57047 1 8.00002C1 8.42957 1.34821 8.77779 1.77777 8.77779H7.22221V14.2222C7.22221 14.6518 7.57043 15 7.99998 15C8.42953 15 8.77775 14.6518 8.77775 14.2222V8.77779H14.2222C14.6517 8.77779 15 8.42957 15 8.00002C15 7.57047 14.6518 7.22225 14.2223 7.22225Z" fill="#122956"/>
                 </svg>
               </div>
             </label>
 
             <div onClick={() => {handleClick(); handleImageClickHeader(6)}} style={{width: '11.16504854368932vh'}} className={`shirt_drawing_header_select`}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <svg xmlns="http://www.w3.org/2000/svg" style={{width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} viewBox="0 0 20 20" fill="none">
                 <path d="M17.5 0H2.5C1.83696 0 1.20107 0.263392 0.732233 0.732233C0.263392 1.20107 0 1.83696 0 2.5L0 20H20V2.5C20 1.83696 19.7366 1.20107 19.2678 0.732233C18.7989 0.263392 18.163 0 17.5 0ZM18.3333 18.3333H1.66667V2.5C1.66667 2.27899 1.75446 2.06702 1.91074 1.91074C2.06702 1.75446 2.27899 1.66667 2.5 1.66667H17.5C17.721 1.66667 17.933 1.75446 18.0893 1.91074C18.2455 2.06702 18.3333 2.27899 18.3333 2.5V18.3333ZM5 5H15V8.33333H13.3333V6.66667H10.8333V13.3333H12.5V15H7.5V13.3333H9.16667V6.66667H6.66667V8.33333H5V5Z" fill="#122956"/>
               </svg>
 
-              <svg style={{marginLeft: '0.970873786407767vh'}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <svg xmlns="http://www.w3.org/2000/svg" style={{width: '1.941747572815534vh', marginLeft: '0.970873786407767vh', height: '1.941747572815534vh'}} viewBox="0 0 16 16" fill="none">
                 <path d="M14.2223 7.22225H8.77779V1.77777C8.77779 1.34821 8.42957 1 8.00002 1C7.57047 1 7.22225 1.34821 7.22225 1.77777V7.22221H1.77777C1.34821 7.22225 1 7.57047 1 8.00002C1 8.42957 1.34821 8.77779 1.77777 8.77779H7.22221V14.2222C7.22221 14.6518 7.57043 15 7.99998 15C8.42953 15 8.77775 14.6518 8.77775 14.2222V8.77779H14.2222C14.6517 8.77779 15 8.42957 15 8.00002C15 7.57047 14.6518 7.22225 14.2223 7.22225Z" fill="#122956"/>
               </svg>
             </div>
 
             <div onClick={() => {handleShowLibrary(); handleImageClickHeader(7)}} style={{width: '23.300970873786408vh'}} className={`shirt_drawing_header_select`}>
               {localStorage.getItem('selectedLanguage') === 'ru' ? 'Из библиотеки' : 'Namunalar'}
-              <svg style={{marginLeft: '1.2135922330097086vh'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <svg style={{marginLeft: '1.2135922330097086vh', width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
                 <path d="M14.9475 15.2091H16.6849L15.3924 20L0 15.7921L2.37516 6.9962V13.4432L2.06462 14.6008L14.2174 17.9214L14.9475 15.2091ZM8.66974 5.91466C9.36634 5.91466 9.92866 5.34854 9.92866 4.64723C9.92866 3.94592 9.36634 3.37981 8.66974 3.37981C7.97314 3.37981 7.41083 3.94592 7.41083 4.64723C7.41083 5.34854 7.97314 5.91466 8.66974 5.91466ZM20 2.53485V13.5192H4.05371V2.53485C4.05371 1.14068 5.18674 0 6.57155 0H17.4822C18.867 0 20 1.14068 20 2.53485ZM5.73227 2.53485V11.5505L12.2283 5.01056L14.9979 7.7989L18.3214 4.45289V2.53485C18.3214 2.07013 17.9438 1.6899 17.4822 1.6899H6.57155C6.10995 1.6899 5.73227 2.07013 5.73227 2.53485ZM18.3214 11.8293V6.84411L14.9979 10.1901L12.2283 7.40177L7.83047 11.8293H18.3214Z" fill="#122956"/>
               </svg>
             </div>
 
             <div onClick={() => {handleImageClickHeader(8)}} style={{width: '15.533980582524272vh'}} className={`shirt_drawing_header_select`}>
               {localStorage.getItem('selectedLanguage') === 'ru' ? 'ИИ' : 'SI'} 
-              <svg style={{marginLeft: '1.2135922330097086vh'}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <svg style={{marginLeft: '1.2135922330097086vh', width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
                 <g clip-path="url(#clip0_2718_2172)">
                   <path d="M11.7346 4.655L0.750475 15.6408C0.299158 16.1248 0.0533432 16.765 0.0648389 17.4266C0.0763346 18.0883 0.344242 18.7196 0.812099 19.1876C1.27996 19.6555 1.91122 19.9236 2.57284 19.9352C3.23446 19.9469 3.87477 19.7012 4.35881 19.25L15.3455 8.26583L11.7346 4.655ZM12.9888 8.26583L10.8338 10.4208L9.58381 9.16667L11.7388 7.01167L12.9888 8.26583ZM3.18048 18.0733C3.01201 18.2339 2.78821 18.3235 2.55548 18.3235C2.32274 18.3235 2.09894 18.2339 1.93048 18.0733C1.76499 17.9074 1.67205 17.6827 1.67205 17.4483C1.67205 17.214 1.76499 16.9892 1.93048 16.8233L8.40464 10.3483L9.65881 11.6025L3.18048 18.0733ZM17.778 12.19L20.0005 13.3017L17.778 14.4167L16.6671 16.635L15.5563 14.4167L13.3338 13.3017L15.5563 12.19L16.6671 9.96833L17.778 12.19ZM5.55631 4.44417L3.33381 3.33333L5.55631 2.2225L6.66714 0L7.77798 2.2225L10.0005 3.33333L7.77798 4.44417L6.66714 6.66667L5.55631 4.44417ZM16.1113 3.88917L14.1671 2.91667L16.1113 1.94417L17.0838 0L18.0563 1.94417L20.0005 2.91667L18.0563 3.88917L17.0838 5.83333L16.1113 3.88917Z" fill="#122956"/>
                 </g>

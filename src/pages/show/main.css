@@ -222,27 +222,27 @@
   border: none;
   color: var(--White, #FFF);
   font-family: Inter;
-  font-size: 2.1844660194174756vh;
+  font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
   text-decoration: none;
   /* width: 56px; */
-  height: 4.368932038834951vh;
+  height: 36px;
   /* margin-left: 40px; */
   /* margin-top: 160px; */
   transition: all 0.3s ease;
-  padding: 0.970873786407767vh;
+  padding: 8px;
   display: flex;
   /* justify-content: center; */
   align-items: center;
-  margin-top: 1.5776699029126213vh;
+  margin-top: 13px;
 }
 
 .add_basket_btn span {
   color: var(--White, #FFF);
   font-family: Inter;
-  font-size: 2.1844660194174756vh;
+  font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 24px; /* 133.333% */

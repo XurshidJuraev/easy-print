@@ -8,12 +8,12 @@
   font-size: 1.941747572815534vh !important;
   font-style: normal !important;
   font-weight: 500 !important;
-  line-height: 20px !important; 
+  line-height: 2.4271844660194173vh !important; 
   cursor: pointer !important;
 }
 
 .header_search {
-  border-radius: 10px;
+  border-radius: 1.2135922330097086vh;
   border: 2px solid #E6E6E6;
   padding: 0.3640776699029126vh 1.0922330097087378vh;
   margin-right: 13.349514563106796vh;
@@ -24,6 +24,8 @@
 .header_logo {
   width: 24.150485436893202vh;
   height: 4.854368932038835vh;
+  position: relative;
+  z-index: 1000;
 }
 
 .header_search_input {
@@ -37,8 +39,8 @@
   font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 125% */
-  letter-spacing: -0.08px;
+  line-height: 2.4271844660194173vh; /* 125% */
+  letter-spacing: -0.009708737864077669vh;
   padding-top: 0.6067961165048543vh;
 }
 
@@ -53,8 +55,8 @@
   font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 125% */
-  letter-spacing: -0.08px;
+  line-height: 2.4271844660194173vh; /* 125% */
+  letter-spacing: -0.009708737864077669vh;
   padding-top: 0.6067961165048543vh;
 }
 
@@ -66,7 +68,7 @@
 .basket_counter_father {
   width: 5.825242718446602vh;
   height: 5.825242718446602vh;
-  border-radius: 24px;
+  border-radius: 2.912621359223301vh;
   background-color: transparent;
   margin-right: 3.1553398058252426vh;
   text-decoration: none;
@@ -82,7 +84,7 @@
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border-radius: 9px;
+  border-radius: 1.0922330097087378vh;
   background: #F94A4A;
   color: #FFF;
   font-family: Montserrat Alternates;
@@ -102,7 +104,7 @@
   font-size: 1.6990291262135921vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 20px;
+  line-height: 2.4271844660194173vh;
   text-decoration: none;
   margin-top: 0px;
   margin-left: 0.4854368932038835vh;
@@ -113,7 +115,7 @@
 .register_title {
   color: var(--neutral-800, #121212);
   font-family: Inter;
-  font-size: 28px;
+  font-size: 3.3980582524271843vh;
   font-style: normal;
   font-weight: 700;
   line-height: 32px; /* 114.286% */
@@ -124,63 +126,63 @@
   color: var(--neutral-500, #666);
   text-align: center;
   font-family: Inter;
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
-  letter-spacing: -0.16px;
+  line-height: 2.912621359223301vh; /* 150% */
+  letter-spacing: -0.019417475728155338vh;
 }
 
 .register {
   display: flex;
-  padding: 16px;
+  padding: 1.941747572815534vh;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 1.2135922330097086vh;
   align-self: stretch;
   color: var(--White, #FFF);
   font-family: Inter;
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 150% */
-  letter-spacing: -0.16px;
+  line-height: 2.912621359223301vh; /* 150% */
+  letter-spacing: -0.019417475728155338vh;
   border: none;
-  border-radius: 12px;
+  border-radius: 1.4563106796116505vh;
   background: var(--primary-6, #3C7CFB);
   margin-top: 32px;
-  margin-bottom: 16px;
+  margin-bottom: 1.941747572815534vh;
   width: 100%;
 }
 
 .login {
   display: flex;
-  padding: 16px;
+  padding: 1.941747572815534vh;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 1.2135922330097086vh;
   align-self: stretch;
   color: var(--primary-7, #3064CC);
   font-family: Inter;
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 150% */
-  letter-spacing: -0.16px;
+  line-height: 2.912621359223301vh; /* 150% */
+  letter-spacing: -0.019417475728155338vh;
   border: none;
-  border-radius: 12px;
+  border-radius: 1.4563106796116505vh;
   background: var(--Neutral-50, #F8F8F8);
   width: 100%;
 }
 
 .register_input {
   display: flex;
-  padding: 16px;
+  padding: 1.941747572815534vh;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 1.2135922330097086vh;
   align-self: stretch;
-  border-radius: 12px;
+  border-radius: 1.4563106796116505vh;
   background: var(--neutral-50, #e8e8e8);
   border: none;
   outline: none;
@@ -189,38 +191,37 @@
 .register_in_text {
   color: var(--neutral-800, #121212);
   font-family: Inter;
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 150% */
-  letter-spacing: -0.16px;
+  line-height: 2.912621359223301vh; /* 150% */
+  letter-spacing: -0.019417475728155338vh;
 }
 
 .register_and_text {
   color: var(--neutral-400, #999);
   font-family: Inter;
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
-  letter-spacing: -0.16px;
-  margin-top: 3px;
+  line-height: 2.912621359223301vh; /* 150% */
+  letter-spacing: -0.019417475728155338vh;
+  margin-top: 0.3640776699029126vh;
 }
 
 .register_text_no_password {
   color: #3064CC;
   font-family: Inter;
-  font-size: 16px;
+  font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
-  letter-spacing: -0.16px;
+  line-height: 2.912621359223301vh; /* 150% */
+  letter-spacing: -0.019417475728155338vh;
 }
 
 .language_list {
   background: var(--White, #FFF);
-  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.05);
-  margin-top: 1.2135922330097086vh;
+  box-shadow: 0px 0px 1.2135922330097086vh 2px rgba(0, 0, 0, 0.05);
 }
 
 .language_item {
@@ -238,7 +239,7 @@
   font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 20px;
+  line-height: 2.4271844660194173vh;
   cursor: pointer;
 }
 
@@ -265,7 +266,7 @@
 
 .language_list {
   display: none !important;
-  transform: translateY(-10px);
+  transform: translateY(-1.2135922330097086vh);
   transition: opacity 0.3s ease, transform 0.3s ease;
   position: absolute;
   top: 100%;
@@ -309,5 +310,5 @@
   /* transform: rotate(10deg); */
   box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.08);
   transition: all 0.1s ease;
-  border-radius: 10px;
+  border-radius: 1.2135922330097086vh;
 }

@@ -32,6 +32,9 @@ function CategoryListByName() {
   const [countHeader, setCountHeader] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingModal, setIsLoadingModal] = useState(true);
+  const [defaultSize, setDefaultSize] = useState();
+  const [defaultColor, setDefaultColor] = useState();
+  const [colorOptions, setColorOptions] = useState([]);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -88,7 +91,7 @@ function CategoryListByName() {
       setIsLoading(false);
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });    
-  }, []);  
+  }, []);
 
   function openModal(cardData) {
     setSelectedCard(cardData);
@@ -105,15 +108,27 @@ function CategoryListByName() {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      setModalData(response.data.data);
       setColorArray(response.data.data.color_by_size);
-      setIsLoadingModal(false);
       setSizeArray(response.data.data.color_by_size);
+      setModalData(response.data.data);
+      setIsLoadingModal(false);
     }).catch((error) => {
       setIsLoadingModal(false);
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
+
+  useEffect(() => {
+    if (modalData.size_by_color && modalData.size_by_color.length > 0) {
+      const sizes = modalData.size_by_color.flatMap((size) => size.sizes.map((s) => s.name));
+      setSizeOptions(sizes);
+    }
+
+    if (modalData.color_by_size && modalData.color_by_size.length > 0) {
+      const colors = modalData.color_by_size.flatMap((color) => color.color.map((c) => c.name));
+      setColorOptions(colors);
+    }
+  }, [modalData]);
 
   function handleCardClick(imageSrc, name, price) {
     const currentTime = new Date();
@@ -171,6 +186,8 @@ function CategoryListByName() {
         body: formdata,
         redirect: 'follow'
       };
+
+      console.log(defaultSize, defaultColor, colorId, sizeId);
       
       const basketData = {
         warehouse_product_id: productData.id,
@@ -362,12 +379,12 @@ function CategoryListByName() {
                           <p className='t-shirt_price'>
                             {data2.price_discount ? 
                               <span>
-                                <span className='discount_price'>{data2.price_discount} сум</span> 
-                                <del className='discount_price_del'>{data2.price} сум</del> 
+                                <span className='discount_price'>{data2.price_discount} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</span> 
+                                <del className='discount_price_del'>{data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</del> 
                               </span>
                               : 
                               <div>
-                                {data2.price} сум
+                                {data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}
                               </div>
                             }
                           </p>
@@ -490,23 +507,21 @@ function CategoryListByName() {
                       <div style={{padding: '80px 32px 0px 32px'}}>
                         <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
                         <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                        <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} сум</p>
+                        <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
     
                         <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                           <div className='d-flex' style={{marginRight: '83px'}}>
                             <p>Размер</p>
-                            <select 
-                              // className='show_detail_option' 
+                            <select
                               style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}}
                               value={sizeOptions[selectedSizeIndex]}
                               onChange={(e) => {
                                 const index = sizeOptions.findIndex((size) => size === e.target.value);
-                                // console.log(sizeArray[index]?.id);
                                 setSelectedSizeIndex(index);
                               }}
                             >
-                              {sizeArray.map((size) => (
-                                <option key={size.id} value={size.name}>{size.name}</option>
+                              {sizeArray.map((size, index) => (
+                                <option key={size.id} onClick={() => {setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId)}} value={size.name}>{size.name}</option>
                               ))}
                             </select>
                           </div>
@@ -518,9 +533,13 @@ function CategoryListByName() {
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
                                 <div
                                   key={index}
-                                  className="color_border me-2"
+                                  className="color_border me-4"
                                   style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}}
-                                  onClick={() => setSelectedColorIndex(index)}
+                                  onClick={() => {
+                                    setSelectedColorIndex(index);
+                                    const selectedColorId = color.id;
+                                    setDefaultColor(selectedColorId)
+                                  }}
                                 >
                                   <div className="color" style={{backgroundColor: color.code}}></div>
                                 </div>

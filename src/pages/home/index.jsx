@@ -210,58 +210,58 @@ function HomePage() {
 
       console.log(defaultSize, defaultColor, colorId, sizeId);
   
-      // fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
-      //   .then(response => response.json())
-      //   .then(result => {
-      //     if (result.status === true) {
-      //       toast(
-      //         <ToastComponent
-      //           image={productData.images[0] ? productData.images[0] : ''}
-      //           title={productData.name}
-      //           description={productData.description ? productData.description : 'Описание недоступно'}
-      //           link="/basket"
-      //           linkText="Перейти в корзину"
-      //           onClose={() => toast.dismiss()}
-      //         />,
-      //         {
-      //           position: "top-center",
-      //           autoClose: 3000,
-      //           draggable: true,
-      //           theme: "colored",
-      //         }
-      //       );
-      //     } else {
-      //       if (result.message === "Unauthenticated.") {
-      //         const basketData = {
-      //           warehouse_product_id: productData.id,
-      //           quantity: 1,
-      //           color_id: colorId,
-      //           size_id: sizeId,
-      //           price: productData.price,
-      //           discount: modalData.discount ? modalData.discount : '0'
-      //         };
+      fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.status === true) {
+            toast(
+              <ToastComponent
+                image={productData.images[0] ? productData.images[0] : ''}
+                title={productData.name}
+                description={productData.description ? productData.description : 'Описание недоступно'}
+                link="/basket"
+                linkText="Перейти в корзину"
+                onClose={() => toast.dismiss()}
+              />,
+              {
+                position: "top-center",
+                autoClose: 3000,
+                draggable: true,
+                theme: "colored",
+              }
+            );
+          } else {
+            if (result.message === "Unauthenticated.") {
+              const basketData = {
+                warehouse_product_id: productData.id,
+                quantity: 1,
+                color_id: colorId,
+                size_id: sizeId,
+                price: productData.price,
+                discount: modalData.discount ? modalData.discount : '0'
+              };
 
-      //         localStorage.setItem('basket', JSON.stringify(basketData));
+              localStorage.setItem('basket', JSON.stringify(basketData));
 
-      //         toast.warn('Вы еще не зарегистрированы. Товар добавлен в корзину.', {
-      //           position: "top-right",
-      //           autoClose: 5000,
-      //           hideProgressBar: false,
-      //           closeOnClick: true,
-      //           pauseOnHover: true,
-      //           draggable: true,
-      //           progress: undefined,
-      //           theme: "light",
-      //         });
-      //       } else {
-      //         toast.error('Товар не добавлен');
-      //       }
-      //     }
-      //   })
-      //   .catch(error => {
-      //     toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-      //     toast.error('Товар не добавлен');
-      //   });
+              toast.warn('Вы еще не зарегистрированы. Товар добавлен в корзину.', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+            } else {
+              toast.error('Товар не добавлен');
+            }
+          }
+        })
+        .catch(error => {
+          toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+          toast.error('Товар не добавлен');
+        });
     }
   };
 
@@ -408,12 +408,12 @@ function HomePage() {
                             <p className='t-shirt_price'>
                               {currentProduct.price_discount ? 
                                 <span>
-                                  <span className='discount_price'>{Number(currentProduct.price_discount).toLocaleString('ru-RU')} сум</span> 
-                                  <del className='discount_price_del'>{Number(currentProduct.price).toLocaleString('ru-RU')} сум</del> 
+                                  <span className='discount_price'>{Number(currentProduct.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</span> 
+                                  <del className='discount_price_del'>{Number(currentProduct.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</del> 
                                 </span>
                                 : 
                                 <div>
-                                  От {Number(currentProduct.price).toLocaleString('ru-RU')} сум
+                                  От {Number(currentProduct.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}
                                 </div>
                               }
                             </p>
@@ -455,12 +455,12 @@ function HomePage() {
                             <p className='t-shirt_price'>
                               {data2.price_discount ? 
                                 <span>
-                                  <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} сум</span> 
-                                  <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} сум</del> 
+                                  <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</span> 
+                                  <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</del> 
                                 </span>
                                 : 
                                 <div>
-                                  {Number(data2.price).toLocaleString('ru-RU')} сум
+                                  {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}
                                 </div>
                               }
                             </p>
@@ -520,12 +520,12 @@ function HomePage() {
                             <p className='t-shirt_price'>
                               {data2.price_discount ? 
                                 <span>
-                                  <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} сум</span> 
-                                  <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} сум</del> 
+                                  <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</span> 
+                                  <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</del> 
                                 </span>
                                 : 
                                 <div>
-                                  {Number(data2.price).toLocaleString('ru-RU')} сум
+                                  {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}
                                 </div>
                               }
                             </p>
@@ -649,7 +649,7 @@ function HomePage() {
                       <div style={{padding: '80px 32px 0px 32px'}}>
                         <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
                         <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                        <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} сум</p>
+                        <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
     
                         <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                           <div className='d-flex' style={{marginRight: '83px'}}>

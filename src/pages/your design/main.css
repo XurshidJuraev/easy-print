@@ -1,10 +1,10 @@
 .white_background {
   background-color: #ffffff;
-  width: 104.59223300970874vh;
+  width: 100.59223300970874vh;
   height: 12.135922330097088vh;
   position: relative;
   margin-top: -12.014563106796116vh;
-  margin-left: 40.16990291262136vh;
+  /* margin-left: 40.16990291262136vh; */
   padding-top: 3.5194174757281553vh;
   padding-left: 77.66990291262135vh;
 }
@@ -61,7 +61,7 @@
   font-size: 1.924757281553398vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 2.4271844660194173vh;
   margin-top: -1px;
   white-space: nowrap;
   overflow: hidden !important;
@@ -117,7 +117,7 @@
   font-size: 2.4271844660194173vh;
   font-style: normal;
   font-weight: 600;
-  line-height: 18px; /* 90% */
+  line-height: 2.1844660194174756vh; /* 90% */
   letter-spacing: -0.1px;
 }
 
@@ -128,7 +128,7 @@
   font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 22px; /* 137.5% */
+  line-height: 2.6699029126213594vh; /* 137.5% */
   letter-spacing: -0.08px;
   width: 22.33009708737864vh;
 }
@@ -143,7 +143,7 @@
   font-size: 3.883495145631068vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 32px;
+  line-height: 3.883495145631068vh;
   padding: 0.6067961165048543vh;
   display: flex;
   justify-content: center;
@@ -159,7 +159,7 @@
   font-size: 3.883495145631068vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 32px;
+  line-height: 3.883495145631068vh;
   padding: 0.6067961165048543vh;
   display: flex;
   justify-content: center;
@@ -201,7 +201,7 @@
   font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 2.1844660194174756vh;
   letter-spacing: -0.08px;
   white-space: nowrap;
   overflow: hidden !important;
@@ -241,7 +241,7 @@
   font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 18px; /* 112.5% */
+  line-height: 2.1844660194174756vh; /* 112.5% */
   letter-spacing: -0.08px;
 }
 
@@ -267,7 +267,7 @@
   font-size: 1.5776699029126213vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 153.846% */
+  line-height: 2.4271844660194173vh; /* 153.846% */
   letter-spacing: -0.13px;
   text-transform: uppercase;
   cursor: pointer;
@@ -287,7 +287,7 @@
   font-size: 1.6990291262135921vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 142.857% */
+  line-height: 2.4271844660194173vh; /* 142.857% */
   letter-spacing: 0.14px;
   text-transform: uppercase;
   border: 1px solid var(--Neutral-200, #CCC);
@@ -319,7 +319,7 @@
   font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 125% */
+  line-height: 2.4271844660194173vh; /* 125% */
   letter-spacing: -0.08px;
   cursor: pointer;
 }
@@ -342,7 +342,7 @@
   font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 125% */
+  line-height: 2.4271844660194173vh; /* 125% */
   letter-spacing: -0.08px;
   background-color: #F3F3F3;
   cursor: pointer;
@@ -354,7 +354,7 @@
   font-size: 1.941747572815534vh;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
+  line-height: 2.912621359223301vh; /* 150% */
   letter-spacing: -0.032px;
 }
 
@@ -372,7 +372,7 @@
   font-size: 2.1844660194174756vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
+  line-height: 2.912621359223301vh; /* 133.333% */
   border: none;
   margin-top: 4.854368932038835vh;
 }
@@ -391,7 +391,7 @@
   font-size: 2.1844660194174756vh;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
+  line-height: 2.912621359223301vh; /* 133.333% */
   border: none;
   margin-top: 4.854368932038835vh;
 }
