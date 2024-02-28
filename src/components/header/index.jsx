@@ -10,6 +10,7 @@ import verifed from '../../layouts/images/green_verifed.svg'
 import language_verifed from '../../layouts/icons/language_verifed.svg'
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Placeholder from 'react-placeholder-loading';
 import { ToastContainer, toast } from 'react-toastify'
 
 function HeaderMain({ trashCardData }) {
@@ -28,6 +29,7 @@ function HeaderMain({ trashCardData }) {
   const [isFirstEntered, setIsFirstEntered] = useState(false);
   const [isSuccesEntered, setIsSuccesEntered] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [registrationData, setRegistrationData] = useState({
     name: '',
     password: '',
@@ -60,23 +62,6 @@ function HeaderMain({ trashCardData }) {
   window.addEventListener('focus', () => {
     document.title = docTitle;
   });
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_TWO}/profile-info`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-        token: token
-      }
-    }).then((response) => {
-      const basket_number = response.data.data.basket_count;
-      localStorage.setItem('counterValue', basket_number.toString());
-    }).catch((error) => {
-      localStorage.setItem('counterValue', '0');
-    })
-  }, []);
 
   if (!localStorage.getItem('selectedLanguage')) {
     localStorage.setItem('selectedLanguage', 'ru')
@@ -211,7 +196,10 @@ function HeaderMain({ trashCardData }) {
       }
     }).then((response) => {
       setBascent(response.data.data.basket_count)
+      const basket_number = response.data.data.basket_count;
+      localStorage.setItem('counterValue', basket_number.toString());
       setData(response.data)
+      setIsLoading(false);
     }).catch((error) => {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     })
@@ -289,79 +277,189 @@ function HeaderMain({ trashCardData }) {
 
   return (
     <header style={{backgroundColor: '#ffffff'}}>
-      <center style={{textAlign: 'left'}} className="d-flex align-items-center justify-content-center">
-        <NavLink title="EasyPrint Home" to={'/'}>
-          <img className='header_logo' style={{marginTop: '3.1553398058252426vh', marginBottom: '3.1553398058252426vh'}} src={logo} alt="logo" />
-        </NavLink>
+      {isLoading ? (
+        <div className='container pt-2'>
+          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+            <div>
+              <Placeholder 
+                shape="rect"
+                width={198} 
+                height={40} 
+                animation="wave" 
+                style={{ marginBottom: '20px' }}
+              />
+            </div>
 
-        <ul className="d-flex" style={{ marginLeft: '6.067961165048544vh', marginTop: '2.368932038834951vh', listStyle: 'none', fontFamily: 'Inter' }}>
-          {category.data && category.data.length > 0 && category.data[0].map((data2) => (
-            <li title={data2.name} key={data2.id} className="nav-item ms-3 me-3">
-              <div className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`} onMouseEnter={() => setActiveLinkId(data2.id)} onMouseLeave={() => setActiveLinkId(null)}>
-                {data2.name}
+            <div className='d-flex'>
+              <div style={{marginRight: '32px'}}>
+                <Placeholder 
+                  shape="rect"
+                  width={126} 
+                  height={44} 
+                  animation="wave" 
+                  style={{ marginBottom: '20px' }}
+                />
               </div>
 
-              {Array.isArray(data2.sub_category) && data2.sub_category.length > 0 ? (
-                <div className={`language_list language_list_${data2.id} ${activeLinkId === data2.id ? 'active' : ''}`}>
-                  {data2.sub_category.map((data3) => (
-                    <NavLink title={data3.name} to={`/categories/${data3.id}/${data3.name}`} className='language_item' key={data3.id}>
-                      {data3.name}
-                    </NavLink>
-                  ))}
-                </div>
-              ) : null}
-            </li>
-          ))}
-        </ul>
-
-        <div className="d-flex">
-          <div style={{marginTop: '2.12621359223301vh', marginLeft: '12.135922330097088vh'}} className='header_search'>
-            <center>
-              <input className="header_search_input" type="search" placeholder="Поиск..." aria-label="Поиск..." />
-              <img className='header_search_icon' src={search} alt="search" />
-            </center>
-          </div>
-
-          <div style={{marginTop: '1.1553398058252426vh'}} className="d-flex">
-            <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none', position: 'relative', zIndex: '100'}}>
-              <img className='language_icon' style={{marginTop: '-0.24271844660194175vh'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
-            </button>
-
-            <div onClick={toggleLanguageDropdown} style={{position: 'absolute', display: showLanguageDropdown === true ? 'block' : 'none', background: 'transparent', width: '100%', height: '100vh', top: '0', left: '0'}} className="color_background"></div>
-
-            {showLanguageDropdown && (
-              <div value={selectedLanguage} style={{border: 'none',backgroundColor: 'white',position: 'absolute',top: '8.495145631067961vh', right: '22.33009708737864vh',boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',zIndex: '1000000000'}}>
-                {data.data && data.data.language && data.data.language.map((lang) => (
-                    <div title={lang.name} onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
-                      {lang.name}
-                      {lang.code === localStorage.getItem('selectedLanguage') ? <img style={{width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} src={language_verifed} alt="language_verifed" /> : null}
-                    </div>
-                  ))}
+              <div style={{marginRight: '32px'}}>
+                <Placeholder 
+                  shape="rect"
+                  width={126} 
+                  height={44} 
+                  animation="wave" 
+                  style={{ marginBottom: '20px' }}
+                />
               </div>
-            )}
 
-            <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none'}} className='basket_counter_father'>
-              <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'block'}}>{localStorage.getItem('counterValue')}</div>
-              <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}>
-                <img className='language_icon' src={bag} alt="bag" />
-              </button>
-            </NavLink>
+              <div style={{marginRight: '32px'}}>
+                <Placeholder 
+                  shape="rect"
+                  width={126} 
+                  height={44} 
+                  animation="wave" 
+                  style={{ marginBottom: '20px' }}
+                />
+              </div>
 
-            {localStorage.getItem('token') ? (
-              <NavLink title="Profile" to={'/profile'} style={{marginTop: '1.6990291262135921vh', textDecoration: 'none'}}>
-                <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-1.2135922330097086vh', border: 'none', display: 'flex', marginTop: '0.4854368932038835vh',}}>
-                  <img className='language_icon' src={user} alt="user" />
-                  <p className='user_name_text'>{localStorage.getItem('user_name')}</p>
-                </button>
-              </NavLink>
-            ) : (
-              <button title="Login or Register" style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                <img className='language_icon' src={user} alt="user" />
-              </button>
-            )}
+              <div>
+                <Placeholder 
+                  shape="rect"
+                  width={126} 
+                  height={44} 
+                  animation="wave" 
+                  style={{ marginBottom: '20px' }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <Placeholder 
+                  shape="rect"
+                  width={200} 
+                  height={44} 
+                  animation="wave" 
+                  style={{ marginBottom: '20px' }}
+                />
+            </div>
+
+            <div className='d-flex'>
+              <div style={{marginRight: '24px'}}>
+                <Placeholder 
+                  shape="circle"
+                  width={32} 
+                  height={32} 
+                  animation="wave" 
+                  style={{ marginBottom: '20px' }}
+                />
+              </div>
+
+              <div style={{marginRight: '24px'}}>
+                <Placeholder 
+                  shape="circle"
+                  width={32} 
+                  height={32} 
+                  animation="wave" 
+                  style={{ marginBottom: '20px' }}
+                />
+              </div>
+
+              <div style={{marginRight: '6px'}}>
+                <Placeholder 
+                  shape="circle"
+                  width={32} 
+                  height={32} 
+                  animation="wave" 
+                  style={{ marginBottom: '20px' }}
+                />
+              </div>
+
+              <div style={{marginTop: '2px'}}>
+                <Placeholder 
+                  shape="rect"
+                  width={52} 
+                  height={20} 
+                  animation="wave" 
+                  style={{ marginBottom: '20px' }}
+                />
+              </div>
+            </div>
           </div>
         </div>
-      </center>
+      ) : (
+        <center style={{textAlign: 'left'}} className="d-flex align-items-center justify-content-center">
+          <NavLink title="EasyPrint Home" to={'/'}>
+            <img className='header_logo' style={{marginTop: '3.1553398058252426vh', marginBottom: '3.1553398058252426vh'}} src={logo} alt="logo" />
+          </NavLink>
+
+          <ul className="d-flex" style={{ marginLeft: '6.067961165048544vh', marginTop: '2.368932038834951vh', listStyle: 'none', fontFamily: 'Inter' }}>
+            {category.data && category.data.length > 0 && category.data[0].map((data2) => (
+              <li title={data2.name} key={data2.id} className="nav-item ms-3 me-3">
+                <div className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`} onMouseEnter={() => setActiveLinkId(data2.id)} onMouseLeave={() => setActiveLinkId(null)}>
+                  {data2.name}
+                </div>
+
+                {Array.isArray(data2.sub_category) && data2.sub_category.length > 0 ? (
+                  <div className={`language_list language_list_${data2.id} ${activeLinkId === data2.id ? 'active' : ''}`}>
+                    {data2.sub_category.map((data3) => (
+                      <NavLink title={data3.name} to={`/categories/${data3.id}/${data3.name}`} className='language_item' key={data3.id}>
+                        {data3.name}
+                      </NavLink>
+                    ))}
+                  </div>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+
+          <div className="d-flex">
+            <div style={{marginTop: '2.12621359223301vh', marginLeft: '12.135922330097088vh'}} className='header_search'>
+              <center>
+                <input className="header_search_input" type="search" placeholder="Поиск..." aria-label="Поиск..." />
+                <img className='header_search_icon' src={search} alt="search" />
+              </center>
+            </div>
+
+            <div style={{marginTop: '1.1553398058252426vh'}} className="d-flex">
+              <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none', position: 'relative', zIndex: '100'}}>
+                <img className='language_icon' style={{marginTop: '-0.24271844660194175vh'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
+              </button>
+
+              <div onClick={toggleLanguageDropdown} style={{position: 'absolute', display: showLanguageDropdown === true ? 'block' : 'none', background: 'transparent', width: '100%', height: '100vh', top: '0', left: '0'}} className="color_background"></div>
+
+              {showLanguageDropdown && (
+                <div value={selectedLanguage} style={{border: 'none',backgroundColor: 'white',position: 'absolute',top: '8.495145631067961vh', right: '22.33009708737864vh',boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',zIndex: '1000000000'}}>
+                  {data.data && data.data.language && data.data.language.map((lang) => (
+                      <div title={lang.name} onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
+                        {lang.name}
+                        {lang.code === localStorage.getItem('selectedLanguage') ? <img style={{width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} src={language_verifed} alt="language_verifed" /> : null}
+                      </div>
+                    ))}
+                </div>
+              )}
+
+              <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none'}} className='basket_counter_father'>
+                <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'block'}}>{localStorage.getItem('counterValue')}</div>
+                <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}>
+                  <img className='language_icon' src={bag} alt="bag" />
+                </button>
+              </NavLink>
+
+              {localStorage.getItem('token') ? (
+                <NavLink title="Profile" to={'/profile'} style={{marginTop: '1.6990291262135921vh', textDecoration: 'none'}}>
+                  <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-1.2135922330097086vh', border: 'none', display: 'flex', marginTop: '0.4854368932038835vh',}}>
+                    <img className='language_icon' src={user} alt="user" />
+                    <p className='user_name_text'>{localStorage.getItem('user_name')}</p>
+                  </button>
+                </NavLink>
+              ) : (
+                <button title="Login or Register" style={{backgroundColor: 'transparent', border: 'none'}} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                  <img className='language_icon' src={user} alt="user" />
+                </button>
+              )}
+            </div>
+          </div>
+        </center>
+      )}
 
       <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex={1}>
         <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>

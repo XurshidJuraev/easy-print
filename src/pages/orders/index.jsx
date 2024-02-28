@@ -187,7 +187,8 @@ function MyOrders() {
         setCities(initialRegion.cities);
       })
       .catch((error) => {
-        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+        // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+        console.log(error);
       });
   }, [token]);
 
@@ -327,27 +328,29 @@ function MyOrders() {
     <div>
       <HeaderMain trashCardData={trashCardData} />
 
-      <div className='white_background' style={{backgroundColor: '#ffffff', width: '77%', height: '100px', position: 'relative', marginTop: '-99px', marginLeft: '331px', paddingTop: '29px', paddingLeft: '200px', position: 'relative', zIndex: '100'}}>
-        <div className="d-flex">
-          {
-            localStorage.getItem('selectedLanguage') === 'ru' ? 
-              <img style={{marginRight: '200px'}} src={lock_order_header} alt="lock_order_header" /> :
-              <img style={{marginRight: '200px'}} src={ulanish} alt="lock_order_header" />
-          }
-          <NavLink to={'/footer/exchange'}>
+      <center>
+        <div className='white_background' style={{backgroundColor: '#ffffff', width: '77%', height: '6.613756613756614vw', position: 'relative', marginTop: '-6.5476190476190474vw', marginLeft: '21.891534391534393vw', paddingTop: '1.917989417989418vw', paddingLeft: '13.227513227513228vw', position: 'relative', zIndex: '100'}}>
+          <div className="d-flex">
+            {
+              localStorage.getItem('selectedLanguage') === 'ru' ? 
+                <img style={{marginRight: '13.227513227513228vw'}} src={lock_order_header} alt="lock_order_header" /> :
+                <img style={{marginRight: '13.227513227513228vw'}} src={ulanish} alt="lock_order_header" />
+            }
+            <NavLink to={'/footer/exchange'}>
+              {
+                localStorage.getItem('selectedLanguage') === 'ru' ?
+                  <img style={{marginRight: '3.1746031746031744vw'}} src={double_order_header2} alt="double_order_header2" /> :
+                  <img style={{marginRight: '3.1746031746031744vw'}} src={qaytarib_olish} alt="double_order_header2" />
+              }
+            </NavLink>
             {
               localStorage.getItem('selectedLanguage') === 'ru' ?
-                <img style={{marginRight: '48px'}} src={double_order_header2} alt="double_order_header2" /> :
-                <img style={{marginRight: '48px'}} src={qaytarib_olish} alt="double_order_header2" />
+                <img style={{cursor: 'pointer'}} data-bs-toggle="modal" data-bs-target="#exampleModal2" src={double_order_header} alt="double_order_header" /> :
+                <img style={{cursor: 'pointer'}} data-bs-toggle="modal" data-bs-target="#exampleModal2" src={qollab_quvvatlash} alt="double_order_header" />
             }
-          </NavLink>
-          {
-            localStorage.getItem('selectedLanguage') === 'ru' ?
-              <img style={{cursor: 'pointer'}} data-bs-toggle="modal" data-bs-target="#exampleModal2" src={double_order_header} alt="double_order_header" /> :
-              <img style={{cursor: 'pointer'}} data-bs-toggle="modal" data-bs-target="#exampleModal2" src={qollab_quvvatlash} alt="double_order_header" />
-          }
+          </div>
         </div>
-      </div>
+      </center>
 
       <ToastContainer />
 

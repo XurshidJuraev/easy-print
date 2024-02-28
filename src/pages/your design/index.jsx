@@ -733,31 +733,31 @@ const YourDesign = () => {
 
         <div className='shirt_drawing'>
           <div className="shirt_drawing_header">
-            <div onClick={() => {handleClickCategoryChange(); handleImageClickHeader(1)}} style={{width: '16.74757281553398vh'}} className={`shirt_drawing_header_select`}>
+            <div style={{width: '80%'}} onClick={() => {handleClickCategoryChange(); handleImageClickHeader(1)}} className={`shirt_drawing_header_select`}>
               {categoryChange === 31 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка' : 'Futbolka' : categoryChange === 32 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Свитшот' : 'Svitter' : categoryChange === 33 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Худи' : 'Xudi' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка' : 'Futbolka'} 
               <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" style={{width: '1.941747572815534vh', height: '1.941747572815534vh'}} viewBox="0 0 16 16" fill="none">
                 <path d="M8 12C7.72592 12.0004 7.45444 11.9511 7.20118 11.8547C6.94792 11.7583 6.71786 11.6169 6.52423 11.4385L1.79945 7.09254C1.36915 6.69675 1.36918 6.01767 1.79951 5.62192C2.18181 5.27034 2.76973 5.27034 3.15203 5.62192L8 10.0803L12.848 5.62189C13.2303 5.27033 13.8182 5.27033 14.2004 5.62189C14.6308 6.01764 14.6308 6.69674 14.2004 7.0925L9.47577 11.4375C9.28223 11.6161 9.05221 11.7577 8.79894 11.8543C8.54567 11.9508 8.27415 12.0003 8 12Z" fill="#32454B"/>
               </svg>
             </div>
 
-            <div onClick={() => {handleClickColorChange(); handleImageClickHeader(3)}} style={{width: '12.257281553398059vh'}} className={`shirt_drawing_header_select`}>
+            <div style={{width: '60%'}} onClick={() => {handleClickColorChange(); handleImageClickHeader(3)}} className={`shirt_drawing_header_select`}>
               Цвет
               <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" style={{width: '1.941747572815534vh', height: '1.941747572815534vh'}} viewBox="0 0 16 16" fill="none">
                 <path d="M8 12C7.72592 12.0004 7.45444 11.9511 7.20118 11.8547C6.94792 11.7583 6.71786 11.6169 6.52423 11.4385L1.79945 7.09254C1.36915 6.69675 1.36918 6.01767 1.79951 5.62192C2.18181 5.27034 2.76973 5.27034 3.15203 5.62192L8 10.0803L12.848 5.62189C13.2303 5.27033 13.8182 5.27033 14.2004 5.62189C14.6308 6.01764 14.6308 6.69674 14.2004 7.0925L9.47577 11.4375C9.28223 11.6161 9.05221 11.7577 8.79894 11.8543C8.54567 11.9508 8.27415 12.0003 8 12Z" fill="#32454B"/>
               </svg>
             </div>
 
-            <div style={{width: '19.053398058252426vh'}} onClick={() => {handleClickTrueFalse(); handleImageClickHeader(4)}}  className={`shirt_drawing_header_select`}>
+            <div style={{width: '80%'}} onClick={() => {handleClickTrueFalse(); handleImageClickHeader(4)}}  className={`shirt_drawing_header_select`}>
               {isFrontView ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Сзади' : 'Orqa' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Спереди' : 'Oldi'} 
               <svg style={{marginLeft: '1.2135922330097086vh', width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
                 <path d="M17.329 10C16.9907 9.9956 16.7044 10.2481 16.6676 10.5834C16.3554 14.2632 13.1099 16.9939 9.41861 16.6827C5.72731 16.3715 2.98803 13.1361 3.30025 9.45626C3.61247 5.77644 6.85792 3.04569 10.5492 3.35691C12.1474 3.49166 13.6443 4.19285 14.7684 5.33332H12.6805C12.3112 5.33332 12.0118 5.63179 12.0118 5.99997C12.0118 6.36816 12.3112 6.66663 12.6805 6.66663H15.4511C16.1368 6.66626 16.6926 6.11219 16.693 5.42863V2.66666C16.693 2.29847 16.3936 2 16.0243 2C15.6549 2 15.3555 2.29847 15.3555 2.66666V4.052C12.0548 1.11172 6.98798 1.39559 4.03852 4.68607C1.08905 7.97654 1.37381 13.0275 4.67456 15.9678C7.97531 18.9081 13.0421 18.6242 15.9916 15.3338C17.1381 14.0547 17.8413 12.4417 17.9971 10.7333C18.0314 10.3641 17.7591 10.0371 17.3887 10.0029C17.3689 10.001 17.349 10.0001 17.329 10Z" fill="#122956"/>
               </svg>
             </div>
 
-            <label>
+            <label style={{width: '50%'}} className={`shirt_drawing_header_select`}>
               <input type="file" accept="image/*" onChange={handleCustomPictureChange} style={{ display: 'none', }} />
 
-              <div className={`shirt_drawing_header_select`} style={{width: '11.16504854368932vh', height: '4.247572815533981vh'}}>
+              <div>
                 <svg xmlns="http://www.w3.org/2000/svg" style={{width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} viewBox="0 0 20 20" fill="none">
                   <path d="M14.9475 15.2091H16.6849L15.3924 20L0 15.7921L2.37516 6.9962V13.4432L2.06462 14.6008L14.2174 17.9214L14.9475 15.2091ZM8.66974 5.91466C9.36634 5.91466 9.92866 5.34854 9.92866 4.64723C9.92866 3.94592 9.36634 3.37981 8.66974 3.37981C7.97314 3.37981 7.41083 3.94592 7.41083 4.64723C7.41083 5.34854 7.97314 5.91466 8.66974 5.91466ZM20 2.53485V13.5192H4.05371V2.53485C4.05371 1.14068 5.18674 0 6.57155 0H17.4822C18.867 0 20 1.14068 20 2.53485ZM5.73227 2.53485V11.5505L12.2283 5.01056L14.9979 7.7989L18.3214 4.45289V2.53485C18.3214 2.07013 17.9438 1.6899 17.4822 1.6899H6.57155C6.10995 1.6899 5.73227 2.07013 5.73227 2.53485ZM18.3214 11.8293V6.84411L14.9979 10.1901L12.2283 7.40177L7.83047 11.8293H18.3214Z" fill="#122956"/>
                 </svg>
@@ -768,7 +768,7 @@ const YourDesign = () => {
               </div>
             </label>
 
-            <div onClick={() => {handleClick(); handleImageClickHeader(6)}} style={{width: '11.16504854368932vh'}} className={`shirt_drawing_header_select`}>
+            <div style={{width: '50%'}} onClick={() => {handleClick(); handleImageClickHeader(6)}} className={`shirt_drawing_header_select`}>
               <svg xmlns="http://www.w3.org/2000/svg" style={{width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} viewBox="0 0 20 20" fill="none">
                 <path d="M17.5 0H2.5C1.83696 0 1.20107 0.263392 0.732233 0.732233C0.263392 1.20107 0 1.83696 0 2.5L0 20H20V2.5C20 1.83696 19.7366 1.20107 19.2678 0.732233C18.7989 0.263392 18.163 0 17.5 0ZM18.3333 18.3333H1.66667V2.5C1.66667 2.27899 1.75446 2.06702 1.91074 1.91074C2.06702 1.75446 2.27899 1.66667 2.5 1.66667H17.5C17.721 1.66667 17.933 1.75446 18.0893 1.91074C18.2455 2.06702 18.3333 2.27899 18.3333 2.5V18.3333ZM5 5H15V8.33333H13.3333V6.66667H10.8333V13.3333H12.5V15H7.5V13.3333H9.16667V6.66667H6.66667V8.33333H5V5Z" fill="#122956"/>
               </svg>
@@ -778,14 +778,14 @@ const YourDesign = () => {
               </svg>
             </div>
 
-            <div onClick={() => {handleShowLibrary(); handleImageClickHeader(7)}} style={{width: '23.300970873786408vh'}} className={`shirt_drawing_header_select`}>
+            <div style={{width: '100%'}} onClick={() => {handleShowLibrary(); handleImageClickHeader(7)}} className={`shirt_drawing_header_select`}>
               {localStorage.getItem('selectedLanguage') === 'ru' ? 'Из библиотеки' : 'Namunalar'}
               <svg style={{marginLeft: '1.2135922330097086vh', width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
                 <path d="M14.9475 15.2091H16.6849L15.3924 20L0 15.7921L2.37516 6.9962V13.4432L2.06462 14.6008L14.2174 17.9214L14.9475 15.2091ZM8.66974 5.91466C9.36634 5.91466 9.92866 5.34854 9.92866 4.64723C9.92866 3.94592 9.36634 3.37981 8.66974 3.37981C7.97314 3.37981 7.41083 3.94592 7.41083 4.64723C7.41083 5.34854 7.97314 5.91466 8.66974 5.91466ZM20 2.53485V13.5192H4.05371V2.53485C4.05371 1.14068 5.18674 0 6.57155 0H17.4822C18.867 0 20 1.14068 20 2.53485ZM5.73227 2.53485V11.5505L12.2283 5.01056L14.9979 7.7989L18.3214 4.45289V2.53485C18.3214 2.07013 17.9438 1.6899 17.4822 1.6899H6.57155C6.10995 1.6899 5.73227 2.07013 5.73227 2.53485ZM18.3214 11.8293V6.84411L14.9979 10.1901L12.2283 7.40177L7.83047 11.8293H18.3214Z" fill="#122956"/>
               </svg>
             </div>
 
-            <div onClick={() => {handleImageClickHeader(8)}} style={{width: '15.533980582524272vh'}} className={`shirt_drawing_header_select`}>
+            <div style={{width: '60%'}} onClick={() => {handleImageClickHeader(8)}} className={`shirt_drawing_header_select`}>
               {localStorage.getItem('selectedLanguage') === 'ru' ? 'ИИ' : 'SI'} 
               <svg style={{marginLeft: '1.2135922330097086vh', width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
                 <g clip-path="url(#clip0_2718_2172)">
@@ -815,7 +815,7 @@ const YourDesign = () => {
             {categoryChange === 31 ? (
               <>
                 <div ref={ref} style={{display: isFrontView ? 'block' : 'none'}} id="tshirt-div">
-                  <svg id="tshirt-backgroundpicture" viewBox="0 0 604 562" fill="none" style={{position: 'relative', width: '72.81553398058253vh', height: '67.96116504854369vh'}} xmlns="http://www.w3.org/2000/svg">
+                  <svg id="tshirt-backgroundpicture" viewBox="0 0 604 562" fill="none" style={{position: 'relative', width: '600px', height: '560px'}} xmlns="http://www.w3.org/2000/svg">
                     <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1L378.706 6.1258L463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12V561H109.099V219.12L67.3343 236.595L2 141.206L140.525 36.7709L224.838 6.1258L238.94 1Z" fill={shirtColor}/>
                     <path d="M238.94 1C259.202 18.5428 312.71 43.1028 364.646 1M238.94 1C239.767 24.162 253.496 71.884 301.793 73.3642C322.193 73.7753 361.338 59.8781 364.646 1M238.94 1L224.838 6.1258M364.646 1L378.706 6.1258M463.888 37.1821L602 141.206L536.666 236.184L494.488 219.12M463.888 37.1821L378.706 6.1258M463.888 37.1821C457.41 76.7905 454.46 168.794 494.488 219.12M494.488 219.12V561H109.099V219.12M109.099 219.12L67.3342 236.595L2 141.206L140.525 36.7709M109.099 219.12C149.457 170.439 146.866 77.3387 140.525 36.7709M140.525 36.7709L224.838 6.1258M378.706 6.1258C378.706 31.8279 363.323 86.4391 301.793 86.9324C277.781 87.1974 230.758 73.3806 224.838 6.1258" stroke="#666666" strokeWidth="1.5"/>
                     <g filter="url(#filter0_i_492_1558)">
@@ -889,7 +889,7 @@ const YourDesign = () => {
                 </div>
 
                 <div ref={refBack} style={{display: !isFrontView ? 'block' : 'none'}}>
-                  <svg style={{display: 'block', width: '72.81553398058253vh', height: '67.96116504854369vh'}} viewBox="0 0 604 562" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg style={{display: 'block', width: '600px', height: '560px'}} viewBox="0 0 604 562" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M239.156 1.186c20.395 17.504 73.583 41.698 125.266-.005a.51.51 0 01.491-.084l13.793 5.029 85.182 31.056L602 141.206l-65.334 94.978-42.178-17.064V561H109.099V219.12l-41.765 17.475L2 141.206 140.525 36.771l84.313-30.645L238.664 1.1a.489.489 0 01.492.086z" fill={shirtColor}/>
                     <path d="M463.888 37.182L602 141.206l-65.334 94.978-42.178-17.064m-30.6-181.938L378.706 6.126l-13.793-5.029a.51.51 0 00-.491.084c-51.683 41.703-104.871 17.51-125.266.005a.489.489 0 00-.492-.086l-13.826 5.026-84.313 30.645m323.363.411c-6.478 39.608-9.428 131.612 30.6 181.938m0 0V561H109.099V219.12m0 0l-41.765 17.475L2 141.206 140.525 36.771M109.099 219.12c40.358-48.681 37.767-141.781 31.426-182.35" stroke="#666" strokeWidth={1.5}/>
                     <path d="M24.5 127l64.219 99.4M20.75 131.667L83.563 227.8M579.969 126.067l-64.219 99.4M583.719 130.733l-62.813 96.134M111.688 545.133h382.031M111.688 539.533h382.031" stroke="#CCC" strokeDasharray="4 4"/>
@@ -1017,7 +1017,7 @@ const YourDesign = () => {
                 !isFrontView ? (
                   <>
                     <div ref={refBackWhiteHoodie}>
-                      <img style={{width: '72.81553398058253vh', height: '67.96116504854369vh'}} src={sweatshot_back_white} alt="sweatshot_back_black" />
+                      <img style={{width: '600px', height: '560px'}} src={sweatshot_back_white} alt="sweatshot_back_black" />
                       
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1046,7 +1046,7 @@ const YourDesign = () => {
                 ) : isFrontView ? (
                   <>
                     <div ref={refWhiteHoodie}>
-                      <img style={{width: '72.81553398058253vh', height: '67.96116504854369vh'}} src={sweatshot_front_white} alt="sweatshot_front_black" />
+                      <img style={{width: '600px', height: '560px'}} src={sweatshot_front_white} alt="sweatshot_front_black" />
                       
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1075,7 +1075,7 @@ const YourDesign = () => {
                 ) : (
                   <>
                     <div ref={refWhiteHoodie}>
-                      <img style={{width: '72.81553398058253vh', height: '67.96116504854369vh'}} src={sweatshot_front_white} alt="sweatshot_front_black" />
+                      <img style={{width: '600px', height: '560px'}} src={sweatshot_front_white} alt="sweatshot_front_black" />
                       
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1108,7 +1108,7 @@ const YourDesign = () => {
                 !isFrontView ? (
                   <>
                     <div ref={refBackBlackSweatshot}>
-                      <img style={{width: '60.679611650485434vh', height: '67.96116504854369vh'}} src={hoodie_back_black} alt="hoodie_back_black" />
+                      <img style={{width: '500px', height: '560px'}} src={hoodie_back_black} alt="hoodie_back_black" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1137,7 +1137,7 @@ const YourDesign = () => {
                 ) : isFrontView ? (
                   <>
                     <div ref={refBlackSweatshot}>
-                      <img style={{width: '60.679611650485434vh', height: '67.96116504854369vh'}} src={hoodie_front_black} alt="hoodie_front_black" />
+                      <img style={{width: '500px', height: '560px'}} src={hoodie_front_black} alt="hoodie_front_black" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1166,7 +1166,7 @@ const YourDesign = () => {
                 ) : (
                   <>
                     <div ref={refBlackSweatshot}>
-                      <img style={{width: '60.679611650485434vh', height: '67.96116504854369vh'}} src={hoodie_front_black} alt="hoodie_front_black" />
+                      <img style={{width: '500px', height: '560px'}} src={hoodie_front_black} alt="hoodie_front_black" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1197,7 +1197,7 @@ const YourDesign = () => {
                 !isFrontView ? (
                   <>
                     <div ref={refBackWhiteSweatshot}>
-                      <img style={{width: '60.679611650485434vh', height: '67.96116504854369vh'}} src={hoodie_back_white} alt="hoodie_back_white" />
+                      <img style={{width: '500px', height: '560px'}} src={hoodie_back_white} alt="hoodie_back_white" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1226,7 +1226,7 @@ const YourDesign = () => {
                 ) : isFrontView ? (
                   <>
                     <div ref={refWhiteSweatshot}>
-                      <img style={{width: '60.679611650485434vh', height: '67.96116504854369vh'}} src={hoodie_front_white} alt="hoodie_front_white" />
+                      <img style={{width: '500px', height: '560px'}} src={hoodie_front_white} alt="hoodie_front_white" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1255,7 +1255,7 @@ const YourDesign = () => {
                 ) : (
                   <>
                     <div ref={refWhiteSweatshot}>
-                      <img style={{width: '60.679611650485434vh', height: '67.96116504854369vh'}} src={hoodie_front_white} alt="hoodie_front_white" />
+                      <img style={{width: '500px', height: '560px'}} src={hoodie_front_white} alt="hoodie_front_white" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1478,7 +1478,8 @@ const YourDesign = () => {
       {isCategoryChange && (
         <>
           <div onClick={handleClickCategoryChange} style={{position: 'absolute', background: '#7c7c7c12', width: '100%', height: '100%', top: '0', left: '0'}} className="color_background"></div>
-          <div style={{ position: 'relative', marginTop: '-93.52427184466019vh', left: '19.2%', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', width: '15.776699029126213vh', height: '4.368932038834951vh', transform: 'scale(1.3)' }}>
+
+          <div style={{ position: 'relative', marginTop: '-50.96825396825397vw', left: '19.2%', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
             <div>
               {categoryName.category.map((cat, index) => (
                 <div key={index} onClick={() => {if (cat.type !== 'no active') { setCategory(cat.name); setCategoryChange(cat.id); setCategoryChangeCheck(cat.id); setCategorySize(cat.sizes); setCategoryIndex(index); } }} className={`${cat.type === 'no active' ? 'category_change_disbaled' : `category_change ${categoryIndex === index ? 'selected' : ''}`} `}>              
@@ -1498,7 +1499,8 @@ const YourDesign = () => {
       {isColorChange && (
         <>
           <div onClick={handleClickColorChange} style={{position: 'absolute', background: '#7c7c7c12', width: '100%', height: '100%', top: '0', left: '0'}} className="color_background"></div>
-          <div style={{ position: 'relative', marginTop: '-93.52427184466019vh', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', left: '29.1%', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
+
+          <div style={{ position: 'relative', marginTop: '-50.96825396825397vw', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', left: '30.1%', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
             <div className='d-flex' style={{cursor: 'pointer'}}>
               <div onClick={() => setShirtColor('#FFFFFF')} className='color_change_selector'>
                 <div className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'white', border: '0.5px solid var(--neutral-200, #CCC)'}}>

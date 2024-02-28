@@ -35,6 +35,7 @@ function Basket() {
   const [countHeader, setCountHeader] = useState(0);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorBorder, setErrorBorder] = useState(false);
   const [isLoadingModal, setIsLoadingModal] = useState(true);
 
   useEffect(() => {
@@ -150,6 +151,10 @@ function Basket() {
 
   const navigate = useNavigate();
 
+  setTimeout(() => {
+    setErrorBorder(false);
+  }, 10000);
+
   async function saveOrder() {
     try {
       const selectedItemsData = selectedItems.map(item => ({
@@ -164,7 +169,13 @@ function Basket() {
         order_id: data.data.id
       };
 
-      console.log('apiData:', apiData);
+      if (apiData.data.length === 0) {
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Выберите хотя бы один элемент!' : 'Iltimos bitta bo`lsa ham maxsulot tanlang!');
+        setErrorBorder(true);
+        return;
+      } else {
+        setErrorBorder(false);
+      }
 
       localStorage.setItem('order_id', data.data.id);
       localStorage.setItem('paymentDate', JSON.stringify({ price, coupon_price, discount_price, grant_total }));
@@ -371,32 +382,33 @@ function Basket() {
     });
   };
 
-  useEffect(() => {
-    const basketData = localStorage.getItem('basketData')
-    setSelectedItems(JSON.parse(basketData));
-    setData((prevData) => {
-      if (!prevData.data || !prevData.data.list) {
-        return prevData;
-      }
+  // useEffect(() => {
+  //   const basketData = localStorage.getItem('basketData')
+  //   setSelectedItems(JSON.parse(basketData));
+  //   setData((prevData) => {
+  //     if (!prevData.data || !prevData.data.list) {
+  //       return prevData;
+  //     }
 
-      const allSelected = prevData.data.list.every(item => item.selected);
+  //     const allSelected = prevData.data.list.every(item => item.selected);
 
-      const updatedList = prevData.data.list.map((item) => {
-        return {
-          ...item,
-          selected: !allSelected,
-        };
-      });
+  //     const updatedList = prevData.data.list.map((item) => {
+  //       return {
+  //         ...item,
+  //         selected: !allSelected,
+  //       };
+  //     });
 
-      const selectedItemsData = updatedList.filter(item => item.selected);
-      setSelectedItems(selectedItemsData);
+  //     const selectedItemsData = updatedList.filter(item => item.selected);
+  //     setSelectedItems(selectedItemsData);
 
-      return { ...prevData, data: { ...prevData.data, list: updatedList } };
-    });
-  }, [])
+  //     return { ...prevData, data: { ...prevData.data, list: updatedList } };
+  //   });
+  // }, [])
 
   return (
     <div>
+      <ToastContainer />
       <HeaderMain trashCardData={trashCardData} />
 
       {isLoading ? (
@@ -985,7 +997,7 @@ function Basket() {
 
                   <label style={{ cursor: 'pointer', marginLeft: '30px', marginTop: '-20px' }}>
                     <input
-                      style={{ position: 'relative', top: '20px', left: '-27px' }}
+                      style={{ position: 'relative', top: '20px', left: '-27px', border: errorBorder === true ? '1px solid red' : 'none' }}
                       type="checkbox"
                       checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)}
                       onChange={handleSelectAll}

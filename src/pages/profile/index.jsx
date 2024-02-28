@@ -75,12 +75,12 @@ function Profile() {
     myHeaders.append("Authorization", `Bearer ${token}`);
 
     var formdata = new FormData();
-    formdata.append("first_name", formData.name);
-    formdata.append("last_name", formData.lastName);
-    formdata.append("phone_number", formData.phoneNumber);
-    formdata.append("gender", formData.gender);
-    formdata.append("email", formData.email);
-    formdata.append("birth_date", formData.birthDate);
+    formdata.append("first_name", formData.name ? formData.name : '');
+    formdata.append("last_name", formData.lastName ? formData.lastName : '');
+    formdata.append("phone_number", formData.phoneNumber ? formData.phoneNumber : '');
+    formdata.append("gender", formData.gender ? formData.gender : 1);
+    formdata.append("email", formData.email ? formData.email : '');
+    formdata.append("birth_date", formData.birthDate ? formData.birthDate : '');
 
     if (formData.img instanceof Blob) {
       formdata.append("image", formData.img);
