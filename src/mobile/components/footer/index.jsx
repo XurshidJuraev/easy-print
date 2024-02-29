@@ -16,11 +16,11 @@ function FooterMainMobile() {
             <br />
 
             <ul style={{listStyle: 'none', padding: '0', width: '147px', display: 'flex', flexDirection: 'column'}}>
-              <NavLink to={'/footer/delivery'} className='footer_text_mobile'>Доставка</NavLink>
-              <NavLink to={'/footer/pay'} className='footer_text_mobile'>Оплата</NavLink>
-              <NavLink to={'/footer/exchange'} className='footer_text_mobile'>Обмен и возврат</NavLink>
-              <NavLink to={'/footer/order'} className='footer_text_mobile'>Как оформить заказ?</NavLink>
-              <NavLink to={'/footer/terms'} className='footer_text_mobile'>Пользовательское <br /> соглашение</NavLink>
+              <NavLink to={'/mobile/footer/delivery'} className='footer_text_mobile'>Доставка</NavLink>
+              <NavLink to={'/mobile/footer/pay'} className='footer_text_mobile'>Оплата</NavLink>
+              <NavLink to={'/mobile/footer/exchange'} className='footer_text_mobile'>Обмен и возврат</NavLink>
+              <NavLink to={'/mobile/footer/order'} className='footer_text_mobile'>Как оформить заказ?</NavLink>
+              <NavLink to={'/mobile/footer/terms'} className='footer_text_mobile'>Пользовательское <br /> соглашение</NavLink>
             </ul>
           </li>
 

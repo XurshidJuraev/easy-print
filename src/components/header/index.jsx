@@ -56,7 +56,7 @@ function HeaderMain({ trashCardData }) {
   let docTitle = document.title;
 
   window.addEventListener('blur', () => {
-    document.title = localStorage.getItem('selectedLanguage') === 'ru' ? 'Вернуться снова! 🤗' : 'Yana qaytib keling! 🤗';
+    document.title = localStorage.getItem('selectedLanguage') === 'ru' ? 'Вернуться снова! 🤗' : `Yana ko'rishguncha! 🤗`;
   });
 
   window.addEventListener('focus', () => {

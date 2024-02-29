@@ -11,11 +11,16 @@ import axios from 'axios'
 function ProfileMobileOrder() {
   const [orders, setOrders] = useState([]);
   const [show, setShow] = useState([]);
+  const [collapse, setCollapse] = useState(false);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, []);
+
+  const handleClickCategoryChange = () => {
+    setCollapse((prev) => !prev);
+  };
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_TWO}/order/get-my-orders`, {
@@ -105,8 +110,8 @@ function ProfileMobileOrder() {
                         <div style={{backgroundColor: '#ffffff', boxShadow: 'inset 0px 0px 0px 0.5px #999'}} className="accordion accordion-flush" id="accordionFlushExample">
                           <div className="accordion-item accordion_color">
                             <h2 className="accordion-header accordion_color">
-                              <button onClick={() => handleShowOrder(order.id)} className="accordion-button accordion_color collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#flush-collapseOne${order.id}`} aria-expanded="false" aria-controls={`flush-collapseOne${order.id}`}>
-                                {order.product_quantity} товар
+                              <button onClick={() => {handleShowOrder(order.id); handleClickCategoryChange()}} className="accordion-button accordion_color collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#flush-collapseOne${order.id}`} aria-expanded="false" aria-controls={`flush-collapseOne${order.id}`}>
+                                {collapse ? 'Свернуть' : `${order.product_quantity} товар`}
                               </button>
                             </h2>
                             <div id={`flush-collapseOne${order.id}`} className={`accordion-collapse collapse ${show.id === order.id ? 'show' : ''}`} data-bs-parent="#accordionFlushExample">

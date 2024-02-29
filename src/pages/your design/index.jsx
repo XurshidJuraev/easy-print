@@ -20,7 +20,6 @@ import { Slider } from '@mui/material';
 import Reveal from '../../animation';
 import { SketchPicker } from 'react-color'
 import { fabric } from "fabric";
-import {FabricJSCanvas, useFabricJSEditor} from "fabricjs-react";
 import { useScreenshot } from 'use-react-screenshot'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -36,8 +35,6 @@ const YourDesign = () => {
   const [size, setSize] = useState('xxs');
   const [category, setCategory] = useState('Футболка');
   const [shirtColor, setShirtColor] = useState('#FFFFFF');
-  const [width, setWidth] = useState('604');
-  const [height, setHeight] = useState('562');
   const [isFrontView, setIsFrontView] = useState(true);
   const [isColorChange, setIsColorChange] = useState(false);
   const [showLibrary, setShowLibrary] = useState(false);
@@ -80,31 +77,31 @@ const YourDesign = () => {
   // Screenshots
   let [image, takeScreenshot] = useScreenshot()
   let [imageBack, takeScreenshotBack] = useScreenshot()
-  let [imageWhiteTShirt, takeScreenshotWhiteTShirt] = useScreenshot()
-  let [imageBackWhiteTShirt, takeScreenshotBackWhiteTShirt] = useScreenshot()
-  let [imageBlackHoodie, takeScreenshotBlackHoodie] = useScreenshot()
-  let [imageBackBlackHoodie, takeScreenshotBackBlackHoodie] = useScreenshot()
-  let [imageWhiteHoodie, takeScreenshotWhiteHoodie] = useScreenshot()
-  let [imageBackWhiteHoodie, takeScreenshotBackWhiteHoodie] = useScreenshot()
-  let [imageBlackSweatshot, takeScreenshotBlackSweatshot] = useScreenshot()
-  let [imageBackBlackSweatshot, takeScreenshotBackBlackSweatshot] = useScreenshot()
-  let [imageWhiteSweatshot, takeScreenshotWhiteSweatshot] = useScreenshot()
-  let [imageBackWhiteSweatshot, takeScreenshotBackWhiteSweatshot] = useScreenshot()
+  // let [imageWhiteTShirt, takeScreenshotWhiteTShirt] = useScreenshot()
+  // let [imageBackWhiteTShirt, takeScreenshotBackWhiteTShirt] = useScreenshot()
+  // let [imageBlackHoodie, takeScreenshotBlackHoodie] = useScreenshot()
+  // let [imageBackBlackHoodie, takeScreenshotBackBlackHoodie] = useScreenshot()
+  // let [imageWhiteHoodie, takeScreenshotWhiteHoodie] = useScreenshot()
+  // let [imageBackWhiteHoodie, takeScreenshotBackWhiteHoodie] = useScreenshot()
+  // let [imageBlackSweatshot, takeScreenshotBlackSweatshot] = useScreenshot()
+  // let [imageBackBlackSweatshot, takeScreenshotBackBlackSweatshot] = useScreenshot()
+  // let [imageWhiteSweatshot, takeScreenshotWhiteSweatshot] = useScreenshot()
+  // let [imageBackWhiteSweatshot, takeScreenshotBackWhiteSweatshot] = useScreenshot()
   // T-Shirt
   let getImage = () => takeScreenshot(ref.current)
   let getImageBack = () => takeScreenshotBack(refBack.current)
-  let getImageBlackTShirt = () => takeScreenshotWhiteTShirt(refBlackTShirt.current)
-  let getImageBackBlackTShirt = () => takeScreenshotBackWhiteTShirt(refBackBlackTShirt.current)
-  // Hoodie
-  let getImageBlackHoodie = () => takeScreenshotBlackHoodie(refBlackHoodie.current)
-  let getImageBackBlackHoodie = () => takeScreenshotBackBlackHoodie(refBackBlackHoodie.current)
-  let getImageWhiteHoodie = () => takeScreenshotWhiteHoodie(refWhiteHoodie.current)
-  let getImageBackWhiteHoodie = () => takeScreenshotBackWhiteHoodie(refBackWhiteHoodie.current)
-  // Sweatshot
-  let getImageBlackSweatshot = () => takeScreenshotBlackSweatshot(refBlackSweatshot.current)
-  let getImageBackBlackSweatshot = () => takeScreenshotBackBlackSweatshot(refBackBlackSweatshot.current)
-  let getImageWhiteSweatshot = () => takeScreenshotWhiteSweatshot(refWhiteSweatshot.current)
-  let getImageBackWhiteSweatshot = () => takeScreenshotBackWhiteSweatshot(refBackWhiteSweatshot.current)
+  // let getImageBlackTShirt = () => takeScreenshotWhiteTShirt(refBlackTShirt.current)
+  // let getImageBackBlackTShirt = () => takeScreenshotBackWhiteTShirt(refBackBlackTShirt.current)
+  // // Hoodie
+  // let getImageBlackHoodie = () => takeScreenshotBlackHoodie(refBlackHoodie.current)
+  // let getImageBackBlackHoodie = () => takeScreenshotBackBlackHoodie(refBackBlackHoodie.current)
+  // let getImageWhiteHoodie = () => takeScreenshotWhiteHoodie(refWhiteHoodie.current)
+  // let getImageBackWhiteHoodie = () => takeScreenshotBackWhiteHoodie(refBackWhiteHoodie.current)
+  // // Sweatshot
+  // let getImageBlackSweatshot = () => takeScreenshotBlackSweatshot(refBlackSweatshot.current)
+  // let getImageBackBlackSweatshot = () => takeScreenshotBackBlackSweatshot(refBackBlackSweatshot.current)
+  // let getImageWhiteSweatshot = () => takeScreenshotWhiteSweatshot(refWhiteSweatshot.current)
+  // let getImageBackWhiteSweatshot = () => takeScreenshotBackWhiteSweatshot(refBackWhiteSweatshot.current)
   const [countHeader, setCountHeader] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
@@ -168,21 +165,22 @@ const YourDesign = () => {
     if (selectedImageIndex !== -1) {
       const selectedImage = imageList[selectedImageIndex];
       const imgObj = new Image();
-      
+
       imgObj.src = selectedImage;
-  
+
       imgObj.onload = function () {
         const img = new fabric.Image(imgObj);
-  
+
         img.scaleToHeight(300);
         img.scaleToWidth(300);
         canvas.centerObject(img);
         canvas.add(img);
         canvas.renderAll();
+        setShowLibrary(false);
         setPhotoInputVisible(!photoInputVisible);
       };
       setPrintImage(selectedImage);
-      console.log(selectedImage);
+      setImeyg(selectedImage);
     }
   };
 
@@ -252,25 +250,6 @@ const YourDesign = () => {
       setColor(savedColor);
     }
   }, []);
-
-  // const handleClick = () => {
-  //   setTextInputVisible(!textInputVisible);
-  //   if (!textInputVisible && textInputValue) {
-  //     const existingData = JSON.parse(localStorage.getItem('textData')) || [];
-  //     const newTextData = [...existingData, textInputValue];
-  //     localStorage.setItem('textData', JSON.stringify(newTextData));
-  //     setText2(textInputValue);
-  //   }
-
-  //   const buttons = [];
-  
-  //   for (let i = 0; i < dublicateText; i++) {
-  //     buttons.push(
-        // 
-  //     );
-  //   }
-  // };
-
   const handleClick = () => {
     setTextInputVisible(!textInputVisible);
   
@@ -613,6 +592,7 @@ const YourDesign = () => {
     <div>
       <HeaderMain />
       <ToastContainer />
+
 
       <center>
         <div className='white_background'>
@@ -1306,17 +1286,15 @@ const YourDesign = () => {
 
             <Reveal>
               <div style={{marginTop: '-180px'}}>
-                {imageList.map((item, index) => (
-                  <img
-                    style={{width: '200px', cursor: 'pointer', height: '200px', borderRadius: '12px', marginBottom: '24px'}}
-                    key={index}
-                    src={item}
-                    alt="build_library_img"
-                    className={(index === selectedImageIndex && selectedImageIndex !== -1) ? 'selected-image_modal' : ''}
-                    onClick={() => handleImageClick2(index)}
-                  />
-                ))}
-                <button onClick={handleLibraryPictureChange} className={selectedImageIndex !== -1 ? 'btn_library' : 'btn_library_disabled'}>Выбрать</button>
+                <div style={{height: '500px', overflow: 'scroll'}}>
+                  {imageList.map((item, index) => (
+                    <img style={{width: '200px', cursor: 'pointer', height: '200px', borderRadius: '12px', marginBottom: '24px'}} key={index} src={item} alt="build_library_img" className={(index === selectedImageIndex && selectedImageIndex !== -1) ? 'selected-image_modal' : ''} onClick={() => handleImageClick2(index)} />
+                  ))}
+                </div>
+
+                <div>
+                  <button onClick={handleLibraryPictureChange} className={selectedImageIndex !== -1 ? 'btn_library' : 'btn_library_disabled'}>Выбрать</button>
+                </div>
               </div>
             </Reveal>
           </div>
@@ -1364,17 +1342,7 @@ const YourDesign = () => {
                   <div style={{width: '250px', textAlign: 'left'}}>
                     <p className='layers_text_fat'>Масштаб</p>
 
-                    <Slider
-                      aria-label="Масштаб"
-                      value={scale}
-                      onChange={handleScaleChange}
-                      valueLabelDisplay="auto"
-                      step={10}
-                      marks
-                      min={10}
-                      max={90}
-                      color="primary"
-                    />
+                    <Slider aria-label="Масштаб" value={scale} onChange={handleScaleChange} valueLabelDisplay="auto" step={10} marks min={10} max={90} color="primary" />
                   </div>
 
                   <div style={{ width: '250px', textAlign: 'left', marginTop: '35px' }}>

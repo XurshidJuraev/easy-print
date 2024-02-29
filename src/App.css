@@ -73,11 +73,16 @@
   transition: all 0.2s ease;
 }
 
+html {
+  height: -webkit-fill-available;
+}
+
 body {
   margin: 0;
   padding: 0;
   background-color: #F8F8F8;
   overflow-x: hidden;
+  min-height: -webkit-fill-available;
 }
 
 a:hover {

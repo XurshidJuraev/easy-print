@@ -3,7 +3,7 @@ import './main.css'
 import logo from '../../layouts/icons/logo.svg'
 import search_mobile from '../../layouts/icons/search_mobile.svg'
 import burger_meny from '../../layouts/icons/burger_meny.svg'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 function HeaderMainMobile() {
   const navigate = useNavigate();
@@ -32,7 +32,9 @@ function HeaderMainMobile() {
     <header>
       <div style={{width: '100%', display: 'flex', paddingTop: '16px', justifyContent: 'space-between', alignItems: 'center', padding: '13px 20px'}}>
         <img src={burger_meny} alt="burger_meny" />
-        <img src={logo} alt="logo" />
+        <NavLink to={'/mobile'}>
+          <img src={logo} alt="logo" />
+        </NavLink>
         <img src={search_mobile} alt="search_mobile" />
       </div>
     </header>

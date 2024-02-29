@@ -1065,9 +1065,9 @@ function Basket() {
                                   <div className='d-flex'>
                                     <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цвет' : 'Rang'}:</p>
                                     <div className="d-flex align-items-center" style={{marginTop: '-10px', marginLeft: '39px'}}>
-                                        <div key={item.color.id} className={`color_border me-2 ${item.color}`} style={{ borderColor: '#E6E6E6', cursor: 'pointer' }}>
-                                          <div className="color" style={{ backgroundColor: item.color.code }}></div>
-                                        </div>
+                                      <div key={item.color.id} className={`color_border_basket me-2 ${item.color}`} style={{ borderColor: '#E6E6E6', cursor: 'pointer' }}>
+                                        <div className="color_basket" style={{ backgroundColor: item.color.code }}></div>
+                                      </div>
                                     </div>
                                   </div>
 
