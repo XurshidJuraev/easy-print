@@ -14,10 +14,10 @@ function FooterBarMobile() {
         <p className='footer_bar_text_active'>Главная</p>
       </NavLink>
 
-      <div style={{textDecoration: 'none'}} className='center flex-column'>
+      <NavLink to={'/mobile/yourDesign'} style={{textDecoration: 'none'}} className='center flex-column'>
         <img src={FooterYourDesignIcon} alt="FooterYourDesignIcon" />
         <p className='footer_bar_text'>Дизайн</p>
-      </div>
+      </NavLink>
 
       <NavLink to={'/basket/mobile'} style={{textDecoration: 'none'}} className='center flex-column'>
         <img src={FooterBasketIcon} alt="FooterBasketIcon" />

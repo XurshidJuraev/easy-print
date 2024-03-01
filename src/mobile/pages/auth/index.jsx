@@ -216,12 +216,12 @@ function AuthPageMobile() {
 
           <label style={{width: '90%', display: 'grid', marginTop: '32px'}}>
             <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
-            <input name='password' onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})} className='register_input' type="text" placeholder='Придумайте надёжный пароль' />
+            <input name='password' onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})} className='register_input' type="password" placeholder='Придумайте надёжный пароль' />
           </label>
 
           <label style={{width: '90%', display: 'grid', marginTop: '32px'}}>
             <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Подтвердите пароль</p>
-            <input name='passwordConfirmation' onChange={(e) => setRegistrationData({...registrationData,passwordConfirmation: e.target.value,})} className='register_input' type="text" placeholder='Подтвердите пароль' />
+            <input name='passwordConfirmation' onChange={(e) => setRegistrationData({...registrationData,passwordConfirmation: e.target.value,})} className='register_input' type="password" placeholder='Подтвердите пароль' />
           </label>
 
           {passwordsMatch ? null : (
@@ -255,7 +255,7 @@ function AuthPageMobile() {
 
           <label style={{width: '90%', display: 'grid', marginTop: '32px'}}>
             <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
-            <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите пароль' />
+            <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="password" placeholder='Введите пароль' />
           </label>
 
           <div style={{display: 'flex', justifyContent: 'right', marginRight: '26px', marginTop: '20px'}}>

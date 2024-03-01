@@ -49,6 +49,10 @@ import BasketMobile from './mobile/pages/basket';
 import OrderMobile from './mobile/pages/order';
 // 404 Не Найдено
 import MobileNotFound from './mobile/pages/404';
+// Изменить футболки страниция 
+import YourDesignMobile from './mobile/pages/your design';
+// Показать детальный продукт
+import ProductShowMobile from './mobile/pages/show';
 
 function App() {
   // const navigate = useNavigate();
@@ -88,6 +92,8 @@ function App() {
           <Route path='/basket/mobile' element={<BasketMobile />} />
           <Route path='/mobile/checkout' element={<OrderMobile />} />
           <Route path='/mobile/404' element={<MobileNotFound />} />
+          <Route path='/mobile/yourDesign' element={<YourDesignMobile />} />
+          <Route path='/mobile/show/detail/:id/:name' element={<ProductShowMobile />} />
         </Routes>
       </center>
     </div>

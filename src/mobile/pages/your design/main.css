@@ -1,0 +1,36 @@
+.yourDesign_header_mobile {
+  width: 100%;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 16px;
+  border-radius: 12px;
+}
+
+.yourDesign_bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.yourDesign_bar_bottom {
+  width: 100%;
+  height: 54px;
+  background-color: #244C9D;
+  position: relative;
+  z-index: 200;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 16px;
+}
+
+.yourDesign_layer {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  background-color: #EBF2FF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

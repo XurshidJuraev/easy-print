@@ -996,12 +996,7 @@ function Basket() {
                   <hr />
 
                   <label style={{ cursor: 'pointer', marginLeft: '30px', marginTop: '-20px' }}>
-                    <input
-                      style={{ position: 'relative', top: '20px', left: '-27px', border: errorBorder === true ? '1px solid red' : 'none' }}
-                      type="checkbox"
-                      checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)}
-                      onChange={handleSelectAll}
-                    />
+                    <input style={{ position: 'relative', top: '20px', left: '-27px', border: errorBorder === true ? '1px solid red' : 'none' }} type="checkbox" checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)} onChange={handleSelectAll} />
                     <p className='basket_check'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Выбрать все' : 'Hammasini tanlang'}</p>
                   </label>
 
@@ -1015,12 +1010,7 @@ function Basket() {
                                 <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
                                   <div className='basket_card_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundColor: item.relation_type === 'product' ? '#ffffff' : '#E9E9E9', backgroundSize: item.relation_type === 'product' ? 'contain' : 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                                 </NavLink>
-                                <input
-                                  style={{ position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px' }}
-                                  type="checkbox"
-                                  checked={item.selected}
-                                  onChange={() => handleSelectItem(item.id)}
-                                />
+                                <input style={{ position: 'relative', top: '13px', left: '-77px', marginBottom: '-15px' }} type="checkbox" checked={item.selected} onChange={() => handleSelectItem(item.id)} />
                               </div>
 
                               <div>

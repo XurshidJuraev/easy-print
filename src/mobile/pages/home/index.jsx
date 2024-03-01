@@ -8,7 +8,7 @@ import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
 import axios from 'axios';
 import './main.css';
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 function HomePageMobile() {
   const [data, setData] = useState(0);
@@ -82,7 +82,7 @@ function HomePageMobile() {
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
           {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
-            <div style={{textDecoration: 'none', marginBottom: '32px'}}>
+            <NavLink to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '32px'}}>
               <div className="clothes_fat">
                 <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                   <div>
@@ -97,7 +97,7 @@ function HomePageMobile() {
                   <p className='home_card_title' title={data2.name}>{data2.name}</p>
                 </div>
               </div>
-            </div>
+            </NavLink>
           )): null}
         </div>
       </center>

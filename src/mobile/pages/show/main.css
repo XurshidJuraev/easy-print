@@ -1,0 +1,59 @@
+.thumbnail_mobile {
+  width: 42px;
+  height: 42px;
+  opacity: 0.6;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.thumbnail-active_mobile {
+  opacity: 1;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.show_detail_price_mobile {
+  font-family: 'Inter500';
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  text-align: left;  
+  color: #18356D;
+}
+
+.show_detail_title_mobile {
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.002em;
+  text-align: left;  
+  margin-top: -10px;
+}
+
+.show_detail_size_mobile {
+  font-family: 'Inter500';
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.002em;
+  text-align: left;
+  color: #1A1A1A;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.show_detail_size_mobile_number {
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.002em;
+  text-align: left;  
+  color: #3C7CFB;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
