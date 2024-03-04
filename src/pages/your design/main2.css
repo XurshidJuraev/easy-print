@@ -12,8 +12,20 @@
 .canvas-container {
   /* width: 200px; */
   /* height: 400px; */
+  /* position: relative;
+  user-select: none; */
+
+  /* ________ */
+
+
+  /* width: 200px; */
+  /* height: 400px; */
   position: relative;
+  -webkit-user-select: none;
   user-select: none;
+  z-index: 400;
+  top: -225px;
+  left: 140px;
 }
 
 #tshirt-div {

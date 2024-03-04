@@ -34,3 +34,115 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.category_change_mobile {
+  width: 49%;
+  height: 52px;
+  padding: 16px;
+  background-color: #fff;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center;  
+  margin: 1px;
+}
+
+.category_change_disbaled_mobile {
+  width: 49%;
+  height: 52px;
+  padding: 16px;
+  background-color: #fff;
+  opacity: 0.5;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center; 
+  margin: 1px;
+}
+
+.selected_category_mobile {
+  width: 49%;
+  height: 52px;
+  padding: 16px;
+  background-color: #FEF4EE;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center; 
+  margin: 1px;
+}
+
+.size_change_selector_mobile {
+  width: 81px;
+  height: 44px;
+  padding: 12px, 16px, 12px, 16px;  
+  background-color: white;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.size_change_selector_selected_mobile {
+  width: 81px;
+  height: 44px;
+  padding: 12px, 16px, 12px, 16px;  
+  background-color: #FEF4EE;
+  font-family: 'Inter400';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  text-align: center;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.color_change_selector_mobile {
+  width: 50px;
+  height: 50px;
+  top: 404px;
+  left: 24px;
+  padding: 1px;
+  border-radius: 50%;
+}
+
+.product_state_text {
+  font-family: 'Inter400';
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.005em;
+  text-align: left;  
+  color: #000;
+  margin: 0;
+  margin-left: 24px;
+}
+
+.mobile_add_text_imput {
+  position: relative;
+  top: -349px;
+  width: 93%;
+  height: 80px;
+  margin: 16px;
+  border-radius: 8px;
+  border: 1px solid #EBF2FF;
+  background-color: #fff;
+  font-family: 'Inter400';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0px;
+}

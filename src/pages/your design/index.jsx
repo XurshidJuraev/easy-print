@@ -211,7 +211,7 @@ const YourDesign = () => {
       setCategoryName(response.data.data);
     }).catch((error) => {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-    });    
+    });
   }, []);
 
   document.addEventListener('keydown', function(event) {
@@ -592,7 +592,6 @@ const YourDesign = () => {
     <div>
       <HeaderMain />
       <ToastContainer />
-
 
       <center>
         <div className='white_background'>
@@ -1509,11 +1508,6 @@ const YourDesign = () => {
                       {categorySize.map(siz => (
                         <div title={siz.name} key={siz.id} onClick={() => {setSize(siz.name); setSelectedSize(siz.id)}} className='color_change_selector_modal' style={{width: '80px', borderColor: size === siz.name ? '#3C7CFB' : '#CCC'}}>
                           {siz.name}
-                          {/* { && (
-                            <svg className='ms-1' xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                              <path d="M4.14027 9.82979C3.84222 9.82992 3.55637 9.71145 3.3458 9.50052L0.943839 7.09945C0.685387 6.84092 0.685387 6.42183 0.943839 6.1633C1.20237 5.90485 1.62146 5.90485 1.87999 6.1633L4.14027 8.42358L10.12 2.44384C10.3785 2.18539 10.7976 2.18539 11.0562 2.44384C11.3146 2.70237 11.3146 3.12146 11.0562 3.37999L4.93474 9.50052C4.72417 9.71145 4.43832 9.82992 4.14027 9.82979Z" fill="#32454B" />
-                            </svg>
-                          )} */}
                         </div>
                       ))}
                     </div>
