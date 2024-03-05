@@ -5,6 +5,8 @@
   justify-content: space-around;
   padding: 6px 16px;
   border-radius: 12px;
+  position: relative;
+  z-index: 1000;
 }
 
 .yourDesign_bar {
@@ -133,7 +135,7 @@
 
 .mobile_add_text_imput {
   position: relative;
-  top: -349px;
+  /* top: -149px; */
   width: 93%;
   height: 80px;
   margin: 16px;
@@ -145,4 +147,27 @@
   font-weight: 400;
   line-height: 18px;
   letter-spacing: 0px;
+  outline: none;
+  touch-action: manipulation;
+  -ms-touch-action: manipulation;
+  overscroll-behavior-y: none;
+}
+
+.yourDesign_canvas_mobile {
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 400;
+  top: -225px;
+  left: 0px;
+}
+
+.mobile_add_text_select {
+  width: 291px;
+  height: 36px;
+  padding: 9px, 10px, 9px, 12px;
+  border-radius: 8px;
+  border: 1px solid #EBF2FF;
+  background-color: #FFFFFF;
+  outline: none;
 }

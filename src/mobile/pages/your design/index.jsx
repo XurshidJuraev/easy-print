@@ -31,6 +31,10 @@ function YourDesignMobile() {
   const [textBar, setTextBar] = useState(false);
   const [imageBar, setImageBar] = useState(false);
 
+  const [styleText, setStyleText] = useState(false);
+  const [textText, setTextText] = useState(true);
+  const [sizeText, setSizeText] = useState(false);
+
   const [imageList, setImageList] = useState([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
   const [categoryName, setCategoryName] = useState([]);
@@ -50,9 +54,14 @@ function YourDesignMobile() {
     setLayersState(false);
     setLibraryState(false);
     setProductState(false);
+
     setFirstBar(true);
     setTextBar(false);
     setImageBar(false);
+
+    setStyleText(false);
+    setTextText(true);
+    setSizeText(false);
   }, [])
 
   const handleShowLibrary = () => {
@@ -97,7 +106,7 @@ function YourDesignMobile() {
   useEffect(() => {
     if (textBar) {
       const canvas = new fabric.Canvas('canvasTextMobile');
-  
+      canvas.clear();
       const text = new fabric.Textbox(textValue, {
         left: 50,
         top: 50,
@@ -105,11 +114,10 @@ function YourDesignMobile() {
         fontSize: 20,
         fontFamily: 'Arial'
       });
-  
       canvas.add(text);
     }
   }, [textBar, textValue]);
-  
+
   const handleInputChange = (e) => {
     setTextValue(e.target.value);
   };
@@ -130,11 +138,12 @@ function YourDesignMobile() {
 
       <div style={{position: 'relative', zIndex: 200}}>
         {desigState === true && (
-          <div style={{textAlign: 'left'}}>
+          <div style={{textAlign: 'left', height: '500px'}}>
             <center>
               <img style={{width: '300px', height: '300px', marginTop: '80px'}} src={tShirt} alt="tShirt" />
-              <div>
-                <canvas style={{position: 'absolute', zIndex: 300, top: '-300px', left: '0'}} id="canvasTextMobile" width="500" height="500"></canvas>
+
+              <div className='yourDesign_canvas_mobile'>
+                <canvas style={{position: 'absolute', zIndex: 300, top: '-300px', left: '0'}} id="canvasTextMobile" width="190" height="220"></canvas>
               </div>
             </center>
           </div>
@@ -271,19 +280,36 @@ function YourDesignMobile() {
 
         {textBar === true && (
           <>
-            <input className='mobile_add_text_imput' type="text" name="" id="" value={textValue} onChange={handleInputChange} />
+            {styleText === true && (
+              <div className="d-flex">
+                <select className='mobile_add_text_select'>
+                  <option value="Inter">Inter</option>
+                  <option value="Inter">Inter</option>
+                  <option value="Inter">Inter</option>
+                  <option value="Inter">Inter</option>
+                </select>
+              </div>
+            )}
+
+            {textText === true && (
+              <input className='mobile_add_text_imput' type="text" name="" id="" value={textValue} onChange={handleInputChange} />
+            )}
+
+            {sizeText === true && (
+              <input className='mobile_add_text_imput' type="text" name="" id="" value={textValue} onChange={handleInputChange} />
+            )}
 
             <div className="yourDesign_bar">
               <div className="yourDesign_bar_bottom">
-                <div>
+                <div onClick={() => {setTextText(false); setStyleText(true); setSizeText(false)}}>
                   <img src={style_text} alt="style_text" />
                 </div>
 
-                <div>
+                <div onClick={() => {setTextText(true); setStyleText(false); setSizeText(false)}}>
                   <img src={text_text} alt="text_text" />
                 </div>
 
-                <div>
+                <div onClick={() => {setTextText(false); setStyleText(false); setSizeText(true)}}>
                   <img src={size_text} alt="size_text" />
                 </div>
               </div>
