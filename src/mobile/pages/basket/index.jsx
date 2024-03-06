@@ -322,17 +322,6 @@ function BasketMobile() {
                   </div>
                 );
               })}
-
-          <div>
-            <div style={{display: 'flex', justifyContent: 'flex-start'}}>
-              <NavLink to={'/mobile'} style={{width: '100%', marginTop: '0', marginBottom: '32px', textDecoration: 'none'}} className='basket_promo_btn_price'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M2 10.9961C2.00487 11.5226 2.21684 12.0259 2.59 12.3971L6.88 16.7002C7.06736 16.8866 7.32082 16.9912 7.585 16.9912C7.84919 16.9912 8.10264 16.8866 8.29 16.7002C8.38373 16.6072 8.45812 16.4965 8.50889 16.3746C8.55966 16.2526 8.5858 16.1218 8.5858 15.9897C8.5858 15.8576 8.55966 15.7268 8.50889 15.6048C8.45812 15.4829 8.38373 15.3722 8.29 15.2792L5 11.9968L21 11.9968C21.2652 11.9968 21.5196 11.8914 21.7071 11.7037C21.8946 11.516 22 11.2615 22 10.9961C22 10.7307 21.8946 10.4762 21.7071 10.2885C21.5196 10.1008 21.2652 9.99538 21 9.99538L5 9.99538L8.29 6.70301C8.4783 6.51589 8.58462 6.26159 8.58556 5.99603C8.58649 5.73048 8.48198 5.47543 8.295 5.28699C8.10802 5.09855 7.8539 4.99216 7.58854 4.99122C7.32317 4.99028 7.06831 5.09487 6.88 5.28198L2.59 9.58508C2.21441 9.9587 2.00223 10.4661 2 10.9961Z" fill="white"/>
-                </svg>
-                {localStorage.getItem('selectedLanguage') === 'ru' ? 'Продолжить покупки' : 'Xarid qilishda davom etish'}
-              </NavLink>
-            </div>
-          </div>
             </>
           )}
         </div>
@@ -342,28 +331,7 @@ function BasketMobile() {
             <></>
           ) : (
             <>
-              <div className="basket_wrapper" style={{marginTop: '36px', padding: '16px'}}>
-                <div className="d-flex justify-content-between">
-                  <div style={{width: '100%'}}>
-                    <h3 className='basket_promo_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокод' : 'Promokod'}</h3>
-                    <p className='basket_promo_text' style={{width: '100%'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод чтобы активировать скидку' : 'Chegirmani faollashtirish uchun reklama kodini kiriting'}</p>
-                    <input className='basket_promo' style={{width: '100%'}} type="text" placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод' : 'Kupon kodini kiriting'} value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
-                    <p style={{ color: promoMessageColor }} className='basket_promo_text'>{promoMessage}</p>
-                    <p className='basket_promo_text' style={{marginTop: '32px', width: '100%'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? '*Вы можете использовать только один промокод в одном заказе' : '*Har bir buyurtma uchun faqat bitta promokoddan foydalanishingiz mumkin'}</p>
-                    <center style={{marginTop: '27px', width: '100%'}}>
-                      <button style={{width: '100%'}} onClick={applyPromoCode} className='basket_promo_btn'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Применить' : `Qo'llash`}</button>
-                    </center>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-
-          {!data.data || data.data.list.length === 0 ? (
-            <></>
-          ) : (
-            <>
-              <div style={{width: '100%', marginTop: '24px', marginBottom: '100px', backgroundColor: '#fff', padding: '16px'}}>
+              <div style={{width: '100%', marginTop: '24px', backgroundColor: '#fff', padding: '16px'}}>
                 <div className="basket_total" style={{width: '100%', padding: '16px 12px', paddingBottom: '0px', height: 'auto'}}>
                   <div>
                     <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})</p>
@@ -390,6 +358,40 @@ function BasketMobile() {
               </div>
             </>
           )}
+
+          {!data.data || data.data.list.length === 0 ? (
+            <></>
+          ) : (
+            <>
+              <div className="basket_wrapper" style={{marginTop: '20px', padding: '16px'}}>
+                <div className="d-flex justify-content-between">
+                  <div style={{width: '100%'}}>
+                    <h3 className='basket_promo_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокод' : 'Promokod'}</h3>
+                    <p className='basket_promo_text' style={{width: '100%'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод чтобы активировать скидку' : 'Chegirmani faollashtirish uchun reklama kodini kiriting'}</p>
+                    <input className='basket_promo' style={{width: '100%'}} type="text" placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод' : 'Kupon kodini kiriting'} value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
+                    <p style={{ color: promoMessageColor }} className='basket_promo_text'>{promoMessage}</p>
+                    <p className='basket_promo_text' style={{marginTop: '32px', width: '100%'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? '*Вы можете использовать только один промокод в одном заказе' : '*Har bir buyurtma uchun faqat bitta promokoddan foydalanishingiz mumkin'}</p>
+                    <center style={{marginTop: '27px', width: '100%'}}>
+                      <button style={{width: '100%'}} onClick={applyPromoCode} className='basket_promo_btn'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Применить' : `Qo'llash`}</button>
+                    </center>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          <center>
+            <div className='center'>
+              <div style={{display: 'flex', justifyContent: 'flex-start'}}>
+                <NavLink to={'/mobile'} style={{width: '100%', marginTop: '32px', marginBottom: '32px', textDecoration: 'none'}} className='basket_promo_btn_price'>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M2 10.9961C2.00487 11.5226 2.21684 12.0259 2.59 12.3971L6.88 16.7002C7.06736 16.8866 7.32082 16.9912 7.585 16.9912C7.84919 16.9912 8.10264 16.8866 8.29 16.7002C8.38373 16.6072 8.45812 16.4965 8.50889 16.3746C8.55966 16.2526 8.5858 16.1218 8.5858 15.9897C8.5858 15.8576 8.55966 15.7268 8.50889 15.6048C8.45812 15.4829 8.38373 15.3722 8.29 15.2792L5 11.9968L21 11.9968C21.2652 11.9968 21.5196 11.8914 21.7071 11.7037C21.8946 11.516 22 11.2615 22 10.9961C22 10.7307 21.8946 10.4762 21.7071 10.2885C21.5196 10.1008 21.2652 9.99538 21 9.99538L5 9.99538L8.29 6.70301C8.4783 6.51589 8.58462 6.26159 8.58556 5.99603C8.58649 5.73048 8.48198 5.47543 8.295 5.28699C8.10802 5.09855 7.8539 4.99216 7.58854 4.99122C7.32317 4.99028 7.06831 5.09487 6.88 5.28198L2.59 9.58508C2.21441 9.9587 2.00223 10.4661 2 10.9961Z" fill="white"/>
+                  </svg>
+                  {localStorage.getItem('selectedLanguage') === 'ru' ? 'Продолжить покупки' : 'Xarid qilishda davom etish'}
+                </NavLink>
+              </div>
+            </div>
+          </center>
         </div>
       </center>
 

@@ -57,3 +57,11 @@
   margin-top: 8px;
   margin-bottom: 8px;
 }
+
+.carousel-indicators [data-bs-target] {
+  background-color: #D9D9D9;
+}
+
+.carousel-indicators .active {
+  background-color: #3C7CFB;
+}

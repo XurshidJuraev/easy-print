@@ -3,10 +3,14 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import no_image from '../../layouts/images/user.svg'
 import './main.css';
+import axios from 'axios';
 
 function ProfileHeader() {
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+  const [userName, setUserName] = useState('');
+  const [userLastName, setUserLastName] = useState('');
 
   const toggleActive = (itemIndex) => {
     setIsActive(itemIndex);
@@ -46,11 +50,36 @@ function ProfileHeader() {
     }, 1000);
   };
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_TWO}/personal-information`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          language: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+        },
+      })
+      .then((response) => {
+        const responseData = response.data.data;
+        localStorage.setItem('user_image', responseData.image);
+        localStorage.setItem('user_phone_number', responseData.phone_number);
+        localStorage.setItem('user_last_name', responseData.last_name);
+        setUserName(responseData.first_name);
+        setUserLastName(responseData.last_name);
+      })
+      .catch((error) => {
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+      });
+  }, [token]);
+
   return (
     <div>
       <div style={{textDecoration: 'none'}} className="d-flex">
         <div style={{backgroundImage: `url(${user_image === null ? no_image : user_image})`, borderRadius: '50%', backgroundSize: 'cover'}} className='user_image'></div>
-        <h3 className='user_name_mobile' title={user_name ? `${user_name} ${user_last_name === null || user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}>{user_name ? `${user_name} ${user_last_name === null || user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}</h3>
+
+        {/* <h3 className='user_name_mobile' title={user_name ? `${user_name} ${user_last_name === null || user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}>{user_name ? `${user_name} ${user_last_name === null || user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}</h3> */}
+        <h3 className='user_name_mobile'>{userName ? `${userName} ${userLastName === null || userLastName === 'null' ? '' : userLastName}` : 'Без имени фамилия'}</h3>
       </div>
 
       <div style={{marginLeft: '16px'}}>

@@ -13,6 +13,8 @@ import axios from 'axios'
 function ProfileMobile() {
   const token = localStorage.getItem('token');
   const [isActive, setIsActive] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userLastName, setUserLastName] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     phoneNumber: '',
@@ -86,7 +88,7 @@ function ProfileMobile() {
       })
       .then((response) => {
         const responseData = response.data.data;
-  
+
         setFormData({
           name: responseData.first_name,
           lastName: responseData.last_name,
@@ -100,6 +102,8 @@ function ProfileMobile() {
         localStorage.setItem('user_image', responseData.image);
         localStorage.setItem('user_phone_number', responseData.phone_number);
         localStorage.setItem('user_last_name', responseData.last_name);
+        setUserName(responseData.first_name);
+        setUserLastName(responseData.last_name);
       })
       .catch((error) => {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -194,7 +198,7 @@ function ProfileMobile() {
                 </div>
               </label>
 
-              <h3 className='user_name_mobile' title={user_name ? `${user_name} ${user_last_name === null || user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}>{user_name ? `${user_name} ${user_last_name === null || user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}</h3>
+              <h3 className='user_name_mobile'>{userName ? `${userName} ${userLastName === null || userLastName === 'null' ? '' : userLastName}` : 'Без имени фамилия'}</h3>
             </div>
 
             <div style={{marginLeft: '16px'}}>

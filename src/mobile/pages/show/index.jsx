@@ -27,6 +27,7 @@ function ProductShowMobile() {
   const [defaultSize, setDefaultSize] = useState();
   const [defaultColor, setDefaultColor] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [touchStartX, setTouchStartX] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('selectedCategory', params.id);
@@ -178,6 +179,31 @@ function ProductShowMobile() {
   useEffect(() => {
     addToBasket(selectedProduct);
   }, [selectedProduct]);
+
+  const handleIndicatorClick = (index) => {
+    setCurrentImageIndex(index);
+  };
+
+  const handleTouchStart = (event) => {
+    setTouchStartX(event.touches[0].clientX);
+  };
+
+  const handleTouchMove = (event) => {
+    if (touchStartX === null) return;
+
+    const touchEndX = event.touches[0].clientX;
+    const difference = touchStartX - touchEndX;
+
+    if (Math.abs(difference) > 50) {
+      if (difference > 0 && currentImageIndex < dataBeck.images.length - 1) {
+        setCurrentImageIndex((prevIndex) => prevIndex + 1);
+      } else if (difference < 0 && currentImageIndex > 0) {
+        setCurrentImageIndex((prevIndex) => prevIndex - 1);
+      }
+
+      setTouchStartX(null);
+    }
+  };
 
   return (
     <div style={{backgroundColor: 'white'}}>
@@ -446,18 +472,29 @@ function ProductShowMobile() {
             <center style={{width: '100%'}}>
               <div className='img_animation' style={{backgroundColor: '#F6F6F6', height: '100%', width: '100%'}}>
                 {dataBeck.images && dataBeck.images.length > 0 && (
-                  <div className='img_animation_img' style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '200px', height: '214px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
-                )}
-
-                <div className='center' style={{marginTop: '20px'}}>
-                  {dataBeck.images && dataBeck.images.length > 0 && (
-                    <div className="d-flex">
-                      {dataBeck.images.map((image, index) => (
-                        <div key={index} style={{backgroundImage: `url(${image})`, marginLeft: '10px', marginRight: '10px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}} className={index === currentImageIndex ? 'thumbnail-active_mobile' : 'thumbnail_mobile'} onClick={() => {setCurrentImageIndex(index); animateImage();}}></div>
+                  <div id="carouselExampleIndicators" className="carousel slide">
+                    <div className="carousel-indicators">
+                      {dataBeck.images && dataBeck.images.map((image, index) => (
+                        <button key={index} type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={index} className={index === currentImageIndex ? "active" : ""} aria-current={index === currentImageIndex ? "true" : "false"} aria-label={`Slide ${index + 1}`} onClick={() => handleIndicatorClick(index)}></button>
                       ))}
                     </div>
-                  )}
-                </div>
+                    <div className="carousel-inner">
+                      {dataBeck.images && dataBeck.images.map((image, index) => (
+                        // <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`}>
+                        //   <div className='img_animation_img' style={{backgroundImage: `url(${image})`, width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                        // </div>
+                        <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`}>
+                          <div 
+                            className='img_animation_img' 
+                            style={{backgroundImage: `url(${image})`, width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                          ></div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </center>
 
@@ -522,7 +559,7 @@ function ProductShowMobile() {
 
           <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
             {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
-              <NavLink to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '32px'}}>
+              <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '32px'}}>
                 <div className="clothes_fat">
                   <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                     <div>

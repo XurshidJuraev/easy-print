@@ -140,7 +140,7 @@ function YourDesignMobile() {
         {desigState === true && (
           <div style={{textAlign: 'left', height: '500px'}}>
             <center>
-              <img style={{width: '300px', height: '300px', marginTop: '80px'}} src={tShirt} alt="tShirt" />
+              <img style={{width: '90%', marginTop: '80px'}} src={tShirt} alt="tShirt" />
 
               <div className='yourDesign_canvas_mobile'>
                 <canvas style={{position: 'absolute', zIndex: 300, top: '-300px', left: '0'}} id="canvasTextMobile" width="190" height="220"></canvas>

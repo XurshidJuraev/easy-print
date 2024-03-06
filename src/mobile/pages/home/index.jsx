@@ -82,7 +82,7 @@ function HomePageMobile() {
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
           {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
-            <NavLink to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '32px'}}>
+            <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '32px'}}>
               <div className="clothes_fat">
                 <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                   <div>
