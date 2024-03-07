@@ -46,6 +46,7 @@ function ProfileHeader() {
       localStorage.removeItem('user_phone_number');
       localStorage.removeItem('user_last_name');
       localStorage.setItem('counterValue', '0');
+      localStorage.removeItem('user_name');
       navigate('/');
     }, 1000);
   };
@@ -76,7 +77,7 @@ function ProfileHeader() {
   return (
     <div>
       <div style={{textDecoration: 'none'}} className="d-flex">
-        <div style={{backgroundImage: `url(${user_image === null ? no_image : user_image})`, borderRadius: '50%', backgroundSize: 'cover'}} className='user_image'></div>
+        <div style={{backgroundImage: `url(${user_image === null || !user_image || user_image === 'null' ? no_image : user_image})`, borderRadius: '50%', backgroundSize: 'cover'}} className='user_image'></div>
 
         {/* <h3 className='user_name_mobile' title={user_name ? `${user_name} ${user_last_name === null || user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}>{user_name ? `${user_name} ${user_last_name === null || user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}</h3> */}
         <h3 className='user_name_mobile'>{userName ? `${userName} ${userLastName === null || userLastName === 'null' ? '' : userLastName}` : 'Без имени фамилия'}</h3>

@@ -488,6 +488,8 @@ function ProductShowMobile() {
                             <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`}>
                               <div 
                                 className='img_animation_img' 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#exampleModal"
                                 style={{backgroundImage: `url(${image})`, width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
                                 onTouchStart={handleTouchStart}
                                 onTouchMove={handleTouchMove}
@@ -611,6 +613,43 @@ function ProductShowMobile() {
 
                 <h3 className='advantage_theme_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Сервис' : 'Xizmat'}</h3>
                 <p className='advantage_text_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? `Лёгкий процесс оплаты, обмена и возврата` : `Oson to'lov, almashtirish va qaytarish jarayoni`}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px'}}>
+              <div className="modal-content" style={{borderRadius: '0px'}}>
+                <div style={{padding: '0px'}} className="modal-body">
+                  <div className="d-flex justify-content-end">
+                    <button style={{position: 'absolute', zIndex: '1', top: '12px', right: '12px'}} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className='img_animation' style={{backgroundColor: '#F6F6F6', height: '100%', width: '100%'}}>
+                    {dataBeck.images && dataBeck.images.length > 0 && (
+                      <div id="carouselExampleIndicators" className="carousel slide">
+                        <div className="carousel-indicators">
+                          {dataBeck.images && dataBeck.images.map((image, index) => (
+                            <button key={index} type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={index} className={index === currentImageIndex ? "active" : ""} aria-current={index === currentImageIndex ? "true" : "false"} aria-label={`Slide ${index + 1}`} onClick={() => handleIndicatorClick(index)}></button>
+                          ))}
+                        </div>
+                        <div className="carousel-inner">
+                          {dataBeck.images && dataBeck.images.map((image, index) => (
+                            <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`}>
+                              <div 
+                                className='img_animation_img' 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#exampleModal"
+                                style={{backgroundImage: `url(${image})`, width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
+                                onTouchStart={handleTouchStart}
+                                onTouchMove={handleTouchMove}
+                              ></div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
