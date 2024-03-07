@@ -19,6 +19,11 @@
 }
 
 @font-face {
+  font-family: 'Inter300';
+  src: local('Inter300'), url(./layouts/fonts/Inter/static/Inter-Light.ttf) format('woff');
+}
+
+@font-face {
   font-family: 'Inter400';
   src: local('Inter400'), url(./layouts/fonts/Inter/static/Inter-Regular.ttf) format('woff');
 }

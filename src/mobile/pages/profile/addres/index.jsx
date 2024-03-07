@@ -256,8 +256,6 @@ function ProfileMobileAddres() {
                           </button>
                         </div>
                       </div>
-
-                      <button style={{width: '100%', marginTop: '220px', marginBottom: '24px'}} className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
                     </>
                   );
                 }) : (
@@ -267,6 +265,8 @@ function ProfileMobileAddres() {
                     <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
                   </center>
                 )}
+
+                <button style={{width: '100%', marginTop: '220px', marginBottom: '24px'}} className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
               </div>
             </div>
           </div>

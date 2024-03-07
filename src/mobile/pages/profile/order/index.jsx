@@ -60,23 +60,25 @@ function ProfileMobileOrder() {
     <div>
       <HeaderMainMobile />
       <center>
-        <div className='profile_page'>
-          <ProfileHeader />
+        <div className='profile_page' style={{padding: '0'}}>
+          <div style={{padding: '16px'}}>
+            <ProfileHeader />
+          </div>
 
           <center>
             <div style={{textAlign: 'left'}}>
-              <h3 className='profile_page_title'>Мои заказы</h3>
+              <h3 className='profile_page_title' style={{paddingLeft: '16px'}}>Мои заказы</h3>
 
               {orders.status === true ? (
-                <center style={{textAlign: 'left'}}>
+                <center style={{textAlign: 'left', padding: '2px'}}>
                   <div>
                     {orders.data ? orders.data.map((order, index) => (
                       <div key={index} style={{width: '99%', position: 'relative', left: '2px', boxShadow: 'inset 0px 0px 0px 0.5px #999'}} className="order_profile_fat">
-                        <h3 className='order_profile_title'>Номер заказа {order.code ? order.code : '12345678'}</h3>
+                        <h3 style={{padding: '12px'}} className='order_profile_title'>ID заказа {order.code ? order.code : '12345678'}</h3>
 
-                        <hr style={{ margin: '0' }} />
+                        <hr style={{ margin: '0', marginRight: '12px', marginLeft: '12px' }} />
 
-                        <div style={{ padding: '24px 32px', display: 'flex', alignItems: 'center' }}>
+                        <div style={{ padding: '12px', display: 'flex', alignItems: 'center' }}>
                           <div style={{width: '100%'}}>
                             <div style={{width: '100%'}} className="d-flex justify-content-between">
                               <p className='order_profile_opacity_text'>Статус:</p>
@@ -105,12 +107,13 @@ function ProfileMobileOrder() {
                           </div>
                         </div>
 
-                        <hr style={{ margin: '0', marginTop: '-20px' }} />
+                        <hr style={{ margin: '0', marginTop: '-20px', marginRight: '12px', marginLeft: '12px', position: 'relative', zIndex: '200' }} />
+                        <div style={{width: '99.5%', position: 'relative', zIndex: '100', height: '2px', backgroundColor: 'rgb(255, 255, 255)', top: '1px', left: '1px'}}></div>
 
                         <div style={{backgroundColor: '#ffffff', boxShadow: 'inset 0px 0px 0px 0.5px #999'}} className="accordion accordion-flush" id="accordionFlushExample">
                           <div className="accordion-item accordion_color">
-                            <h2 className="accordion-header accordion_color">
-                              <button onClick={() => {handleShowOrder(order.id); handleClickCategoryChange()}} className="accordion-button accordion_color collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#flush-collapseOne${order.id}`} aria-expanded="false" aria-controls={`flush-collapseOne${order.id}`}>
+                            <h2 style={{border: 'none'}} className="accordion-header accordion_color">
+                              <button style={{border: 'none', fontSize: '16px', padding: '12px'}} onClick={() => {handleShowOrder(order.id); handleClickCategoryChange()}} className="accordion-button accordion_color collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#flush-collapseOne${order.id}`} aria-expanded="false" aria-controls={`flush-collapseOne${order.id}`}>
                                 {collapse ? 'Свернуть' : `${order.product_quantity} товар`}
                               </button>
                             </h2>
@@ -118,7 +121,7 @@ function ProfileMobileOrder() {
                               <div className="accordion-body">
                                 {show && show.map((item, idx) => (
                                   <div key={idx} style={{marginBottom: '12px'}}>
-                                    <div className='d-flex justify-content-between'>
+                                    <div className='d-flex'>
                                       <div>
                                         <div style={{width: '130px', height: '180px', backgroundColor: '#F6F6F6', backgroundImage: `url(${item.warehouse && item.warehouse.images && item.warehouse.images[0] ? item.warehouse.images[0] : item.image_front})`, borderRadius: '8px', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                                       </div>
@@ -128,9 +131,9 @@ function ProfileMobileOrder() {
                                         <div className="d-flex">
                                           <div className='d-flex'>
                                             <div>
-                                              <p className='order_name_tite'>Количество: <span className='order_name_name ms-2' style={{fontFamily: 'Inter500', color: '#1A1A1A'}}>{item.quantity}</span></p>
-                                              <p className='order_name_tite'>Размер: <span className='order_name_name ms-2' style={{color: '#1A1A1A'}}>{item.warehouse && item.warehouse.size && item.warehouse.size.name ? item.warehouse.size.name : item.size.name}</span></p>
-                                              <p className='order_name_tite d-flex'>Цвет: <div style={{ backgroundColor: item.warehouse && item.warehouse.color && item.warehouse.color.code ? item.warehouse.color.code : item.color.code }} className='order_name_color ms-2'></div></p>
+                                              <p className='order_name_tite'>Количество: <span className='order_name_name ms-1' style={{fontFamily: 'Inter500', color: '#1A1A1A', fontSize: '13px'}}>{item.quantity}</span></p>
+                                              <p className='order_name_tite'>Размер: <span className='order_name_name ms-1' style={{color: '#1A1A1A', fontSize: '13px'}}>{item.warehouse && item.warehouse.size && item.warehouse.size.name ? item.warehouse.size.name : item.size.name}</span></p>
+                                              <p className='order_name_tite d-flex'>Цвет: <div style={{ backgroundColor: item.warehouse && item.warehouse.color && item.warehouse.color.code ? item.warehouse.color.code : item.color.code, width: '16px', height: '16px' }} className='order_name_color ms-1'></div></p>
                                             </div>
                                           </div>
                                         </div>

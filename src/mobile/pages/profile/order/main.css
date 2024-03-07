@@ -11,4 +11,24 @@
 
 .accordion_color {
   background-color: #ffffff00 !important;
+  border: 1px solid #ffffff00;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: transparent !important;
+  color: inherit;
+}
+
+button.accordion-button:focus{
+  box-shadow: inherit;
+}
+
+button.accordion-button:focus{
+  box-shadow: none;
+  outline: none; 
+}
+
+.accordion-button::after {
+  width: 24px;
+  height: 24px;
 }

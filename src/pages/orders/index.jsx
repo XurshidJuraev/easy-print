@@ -368,41 +368,9 @@ function MyOrders() {
                     <h3 className='order_subtitle' style={{marginTop: '48px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Покупатель' : 'Buyurtma qabul qiluvchi:'}</h3>
 
                     <input className='order_info' style={{border: nullName === true ? '1px solid red' : 'none'}} value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') + ' ' + `${localStorage.getItem('user_last_name') ? localStorage.getItem('user_last_name') : ''}` : 'Имя и Фамилия*'}/>
-                    <input className='order_info mt-4' style={{border: nullPhoneNumber === true ? '1px solid red' : 'none'}} value={localStorage.getItem('user_phone_number') === null ? `${localStorage.getItem('user_phone_number')}` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Действующий номер телефона*' : `Joriy telefon raqami*`} />
-                    
-                    {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
-                      <>
-                        <h3 className='order_subtitle' style={{marginTop: '48px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес доставки' : 'Yetkazib berish manzili:'}</h3>
+                    <input className='order_info mt-2' style={{border: nullPhoneNumber === true ? '1px solid red' : 'none'}} value={localStorage.getItem('user_phone_number')} />
 
-                        {address && address.length > 0 ? (
-                          <>
-                            <select onChange={(e) => {setAddressId(e.target.value); setNullAddres(false)}} className='order_info mt-2'>
-                              {address.map((addr, index) => (
-                                <option key={index} value={addr.id}>
-                                  {`${addr.region.name} ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
-                                </option>
-                              ))}
-                            </select>
-
-                            <center style={{marginTop: '28px'}}>
-                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить другой адрес' : 'Boshqa manzil kiritsh'}</button>
-                            </center>
-                          </>
-                        ) : (
-                          <>
-                            <div data-bs-toggle="modal" data-bs-target="#exampleModal"  style={{border: nullAddres === true ? '1px solid red' : 'none'}} className='order_info'>
-                              {localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес*' : 'Yetkazib berish*'}
-                            </div>
-
-                            <center style={{marginTop: '28px'}}>
-                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить адрес' : 'Manzil qo\'shish'}</button>
-                            </center>
-                          </>
-                        )}
-                      </>
-                    )}
-
-                    <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ получения' : 'Qabul qilish usuli:'}</h3>
+                    <h3 className='order_subtitle' style={{ marginTop: '32px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ получения' : 'Qabul qilish usuli:'}</h3>
 
                     <label className='order_info'>
                       <input
@@ -447,7 +415,7 @@ function MyOrders() {
 
                     {deliveryMethod === 'pickup' && (
                       <div>
-                        <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Выберите пункт выдачи' : 'Topshirish punkti tanlang'}</h3>
+                        <h3 className='order_subtitle' style={{ marginTop: '32px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Выберите пункт выдачи' : 'Topshirish punkti tanlang'}</h3>
                         {pickapAdrse && pickapAdrse.map((item, index) => (
                           <label className='order_info' key={index} style={{ backgroundColor: 'transparent' }}>
                             <input
@@ -466,15 +434,43 @@ function MyOrders() {
                       </div>
                     )}
 
-                    {/* {deliveryMethod === 'pickup' && (
-                      <p className='order_text' style={{ display: 'none' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цена доставки будет зависеть от расстояния до вашего адреса' : `Yetkazib berish narxi sizning manzilingizgacha bo'lgan masofaga bog'liq bo'ladi`}</p>
-                    )} */}
-
                     {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
                       <p className='order_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цена доставки будет зависеть от расстояния до вашего адреса' : `Yetkazib berish narxi sizning manzilingizgacha bo'lgan masofaga bog'liq bo'ladi`}</p>
                     )}
 
-                    <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ оплаты' : 'To\'lov turi'}</h3>
+                    {(deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery') && (
+                      <>
+                        <h3 className='order_subtitle' style={{marginTop: '32px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес доставки' : 'Yetkazib berish manzili:'}</h3>
+
+                        {address && address.length > 0 ? (
+                          <>
+                            <select onChange={(e) => {setAddressId(e.target.value); setNullAddres(false)}} className='order_info mt-2'>
+                              {address.map((addr, index) => (
+                                <option key={index} value={addr.id}>
+                                  {`${addr.region.name} ${addr.city && addr.city.name ? `${addr.city.name}, ` : ''}${addr.name}, ${addr.postcode}`}
+                                </option>
+                              ))}
+                            </select>
+
+                            <center style={{marginTop: '28px'}}>
+                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить другой адрес' : 'Boshqa manzil kiritsh'}</button>
+                            </center>
+                          </>
+                        ) : (
+                          <>
+                            <div data-bs-toggle="modal" data-bs-target="#exampleModal"  style={{border: nullAddres === true ? '1px solid red' : 'none'}} className='order_info'>
+                              {localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес*' : 'Yetkazib berish*'}
+                            </div>
+
+                            <center style={{marginTop: '28px'}}>
+                              <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border: 'none'}} className={'addres_btn'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить адрес' : 'Manzil qo\'shish'}</button>
+                            </center>
+                          </>
+                        )}
+                      </>
+                    )}
+
+                    <h3 className='order_subtitle' style={{ marginTop: '32px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ оплаты' : 'To\'lov turi'}</h3>
 
                     <label className='order_info'>
                       <input
@@ -549,6 +545,12 @@ function MyOrders() {
                         <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидки' : 'Chegirmalar'}</p>
                         <p className='basket_total_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итого' : 'Jami'}</p>
                       </div>
+                      {/* <div className='d-flex flex-column' style={{position: 'absolute', right: '132px'}}>
+                        <hr style={{width: '232px', position: 'relative', left: localStorage.getItem('selectedLanguage') === 'ru' ? '-5px' : '3px', top: '-3px'}} />
+                        <hr style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '353px' : '298px', position: 'relative', left: localStorage.getItem('selectedLanguage') === 'ru' ? '-47px' : '-6px', top: '15px'}} />
+                        <hr style={{width: '370px', position: 'relative', left: '-67px', top: '34px'}} />
+                        <hr style={{width: '293px', position: 'relative', left: '-62px', top: '52px'}} />
+                      </div> */}
                       <div style={{textAlign: 'right'}}>
                         <p className='basket_total_price' style={{marginBottom: '28px'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
                         <p className='basket_total_price' style={{marginBottom: '28px'}}>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'Яндекс Go' : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}`}</p>

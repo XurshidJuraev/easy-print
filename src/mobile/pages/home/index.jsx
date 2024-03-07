@@ -86,7 +86,7 @@ function HomePageMobile() {
               <div className="clothes_fat">
                 <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
                   <div>
-                    <div style={{width: '162px', height: '190px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                    <div style={{width: '162px', height: '190px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                   </div>
                 </div>
               </div>

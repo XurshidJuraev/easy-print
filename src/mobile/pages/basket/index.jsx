@@ -6,6 +6,7 @@ import pencil from '../../layouts/icons/edit_product_basket.svg'
 import trash from '../../layouts/icons/delete_product_basket.svg'
 import no_basket from '../../layouts/images/no_trash.svg'
 import axios from 'axios';
+import './main.css';
 import { toast } from 'react-toastify';
 import { NavLink, useNavigate } from 'react-router-dom'
 
@@ -197,13 +198,13 @@ function BasketMobile() {
         }
       )
       .then((response) => {
-        toast.success('Товар в корзине удален.');
+        alert('Товар в корзине удален.');
         setTimeout(() => {
           window.location.reload();
         }, 1000);
       })
       .catch((error) => {
-        toast.error('Товар в корзине не был удален.');
+        alert('Товар в корзине не был удален.');
       });
   };  
 
@@ -298,13 +299,13 @@ function BasketMobile() {
                           <div className="d-flex">
                             <div className='d-flex' style={{marginTop: '-44px'}}>
                               <div>
-                                <p style={{marginBottom: '0'}} className='basket_name_tite'>Количество: <span className='order_name_name ms-2' style={{fontFamily: 'Inter500', color: '#1A1A1A'}}>{item.quantity}</span></p>
-                                <p style={{marginBottom: '0'}} className='basket_name_tite'>Размер: <span className='order_name_name ms-2' style={{color: '#1A1A1A'}}>{item.warehouse && item.warehouse.size && item.warehouse.size.name ? item.warehouse.size.name : item.size.name}</span></p>
-                                <p style={{marginBottom: '0'}} className='basket_name_tite d-flex'>Цвет: <div style={{ backgroundColor: item.warehouse && item.warehouse.color && item.warehouse.color.code ? item.warehouse.color.code : item.color.code }} className='order_name_color ms-2'></div></p>
+                                <p style={{marginBottom: '10px', marginTop: '10px'}} className='basket_name_tite'>Количество: <span className='order_name_name ms-1' style={{fontFamily: 'Inter500', color: '#1A1A1A', fontSize: '13px'}}>{item.quantity}</span></p>
+                                <p style={{marginBottom: '10px'}} className='basket_name_tite'>Размер: <span className='order_name_name ms-1' style={{color: '#1A1A1A', fontSize: '13px'}}>{item.warehouse && item.warehouse.size && item.warehouse.size.name ? item.warehouse.size.name : item.size.name}</span></p>
+                                <p style={{marginBottom: '0'}} className='basket_name_tite d-flex'>Цвет: <div style={{ backgroundColor: item.warehouse && item.warehouse.color && item.warehouse.color.code ? item.warehouse.color.code : item.color.code, width: '16px', height: '16px' }} className='order_name_color ms-1'></div></p>
                               </div>
                             </div>
                           </div>
-                          <p style={{color: '#18356D', fontFamily: 'Inter400', marginBottom: '0', position: 'relative', top: '-23px'}} className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m' : 'so`m'}</p>
+                          <p style={{color: '#18356D', fontFamily: 'Inter400', marginBottom: '0', position: 'relative', top: '-11px'}} className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m' : 'so`m'}</p>
                         </div>
                       </div>
                     </div>
@@ -348,7 +349,7 @@ function BasketMobile() {
                 </div>
 
                 <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                  <button style={{width: '100%'}} className='basket_promo_btn_price' onClick={() => {saveOrder();}}>
+                  <button style={{width: '100%', padding: '16px 21px'}} className='basket_promo_btn_price' onClick={() => {saveOrder();}}>
                     {localStorage.getItem('selectedLanguage') === 'ru' ? 'Перейти к оформлению ' : 'Rasmiylashtirishga o`tish'}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <path d="M22 13.0039C21.9951 12.4774 21.7832 11.9741 21.41 11.6029L17.12 7.29979C16.9326 7.11341 16.6792 7.00879 16.415 7.00879C16.1508 7.00879 15.8974 7.11341 15.71 7.29979C15.6163 7.39282 15.5419 7.5035 15.4911 7.62545C15.4403 7.7474 15.4142 7.8782 15.4142 8.0103C15.4142 8.14241 15.4403 8.27321 15.4911 8.39516C15.5419 8.5171 15.6163 8.62778 15.71 8.72081L19 12.0032H3C2.73478 12.0032 2.48043 12.1086 2.29289 12.2963C2.10536 12.484 2 12.7385 2 13.0039C2 13.2693 2.10536 13.5238 2.29289 13.7115C2.48043 13.8992 2.73478 14.0046 3 14.0046H19L15.71 17.297C15.5217 17.4841 15.4154 17.7384 15.4144 18.004C15.4135 18.2695 15.518 18.5246 15.705 18.713C15.892 18.9015 16.1461 19.0078 16.4115 19.0088C16.6768 19.0097 16.9317 18.9051 17.12 18.718L21.41 14.4149C21.7856 14.0413 21.9978 13.5339 22 13.0039Z" fill="white"/>
