@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import './main.css';
 import { toast } from 'react-toastify';
-import Swiper from 'react-id-swiper';
 
 function HeroMainMobile() {
   const [data, setData] = useState([]);

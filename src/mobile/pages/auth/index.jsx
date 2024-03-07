@@ -4,6 +4,7 @@ import authImage from '../../layouts/images/43.svg'
 import verifed from '../../layouts/images/green_verifed.svg'
 import {NavLink, useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify'
+import CodeVerificationInput from '../../components/code verifed'
 
 function AuthPageMobile() {
   const token = localStorage.getItem('token');
@@ -61,7 +62,8 @@ function AuthPageMobile() {
   const handleOpenCodeVerification = (evt) => {
     evt.preventDefault();
   
-    const { code_verify } = evt.target.elements;
+    const { code_verify } = localStorage.getItem('phone_code_verify')
+    console.log(localStorage.getItem('phone_code_verify'));
 
     fetch(`${process.env.REACT_APP_TWO}/phone-verify`, {
       method: 'POST',
@@ -71,11 +73,11 @@ function AuthPageMobile() {
       },
       body: JSON.stringify({
         phone_number: phoneNumber,
-        verify_code: code_verify.value.trim(),
+        verify_code: localStorage.getItem('phone_code_verify'),
       }),
     })
       .then(response => response.json())
-      .then(result => {localStorage.setItem('token', result.data.token); setPassword(true); setPhone_confirm(false)})
+      .then(result => {localStorage.setItem('token', result.data.token); setPassword(true); setPhone_confirm(false); localStorage.removeItem('phone_code_verify');})
       .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setPassword(false); setPhone_confirm(true)});
   };
 
@@ -108,8 +110,9 @@ function AuthPageMobile() {
     fetch(`${process.env.REACT_APP_TWO}/register`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        localStorage.setItem('user_name', result.data.user.first_name);
-        setPassword(false); window.location.href = '/mobile';
+        // localStorage.setItem('user_name', result.data.user.first_name);
+        console.log(result);
+        setPassword(false); navigate('/mobile');
       })
       .catch(error => {
         toast.error('Регистрация не была оформлена.');
@@ -138,13 +141,13 @@ function AuthPageMobile() {
       .then(response => response.json())
       .then(result => {
         localStorage.setItem('token', result.data.token);
-        setLogin(false); window.location.href = '/mobile';
+        setLogin(false); navigate('/mobile');
       })
       .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setSuccess_login(false); setLogin(true);});
   };  
 
   return (
-    <>
+    <div style={{backgroundColor: '#FFFFFF', height: '100vh'}}>
       <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
         <center style={{display: first ? 'block' : 'none', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='first'>
           <NavLink to={'/mobile'}>
@@ -197,10 +200,10 @@ function AuthPageMobile() {
           <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleOpenCodeVerification(evt) }}>
             <h2 style={{width: '343px', marginBottom: '48px'}} className='auth_title'>Введите код подтверждения</h2>
             <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
-            <label style={{width: '343px', display: 'grid', marginTop: '64px'}}>
+            <div style={{width: '343px', display: 'grid', marginTop: '64px'}}>
               <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Код подтверждения</p>
-              <input name='phone' id='code_verify' className='register_input' type="text" placeholder=' _ _ _ _ _ _ ' />
-            </label>
+              <CodeVerificationInput length={6} name='phone' id='code_verify' />
+            </div>
 
             <button className='auth_button_reg' style={{marginTop: '240px', marginBottom: '74px'}}>Подтвердить</button>
           </form>
@@ -249,7 +252,7 @@ function AuthPageMobile() {
                 <p style={{marginLeft: '20px'}}>Я согласен с <span style={{color: '#3C7CFB'}}>условиями пользования</span></p>
               </div>
 
-              <button className='auth_button_reg' style={{marginTop: '26px', marginBottom: '120px'}}>Подтвердить</button>
+              <button className='auth_button_reg' style={{marginTop: '26px', marginBottom: '120px'}}>Зарегистрироваться</button>
             </form>
           </div>
         </center>
@@ -284,7 +287,7 @@ function AuthPageMobile() {
               <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
             )}
 
-            <button className='auth_button_reg' style={{marginTop: '85px', marginBottom: '90px'}}>Подтвердить</button>
+            <button className='auth_button_reg' style={{marginTop: '85px', marginBottom: '90px'}}>Войти</button>
           </form>
         </center>
       </div>
@@ -318,7 +321,7 @@ function AuthPageMobile() {
           <button onClick={() => {navigate('/mobile'); setSuccess_login(false)}} className='auth_button_reg'>Назад на главную</button>
         </div>
       </center> */}
-    </>
+    </div>
   )
 }
 
