@@ -410,7 +410,7 @@ function OrderMobile() {
 
                   <h3 className='order_subtitle' style={{marginTop: '48px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Покупатель' : 'Buyurtma qabul qiluvchi:'}</h3>
 
-                  <input className='order_info' style={{border: nullName === true ? '1px solid red' : 'none', width: '100%'}} value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') + ' ' + `${localStorage.getItem('user_last_name') ? localStorage.getItem('user_last_name') : ''}` : 'Имя и Фамилия*'}/>
+                  <input className='order_info' style={{border: nullName === true ? '1px solid red' : 'none', width: '100%'}} value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') + ' ' + `${localStorage.getItem('user_last_name') === null || localStorage.getItem('user_last_name') === 'null' ? '' : localStorage.getItem('user_last_name')}` : 'Имя и Фамилия*'}/>
                   <input className='order_info mt-2' style={{border: nullPhoneNumber === true ? '1px solid red' : 'none', width: '100%'}} value={localStorage.getItem('user_phone_number')} />
                   
                   <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ оплаты' : 'To\'lov turi'}</h3>

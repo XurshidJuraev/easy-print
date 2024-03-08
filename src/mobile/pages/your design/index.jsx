@@ -252,11 +252,13 @@ function YourDesignMobile() {
 
         {firstBar === true && (
           <div className="yourDesign_bar">
-            <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', position: 'relative', bottom: '-30px', zIndex: '100'}}>
-              <img src={addImage} alt="addImage" />
+            {desigState === true && (
+              <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', position: 'relative', bottom: '-30px', zIndex: '100'}}>
+                <img src={addImage} alt="addImage" />
 
-              <img onClick={() => {setTextBar(true); setFirstBar(false); setImageBar(false)}} src={addText} alt="addText" />
-            </div>
+                <img onClick={() => {setTextBar(true); setFirstBar(false); setImageBar(false)}} src={addText} alt="addText" />
+              </div>
+            )}
 
             <div className="yourDesign_bar_bottom">
               <div onClick={() => {setDesigState(true); setLayersState(false); setLibraryState(false); setProductState(false);}}>

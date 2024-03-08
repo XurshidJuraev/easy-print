@@ -53,6 +53,11 @@ import MobileNotFound from './mobile/pages/404';
 import YourDesignMobile from './mobile/pages/your design';
 // Показать детальный продукт
 import ProductShowMobile from './mobile/pages/show';
+// Футeр страниция 
+import Delivermobile from './mobile/pages/footer page/information/delivery';
+import PayMobile from './mobile/pages/footer page/information/pay';
+import ExchangeMobile from './mobile/pages/footer page/information/exchange';
+import TermsMobile from './mobile/pages/footer page/information/terms';
 
 function App() {
   // const navigate = useNavigate();
@@ -94,6 +99,10 @@ function App() {
           <Route path='/mobile/404' element={<MobileNotFound />} />
           <Route path='/mobile/yourDesign' element={<YourDesignMobile />} />
           <Route path='/mobile/show/detail/:id/:name' element={<ProductShowMobile />} />
+          <Route path='/mobile/footer/delivery' element={<Delivermobile />} />
+          <Route path='/mobile/footer/pay' element={<PayMobile />} />
+          <Route path='/mobile/footer/exchange' element={<ExchangeMobile />} />
+          <Route path='/mobile/footer/terms' element={<TermsMobile />} />
         </Routes>
       </center>
     </div>

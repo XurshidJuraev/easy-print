@@ -9,17 +9,37 @@ import FooterProfileIconActive from '../../layouts/icons/footer_bar_profile_acti
 import FooterYourDesignIcon from '../../layouts/icons/footer_bar_your_design.svg'
 import FooterYourDesignIconActive from '../../layouts/icons/footer_bar_design_active.svg'
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 function FooterBarMobile() {
   const [active, setActive] = useState('');
   const [activeId, setActiveId] = useState();
   const [activeName, setActiveName] = useState();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const path = window.location.hash;
     setActive(path);
     setActiveId(localStorage.getItem('idActive'));
     setActiveName(localStorage.getItem('nameActive'));
+  }, []);
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/profile-info`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+        token: token
+      }
+    }).then((response) => {
+      const basket_number = response.data.data.basket_count;
+      localStorage.setItem('counterValue', basket_number.toString());
+      console.log(response.data.data.basket_count);
+    }).catch((error) => {
+      console.log(error);
+    })
   }, []);
 
   return (
@@ -34,8 +54,16 @@ function FooterBarMobile() {
         {active === '#/mobile/yourDesign' ? <p className='footer_bar_text_active'>Дизайн</p> : <p className='footer_bar_text'>Дизайн</p>}
       </NavLink>
 
-      <NavLink to={'/basket/mobile'} style={{textDecoration: 'none'}} className='center flex-column'>
-        {active === '#/basket/mobile' || active === '#/mobile/checkout' ?<img src={FooterBasketIconActive} alt="FooterBasketIcon" /> : <img src={FooterBasketIcon} alt="FooterBasketIcon" />}
+      <NavLink to={'/basket/mobile'} style={{textDecoration: 'none'}} onClick={() => localStorage.setItem('trueVerifed', true)} className='center flex-column'>
+        {active === '#/basket/mobile' || active === '#/mobile/checkout' ? 
+        <div>
+          <p className='footer_bar_text_count' style={{position: 'absolute', right: '130px', display: localStorage.getItem('counterValue') === '0' ? 'none' : 'flex'}}>{localStorage.getItem('counterValue') ? localStorage.getItem('counterValue') : 0}</p>
+          <img src={FooterBasketIconActive} alt="FooterBasketIcon" />
+        </div> :  
+        <div>
+          <p className='footer_bar_text_count' style={{position: 'absolute', right: '130px', display: localStorage.getItem('counterValue') === '0' ? 'none' : 'flex'}}>{localStorage.getItem('counterValue') ? localStorage.getItem('counterValue') : 0}</p>
+          <img src={FooterBasketIcon} alt="FooterBasketIcon" />
+        </div>}
         {active === '#/basket/mobile' || active === '#/mobile/checkout' ? <p className='footer_bar_text_active'>Корзина</p> : <p className='footer_bar_text'>Корзина</p>}
       </NavLink>
 

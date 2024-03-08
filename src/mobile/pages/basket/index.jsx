@@ -38,6 +38,30 @@ function BasketMobile() {
     window.scrollTo(0, 0)
   }, []);
 
+  useEffect(() => {
+    const basketData = localStorage.getItem('basketData')
+    setSelectedItems(JSON.parse(basketData));
+    setData((prevData) => {
+      if (!prevData.data || !prevData.data.list) {
+        return prevData;
+      }
+
+      const allSelected = prevData.data.list.every(item => item.selected);
+
+      const updatedList = prevData.data.list.map((item) => {
+        return {
+          ...item,
+          selected: !allSelected,
+        };
+      });
+
+      const selectedItemsData = updatedList.filter(item => item.selected);
+      setSelectedItems(selectedItemsData);
+
+      return { ...prevData, data: { ...prevData.data, list: updatedList } };
+    });
+  }, [])
+
   function calculateTotalPrice(data) {
     if (!data || !data.length || data.length === 0) {
       return 0;
@@ -130,6 +154,7 @@ function BasketMobile() {
       });
 
       if (response.data.status === true) {
+        localStorage.setItem('trueVerifed', true);
         navigate('/checkout');
         // window.location.href = '/#/checkout';
       } else {
@@ -246,30 +271,6 @@ function BasketMobile() {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
   }
-
-  useEffect(() => {
-    const basketData = localStorage.getItem('basketData')
-    setSelectedItems(JSON.parse(basketData));
-    setData((prevData) => {
-      if (!prevData.data || !prevData.data.list) {
-        return prevData;
-      }
-
-      const allSelected = prevData.data.list.every(item => item.selected);
-
-      const updatedList = prevData.data.list.map((item) => {
-        return {
-          ...item,
-          selected: !allSelected,
-        };
-      });
-
-      const selectedItemsData = updatedList.filter(item => item.selected);
-      setSelectedItems(selectedItemsData);
-
-      return { ...prevData, data: { ...prevData.data, list: updatedList } };
-    });
-  }, [])
 
   return (
     <div>
