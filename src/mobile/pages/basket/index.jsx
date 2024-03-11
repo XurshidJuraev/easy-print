@@ -279,6 +279,14 @@ function BasketMobile() {
       <center style={{padding: '16px'}}>
         <div style={{textAlign: 'left', width: '100%', padding: '12px', marginTop: '12px', backgroundColor: '#FFFFFF'}}>
           <h3 className='basket_name_mobile_title'>Корзина</h3>
+          {!data.data || data.data.list.length === 0 ? (
+            null
+          ) : (
+            <label style={{position: 'absolute', right: '40px', top: '120px'}}>
+              <p style={{position: 'relative', right: '23px', top: '0px'}} className='basket_name_mobile_select_all'>Выбрать все</p>
+              <input style={{position: 'absolute', right: '0px', top: '0px'}} type="checkbox" name="" id="" />
+            </label>
+          )}
 
           {!data.data || data.data.list.length === 0 ? (
             <center>
@@ -289,6 +297,7 @@ function BasketMobile() {
               {data.data && data.data.list.map((item) => {
                 return (
                   <div>
+                    <input style={{position: 'absolute', right: '40px'}} type="checkbox" name="" id="" />
                     <div key={item.id} style={{marginBottom: '12px'}}>
                       <div className='d-flex'>
                         <div>

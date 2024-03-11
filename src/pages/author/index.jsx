@@ -10,6 +10,7 @@ import FooterMain from '../../components/footer';
 import AdvantageMain from '../../components/advantage';
 import ToastComponent from '../../components/toast';
 import Placeholder from 'react-placeholder-loading';
+import AdsSlider2 from '../../components/ads slider 2';
 
 function AuthorPage() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -235,7 +236,9 @@ function AuthorPage() {
     <div>
       <HeaderMain trashCardData={trashCardData} />
 
-      <div style={{width: '100%', height: '260px', backgroundImage: `url(${Author_background_default})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover'}}></div>
+      {/* <div style={{width: '100%', height: '260px', backgroundImage: `url(${Author_background_default})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover'}}></div> */}
+
+      <AdsSlider2 />
 
       <div className="container">
         <div className="d-flex center">

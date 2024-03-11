@@ -96,7 +96,7 @@ function AuthorPageMobile() {
           <h3 className='author_item_mobile' style={{fontFamily: 'Inter600', fontWeight: '600', marginTop: '16px'}}>{author.full_name}</h3>
           <p className='author_country'>{author.country === 'Uzbekistan' ? '🇺🇿' : ''} {author.country}</p>
 
-          <h3 className='author_item_mobile' style={{marginTop: '4px', marginBottom: '16px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Информация' : 'Ma`lumot'}</h3>
+          <h3 className='author_item_mobile' style={{marginTop: '24px', marginBottom: '26px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Информация' : 'Ma`lumot'}</h3>
 
           <p className='author_list'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Всего принтов' : 'Jami nashrlar'}</p>
           <p className='author_item'>{Number(author.total_prints).toLocaleString('ru-RU')}</p>
@@ -107,7 +107,7 @@ function AuthorPageMobile() {
           <p className='author_list'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Дата регистрации' : `Ro'yxatga olingan sana`}</p>
           <p className='author_item'>{author.registration_date}</p>
 
-          <button className='author_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пожаловаться' : 'Shikoyat'}</button>
+          <button style={{marginTop: '36px', marginBottom: '16px'}} className='author_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пожаловаться' : 'Shikoyat'}</button>
         </div>
       </div>
 
