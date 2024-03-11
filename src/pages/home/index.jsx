@@ -378,7 +378,7 @@ function HomePage() {
                     <div key={currentProduct.id}>
                       <div style={{textDecoration: 'none'}} className="cards your_print">
                         <NavLink to={'/yourDesign'} onClick={() => handleCardShow(`${currentProduct.images[0]}`, `${currentProduct.name}`, `${currentProduct.price}`, `${currentProduct.id}`)} className="clothes_fat">
-                          <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
+                          <div className="image-container" style={{position: 'relative', borderRadius: '8px', zIndex: '200'}}>
                             <div>
                               <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: currentProduct.discount ? 'block' : 'none'}}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
@@ -389,10 +389,10 @@ function HomePage() {
                                 </div>
                               </div>
                               {/* <img style={{ borderRadius: '20px', width: '276px', height: '320px' }} src={`${currentProduct.images[0]}`} alt={currentProduct.name} /> */}
-                              <div style={{width: '276px', height: '320px', backgroundImage: `url(${your_design})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${your_design})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
                             
-                            <div className="image-overlay">
+                            <div className="image-overlay" style={{borderRadius: '8px'}}>
                               <div className="detail_back">
                                 <p className="overlay-text">Свой дизайн</p>
                               </div>
@@ -425,10 +425,10 @@ function HomePage() {
                     <div key={data2.id}>
                       <div style={{textDecoration: 'none'}} className="cards">
                         <NavLink to={`/show/detail/${data2.id}/${data2.name}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
-                          <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
+                          <div className="image-container" style={{position: 'relative', borderRadius: '8px', zIndex: '200'}}>
                             <div>
-                              <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
+                              <div style={{position: 'absolute', borderRadius: '8px', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
+                                <svg style={{borderTopRightRadius: '8px'}} xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
                                   <circle cx="75" cy="-31" r="74.5" fill="#FEF4EE" stroke="#F9D5BB"/>
                                 </svg>
                                 <div>
@@ -436,10 +436,10 @@ function HomePage() {
                                 </div>
                               </div>
                               {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
-                              <div style={{width: '276px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
 
-                            <div className="image-overlay">
+                            <div className="image-overlay" style={{borderRadius: '8px'}}>
                               <div className="detail_back">
                                 <p className="overlay-text">Посмотреть детали</p>
                               </div>
@@ -491,10 +491,10 @@ function HomePage() {
                     <div key={data2.id} style={{marginTop: '48px'}}>
                       <div style={{textDecoration: 'none'}} className="cards">
                         <NavLink to={`/show/detail/${data2.id}/${data2.name}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
-                          <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
+                          <div className="image-container" style={{position: 'relative', borderRadius: '8px', zIndex: '200'}}>
                             <div>
-                              <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
+                              <div style={{position: 'absolute', top: '0', borderRadius: '8px', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
+                                <svg style={{borderTopRightRadius: '8px'}} xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
                                   <circle cx="75" cy="-31" r="74.5" fill="#FEF4EE" stroke="#F9D5BB"/>
                                 </svg>
                                 <div>
@@ -502,9 +502,9 @@ function HomePage() {
                                 </div>
                               </div>
                               {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
-                              <div style={{width: '276px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
-                            <div className="image-overlay">
+                            <div className="image-overlay" style={{borderRadius: '8px'}}>
                               <div className="detail_back">
                                 <p className="overlay-text">Посмотреть детали</p>
                               </div>

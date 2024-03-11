@@ -78,6 +78,18 @@
   margin-bottom: 0.970873786407767vh;
 }
 
+.show_detail_size_quantity {
+  color: #3C7CFB;
+  font-family: 'Inter400';
+  font-size: 1.941747572815534vh;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.032px;
+  margin-top: 3.2766990291262137vh;
+  margin-bottom: 0.970873786407767vh;
+}
+
 .show_detail_option {
   display: flex;
   width: 13.592233009708737vh;

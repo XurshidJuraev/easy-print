@@ -262,7 +262,6 @@ function ProfileMobileAddres() {
                   <center style={{marginTop: '56px'}}>
                     <img src={no_addres} alt="no_addres" />
                     <p className='no_address_text'>Вы ещё не добавляли адрес</p>
-                    <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
                   </center>
                 )}
 

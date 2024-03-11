@@ -9,6 +9,12 @@ import HeaderMainMobile from '../../components/header';
 import FooterMainMobile from '../../components/footer';
 import FooterBarMobile from '../../components/footer bar';
 import Placeholder from 'react-placeholder-loading';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 function ProductShowMobile() {
   const params = useParams()
@@ -711,17 +717,10 @@ function ProductShowMobile() {
                             <button key={index} type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={index} className={index === currentImageIndex ? "active" : ""} aria-current={index === currentImageIndex ? "true" : "false"} aria-label={`Slide ${index + 1}`} onClick={() => handleIndicatorClick(index)}></button>
                           ))}
                         </div>
-                        <div className="carousel-inner">
+                        <div className="carousel-inner" style={{borderRadius: '6px'}}>
                           {dataBeck.images && dataBeck.images.map((image, index) => (
-                            <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`}>
-                              <div 
-                                className='img_animation_img' 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#exampleModal"
-                                style={{backgroundImage: `url(${image})`, width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
-                                onTouchStart={handleTouchStart}
-                                onTouchMove={handleTouchMove}
-                              ></div>
+                            <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`} style={{borderRadius: '6px'}}>
+                              <div className='img_animation_img' data-bs-toggle="modal" data-bs-target="#exampleModal"style={{backgroundImage: `url(${image})`, borderRadius: '6px', width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}onTouchStart={handleTouchStart}onTouchMove={handleTouchMove}></div>
                             </div>
                           ))}
                         </div>
@@ -770,7 +769,7 @@ function ProductShowMobile() {
                     <div style={{display: 'flex', marginTop: '3.883495145631068vh'}}>
                       <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Автор' : 'Muallif'}:</p>
                       {/* <NavLink to={`/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink> */}
-                      <div className='show_detail_author_name' href="#">{dataBeck.company_name}</div>
+                      <NavLink to={`/mobile/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink>
                     </div>
 
                     <center>
@@ -782,7 +781,7 @@ function ProductShowMobile() {
                           <span>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить в корзину' : 'Savatga qo\'shish'}</span>
                         </button>
                       ) : (
-                        <NavLink to={'/basket/mobile'} className='add_basket_btn center' style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '100%' : '100%', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
+                        <NavLink to={'/basket/mobile'} className='add_basket_btn center' style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '100%' : '100%', height: '56px', marginTop: '18px', backgroundColor: '#3C7CFB', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
                           <span>Перейти в корзину </span>
                         </NavLink>
                       )}
@@ -793,28 +792,30 @@ function ProductShowMobile() {
             )}
 
             <center>
-              <h2 className='home_card_title_mobile'>Рекомендуем вам:</h2>
+              <h2 style={{marginBottom: '-4px'}} className='home_card_title_mobile'>Рекомендуем вам:</h2>
 
-              <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
+              <Swiper style={{marginLeft: '30px'}} slidesPerView={2.3} spaceBetween={10} freeMode={true} pagination={{clickable: true,}} className="mySwiper">
                 {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
-                  <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '32px'}}>
-                    <div className="clothes_fat">
-                      <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
-                        <div>
-                          <div style={{width: '162px', height: '190px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                  <SwiperSlide key={data2.id}>
+                    <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginLeft: '8px', marginRight: '8px'}}>
+                      <div className="clothes_fat" style={{borderRadius: '6px'}}>
+                        <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
+                          <div>
+                            <div style={{width: '162px', height: '190px', borderRadius: '6px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="d-flex">
-                      <div>
-                        <p className='home_card_price'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
-                        <p className='home_card_title' title={data2.name}>{data2.name}</p>
+                      <div className="d-flex">
+                        <div style={{marginLeft: '15px'}}>
+                          <p className='home_card_price'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                          <p className='home_card_title' title={data2.name}>{data2.name}</p>
+                        </div>
                       </div>
-                    </div>
-                  </NavLink>
-                )): null}
-              </div>
+                    </NavLink>
+                  </SwiperSlide>
+                )) : null}
+              </Swiper>
             </center>
           </div>
 

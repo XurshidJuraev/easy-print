@@ -162,6 +162,7 @@ function HeaderMain({ trashCardData }) {
   
     var formdata = new FormData();
     formdata.append("name", registrationData.name);
+    formdata.append("surname", localStorage.getItem('user_last_name'));
     formdata.append("password", registrationData.password);
     formdata.append("password_confirmation", registrationData.passwordConfirmation);
   
@@ -175,9 +176,10 @@ function HeaderMain({ trashCardData }) {
     fetch(`${process.env.REACT_APP_TWO}/register`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        setIsRegisterEntered(false);
         localStorage.setItem('user_name', result.data.user.first_name);
+        setIsRegisterEntered(false);
         setIsSuccesEntered(true);
+        console.log(result);
       })
       .catch(error => {
         toast.error('Регистрация не была оформлена.');
@@ -278,7 +280,7 @@ function HeaderMain({ trashCardData }) {
   return (
     <header style={{backgroundColor: '#ffffff'}}>
       {isLoading ? (
-        <div className='container pt-2'>
+        <div className='container pt-4 pb-4'>
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
             <div>
               <Placeholder 

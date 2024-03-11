@@ -357,20 +357,20 @@ function AuthorPage() {
                   <div key={data2.id} className='mt-5'>
                     <div style={{textDecoration: 'none'}} className="cards">
                       <NavLink to={`/show/detail/${data2.id}/${data2.name}`} className="clothes_fat">
-                        <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
+                        <div className="image-container" style={{position: 'relative', borderRadius: '8px', zIndex: '200'}}>
                           <div>
                             <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
+                              <svg style={{borderTopRightRadius: '8px'}} xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
                                 <circle cx="75" cy="-31" r="74.5" fill="#FEF4EE" stroke="#F9D5BB"/>
                               </svg>
                               <div>
                                 <p className='discount'>-{data2.discount}%</p>
                               </div>
                             </div>
-                            <div style={{width: '276px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                            <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                           </div>
 
-                          <div className="image-overlay">
+                          <div className="image-overlay" style={{borderRadius: '8px'}}>
                             <div className="detail_back">
                               <p className="overlay-text">Посмотреть детали</p>
                             </div>
@@ -422,20 +422,20 @@ function AuthorPage() {
                   <div key={data2.id} className='mt-5'>
                     <div style={{textDecoration: 'none'}} className="cards">
                       <NavLink to={`/show/detail/${data2.id}/${data2.name}`} className="clothes_fat">
-                        <div className="image-container" style={{position: 'relative', zIndex: '200'}}>
+                        <div className="image-container" style={{position: 'relative', borderRadius: '8px', zIndex: '200'}}>
                           <div>
                             <div style={{position: 'absolute', top: '0', right: '0', zIndex: '1', display: data2.discount ? 'block' : 'none'}}>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
+                              <svg style={{borderTopRightRadius: '8px'}} xmlns="http://www.w3.org/2000/svg" width="80" height="44" viewBox="0 0 80 44" fill="none">
                                 <circle cx="75" cy="-31" r="74.5" fill="#FEF4EE" stroke="#F9D5BB"/>
                               </svg>
                               <div>
                                 <p className='discount'>-{data2.discount}%</p>
                               </div>
                             </div>
-                            <div style={{width: '276px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                            <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                           </div>
 
-                          <div className="image-overlay">
+                          <div className="image-overlay" style={{borderRadius: '8px'}}>
                             <div className="detail_back">
                               <p className="overlay-text">Посмотреть детали</p>
                             </div>

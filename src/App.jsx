@@ -58,6 +58,9 @@ import Delivermobile from './mobile/pages/footer page/information/delivery';
 import PayMobile from './mobile/pages/footer page/information/pay';
 import ExchangeMobile from './mobile/pages/footer page/information/exchange';
 import TermsMobile from './mobile/pages/footer page/information/terms';
+import OrderMobileFooter from './mobile/pages/footer page/information/order';
+// Автор
+import AuthorPageMobile from './mobile/pages/author';
 
 function App() {
   // const navigate = useNavigate();
@@ -103,6 +106,8 @@ function App() {
           <Route path='/mobile/footer/pay' element={<PayMobile />} />
           <Route path='/mobile/footer/exchange' element={<ExchangeMobile />} />
           <Route path='/mobile/footer/terms' element={<TermsMobile />} />
+          <Route path='/mobile/footer/order' element={<OrderMobileFooter />} />
+          <Route path='/mobile/author/:id/:name' element={<AuthorPageMobile />} />
         </Routes>
       </center>
     </div>
