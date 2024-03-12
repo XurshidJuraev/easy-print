@@ -48,7 +48,7 @@
   border: none;
   color: var(--White, #FFF);
   font-family: Inter;
-  font-size: 2.1844660194174756vh;
+  font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 2.912621359223301vh; /* 133.333% */
@@ -64,7 +64,7 @@
 .hero_button span {
   color: var(--White, #FFF);
   font-family: Inter;
-  font-size: 2.1844660194174756vh;
+  font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 2.912621359223301vh; /* 133.333% */

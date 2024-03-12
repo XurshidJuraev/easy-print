@@ -630,10 +630,18 @@ function ShowDetail() {
           <HeaderMain trashCardData={trashCardData} />
           <ToastContainer />
 
-          <div className="container">
-            <div className="card_detail">
-              <h3 className='show_detail_title' style={{margin: '0', marginBottom: '24px'}}>Детали товара</h3>
+          <div className="d-flex" style={{paddingLeft: '120px', position: 'relative', top: '30px'}}>
+            <NavLink to={`/categories/${dataBeck.product_category ? dataBeck.product_category.id : null}/${dataBeck.product_category ? dataBeck.product_category.name : null}`} className='category_subcategor_name'>{dataBeck.product_category ? dataBeck.product_category.name : ''}</NavLink>
 
+            <svg style={{display: dataBeck.product_sub_category === null ? 'none' : 'block'}} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <NavLink to={`/categories/${dataBeck.product_sub_category ? dataBeck.product_sub_category.id : null}/${dataBeck.product_sub_category ? dataBeck.product_sub_category.name : null}`} className='category_subcategor_name'>{dataBeck.product_sub_category ? dataBeck.product_sub_category.name : ''}</NavLink>
+          </div>
+
+          <div className="center flex-column" style={{paddingLeft: '120px', paddingRight: '120px'}}>
+            <div className="card_detail">
               {isLoading ? (
                 <>
                   <div>
@@ -938,21 +946,21 @@ function ShowDetail() {
 
                   <div className="img_card_detail">
                     {dataBeck.images && dataBeck.images.length > 0 && (
-                      <div style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '60.679611650485434vh', height: '70.3883495145631vh', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                      <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                     )}
 
-                    <div className="d-flex justify-content-between" style={{width: '59.5873786407767vh', marginLeft: '-0.3640776699029126vh', marginTop: '54.61165048543689vh'}}>
+                    <div className="d-flex justify-content-between" style={{width: '491px', marginLeft: '-3px', marginTop: '450px'}}>
                       <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handlePrevImage}>
-                        <img style={{ width: '5.825242718446602vh', height: '5.825242718446602vh' }} src={show_right} alt="show_right" />
+                        <img style={{ width: '48px', height: '48px' }} src={show_right} alt="show_right" />
                       </button>
 
                       <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handleNextImage}>
-                        <img style={{ width: '5.825242718446602vh', height: '5.825242718446602vh' }} src={show_left} alt="show_left" />
+                        <img style={{ width: '48px', height: '48px' }} src={show_left} alt="show_left" />
                       </button>
                     </div>
                   </div>
 
-                  <div style={{marginLeft: '5.825242718446602vh'}}>
+                  <div style={{marginLeft: '450px'}}>
                     <h2 className='show_detail_name'>{dataBeck.name ? dataBeck.name : 'Название отсутствует или не найден'}</h2>
 
                     <p className='show_detail_description'>{dataBeck.description ? dataBeck.description : 'Описание отсутствует или не найден'}</p>
@@ -973,9 +981,9 @@ function ShowDetail() {
                     </p>
 
                     <div>
-                      <div style={{marginRight: '10.072815533980583vh'}}>
+                      <div style={{marginRight: '83px'}}>
                         <p className='show_detail_size'>Размер</p>
-                        <div className='size_selection' style={{width: '42.47572815533981vh'}}>
+                        <div className='size_selection' style={{width: '350px'}}>
                           {sizeArray.map((size, index) => (
                             <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId) }}>
                               {size.name}
@@ -1002,7 +1010,7 @@ function ShowDetail() {
                       </div>
                     </div>
 
-                    <div className="d-flex" style={{marginTop: '-1.6990291262135921vh'}}>
+                    <div className="d-flex" style={{marginTop: '-14px'}}>
                       <button onClick={() => {addToBasket(dataBeck); handleButtonClick();}} className='add_basket_btn' style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '266px' : '224px', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                           <path d="M19.5 7H17C17 5.67392 16.4732 4.40215 15.5355 3.46447C14.5979 2.52678 13.3261 2 12 2C10.6739 2 9.40215 2.52678 8.46447 3.46447C7.52678 4.40215 7 5.67392 7 7H4.5C3.83696 7 3.20107 7.26339 2.73223 7.73223C2.26339 8.20107 2 8.83696 2 9.5L2 17.8333C2.00132 18.938 2.44073 19.997 3.22185 20.7782C4.00296 21.5593 5.062 21.9987 6.16667 22H17.8333C18.938 21.9987 19.997 21.5593 20.7782 20.7782C21.5593 19.997 21.9987 18.938 22 17.8333V9.5C22 8.83696 21.7366 8.20107 21.2678 7.73223C20.7989 7.26339 20.163 7 19.5 7ZM12 3.66667C12.8841 3.66667 13.7319 4.01786 14.357 4.64298C14.9821 5.2681 15.3333 6.11594 15.3333 7H8.66667C8.66667 6.11594 9.01786 5.2681 9.64298 4.64298C10.2681 4.01786 11.1159 3.66667 12 3.66667ZM20.3333 17.8333C20.3333 18.4964 20.0699 19.1323 19.6011 19.6011C19.1323 20.0699 18.4964 20.3333 17.8333 20.3333H6.16667C5.50363 20.3333 4.86774 20.0699 4.3989 19.6011C3.93006 19.1323 3.66667 18.4964 3.66667 17.8333V9.5C3.66667 9.27899 3.75446 9.06702 3.91074 8.91074C4.06702 8.75446 4.27899 8.66667 4.5 8.66667H7V10.3333C7 10.5543 7.0878 10.7663 7.24408 10.9226C7.40036 11.0789 7.61232 11.1667 7.83333 11.1667C8.05435 11.1667 8.26631 11.0789 8.42259 10.9226C8.57887 10.7663 8.66667 10.5543 8.66667 10.3333V8.66667H15.3333V10.3333C15.3333 10.5543 15.4211 10.7663 15.5774 10.9226C15.7337 11.0789 15.9457 11.1667 16.1667 11.1667C16.3877 11.1667 16.5996 11.0789 16.7559 10.9226C16.9122 10.7663 17 10.5543 17 10.3333V8.66667H19.5C19.721 8.66667 19.933 8.75446 20.0893 8.91074C20.2455 9.06702 20.3333 9.27899 20.3333 9.5V17.8333Z" fill="white"/>
@@ -1018,11 +1026,11 @@ function ShowDetail() {
                       </button>
                     </div>
 
-                    <div style={{margin: '2.4271844660194173vh 0px -1.6990291262135921vh 0px'}}>
+                    <div style={{margin: '20px 0px -14px 0px'}}>
                       <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Состав' : 'Tarkibi'}: {dataBeck.composition ? dataBeck.composition : 'Состав отсутствует или не найден'}</p>
                     </div>
 
-                    <div style={{display: 'flex', marginTop: '3.883495145631068vh'}}>
+                    <div style={{display: 'flex', marginTop: '32px'}}>
                       <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Автор' : 'Muallif'}:</p>
                       <NavLink to={`/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink>
                     </div>
@@ -1033,7 +1041,7 @@ function ShowDetail() {
           </div>
 
           <div className="container">
-            <h3 className='show_detail_title' style={{marginBottom: '-2.4271844660194173vh'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Похожие товары' : `Shunga o'xshash mahsulotlar`}</h3>
+            <h3 className='show_detail_title' style={{marginBottom: '-20px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Похожие товары' : `Shunga o'xshash mahsulotlar`}</h3>
 
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
               {data.data ? data.data.warehouse_product_list.slice(0, displayedItems).map((data2) => (
@@ -1303,6 +1311,56 @@ function ShowDetail() {
                       )}
                     </>
                   )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px'}}>
+              <div className="modal-content" style={{borderRadius: '0px'}}>
+                <div style={{padding: '0px'}} className="modal-body">
+                  <div className="d-flex justify-content-end">
+                    <button style={{position: 'absolute', zIndex: '1', top: '12px', right: '12px'}} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className='img_animation' style={{backgroundColor: '#F6F6F6', height: '100%', width: '100%'}}>
+                    {dataBeck.images && dataBeck.images.length > 0 && (
+                      // <div id="carouselExampleIndicators" className="carousel slide">
+                      //   <div className="carousel-indicators">
+                      //     {dataBeck.images && dataBeck.images.map((image, index) => (
+                      //       <button key={index} type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={index} className={index === currentImageIndex ? "active" : ""} aria-current={index === currentImageIndex ? "true" : "false"} aria-label={`Slide ${index + 1}`}></button>
+                      //     ))}
+                      //   </div>
+                      //   <div className="carousel-inner">
+                      //     {dataBeck.images && dataBeck.images.map((image, index) => (
+                      //       <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`}>
+                      //         <div 
+                      //           className='img_animation_img' 
+                      //           data-bs-toggle="modal" 
+                      //           data-bs-target="#exampleModal"
+                      //           style={{backgroundImage: `url(${image})`, width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
+                      //         ></div>
+                      //       </div>
+                      //     ))}
+                      //   </div>
+                      // </div>
+                      <>
+                        {dataBeck.images && dataBeck.images.length > 0 && (
+                          <div data-bs-toggle="modal" data-bs-target="#exampleModal2" style={{backgroundImage: `url(${dataBeck.images[currentImageIndex]})`, width: '500px', height: '580px', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                        )}
+    
+                        <div className="d-flex justify-content-between" style={{ width: '490px', marginLeft: '5px', position: 'absolute', bottom: '16px'}}>
+                          <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handlePrevImage}>
+                            <img style={{ width: '48px', height: '48px', boxShadow: '0px 13px 84px -22px rgba(0,0,0,0.75)', borderRadius: '50%' }} src={show_right} alt="show_right" />
+                          </button>
+    
+                          <button style={{ backgroundColor: 'transparent', border: 'none' }} onClick={handleNextImage}>
+                            <img style={{ width: '48px', height: '48px', boxShadow: '0px 13px 84px -22px rgba(0,0,0,0.75)', borderRadius: '50%' }} src={show_left} alt="show_left" />
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
