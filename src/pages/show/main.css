@@ -370,3 +370,25 @@
 .category_subcategor_name:hover {
   color: #999999;
 }
+
+.swiper-button-next, .swiper-button-prev {
+  background-color: #FFFFFF;
+  right: 10px;
+  padding: 4px;
+  color: #000 !important;
+  fill: black !important;
+  stroke: black !important;
+  width: 32px !important;
+  height: 32px !important;
+  box-shadow: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.swiper-button-next {
+  position: absolute !important;
+  right: 60px !important;
+}
+
+.swiper-button-prev:after, .swiper-button-next:after {
+  font-size: 17px !important;
+}

@@ -10,7 +10,6 @@ import FooterMainMobile from '../../components/footer';
 import FooterBarMobile from '../../components/footer bar';
 import Placeholder from 'react-placeholder-loading';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';

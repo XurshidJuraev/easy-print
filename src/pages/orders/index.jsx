@@ -7,6 +7,7 @@ import double_order_header2 from '../../layouts/icons/for_a_double_one.svg'
 import lock_order_header from '../../layouts/icons/lock_order_header.svg'
 import ulanish from '../../layouts/icons/ulanish.svg'
 import qaytarib_olish from '../../layouts/icons/qaytarib_olish.svg'
+import saved_order_modal from '../../layouts/images/saved_order_modal.svg'
 import qollab_quvvatlash from '../../layouts/icons/qolab_quvvatlash.svg'
 import order_modal_phone from '../../layouts/icons/order_modal_phone.svg'
 import order_modal_telegram from '../../layouts/icons/order_modal_telegram.svg'
@@ -25,6 +26,7 @@ function MyOrders() {
   const [total, setTotal] = useState('');
   const [delivery, setDelivery] = useState('');
   const [nullAddres, setNullAddres] = useState(false);
+  const [getHome, setGetHome] = useState(false);
   const [nullName, setNullName] = useState(false);
   const [nullPhoneNumber, setNullPhoneNumber] = useState(false);
   const [products_total, setProducts_total] = useState('');
@@ -34,6 +36,7 @@ function MyOrders() {
   const [pickapAdrseCheck, setPickapAdrseCheck] = useState('');
   const [selectedPickapAdrs, setSelectedPickapAdrs] = useState(null);
   const [data, setData] = useState([]);
+  const [dataModal, setDataModal] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
   const [deliveryMethod, setDeliveryMethod] = useState('pickup');
@@ -254,11 +257,13 @@ function MyOrders() {
       .then(response => response.json())
       .then(result => {
         if (result.status === true) {
-          toast.success('Заказ успешно оформлен!');
+          // toast.success('Заказ успешно оформлен!');
           setTimeout(() => {
-            navigate('/');
+            // navigate('/');
             localStorage.setItem('counterValue', 0);
           }, 1500);
+          setDataModal(result.data);
+          console.log(result);
         } else {
           toast.error('Заказ не был оформлен!');
         }
@@ -323,6 +328,10 @@ function MyOrders() {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   };
+
+  const handleGetHome = () => {
+    navigate('/');
+  }
 
   return (
     <div>
@@ -560,7 +569,7 @@ function MyOrders() {
                     </div>
 
                     <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
-                      <button style={{width: '550px', margin: '0', textAlign: 'center', padding: '0'}} onClick={() => {saveOrder();}} className='hero_button center'>
+                      <button data-bs-toggle="modal" data-bs-target="#exampleModal3" style={{width: '550px', margin: '0', textAlign: 'center', padding: '0'}} onClick={() => {saveOrder();}} className='hero_button center'>
                         {localStorage.getItem('selectedLanguage') === 'ru' ? 'Оформить заказ' : 'Buyurtmani rasmiylashtirish'}
                       </button>
                     </div>
@@ -664,6 +673,41 @@ function MyOrders() {
               <div style={{marginTop: '-4px', marginBottom: '50px'}}>
                 <NavLink to={"mailto:support@easyprint.com"} className='order_modal_body_text_link'>support@easyprint.com</NavLink>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px', width: '520px'}}>
+          <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
+            <div className="modal-header d-flex justify-content-between" style={{borderBottom: 'none', padding: '32px'}}>
+              <div style={{width: '100%'}} className="d-flex mt-4 flex-column">
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                  <img src={saved_order_modal} alt="saved_order_modal" />
+                </div>
+              </div>
+              <button style={{marginTop: '-80px'}} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div style={{padding: '32px'}} className="modal-body">
+              <div style={{marginTop: '-45px'}} className="d-flex">
+                <p className='order_modal_body_text_link_link'>Заказ №{dataModal.code ? dataModal.code : '000'} оформлен. В день доставки вам придёт СМС с кодом. Покажите его, чтобы получить заказ</p>
+              </div>
+
+              <center>
+                <div className='accept_modal_body'>
+                  <p className='order_modal_body_text_opacity'>Где забирать</p>
+                  <p className='order_modal_body_text'>{dataModal.address ? dataModal.address : 'г. Ташкент, Мирзо-Улугбекский район, массив Буюк Ипак Йули, 31 дом'}</p>
+
+                  <p className='order_modal_body_text_opacity mt-2'>Часы работы</p>
+                  <p className='order_modal_body_text'>10:00 - 20:00</p>
+
+                  <p className='order_modal_body_text_opacity mt-2'>Когда забирать</p>
+                  <p className='order_modal_body_text'>{dataModal.pick_up_time ? dataModal.pick_up_time : 'Завтра'}</p>
+                </div>
+
+                <div data-bs-dismiss="modal" aria-label="Close" onClick={() => handleGetHome()} className='basket_promo_btn_price'>Продолжить покупки</div>
+              </center>
             </div>
           </div>
         </div>
