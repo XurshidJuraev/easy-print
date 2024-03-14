@@ -61,6 +61,8 @@ import TermsMobile from './mobile/pages/footer page/information/terms';
 import OrderMobileFooter from './mobile/pages/footer page/information/order';
 // Автор
 import AuthorPageMobile from './mobile/pages/author';
+// Страница категорий
+import CategoryMobile from './mobile/pages/category';
 
 function App() {
   // const navigate = useNavigate();
@@ -108,6 +110,7 @@ function App() {
           <Route path='/mobile/footer/terms' element={<TermsMobile />} />
           <Route path='/mobile/footer/order' element={<OrderMobileFooter />} />
           <Route path='/mobile/author/:id/:name' element={<AuthorPageMobile />} />
+          <Route path='/mobile/categories/:id/:name' element={<CategoryMobile />} />
         </Routes>
       </center>
     </div>

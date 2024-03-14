@@ -396,9 +396,9 @@ function HeaderMain({ trashCardData }) {
           <ul className="d-flex" style={{ marginLeft: '6.067961165048544vh', marginTop: '2.368932038834951vh', listStyle: 'none', fontFamily: 'Inter' }}>
             {category.data && category.data.length > 0 && category.data[0].map((data2) => (
               <li title={data2.name} key={data2.id} className="nav-item ms-3 me-3">
-                <div className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`} onMouseEnter={() => setActiveLinkId(data2.id)} onMouseLeave={() => setActiveLinkId(null)}>
+                <NavLink to={`/categories/${data2.id}/${data2.name}`} className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`} onMouseEnter={() => setActiveLinkId(data2.id)} onMouseLeave={() => setActiveLinkId(null)}>
                   {data2.name}
-                </div>
+                </NavLink>
 
                 {Array.isArray(data2.sub_category) && data2.sub_category.length > 0 ? (
                   <div className={`language_list language_list_${data2.id} ${activeLinkId === data2.id ? 'active' : ''}`}>

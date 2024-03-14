@@ -37,7 +37,7 @@ function HomePageMobile() {
   }, []);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_TWO}/anime-category-size-color`, {
+    axios.get(`${process.env.REACT_APP_TWO}/get-categories`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ function HomePageMobile() {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      setCategory(response.data.data.category);
+      setCategory(response.data.data[0]);
     }).catch((error) => {
       console.log(error);
     });
@@ -72,7 +72,7 @@ function HomePageMobile() {
       <HeaderMainMobile />
       <div style={{backgroundColor: 'white'}}>
         {category && category.map((item, index) => (
-          <button className='header_button_mobile' key={index}>{item.name}</button>
+          <NavLink to={`/mobile/categories/${item.id}/${item.name}`} className='header_button_mobile' key={index}>{item.name}</NavLink>
         ))}
       </div>
       <HeroMainMobile />

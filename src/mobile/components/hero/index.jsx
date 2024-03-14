@@ -52,8 +52,8 @@ function HeroMainMobile() {
 
             <div className='center flex-column' style={{marginTop: '50px',}}>
               <img style={{ width: '200px', height: '222px'}} src={data[currentIndex].banner_image} alt={data[currentIndex].title} />
-              <div style={{position: 'relative', top: '-240px'}}>
-                <Splide options={{ type: 'loop', arrows: false, autoplay: true, width: '101.94174757281553vh', arrow: false, heightRatio: 0.5, pagination: false, focus: 'center', auto: true, interval: 3000, perPage: 1, pauseOnHover: false, }}>
+              <div style={{position: 'relative', top: '-180px'}}>
+                <Splide options={{ type: 'loop', arrows: false, autoplay: true, width: '300px', arrow: false, heightRatio: 0.5, pagination: false, focus: 'center', auto: true, interval: 3000, perPage: 1, pauseOnHover: false, }}>
                   {data[currentIndex].carousel_image.map((imageUrl, index) => (
                     <SplideSlide key={index}>
                       <img style={{maxWidth: '70px', maxHeight: '166px'}} src={imageUrl} alt={`carousel-image-${index}`} />
@@ -63,7 +63,7 @@ function HeroMainMobile() {
               </div>
             </div>
 
-            <p style={{marginTop: '-240px'}} className='hero_text_mobile'>{data[currentIndex].text}</p>
+            <p style={{marginTop: '-120px'}} className='hero_text_mobile'>{data[currentIndex].text}</p>
 
             <NavLink to={'/mobile/yourDesign'} className='hero_button' style={{margin: '0', height: '48px', marginTop: '32px', padding: '14px 0px 0px 30px'}}>
               Напечатать свой дизайн

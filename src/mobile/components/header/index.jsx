@@ -10,7 +10,11 @@ function HeaderMainMobile() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const [category, setCategory] = useState(null);
+  const [category2, setCategory2] = useState(null);
   const [categoryShow, setCategoryShow] = useState(false);
+  const [categoryShow2, setCategoryShow2] = useState(true);
+  const [subCategoryShow, setSubCategoryShow] = useState(false);
+  const [subCategoryShowDef, setSubCategoryShowDef] = useState(null);
   const [searchShow, setSearchShow] = useState(false);
 
   if (!localStorage.getItem('selectedLanguage')) {
@@ -34,7 +38,7 @@ function HeaderMainMobile() {
   // }, []);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_TWO}/anime-category-size-color`, {
+    axios.get(`${process.env.REACT_APP_TWO}/get-categories`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -42,7 +46,7 @@ function HeaderMainMobile() {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      setCategory(response.data.data.category);
+      setCategory(response.data.data[0]);
     }).catch((error) => {
       console.log(error);
     });
@@ -55,6 +59,21 @@ function HeaderMainMobile() {
   const handleSearchClick = () => {
     setSearchShow((prev) => !prev);
   };
+
+  const handleSubCategoryClick = () => {
+    setSubCategoryShow((prev) => !prev);
+  };
+
+  const selectedSubCategoryString = localStorage.getItem('selectedSubCategory');
+  let selectedSubCategory = [];
+  if (selectedSubCategoryString) {
+    try {
+      selectedSubCategory = JSON.parse(selectedSubCategoryString);
+    } catch (error) {
+      console.error('Error parsing selectedSubCategory:', error);
+    }
+  }
+  
 
   return (
     <header>
@@ -69,9 +88,31 @@ function HeaderMainMobile() {
       {categoryShow && (
         <>
           <div style={{backgroundColor: 'white', position: 'absolute', width: '100%', zIndex: 100000}}>
-            {category && category.map((item, index) => (
-              <button className='header_button_mobile' key={index}>{item.name}</button>
-            ))}
+            {subCategoryShow && (
+              <div className='sub_category_mobile'>
+                  <svg onClick={() => {setCategoryShow2(true); setSubCategoryShow(false)}} style={{marginTop: '-2px'}} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="#18356D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+
+                  <NavLink style={{width: '100%', textDecoration: 'none'}} to={`/mobile/categories/${localStorage.getItem('selectedCategoryId')}/${localStorage.getItem('selectedCategoryName')}`}>
+                    <p style={{textDecoration: 'none'}} className='sub_category_mobile_text'>{localStorage.getItem('selectedCategoryName')}</p>
+                  </NavLink>
+
+                  <div style={{backgroundColor: 'white', left: '0', top: '44px', position: 'absolute', width: '100%', zIndex: 100000}}>
+                    {selectedSubCategory && selectedSubCategory.map((item, index) => (
+                      <NavLink to={`/mobile/categories/${item.id}/${item.name}`} className='header_button_mobile' key={index}>{item.name}</NavLink>
+                    ))}
+                  </div>
+              </div>
+            )}
+
+            {categoryShow2 && (
+              <>
+                {category && category.map((item, index) => (
+                  <div onClick={() => {localStorage.setItem('selectedCategoryName', item.name); localStorage.setItem('selectedCategoryId', item.id); localStorage.setItem('selectedSubCategory', JSON.stringify(item.sub_category)); setCategoryShow2(false); setSubCategoryShow(true)}} className='header_button_mobile' key={index}>{item.name}</div>
+                ))}
+              </>
+            )}
           </div>
 
           <div onClick={handleHumburgerMenuClick} style={{backgroundColor: '#0101011A', position: 'absolute', width: '100%', height: '100%', zIndex: 10000}}></div>
