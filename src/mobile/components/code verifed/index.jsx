@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './main.css';
 
 function CodeVerificationInput({ length }) {
   const [code, setCode] = useState(Array(length).fill(''));
+  const inputs = useRef([]);
 
   const handleChange = (index, value) => {
     const newCode = [...code];
     newCode[index] = value;
     setCode(newCode);
+
+    if (index < length - 1 && value !== '') {
+      inputs.current[index + 1].focus();
+    }
   };
 
   const handleKeyDown = (e, index) => {
-    if (e.key === 'Backspace' && index > 0 && code[index] === '') {
-      handleChange(index - 0, '');
-    } else if (e.key.match(/[0-9]/) && index < length - 1) {
-      handleChange(index + 0, e.key);
+    if ((e.key === 'Delete' || e.key === 'Backspace') && index > 0 && code[index] === '') {
+      handleChange(index - 1, '');
+      inputs.current[index - 1].focus();
     }
   };
 
@@ -24,12 +28,13 @@ function CodeVerificationInput({ length }) {
   }, [code]);
 
   return (
-    <div style={{display: 'flex'}}>
+    <div style={{ display: 'flex' }}>
       {code.map((char, index) => (
         <input
+          ref={el => (inputs.current[index] = el)}
           className='code_input_reg'
           type="text"
-          name='phone' 
+          name='phone'
           id='code_verify'
           maxLength={1}
           value={char}

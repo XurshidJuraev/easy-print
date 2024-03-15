@@ -385,13 +385,13 @@ function OrderMobile() {
                     <p className='basket_total_title' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami maxsulotlar'}</p>
                     <p className='basket_total_title' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Доставка' : 'Yetkazib berish'}</p>
                     <p className='basket_total_title' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидки' : 'Chegirmalar'}</p>
-                    <p className='basket_total_title' style={{fontFamily: 'Inter400'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итого' : 'Jami'}</p>
+                    <p className='basket_total_title_all' style={{fontFamily: 'Inter400'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итого' : 'Jami'}</p>
                   </div>
                   <div style={{textAlign: 'right'}}>
                     <p className='basket_total_price' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{Number(jsonPaymentDate?.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
                     <p className='basket_total_price' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'Яндекс Go' : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}`}</p>
                     <p className='basket_total_price' style={{marginBottom: '28px', fontFamily: 'Inter400'}}>{Number(jsonPaymentDate?.discount_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
-                    <p className='basket_total_price' style={{fontFamily: 'Inter400'}}>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
+                    <p className='basket_total_title_all' style={{fontSize: '18px'}}>{Number(jsonPaymentDate?.grant_total).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : 'so`m'}</p>
                   </div>
                 </div>
               </div>
@@ -412,22 +412,6 @@ function OrderMobile() {
 
                   <input className='order_info' style={{border: nullName === true ? '1px solid red' : 'none', width: '100%'}} value={localStorage.getItem('user_name') ? localStorage.getItem('user_name') + ' ' + `${localStorage.getItem('user_last_name') === null || localStorage.getItem('user_last_name') === 'null' ? '' : localStorage.getItem('user_last_name')}` : 'Имя и Фамилия*'}/>
                   <input className='order_info mt-2' style={{border: nullPhoneNumber === true ? '1px solid red' : 'none', width: '100%'}} value={localStorage.getItem('user_phone_number')} />
-                  
-                  <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ оплаты' : 'To\'lov turi'}</h3>
-
-                  <label className='order_info' style={{width: '100%'}}>
-                    <input style={{ cursor: 'pointer' }} type="radio" id="card" name="pay" value="30" checked={selectedPaymentMethod === 'card'} onChange={() => setSelectedPaymentMethod('card')} />
-                    <label style={{ cursor: 'pointer' }} htmlFor="card">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Картой онлайн' : 'Karta orqali onlayn'}</label>
-                  </label>
-
-                  {selectedPaymentMethod === 'card' && (
-                    <img src={cards} alt="cards" />
-                  )}
-
-                  <label className='order_info mt-2' style={{width: '100%'}}>
-                    <input style={{ cursor: 'pointer' }} type="radio" id="naxt" name="pay" value="60" checked={selectedPaymentMethod === 'cash'} onChange={() => setSelectedPaymentMethod('cash')} />
-                    <label style={{ cursor: 'pointer' }} htmlFor="naxt">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наличными, при получении' : 'Naqd pul yoki karta orqali qabul qilganda'}</label>
-                  </label>
 
                   <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ получения' : 'Qabul qilish usuli:'}</h3>
 
@@ -497,6 +481,22 @@ function OrderMobile() {
                       )}
                     </>
                   )}
+
+                  <h3 className='order_subtitle' style={{ marginTop: '48px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ оплаты' : 'To\'lov turi'}</h3>
+
+                  <label className='order_info' style={{width: '100%'}}>
+                    <input style={{ cursor: 'pointer' }} type="radio" id="card" name="pay" value="30" checked={selectedPaymentMethod === 'card'} onChange={() => setSelectedPaymentMethod('card')} />
+                    <label style={{ cursor: 'pointer' }} htmlFor="card">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Картой онлайн' : 'Karta orqali onlayn'}</label>
+                  </label>
+
+                  {selectedPaymentMethod === 'card' && (
+                    <img src={cards} alt="cards" />
+                  )}
+
+                  <label className='order_info mt-2' style={{width: '100%'}}>
+                    <input style={{ cursor: 'pointer' }} type="radio" id="naxt" name="pay" value="60" checked={selectedPaymentMethod === 'cash'} onChange={() => setSelectedPaymentMethod('cash')} />
+                    <label style={{ cursor: 'pointer' }} htmlFor="naxt">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наличными, при получении' : 'Naqd pul yoki karta orqali qabul qilganda'}</label>
+                  </label>
                 </div>
               </div>
 
