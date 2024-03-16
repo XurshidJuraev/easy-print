@@ -7,6 +7,8 @@ import FooterMainMobile from '../../components/footer';
 import FooterBarMobile from '../../components/footer bar';
 import cards from '../../layouts/images/cards.svg'
 import delete_product_basket from '../../layouts/icons/delete_product_basket.svg'
+import saved_order_modal from '../../../layouts/images/saved_order_modal.svg'
+import Sheet from 'react-modal-sheet';
 import './main.css';
 
 function OrderMobile() {
@@ -15,11 +17,14 @@ function OrderMobile() {
   const [addressId, setAddressId] = useState(null);
   const [trashCardData, setTrashCardData] = useState([]);
   const [sale, setSale] = useState('');
+  const [isOpen, setOpen] = useState(false);
   const [total, setTotal] = useState('');
   const [delivery, setDelivery] = useState('');
   const [nullAddres, setNullAddres] = useState(false);
+  const [dataModal, setDataModal] = useState([]);
   const [nullName, setNullName] = useState(false);
   const [nullPhoneNumber, setNullPhoneNumber] = useState(false);
+  const [bekStatus, setBekStatus] = useState();
   const [products_total, setProducts_total] = useState('');
   const [editAddressId, setEditAddressId] = useState(null);
   const [adrse, setAdrse] = useState('');
@@ -243,7 +248,10 @@ function OrderMobile() {
         if (result.status === true) {
           toast.success('Заказ успешно оформлен!');
           setTimeout(() => {
-            navigate('/');
+            // navigate('/');
+            setDataModal(result.data);
+            setBekStatus(result.status);
+            setOpen(true);
             localStorage.setItem('counterValue', 0);
           }, 1500);
         } else {
@@ -336,6 +344,10 @@ function OrderMobile() {
       });
   };  
 
+  const handleGetHome = () => {
+    navigate('/');
+  }
+
   return (
     <div>
       <HeaderMainMobile />
@@ -374,7 +386,7 @@ function OrderMobile() {
                     </div>
 
                     <center>
-                      <img onClick={() => {handleDeleteAddress(item.id)}} style={{marginTop: '20px', cursor: 'pointer'}} src={delete_product_basket} alt="delete_product_basket" />
+                      <img onClick={() => {handleDeleteAddress(item.id)}} style={{marginTop: '20px', cursor: 'pointer', display: bekStatus ? 'none' : 'block'}} src={delete_product_basket} alt="delete_product_basket" />
                       <hr style={{marginTop: '20px', marginBottom: '20px'}} />
                     </center>
                   </div>
@@ -575,6 +587,39 @@ function OrderMobile() {
           </div>
         </div>
       </div>
+
+      <Sheet isOpen={isOpen} onClose={() => setOpen(false)}>
+        <Sheet.Container>
+          <Sheet.Header />
+          <Sheet.Content>
+            <div style={{padding: '0 16px'}}>
+              <center>
+                <img style={{marginTop: '81px'}} src={saved_order_modal} alt="saved_order_modal" />
+
+                <div style={{marginTop: '32px'}} className="d-flex">
+                  <p className='order_modal_body_text_link_link'>Заказ №{dataModal.code ? dataModal.code : '000'} оформлен. В день доставки вам придёт СМС с кодом. Покажите его, чтобы получить заказ</p>
+                </div>
+
+                <center>
+                  <div className='accept_modal_body'>
+                    <p className='order_modal_body_text_opacity'>Где забирать</p>
+                    <p className='order_modal_body_text'>{dataModal.address ? dataModal.address : 'г. Ташкент, Мирзо-Улугбекский район, массив Буюк Ипак Йули, 31 дом'}</p>
+
+                    <p className='order_modal_body_text_opacity mt-2'>Часы работы</p>
+                    <p className='order_modal_body_text'>10:00 - 20:00</p>
+
+                    <p className='order_modal_body_text_opacity mt-2'>Когда забирать</p>
+                    <p className='order_modal_body_text'>{dataModal.pick_up_time ? dataModal.pick_up_time : 'Завтра'}</p>
+                  </div>
+
+                  <div style={{width: '100%'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => handleGetHome()} className='basket_promo_btn_price'>Продолжить покупки</div>
+                </center>
+              </center>
+            </div>
+          </Sheet.Content>
+        </Sheet.Container>
+        <Sheet.Backdrop />
+      </Sheet>
 
       <FooterMainMobile />
       <FooterBarMobile />

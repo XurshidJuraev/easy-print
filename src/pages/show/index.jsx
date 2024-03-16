@@ -11,11 +11,17 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import ToastComponent from '../../components/toast'
 import Placeholder from 'react-placeholder-loading';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import 'swiper/css';
+// import 'swiper/css/free-mode';
+// import 'swiper/css/pagination';
+// import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import 'swiper/swiper-bundle.css';
 
 function ShowDetail() {
   const params = useParams()

@@ -37,6 +37,7 @@ function CodeVerificationInput({ length }) {
           name='phone'
           id='code_verify'
           maxLength={1}
+          keyboardType="number-pad"
           value={char}
           onChange={e => handleChange(index, e.target.value)}
           onKeyDown={e => handleKeyDown(e, index)}

@@ -1,7 +1,7 @@
 {
   "name": "easy-print",
-  "version": "1.5.2",
-  "mobile_version": "1.5.7",
+  "version": "1.6",
+  "mobile_version": "1.6",
   "homepage": "http://easyprint.uz/",
   "rewrites": [
     {
@@ -27,7 +27,6 @@
     "framer-motion": "^10.16.4",
     "he": "^1.2.0",
     "html2canvas": "^1.4.1",
-    "node-sass": "^4.13.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-canvas-draw": "^1.2.1",
@@ -39,6 +38,7 @@
     "react-image-gallery": "^1.3.0",
     "react-input-date-mask": "^2.0.0",
     "react-input-mask": "^2.0.4",
+    "react-modal-sheet": "^2.2.0",
     "react-placeholder-loading": "^0.5.30",
     "react-router-dom": "6.20.0",
     "react-scripts": "5.0.1",
@@ -47,7 +47,8 @@
     "react-toastify": "^9.1.3",
     "react-transition-group": "^4.4.5",
     "slick-carousel": "^1.8.1",
-    "swiper": "^5.2.0",
+    "swiper": "^11.0.7",
+    "swiper-react": "^1.0.0",
     "use-react-screenshot": "^4.0.0",
     "web-vitals": "^2.1.4"
   },
