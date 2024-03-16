@@ -236,12 +236,12 @@ function MyOrders() {
     formdata.append("payment_method", "1");
     formdata.append("user_card_id", "1");
 
-    console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    console.log("payment_method:", "1");
-    console.log("user_card_id:", "1");
+    // console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+    // console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+    // console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    // console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    // console.log("payment_method:", "1");
+    // console.log("user_card_id:", "1");
 
     var requestOptions = {
       Accept: 'application/json',
@@ -251,7 +251,7 @@ function MyOrders() {
       redirect: 'follow'
     };
 
-    console.log(requestOptions);
+    // console.log(requestOptions);
 
     fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
       .then(response => response.json())
@@ -263,7 +263,7 @@ function MyOrders() {
             localStorage.setItem('counterValue', 0);
           }, 1500);
           setDataModal(result.data);
-          console.log(result);
+          // console.log(result);
         } else {
           toast.error('Заказ не был оформлен!');
         }

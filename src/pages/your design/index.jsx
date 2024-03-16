@@ -147,12 +147,12 @@ const YourDesign = () => {
         canvas.add(img);
         canvas.renderAll();
         setPhotoInputVisible(!photoInputVisible);
-        console.log(photoInputVisible);
+        // console.log(photoInputVisible);
         setImage2(img);
       };
     };
 
-    console.log(reader);
+    // console.log(reader);
 
     setPrintImage(e.target.files[0]);
   
@@ -189,12 +189,9 @@ const YourDesign = () => {
       canvas.remove(image2);
       setImage2(null);
       setPhotoInputVisible(photoInputVisible);
-      console.log(image2);
-      console.log(photoInputVisible);
+      // console.log(image2);
+      // console.log(photoInputVisible);
       window.location.reload();
-    } else {
-      console.log(image2);
-      console.log(photoInputVisible);
     }
   };
 
@@ -272,9 +269,9 @@ const YourDesign = () => {
   };
 
   const deleteText = () => {
-    console.log(text2);
+    // console.log(text2);
     setTextInputVisible(true)
-    console.log(textInputVisible);
+    // console.log(textInputVisible);
   };
 
   function valuetext(value) {

@@ -179,7 +179,7 @@ function HeaderMain({ trashCardData }) {
         localStorage.setItem('user_name', result.data.user.first_name);
         setIsRegisterEntered(false);
         setIsSuccesEntered(true);
-        console.log(result);
+        // console.log(result);
       })
       .catch(error => {
         toast.error('Регистрация не была оформлена.');

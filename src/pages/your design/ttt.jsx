@@ -155,8 +155,8 @@ const YourDesign = () => {
       
       imgObj.src = selectedImage;
 
-      console.log(imgObj);
-      console.log(selectedImage);
+      // console.log(imgObj);
+      // console.log(selectedImage);
   
       imgObj.onload = function () {
         const img = new fabric.Image(imgObj);
@@ -167,11 +167,11 @@ const YourDesign = () => {
         canvas.add(img);
         canvas.renderAll();
         setPhotoInputVisible(!photoInputVisible);
-        console.log(imgObj);
+        // console.log(imgObj);
       };
     }
     
-    console.log(selectedImageIndex);
+    // console.log(selectedImageIndex);
   };
 
   useEffect(() => {
@@ -487,7 +487,7 @@ const YourDesign = () => {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setImageList(response.data.data);
     }).catch((error) => {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');

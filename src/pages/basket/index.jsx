@@ -337,7 +337,7 @@ function Basket() {
       setPrice(totalPrice);      
       setDiscount_price(totalDiscountPrice);
       
-      console.log(selectedItemsData.map(item => item.discount_price));
+      // console.log(selectedItemsData.map(item => item.discount_price));
 
       calculateTotalPrice(selectedItemsData);
 

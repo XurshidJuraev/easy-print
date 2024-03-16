@@ -36,7 +36,7 @@ function FooterBarMobile() {
     }).then((response) => {
       const basket_number = response.data.data.basket_count;
       localStorage.setItem('counterValue', basket_number.toString());
-      console.log(response.data.data.basket_count);
+      // console.log(response.data.data.basket_count);
     }).catch((error) => {
       console.log(error);
     })

@@ -102,7 +102,7 @@ function OrderMobile() {
         setProducts_total(response.data.data.grant_total);
         setOrders(response.data.data);
         setAdrse(response.data.data.list.length)
-        console.log(response.data.data);
+        // console.log(response.data.data);
       } catch (error) {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
@@ -225,12 +225,12 @@ function OrderMobile() {
     formdata.append("payment_method", "1");
     formdata.append("user_card_id", "1");
 
-    console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    console.log("payment_method:", "1");
-    console.log("user_card_id:", "1");
+    // console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+    // console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+    // console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    // console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    // console.log("payment_method:", "1");
+    // console.log("user_card_id:", "1");
 
     var requestOptions = {
       Accept: 'application/json',
@@ -239,8 +239,6 @@ function OrderMobile() {
       body: formdata,
       redirect: 'follow'
     };
-
-    console.log(requestOptions);
 
     fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
       .then(response => response.json())

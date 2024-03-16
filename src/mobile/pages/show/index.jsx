@@ -167,7 +167,7 @@ function ProductShowMobile() {
 
       localStorage.setItem('basket', JSON.stringify(basketData));
 
-      console.log(basketData);
+      // console.log(basketData);
   
       fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
         .then(response => response.json())

@@ -17,7 +17,7 @@ function AdsSlider() {
         token: token
       }
     }).then((response) => {
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setSlider(response.data.data);
     }).catch((error) => {
       console.log(error);

@@ -140,7 +140,7 @@ function BasketMobile() {
         order_id: data.data.id
       };
 
-      console.log('apiData:', apiData);
+      // console.log('apiData:', apiData);
 
       localStorage.setItem('order_id', data.data.id);
       localStorage.setItem('paymentDate', JSON.stringify({ price, coupon_price, discount_price, grant_total }));
@@ -247,7 +247,7 @@ function BasketMobile() {
         order_id: data.data.id
       };
 
-      console.log('apiData:', apiData);
+      // console.log('apiData:', apiData);
 
       localStorage.setItem('order_id', data.data.id);
       localStorage.setItem('paymentDate', JSON.stringify({ price, coupon_price, discount_price, grant_total }));

@@ -97,7 +97,7 @@ function Profile() {
       redirect: 'follow',
     };
 
-    console.log(formData);
+    // console.log(formData);
 
     axios.post(`${process.env.REACT_APP_TWO}/personal-information`, formdata,
       {
