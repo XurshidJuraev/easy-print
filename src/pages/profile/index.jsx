@@ -60,6 +60,7 @@ function Profile() {
         });
 
         localStorage.setItem('user_image', responseData.image);
+        console.log(response);
         localStorage.setItem('user_phone_number', responseData.phone_number);
         localStorage.setItem('user_last_name', responseData.last_name);
         localStorage.setItem('user_name', responseData.first_name);
@@ -70,10 +71,10 @@ function Profile() {
   }, [token]);
 
   const handleUpdateBackend = () => {
-    var myHeaders = new Headers();
-    myHeaders.append("language", `${localStorage.getItem('selectedLanguage')}`);
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    // var myHeaders = new Headers();
+    // myHeaders.append("language", `${localStorage.getItem('selectedLanguage')}`);
+    // myHeaders.append("Accept", "application/json");
+    // myHeaders.append("Authorization", `Bearer ${token}`);
 
     var formdata = new FormData();
     formdata.append("first_name", formData.name ? formData.name : '');
@@ -87,15 +88,23 @@ function Profile() {
       formdata.append("image", formData.img);
     }
 
+    // console.log("first_name", formData.name ? formData.name : '');
+    // console.log("last_name", formData.lastName ? formData.lastName : '');
+    // console.log("phone_number", formData.phoneNumber ? formData.phoneNumber : '');
+    // console.log("gender", formData.gender ? formData.gender : 1);
+    // console.log("email", formData.email ? formData.email : '');
+    // console.log("birth_date", formData.birthDate ? formData.birthDate : '');
+    // console.log(formdata.append("image", formData.img));
+
     localStorage.setItem('user_name', formData.name);
     localStorage.setItem('user_image', formData.image);
 
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: formdata,
-      redirect: 'follow',
-    };
+    // var requestOptions = {
+    //   method: 'POST',
+    //   headers: myHeaders,
+    //   body: formdata,
+    //   redirect: 'follow',
+    // };
 
     // console.log(formData);
 

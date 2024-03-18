@@ -4,9 +4,11 @@ import no_image from '../../layouts/images/user.svg'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 function ProfileHeader() {
   const [isActive, setIsActive] = useState(false);
+  const [beckImage, setBeckImage] = useState();
   const navigate = useNavigate();
 
   const toggleActive = (itemIndex) => {
@@ -35,6 +37,28 @@ function ProfileHeader() {
     updateActiveTab();
   }, []);
 
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_TWO}/personal-information`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          language: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+        },
+      })
+      .then((response) => {
+        const responseData = response.data.data;
+
+        setBeckImage(responseData.image);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [token]);
+
   const handleLogout = () => {
     toast.success('Выход из вашей учетной записи успешно завершен!');
     setTimeout(() => {
@@ -51,7 +75,8 @@ function ProfileHeader() {
   return (
     <div className='profile_header'>
       <NavLink to={'/profile'} style={{textDecoration: 'none'}} className="d-flex">
-        <img className='user_image' src={user_image === 'null' ? no_image : user_image} alt={user_name} style={{borderRadius: '50%'}} />
+        {/* <img className='user_image' src={user_image === 'null' || !user_image || user_image === 'undefined' ? no_image : user_image} alt={user_name} style={{borderRadius: '50%'}} /> */}
+        <img className='user_image' src={beckImage ? beckImage : no_image} alt={user_name} style={{borderRadius: '50%'}} />
         <h3 title={user_name ? `${user_name} ${user_last_name}` : 'Без имени фамилия'} style={{marginLeft: '15px', marginTop: '2px'}} className='user_name'>{user_name ? `${user_name} ${user_last_name === 'null' ? '' : user_last_name}` : 'Без имени фамилия'}</h3>
       </NavLink>
 
