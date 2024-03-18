@@ -209,13 +209,13 @@ function MyOrders() {
 
     var formdata = new FormData();
     formdata.append("order_id", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    formdata.append("address_id", addressId);
+    formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
     if (addressId === null) {
       toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы не можете отправить свой заказ. Потому что у тебя нет адреса. Выберите свой адрес и отправьте.' : `Buyurtmani yubora olmaysiz. Chunki sizda manzil yo'q. Manzilingizni tanlang va yuboring.`);
       setNullAddres(true)
       return;
     } else {
-      formdata.append("address_id", addressId);
+      formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
     }
     formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
     if (localStorage.getItem('user_name') === null) {
@@ -236,12 +236,12 @@ function MyOrders() {
     formdata.append("payment_method", "1");
     formdata.append("user_card_id", "1");
 
-    // console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    // console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    // console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    // console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    // console.log("payment_method:", "1");
-    // console.log("user_card_id:", "1");
+    console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+    console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+    console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    console.log("payment_method:", "1");
+    console.log("user_card_id:", "1");
 
     var requestOptions = {
       Accept: 'application/json',

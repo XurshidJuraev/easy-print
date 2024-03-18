@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './main.css'
 import authImage from '../../layouts/images/43.svg'
-import verifed from '../../layouts/images/green_verifed.svg'
 import {NavLink, useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify'
 import CodeVerificationInput from '../../components/code verifed'
@@ -291,36 +290,6 @@ function AuthPageMobile() {
           </form>
         </center>
       </div>
-
-      {/* <center style={{display: success_reg ? 'block' : 'none'}} id='success_reg'>
-        <div onClick={() => {setSuccess_reg(false); setRegister(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-
-        <h2 style={{marginTop: '130px', textAlign: 'center'}} className='auth_title'>Отлично!</h2>
-        <p style={{textAlign: 'center'}} className='auth_text'>Вы зарегистрировались успешно</p>
-        <img style={{width: '100px', height: '100px', marginTop: '120px'}} src={verifed} alt="authImage" />
-        <div className="center flex-column" style={{marginBottom: '120px', marginTop: '120px'}}>
-          <button onClick={() => {navigate('/mobile'); setSuccess_reg(false)}} className='auth_button_reg'>Назад на главную</button>
-        </div>
-      </center>
-
-      <center style={{display: success_login ? 'block' : 'none'}} id='success_login'>
-        <div onClick={() => {setSuccess_login(false); setLogin(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-
-        <h2 style={{marginTop: '130px', textAlign: 'center'}} className='auth_title'>Отлично!</h2>
-        <p style={{textAlign: 'center'}} className='auth_text'>Вы вошли в свой личный кабинет</p>
-        <img style={{width: '100px', height: '100px', marginTop: '120px'}} src={verifed} alt="authImage" />
-        <div className="center flex-column" style={{marginBottom: '120px', marginTop: '120px'}}>
-          <button onClick={() => {navigate('/mobile'); setSuccess_login(false)}} className='auth_button_reg'>Назад на главную</button>
-        </div>
-      </center> */}
     </div>
   )
 }

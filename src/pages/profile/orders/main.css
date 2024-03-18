@@ -55,6 +55,12 @@
   height: 28px;
 }
 
+.hidden_three_dots {
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
 .order_profile_text {
   color: var(--Neutral-900, #1A1A1A);
   font-family: 'Inter400';

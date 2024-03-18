@@ -12,6 +12,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Placeholder from 'react-placeholder-loading';
 import { ToastContainer, toast } from 'react-toastify'
+import CodeVerificationInput from '../../mobile/components/code verifed'
 
 function HeaderMain({ trashCardData }) {
   const [data, setData] = useState([]);
@@ -496,6 +497,9 @@ function HeaderMain({ trashCardData }) {
                   <p className='register_in_text'>Код подтверждения</p>
 
                   <input name='phone' id='code_verify' className='register_input' type="text" placeholder='_ _ _ _ _ _' />
+                  {/* <div className='center'>
+                    <CodeVerificationInput length={6} name='phone' id='code_verify' />
+                  </div> */}
                 </label>
 
                 <button className='register'>Подтвердить</button>

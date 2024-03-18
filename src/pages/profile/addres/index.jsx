@@ -18,6 +18,8 @@ function ProfileAddres() {
     city_id: '',
     name: '',
     postcode: '',
+    city_id: '',
+    region: '',
   });
   const [formErrors, setFormErrors] = useState({
     region: false,
@@ -27,6 +29,7 @@ function ProfileAddres() {
   });
   const [data, setData] = useState([]);
   const [dataGet, setDataGet] = useState([]);
+  const [dataGetEdit, setDataEdit] = useState([]);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -38,23 +41,63 @@ function ProfileAddres() {
   
     const selectedAddress = dataGet.data.find((address) => address.id === id);
     if (selectedAddress) {
-      // Set the selected region and cities based on the existing address data
       const selectedRegionData = data.find((region) => region.region === selectedAddress.region.name);
       if (selectedRegionData) {
         setCities(selectedRegionData.cities || []);
       } else {
-        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+        console.log('No selectedRegionData found');
       }
   
-      // Set the form data including region and city
       setFormData({
         id: selectedAddress.id,
         city_id: selectedAddress.city.id,
         name: selectedAddress.name,
         postcode: selectedAddress.postcode,
-        region: selectedAddress.region.name, // Assuming your API returns region name
+        region: selectedAddress.region.name,
       });
     }
+
+    if (id) {
+      const selectedAddress = dataGet.data.find((address) => address.id === editAddressId);
+      if (selectedAddress) {
+        setFormData({
+          id: selectedAddress.id,
+          city_id: selectedAddress.city_id,
+          name: selectedAddress.name,
+          postcode: selectedAddress.postcode,
+        });
+
+        const selectedRegion = data.find((region) => {
+          const selectedCity = region.cities.find((city) => city.id === selectedAddress.city_id);
+          return selectedCity ? region.region === selectedCity.region : false;
+        });
+
+        if (selectedRegion) {
+          setCities(selectedRegion.cities);
+        }
+      }
+    } else {
+      const initialRegion = data[0];
+      if (initialRegion) {
+        setFormData({
+          city_id: initialRegion.cities[0]?.id,
+          name: '',
+          postcode: '',
+        });
+        setCities(initialRegion.cities);
+      }
+    }
+
+    setDataEdit(selectedAddress);
+
+    console.log(
+      data.map((region) => (
+        region
+      ))
+    );
+
+    console.log(formData);
+    console.log(dataGetEdit);
   };
 
   const handleCloseModal = () => {
@@ -110,10 +153,30 @@ function ProfileAddres() {
       return;
     }
 
-    const apiUrl = editAddressId ? `${process.env.REACT_APP_TWO}/edit-address` : `${process.env.REACT_APP_TWO}/set-address`;
+    const apiUrl = editAddressId ? `${process.env.REACT_APP_TWO}/set-address` : `${process.env.REACT_APP_TWO}/set-address`;
 
-    axios
-      .post(apiUrl, formData, {
+    axios.post(apiUrl, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      })
+      .then((response) => {
+        toast.success('Malumotlar saqlandi!');
+        handleCloseModal();
+        window.location.reload();
+      })
+      .catch((error) => {
+        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+      });
+  };
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+
+    const apiUrl = editAddressId ? `${process.env.REACT_APP_TWO}/edit-address` : `${process.env.REACT_APP_TWO}/edit-address`;
+
+    axios.post(apiUrl, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
@@ -201,41 +264,9 @@ function ProfileAddres() {
       });
   };
 
-  useEffect(() => {
-    if (editAddressId) {
-      // If editing, find the selected address and set initial values
-      const selectedAddress = dataGet.data.find((address) => address.id === editAddressId);
-      if (selectedAddress) {
-        setFormData({
-          id: selectedAddress.id, // Add id field for the edit operation
-          city_id: selectedAddress.city_id,
-          name: selectedAddress.name,
-          postcode: selectedAddress.postcode,
-        });
-
-        // Find the region based on the selected city
-        const selectedRegion = data.find((region) => {
-          const selectedCity = region.cities.find((city) => city.id === selectedAddress.city_id);
-          return selectedCity ? region.region === selectedCity.region : false;
-        });
-
-        if (selectedRegion) {
-          setCities(selectedRegion.cities);
-        }
-      }
-    } else {
-      // If not editing, set initial values based on the first region and city
-      const initialRegion = data[0];
-      if (initialRegion) {
-        setFormData({
-          city_id: initialRegion.cities[0]?.id,
-          name: '',
-          postcode: '',
-        });
-        setCities(initialRegion.cities);
-      }
-    }
-  }, [editAddressId, data, dataGet.data]);
+  // useEffect(() => {
+    
+  // }, [editAddressId, data, dataGet.data]);
 
   return (
     <>
@@ -283,11 +314,66 @@ function ProfileAddres() {
 
             {dataGet.status === true ? (
               <div className='d-flex justify-content-end mt-4' style={{marginRight: '142px'}}>
-                <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal">Добавить адрес</button>
+                <button className='no_address_button' data-bs-toggle="modal" data-bs-target="#exampleModal2">Добавить адрес</button>
               </div>
             ) : null}
 
             <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px', width: '520px'}}>
+                <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
+                  <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none', paddingTop: '48px'}}>
+                    <center>
+                      <h1 className="modal-title modal_title" id="exampleModalLabel">Ваш адрес</h1>
+                    </center>
+                  </div>
+                  <div style={{padding: '48px'}} className="modal-body">
+                    <form onSubmit={handleEdit}>
+                      <div className="d-flex align-items-center mb-2 justify-content-between">
+                        <p className='address_modal_text'>Область</p>
+
+                        <select style={{border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px'}} className='input_profile' onChange={handleChange}>
+                          {data.map((region) => (
+                            <option selected={dataGetEdit.region && region.region === dataGetEdit.region.name} key={region.id} value={region.region}>
+                              {region.region}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="d-flex align-items-center mb-2 justify-content-between">
+                        <p className='address_modal_text'>Город</p>
+
+                        <select style={{border: formErrors.city_id ? '1px solid red' : 'none', margin: 'auto', marginLeft: '87px', width: '280px'}} name="city_id" className='input_profile' value={formData.city} onChange={handleChange}>
+                          {cities.map((city) => (
+                            <option selected={dataGetEdit.city && city.id === dataGetEdit.city.id} key={city.id} value={city.id}>
+                              {city.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="d-flex align-items-center justify-content-between">
+                        <p className='address_modal_text'>Ул. и дом</p>
+
+                        <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder="Ул. и дом" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
+                      </div>
+
+                      <div className="d-flex align-items-center justify-content-between">
+                        <p style={{marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none'}} className='address_modal_text'>Почтовый индекс</p>
+
+                        <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+                        <button style={{width: '100%'}} type="submit" className='btn_profile'>Добавить адрес</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px', width: '520px'}}>
                 <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
                   <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none', paddingTop: '48px'}}>

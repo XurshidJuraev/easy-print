@@ -297,7 +297,6 @@ function Basket() {
       setPromoMessageColor(promoColor);
     })
     .catch((error) => {
-      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
       promoMessage = `Введенный вами промокод ${promoCode} не сработал.`;
       promoColor = 'red';
