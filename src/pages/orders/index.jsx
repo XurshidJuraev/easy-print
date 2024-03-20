@@ -683,7 +683,7 @@ function MyOrders() {
           <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
             <div className="modal-header d-flex justify-content-between" style={{borderBottom: 'none', padding: '32px'}}>
               <div style={{width: '100%'}} className="d-flex mt-4 flex-column">
-                <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div style={{display: 'flex', justifyContent: 'center', marginLeft: '25px'}}>
                   <img src={saved_order_modal} alt="saved_order_modal" />
                 </div>
               </div>
@@ -706,7 +706,7 @@ function MyOrders() {
                   <p className='order_modal_body_text'>{dataModal.pick_up_time ? dataModal.pick_up_time : 'Завтра'}</p>
                 </div>
 
-                <div data-bs-dismiss="modal" aria-label="Close" onClick={() => handleGetHome()} className='basket_promo_btn_price'>Продолжить покупки</div>
+                <div style={{cursor: 'pointer'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => handleGetHome()} className='basket_promo_btn_price'>Продолжить покупки</div>
               </center>
             </div>
           </div>

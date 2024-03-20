@@ -6,6 +6,7 @@ import axios from 'axios';
 import './main.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Placeholder from 'react-placeholder-loading';
+import DOMPurify from 'dompurify';
 
 function HeroMain() {
   const [data, setData] = useState([]);

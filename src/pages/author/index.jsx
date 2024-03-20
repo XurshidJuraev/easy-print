@@ -16,7 +16,7 @@ function AuthorPage() {
   const [trashCardData, setTrashCardData] = useState([]);
   const [data, setData] = useState([]);
   const params = useParams()
-  const [displayedItems, setDisplayedItems] = useState(8);
+  const [displayedItems, setDisplayedItems] = useState(6);
   const token = localStorage.getItem('token');
   const [selectedCard, setSelectedCard] = useState(null);
   const [colorArray, setColorArray] = useState([]);
@@ -281,7 +281,8 @@ function AuthorPage() {
           </div>
         </div>
 
-          {/* <h2 className='products_father_text mb-3 ms-5 mt-4'>Товары</h2> */}
+        <h2 className='products_father_text ms-3' style={{marginBottom: '100px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Товары' : 'Mahsulotlar'}</h2>
+
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
           <div className="container">
             {isLoading ? (

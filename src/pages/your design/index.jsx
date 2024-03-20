@@ -147,7 +147,7 @@ const YourDesign = () => {
         canvas.add(img);
         canvas.renderAll();
         setPhotoInputVisible(!photoInputVisible);
-        // console.log(photoInputVisible);
+        console.log(photoInputVisible);
         setImage2(img);
       };
     };

@@ -84,8 +84,9 @@ function CategoryListByName() {
     }).then((response) => {
       setData(response.data);
       setIsLoading(false);
-      setCategory(response.data.data[0].category.name);
-      setSubCategory(response.data.data[0].sub_category.name);
+      setCategory(response.data.data[0].category);
+      setSubCategory(response.data.data[0].sub_category);
+      console.log(response.data.data[0]);
       setSubCategoryQuant(response.data.data[0].products.length);
     }).catch((error) => {
       setIsLoading(false);
@@ -253,6 +254,8 @@ function CategoryListByName() {
     }
   };
 
+  console.log(subCategory);
+
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
@@ -333,16 +336,22 @@ function CategoryListByName() {
           <>
             <div style={{marginBottom: '28px'}}>
               <p className='categories_title'>
-                {category}
+                {category && (
+                  <NavLink className='categories_title_link_sub' to={`/categories/${category.id}/${category.name}`}>{category.name}</NavLink>
+                )}
 
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7.5 15L12.5 10L7.5 5" stroke="#3C7CFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <path d="M7.5 15L12.5 10L7.5 5" stroke="#3C7CFB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
 
-                {subCategory}
+                {subCategory.length > 0 && (
+                  <NavLink className='categories_title_link_sub' style={{ display: subCategory.length === 1 ? 'inline' : 'none' }} to={`/categories/${subCategory[0].id}/${subCategory[0].name}`}>
+                    {subCategory[0].name}
+                  </NavLink>
+                )}
               </p>
 
-              <h3>{category} <span className='categories_quant'>{subCategoryQuant}</span></h3>
+              <h3>{category.name} <span className='categories_quant'>{subCategoryQuant}</span></h3>
             </div>
 
             {data.data ? data.data.map(category => (

@@ -6,6 +6,17 @@
   letter-spacing: 0em;
   text-align: left;  
   color: #6396FC;
+  text-decoration: none;
+}
+
+.categories_title_link_sub {
+  color: #6396FC;
+  text-decoration: none;
+}
+
+.categories_title_link_sub:hover {
+  color: #0F7CF4;
+  text-decoration: none;
 }
 
 .categories_quant {
