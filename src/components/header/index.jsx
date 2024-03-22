@@ -70,7 +70,7 @@ function HeaderMain({ trashCardData }) {
       })
   })
 
-  const cls = visible ? "visible header_main" : "hidden header_main";
+  const cls = visible ? "visible" : "hidden";
 
   let docTitle = document.title;
 
@@ -297,7 +297,7 @@ function HeaderMain({ trashCardData }) {
   });
 
   return (
-    <header className={cls} style={{backgroundColor: '#ffffff'}}>
+    <header style={{backgroundColor: '#ffffff'}}>
       {isLoading ? (
         <div className='container pt-4 pb-4'>
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
@@ -433,14 +433,14 @@ function HeaderMain({ trashCardData }) {
           </ul>
 
           <div className="d-flex">
-            <div style={{marginTop: '2.12621359223301vh', marginLeft: '12.135922330097088vh'}} className='header_search'>
+            <div style={{marginLeft: '12.135922330097088vh'}} className='header_search'>
               <center>
                 <input className="header_search_input" type="search" placeholder="Поиск..." aria-label="Поиск..." />
                 <img className='header_search_icon' src={search} alt="search" />
               </center>
             </div>
 
-            <div style={{marginTop: '1.1553398058252426vh'}} className="d-flex">
+            <div className="d-flex">
               <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none', position: 'relative', zIndex: '100'}}>
                 <img className='language_icon' style={{marginTop: '-0.24271844660194175vh'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
               </button>
