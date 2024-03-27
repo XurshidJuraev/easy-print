@@ -1015,7 +1015,7 @@ function Basket() {
                               <div>
                                 <div className="basket_info1">
                                   <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
-                                    <p className='basket_card_name'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
+                                    <p className='basket_card_name hiided_text'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
                                   </NavLink>
 
                                   <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>

@@ -553,7 +553,7 @@ const cls = visible ? "visible" : "hidden";
                                   </div>
 
                                   <div style={{marginLeft: '12px'}}>
-                                    <p className='order_name'>{item.name ? item.name : ''}</p>
+                                    <p className='order_name hiided_text'>{item.name ? item.name : ''}</p>
                                     <p className='order_price'>{item.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                                   </div>
                                 </div>
