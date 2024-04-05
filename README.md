@@ -1,10 +1,10 @@
 # EasyPrint site version 1
 \
 Laptop Page\
-  -- 404 
+  -- 404\
   -- Author\
   -- Basket\
-  -- Categor\y
+  -- Category\
   -- Footer\ 
     -- About\ 
     -- Cooperation\ 
@@ -14,21 +14,21 @@ Laptop Page\
       -- Order\ 
       -- Pay\ 
       -- Terms\ 
-  -- Home
+  -- Home\
   -- Orders\
   -- Profile\ 
     -- Addres\ 
     -- Orders\ 
     -- Pay (Not Working)\ 
-  -- Show
+  -- Show\
   -- Your Desig\n
 \
 Mobile Page\
-  -- 404 
-  -- Auth 
+  -- 404 \
+  -- Auth \
   -- Author\
   -- Basket\
-  -- Categor\y
+  -- Category\
   -- Footer\ 
     -- About\ 
     -- Cooperation\ 
@@ -38,10 +38,10 @@ Mobile Page\
       -- Order\ 
       -- Pay\ 
       -- Terms\ 
-  -- Home
+  -- Home\
   -- Orders\
   -- Profile\ 
     -- Addres\ 
     -- Orders\ 
-  -- Show
-  -- Your Desig\n
+  -- Show\
+  -- Your Design\
