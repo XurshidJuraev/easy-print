@@ -5,23 +5,24 @@ Laptop Page\
   -- Author\
   -- Basket\
   -- Category\
-  -- Footer\ 
-    -- About\ 
-    -- Cooperation\ 
-    -- Information\ 
-      -- Delivery\ 
-      -- Exchange\ 
-      -- Order\ 
-      -- Pay\ 
-      -- Terms\ 
+  -- Footer\
+    -- About\
+    -- Cooperation\
+    -- Information\
+      -- Delivery\
+      -- Exchange\
+      -- Order\
+      -- Pay\
+      -- Terms\
   -- Home\
   -- Orders\
-  -- Profile\ 
-    -- Addres\ 
-    -- Orders\ 
-    -- Pay (Not Working)\ 
+  -- Profile\
+    -- Addres\
+    -- Orders\
+    -- Pay (Not Working)\
   -- Show\
-  -- Your Desig\n
+  -- Your Design\
+\
 \
 Mobile Page\
   -- 404 \
@@ -29,19 +30,19 @@ Mobile Page\
   -- Author\
   -- Basket\
   -- Category\
-  -- Footer\ 
-    -- About\ 
-    -- Cooperation\ 
-    -- Information\ 
-      -- Delivery\ 
-      -- Exchange\ 
-      -- Order\ 
-      -- Pay\ 
-      -- Terms\ 
+  -- Footer\
+    -- About\
+    -- Cooperation\
+    -- Information\
+      -- Delivery\
+      -- Exchange\
+      -- Order\
+      -- Pay\
+      -- Terms\
   -- Home\
   -- Orders\
-  -- Profile\ 
-    -- Addres\ 
-    -- Orders\ 
+  -- Profile\
+    -- Addres\
+    -- Orders\
   -- Show\
   -- Your Design\
