@@ -42,7 +42,7 @@ Mobile Page\
 ⋅⋅ Home\
 ⋅⋅ Orders\
 ⋅⋅ Profile\
-⋅⋅⋅⋅⋅⋅ Addres\
-⋅⋅⋅⋅⋅⋅ Orders\
+⋅⋅⋅⋅ Addres\
+⋅⋅⋅⋅ Orders\
 ⋅⋅ Show\
 ⋅⋅ Your Design\
