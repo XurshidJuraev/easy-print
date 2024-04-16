@@ -41,6 +41,20 @@ function ProfileMobileOrder() {
   }, []);
 
   const handleShowOrder = (id) => {
+    const accordionItems = document.querySelectorAll('.accordion-item');
+
+    accordionItems.forEach(item => {
+      const button = item.querySelector('.accordion-button');
+      const collapseId = button.getAttribute('data-bs-target').slice(1); // Slice to remove '#'
+
+      if (collapseId !== `flush-collapseOne${id}`) {
+        const collapse = document.getElementById(collapseId);
+        if (collapse.classList.contains('show')) {
+          collapse.classList.remove('show');
+        }
+      }
+    });
+
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -57,7 +71,7 @@ function ProfileMobileOrder() {
       .catch((error) => {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
-  };  
+  };
 
   // useEffect(() => {
   //   const token = localStorage.getItem('token');
