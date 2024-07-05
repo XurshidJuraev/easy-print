@@ -25,6 +25,10 @@ function HomePage() {
   const [sizeOptions, setSizeOptions] = useState([]);
   const [colorOptions, setColorOptions] = useState([]);
   const [selectedColor, setSelectedColor] = useState('#D9CCC6');
+  const [displayedPrice, setDisplayedPrice] = useState();
+  const [displayedName, setDisplayedName] = useState();
+  const [displayedImage, setDisplayedImage] = useState();
+  const [displayedQuantity, setDisplayedQuantity] = useState();
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [data, setData] = useState([]);
   const token = localStorage.getItem('token');
@@ -165,6 +169,10 @@ function HomePage() {
       setColorArray(response.data.data.color_by_size);
       setSizeArray(response.data.data.color_by_size);
       setModalData(response.data.data);
+      setDisplayedName(response.data.data.color_by_size[0].color[0].product.name);
+      setDisplayedQuantity(response.data.data.color_by_size[0].color[0].product.quantity);
+      setDisplayedImage(response.data.data.images)
+      setDisplayedPrice(response.data.data.color_by_size[0].color[0].product.price)
       setIsLoadingModal(false);
     }).catch((error) => {
       setIsLoadingModal(false);
@@ -622,16 +630,56 @@ function HomePage() {
                   {modalData && (
                     <div className='d-flex'>
                       <div style={{padding: '80px 32px 0px 32px'}}>
-                        <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
+                        <p className='modal_name'>{displayedName ? displayedName : 'Название отсутствует'}</p>
                         <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                        <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                        <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
 
                         <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
-                          <div className='d-flex' style={{marginRight: '83px'}}>
+                          {/* <div className='d-flex' style={{marginRight: '83px'}}>
                             <p>Размер</p>
                             <select style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}} value={sizeOptions[selectedSizeIndex]} onChange={(e) => { const index = sizeOptions.findIndex((size) => size === e.target.value); setSelectedSizeIndex(index); }}>
                               {sizeArray.map((size, index) => (
-                                <option key={size.id} onClick={() => {setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId)}} value={size.name}>{size.name}</option>
+                                <option 
+                                  key={size.id} 
+                                  onClick={() => {
+                                    console.log(size);
+                                    setSelectedSizeIndex(index); 
+                                    const selectedSizeId = size.id; 
+                                    setDefaultSize(selectedSizeId); 
+                                    setDisplayedPrice(size.color[0].product.price); 
+                                    setDisplayedName(size.color[0].product.name); 
+                                    setDisplayedQuantity(size.color[0].product.quantity); 
+                                    setDisplayedImage(size.color[0].product.img)
+                                  }} 
+                                  value={size.name}
+                                >
+                                  {size.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div> */}
+
+                          <div className='d-flex' style={{ marginRight: '83px' }}>
+                            <p>Размер</p>
+                            <select
+                              style={{ border: 'none', height: '29px', marginLeft: '12px', outline: 'none' }}
+                              value={sizeOptions[selectedSizeIndex]}
+                              onChange={(e) => {
+                                const index = sizeOptions.findIndex((size) => size === e.target.value);
+                                setSelectedSizeIndex(index);
+                                const selectedSize = sizeArray[index];
+                                const selectedSizeId = selectedSize.id;
+                                setDefaultSize(selectedSizeId);
+                                setDisplayedPrice(selectedSize.color[0].product.price);
+                                setDisplayedName(selectedSize.color[0].product.name);
+                                setDisplayedQuantity(selectedSize.color[0].product.quantity);
+                                setDisplayedImage(selectedSize.color[0].product.img);
+                              }}
+                            >
+                              {sizeArray.map((size, index) => (
+                                <option key={size.id} value={size.name}>
+                                  {size.name}
+                                </option>
                               ))}
                             </select>
                           </div>
@@ -648,7 +696,11 @@ function HomePage() {
                                   onClick={() => {
                                     setSelectedColorIndex(index);
                                     const selectedColorId = color.id;
-                                    setDefaultColor(selectedColorId)
+                                    setDefaultColor(selectedColorId);
+                                    setDisplayedPrice(color.product.price); 
+                                    setDisplayedName(color.product.name); 
+                                    setDisplayedQuantity(color.product.quantity); 
+                                    setDisplayedImage(color.product.img)
                                   }}
                                 >
                                   <div className="color" style={{backgroundColor: color.code}}></div>
@@ -670,7 +722,7 @@ function HomePage() {
 
                         <div className='d-flex'>
                           <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{modalData.quantity}</p>
+                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{displayedQuantity}</p>
                         </div>
 
                         <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
@@ -706,7 +758,7 @@ function HomePage() {
                       </div>
 
                       <div className='modal_image_fat'>
-                        <img src={modalData.images ? modalData.images[0] : ''} alt="your_design" />
+                        <img src={displayedImage ? displayedImage[0] : ''} alt="your_design" />
                       </div>
                     </div>
                   )}

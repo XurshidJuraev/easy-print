@@ -47,7 +47,6 @@ function AuthorPage() {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      // console.log(response.data.data[0]);
       setIsLoading(false);
       setAuthor(response.data.data[0]);
     }).catch((error) => {

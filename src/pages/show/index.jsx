@@ -40,17 +40,24 @@ function ShowDetail() {
   const [displayedPrice, setDisplayedPrice] = useState();
   const [displayedName, setDisplayedName] = useState();
   const [displayedImage, setDisplayedImage] = useState();
+  const [displayedId, setDisplayedId] = useState();
   const [displayedQuantity, setDisplayedQuantity] = useState();
   const [modalData, setModalData] = useState([]);
   const [count, setCount] = useState(1);
   const [selectedSize, setSelectedSize] = useState('s');
   const [selectedColor, setSelectedColor] = useState('#D9CCC6');
+  const [clickIdColor, setClickIdColor] = useState();
+  const [clickIdSize, setClickIdSize] = useState();
   const [defaultSize, setDefaultSize] = useState();
   const [defaultColor, setDefaultColor] = useState();
   const [countHeader, setCountHeader] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [isLoadingModal, setIsLoadingModal] = useState(true);
+  const [displayedPrice2, setDisplayedPrice2] = useState();
+  const [displayedName2, setDisplayedName2] = useState();
+  const [displayedImage2, setDisplayedImage2] = useState();
+  const [displayedQuantity2, setDisplayedQuantity2] = useState();
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
@@ -152,7 +159,7 @@ function ShowDetail() {
       setDisplayedName(response.data.data.color_by_size[0].color[0].product.name);
       setDisplayedQuantity(response.data.data.color_by_size[0].color[0].product.quantity);
       setDisplayedImage(response.data.data.images)
-      // console.log();
+      setDisplayedId(response.data.data.id);
       setDisplayedPrice(response.data.data.color_by_size[0].color[0].product.price)
       setIsLoading(false);
     }).catch((error) => {
@@ -195,6 +202,10 @@ function ShowDetail() {
       setColorArray(response.data.data.color_by_size);
       setIsLoadingModal(false);
       setSizeArray(response.data.data.color_by_size);
+      setDisplayedName2(response.data.data.color_by_size[0].color[0].product.name);
+      setDisplayedQuantity2(response.data.data.color_by_size[0].color[0].product.quantity);
+      setDisplayedImage2(response.data.data.images)
+      setDisplayedPrice2(response.data.data.color_by_size[0].color[0].product.price)
     }).catch((error) => {
       setIsLoadingModal(false);
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
@@ -218,8 +229,12 @@ function ShowDetail() {
       const selectedColor = dataBeck.color_by_size[selectedSizeIndex];
       const selectedSize = dataBeck.size_by_color[selectedColorIndex];
   
-      const colorId = selectedColor.color[selectedColorIndex].id;
-      const sizeId = selectedSize.sizes[selectedSizeIndex].id;
+      const colorId = selectedColor.id;
+      const sizeId = selectedSize.id;
+
+      // console.log(productData);
+
+      // alert(colorId ? colorId : `selectedColor ${selectedColor}`, sizeId ? sizeId : `selectedSize: ${selectedSize}`);
   
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
@@ -227,10 +242,11 @@ function ShowDetail() {
       myHeaders.append("Authorization", `Bearer ${token}`);
 
       var formdata = new FormData();
-      formdata.append("warehouse_product_id", productData.id);
+      // formdata.append("warehouse_product_id", productData.id);
+      formdata.append("warehouse_product_id", displayedId);
       formdata.append("quantity", 1);
-      formdata.append("color_id", defaultColor ? defaultColor : colorId);
-      formdata.append("size_id", defaultSize ? defaultSize : sizeId);
+      formdata.append("color_id", defaultColor ? defaultColor : clickIdColor);
+      formdata.append("size_id", defaultSize ? defaultSize : colorId);
       formdata.append("price", productData.price);
       formdata.append("discount", dataBeck.discount ? dataBeck.discount : '0');
   
@@ -244,24 +260,22 @@ function ShowDetail() {
       const basketData = {
         warehouse_product_id: productData.id,
         quantity: 1,
-        color_id: defaultColor ? defaultColor : colorId,
-        size_id: defaultSize ? defaultSize : sizeId,
+        color_id: defaultColor ? defaultColor : clickIdColor,
+        size_id: defaultSize ? defaultSize : colorId,
         price: productData.price,
         discount: dataBeck.discount ? dataBeck.discount : '0'
       };
 
       localStorage.setItem('basket', JSON.stringify(basketData));
 
-      // console.log(basketData);
-  
       fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.status === true) {
             toast(
               <ToastComponent
-                image={productData.images[0] ? productData.images[0] : ''}
-                title={productData.name}
+                image={displayedImage[0] ? displayedImage[0] : ''}
+                title={displayedName}
                 description={productData.description ? productData.description : 'Описание недоступно'}
                 link="/basket"
                 linkText="Перейти в корзину"
@@ -341,6 +355,7 @@ function ShowDetail() {
 
   const handleGetHome = () => {
     navigate('/basket');
+    console.log("aa");
   }
 
   return (
@@ -1035,7 +1050,7 @@ function ShowDetail() {
                             <p className='show_detail_size'>Размер</p>
                             <div className='size_selection' style={{width: '350px'}}>
                               {sizeArray.map((size, index) => (
-                                <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId); console.log(size.color[0]); setDisplayedPrice(size.color[0].product.price); setDisplayedName(size.color[0].product.name); setDisplayedQuantity(size.color[0].product.quantity); setDisplayedImage(size.color[0].product.img) }}>
+                                <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id;  setClickIdColor(size.color[0].id); setDefaultSize(selectedSizeId); setDisplayedId(size.color[0].product.id); setDisplayedPrice(size.color[0].product.price); setDisplayedName(size.color[0].product.name); setDisplayedQuantity(size.color[0].product.quantity); setDisplayedImage(size.color[0].product.img) }}>
                                   {size.name}
                                 </div>
                               ))}
@@ -1045,10 +1060,33 @@ function ShowDetail() {
                           <div>
                             <p className='show_detail_size'>Цвет</p>
 
+                            {/* <div className="d-flex">
+                              {colorArray[selectedSizeIndex]?.color.map((color, index) => (
+                                <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setClickIdColor(color.id); setDefaultColor(selectedColorId); console.log(color.color[0].product.id); setDisplayedId(color.color[0].product.id); setDisplayedPrice(color.product.price); setDisplayedName(color.product.name); setDisplayedQuantity(color.product.quantity); setDisplayedImage(color.product.img) }}>
+                                  <div className="color" style={{backgroundColor: color.code}}></div>
+                                </div>
+                              ))}
+                            </div> */}
+
                             <div className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                                <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setDefaultColor(selectedColorId); setDisplayedPrice(color.product.price); setDisplayedName(color.product.name); setDisplayedQuantity(color.product.quantity); setDisplayedImage(color.product.img) }}>
-                                  <div className="color" style={{backgroundColor: color.code}}></div>
+                                <div
+                                  key={index}
+                                  className="color_border me-4"
+                                  style={{ borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer' }}
+                                  onClick={() => {
+                                    setSelectedColorIndex(index);
+                                    const selectedColorId = color.id;
+                                    setClickIdColor(color.id);
+                                    setDefaultColor(selectedColorId);
+                                    setDisplayedId(color.product.id);
+                                    setDisplayedPrice(color.product.price);
+                                    setDisplayedName(color.product.name);
+                                    setDisplayedQuantity(color.product.quantity);
+                                    setDisplayedImage(color.product.img);
+                                  }}
+                                >
+                                  <div className="color" style={{ backgroundColor: color.code }}></div>
                                 </div>
                               ))}
                             </div>
@@ -1251,12 +1289,12 @@ function ShowDetail() {
                       {modalData && (
                         <div className='d-flex'>
                           <div style={{padding: '80px 32px 0px 32px'}}>
-                            <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
+                            <p className='modal_name'>{displayedName2 ? displayedName2 : 'Название отсутствует'}</p>
                             <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                            <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                            <p className='modal_price'>{Number(displayedPrice2).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
         
                             <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
-                              <div className='d-flex' style={{marginRight: '83px'}}>
+                              {/* <div className='d-flex' style={{marginRight: '83px'}}>
                                 <p>Размер</p>
                                 <select
                                   style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}}
@@ -1291,6 +1329,58 @@ function ShowDetail() {
                                     </div>
                                   ))}
                                 </div>
+                              </div> */}
+
+                              <div className='d-flex' style={{ marginRight: '83px' }}>
+                                <p>Размер</p>
+                                <select
+                                  style={{ border: 'none', height: '29px', marginLeft: '12px', outline: 'none' }}
+                                  value={sizeOptions[selectedSizeIndex]}
+                                  onChange={(e) => {
+                                    const index = sizeOptions.findIndex((size) => size === e.target.value);
+                                    setSelectedSizeIndex(index);
+
+                                    const selectedSize = sizeArray[index];
+                                    console.log(selectedSize);
+                                    const selectedSizeId = selectedSize.id;
+                                    setDefaultSize(selectedSizeId);
+                                    setDisplayedPrice2(selectedSize.color[0].product.price);
+                                    setDisplayedName2(selectedSize.color[0].product.name);
+                                    setDisplayedQuantity2(selectedSize.color[0].product.quantity);
+                                    setDisplayedImage2(selectedSize.color[0].product.img);
+                                  }}
+                                >
+                                  {sizeArray.map((size, index) => (
+                                    <option key={size.id} value={size.name}>
+                                      {size.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+
+                              <div className='d-flex'>
+                                <p>Цвет</p>
+
+                                <div style={{marginLeft: '12px'}} className="d-flex">
+                                  {colorArray[selectedSizeIndex]?.color.map((color, index) => (
+                                    <div
+                                      key={index}
+                                      className="color_border me-4"
+                                      style={{borderColor: selectedColorIndex === index ? '#4D4D4D' : '#E6E6E6', cursor: 'pointer'}}
+                                      onClick={() => {
+                                        setSelectedColorIndex(index);
+                                        const selectedColorId = color.id;
+                                        setDefaultColor(selectedColorId);
+                                        setDisplayedPrice2(color.product.price); 
+                                        setDisplayedName2(color.product.name); 
+                                        setDisplayedQuantity2(color.product.quantity); 
+                                        setDisplayedImage2(color.product.img)
+                                      }}
+                                    >
+                                      <div className="color" style={{backgroundColor: color.code}}></div>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
         
@@ -1316,7 +1406,7 @@ function ShowDetail() {
 
                             <div className='d-flex'>
                               <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
-                              <p className='show_detail_size_quantity ms-1'>{modalData.quantity}</p>
+                              <p className='show_detail_size_quantity ms-1'>{displayedQuantity2}</p>
                             </div>
         
                             <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
@@ -1352,7 +1442,7 @@ function ShowDetail() {
                           </div>
         
                           <div className='modal_image_fat'>
-                            <img src={modalData.images ? modalData.images[0] : ''} alt="your_design" />
+                            <img src={displayedImage2 ? displayedImage2[0] : ''} alt="your_design" />
                           </div>
                         </div>
                       )}
