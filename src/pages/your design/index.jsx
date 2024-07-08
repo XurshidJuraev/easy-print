@@ -190,7 +190,7 @@ const YourDesign = () => {
 
     localStorage.setItem('counterValue', newCount.toString());
   };
-  
+
   localStorage.setItem('selectedColor', '#000000');
 
   useEffect(() => {
@@ -203,15 +203,15 @@ const YourDesign = () => {
 
   const handleCustomPictureChange = (e) => {
     const reader = new FileReader();
-  
+
     reader.onload = function (event) {
       const imgObj = new Image();
       imgObj.src = event.target.result;
       setImeyg(imgObj.src);
-  
+
       imgObj.onload = function () {
         const img = new fabric.Image(imgObj);
-  
+
         img.scaleToHeight(300);
         img.scaleToWidth(300);
         canvas.centerObject(img);
@@ -226,7 +226,7 @@ const YourDesign = () => {
     // console.log(reader);
 
     setPrintImage(e.target.files[0]);
-  
+
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
     }

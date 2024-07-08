@@ -31,6 +31,7 @@ function HeaderMain({ trashCardData }) {
   const [isSuccesEntered, setIsSuccesEntered] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState();
   const [position, setPosition] = useState(window.pageYOffset)
   const [visible, setVisible] = useState(true) 
   const [registrationData, setRegistrationData] = useState({
@@ -210,15 +211,16 @@ function HeaderMain({ trashCardData }) {
     axios.get(`${process.env.REACT_APP_TWO}/profile-info`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
         Accept: "application/json",
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-        // token: token
+        token: token
       }
     }).then((response) => {
       setBascent(response.data.data.basket_count)
       const basket_number = response.data.data.basket_count;
       localStorage.setItem('counterValue', basket_number.toString());
+      setProfileImage(response.data.data.profile[1]);
       setData(response.data)
       setIsLoading(false);
     }).catch((error) => {
@@ -478,7 +480,11 @@ function HeaderMain({ trashCardData }) {
               {localStorage.getItem('token') ? (
                 <NavLink title="Profile" to={'/profile'} style={{marginTop: '1.6990291262135921vh', textDecoration: 'none'}}>
                   <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-1.2135922330097086vh', border: 'none', display: 'flex', marginTop: '0.4854368932038835vh',}}>
-                    <img className='language_icon' src={user} alt="user" />
+                    {profileImage ? (
+                      <img style={{borderRadius: '50%'}} className='language_icon' src={profileImage} alt="user" />
+                    ) : (
+                      <img className='language_icon' src={user} alt="user" />
+                    )}
                     <p className='user_name_text'>{localStorage.getItem('user_name')}</p>
                   </button>
                 </NavLink>

@@ -17,6 +17,7 @@ function HomePageMobile() {
   const [category, setCategory] = useState(null);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayedItems, setDisplayedItems] = useState(11);
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -83,6 +84,12 @@ function HomePageMobile() {
 
   localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
 
+  const handleShowMore = () => {
+    if (data.data && data.data.warehouse_product_list.length > displayedItems) {
+      setDisplayedItems((prevDisplayedItems) => prevDisplayedItems + 12);
+    }
+  };
+
   return (
     <div style={{backgroundColor: '#ffffff'}}>
       <HeaderMainMobile />
@@ -97,7 +104,7 @@ function HomePageMobile() {
         <h2 className='home_card_title_mobile'>Рекомендуем вам:</h2>
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-          {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
+          {data.data ? data.data.warehouse_product_list.slice(3, displayedItems).map((data2) => (
             <Reveal>
               <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '12px'}}>
                 <div className="clothes_fat" style={{borderRadius: '6px'}}>
@@ -118,6 +125,12 @@ function HomePageMobile() {
             </Reveal>
           )): null}
         </div>
+
+        {data.data && data.data.warehouse_product_list.length > displayedItems && (
+          <center className='mt-5'>
+            <button className='show_detail_button' onClick={handleShowMore}>Показать еще</button>
+          </center>
+        )}
       </center>
 
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>

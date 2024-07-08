@@ -158,7 +158,7 @@ function ShowDetail() {
       setDataBeck(response.data.data);
       setDisplayedName(response.data.data.color_by_size[0].color[0].product.name);
       setDisplayedQuantity(response.data.data.color_by_size[0].color[0].product.quantity);
-      setDisplayedImage(response.data.data.images)
+      setDisplayedImage(response.data.data.color_by_size[0].color[0].product.img)
       setDisplayedId(response.data.data.id);
       setDisplayedPrice(response.data.data.color_by_size[0].color[0].product.price)
       setIsLoading(false);
@@ -355,8 +355,21 @@ function ShowDetail() {
 
   const handleGetHome = () => {
     navigate('/basket');
-    console.log("aa");
   }
+
+  useEffect(() => {
+    if (colorArray[selectedSizeIndex] && colorArray[selectedSizeIndex].color.length > 0) {
+      const defaultColor = colorArray[selectedSizeIndex].color[0];
+      setSelectedColorIndex(0);
+      setClickIdColor(defaultColor.id);
+      setDefaultColor(defaultColor.id);
+      setDisplayedId(defaultColor.product.id);
+      setDisplayedPrice(defaultColor.product.price);
+      setDisplayedName(defaultColor.product.name);
+      setDisplayedQuantity(defaultColor.product.quantity);
+      setDisplayedImage(defaultColor.product.img);
+    }
+  }, [selectedSizeIndex, colorArray]);
 
   return (
     <>
@@ -1069,7 +1082,7 @@ function ShowDetail() {
                             </div> */}
 
                             <div className="d-flex">
-                              {colorArray[selectedSizeIndex]?.color.map((color, index) => (
+                              {/* {colorArray[selectedSizeIndex]?.color.map((color, index) => (
                                 <div
                                   key={index}
                                   className="color_border me-4"
@@ -1088,7 +1101,54 @@ function ShowDetail() {
                                 >
                                   <div className="color" style={{ backgroundColor: color.code }}></div>
                                 </div>
-                              ))}
+                              ))} */}
+
+                              <div className="d-flex">
+                                {/* {colorArray[selectedSizeIndex]?.color.map((color, index) => (
+                                  <div
+                                    key={index}
+                                    className="color_border me-4"
+                                    style={{ borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer' }}
+                                    onClick={() => {
+                                      setSelectedColorIndex(index);
+                                      const selectedColorId = color.id;
+                                      setClickIdColor(selectedColorId);
+                                      setDefaultColor(selectedColorId);
+                                      setDisplayedId(color.product.id);
+                                      setDisplayedPrice(color.product.price);
+                                      setDisplayedName(color.product.name);
+                                      setDisplayedQuantity(color.product.quantity);
+                                      setDisplayedImage(color.product.img);
+                                    }}
+                                  >
+                                    <div className="color" style={{ backgroundColor: color.code }}></div>
+                                  </div>
+                                ))} */}
+
+                                {console.log(colorArray[selectedSizeIndex])}
+                                {console.log(dataBeck)}
+
+                                {colorArray[selectedSizeIndex]?.color.map((color, index) => (
+                                  <div
+                                    key={index}
+                                    className="color_border me-4"
+                                    style={{ borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer' }}
+                                    onClick={() => {
+                                      setSelectedColorIndex(index);
+                                      const selectedColorId = color.id;
+                                      setClickIdColor(color.id);
+                                      setDefaultColor(selectedColorId);
+                                      setDisplayedId(color.product.id);
+                                      setDisplayedPrice(color.product.price);
+                                      setDisplayedName(color.product.name);
+                                      setDisplayedQuantity(color.product.quantity);
+                                      setDisplayedImage(color.product.img);
+                                    }}
+                                  >
+                                    <div className="color" style={{ backgroundColor: color.code }}></div>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
                           </div>
 

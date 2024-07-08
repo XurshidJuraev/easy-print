@@ -661,22 +661,25 @@ function HomePage() {
 
                           <div className='d-flex' style={{ marginRight: '83px' }}>
                             <p>Размер</p>
+
                             <select
                               style={{ border: 'none', height: '29px', marginLeft: '12px', outline: 'none' }}
-                              value={sizeOptions[selectedSizeIndex]}
+                              value={sizeArray[selectedSizeIndex]?.name || ''}
                               onChange={(e) => {
-                                const index = sizeOptions.findIndex((size) => size === e.target.value);
-                                setSelectedSizeIndex(index);
-                                const selectedSize = sizeArray[index];
-                                const selectedSizeId = selectedSize.id;
-                                setDefaultSize(selectedSizeId);
-                                setDisplayedPrice(selectedSize.color[0].product.price);
-                                setDisplayedName(selectedSize.color[0].product.name);
-                                setDisplayedQuantity(selectedSize.color[0].product.quantity);
-                                setDisplayedImage(selectedSize.color[0].product.img);
+                                const index = sizeArray.findIndex((size) => size.name === e.target.value);
+                                if (index !== -1) {
+                                  setSelectedSizeIndex(index);
+                                  const selectedSize = sizeArray[index];
+                                  const selectedSizeId = selectedSize.id;
+                                  setDefaultSize(selectedSizeId);
+                                  setDisplayedPrice(selectedSize.color[0].product.price);
+                                  setDisplayedName(selectedSize.color[0].product.name);
+                                  setDisplayedQuantity(selectedSize.color[0].product.quantity);
+                                  setDisplayedImage(selectedSize.color[0].product.img);
+                                }
                               }}
                             >
-                              {sizeArray.map((size, index) => (
+                              {sizeArray.map((size) => (
                                 <option key={size.id} value={size.name}>
                                   {size.name}
                                 </option>

@@ -564,7 +564,19 @@ const cls = visible ? "visible" : "hidden";
 
                                       <div style={{marginLeft: '12px'}}>
                                         <p className='order_name hiided_text'>{item.name ? item.name : ''}</p>
-                                        <p className='order_price'>{item.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                                        {/* <p className='order_price'>{item.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p> */}
+                                        {item.all_price ?
+                                          <div>
+                                            {Number(item.all_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                            <del className='show_detail_price_discount'>
+                                              {Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                            </del>
+                                          </div>
+                                          :
+                                          <div>
+                                            {item.price ? `${Number(item.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
+                                          </div>
+                                        }
                                       </div>
                                     </div>
                                   </Reveal>

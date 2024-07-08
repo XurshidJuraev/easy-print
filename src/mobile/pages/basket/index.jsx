@@ -372,7 +372,7 @@ function BasketMobile() {
                         <img src={trash} alt="trash" />
                       </div>
                       <div style={{display: item.relation_type === 'warehouse_product' ? 'none' : 'flex'}}>
-                        <img src={pencil} alt="pencil" />
+                        <img style={{transform: 'scale(0.8)', marginRight: '15px'}} src={pencil} alt="pencil" />
                       </div>
                     </div>
 

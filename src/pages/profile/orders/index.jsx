@@ -179,7 +179,19 @@ function ProfileOrders() {
                                           </div>
                                         </div>
                                         <div className='d-flex justify-content-space-between flex-column'>
-                                          <p className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                                          {/* <p className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p> */}
+                                          {item.all_price ?
+                                            <div style={{marginRight: '-20px', position: 'relative', left: '-6px'}} className='d-flex flex-column'>
+                                              {Number(item.all_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                              <del style={{position: 'relative', left: '-10px', fontSize: '16px'}} className='show_detail_price_discount'>
+                                                {Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                              </del>
+                                            </div>
+                                            :
+                                            <div>
+                                              {item.price ? `${Number(item.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
+                                            </div>
+                                          }
                                         </div>
                                       </div>
                                     </Reveal>

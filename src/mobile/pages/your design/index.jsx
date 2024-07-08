@@ -18,9 +18,24 @@ import text_text from '../../layouts/icons/text_text.svg';
 import style_text from '../../layouts/icons/style_text.svg';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import { fabric } from 'fabric';
-import html2canvas from 'html2canvas';
+// import { fabric } from 'fabric';
+// import html2canvas from 'html2canvas';
+// import { useScreenshot } from 'use-react-screenshot'
+// import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react'
+import { fabric } from "fabric";
 import { useScreenshot } from 'use-react-screenshot'
+import frontImage from '../../layouts/images/front.png'
+import backImage from '../../layouts/images/back.png'
+import hoodie_back_black from '../../layouts/images/hoodie_back.svg'
+import hoodie_front_black from '../../layouts/images/hoodie_front.svg'
+import sweatshot_back_black from '../../layouts/images/sweeatchot_back.svg'
+import sweatshot_front_black from '../../layouts/images/sweeatchot_front.svg'
+import hoodie_back_white from '../../layouts/images/hoodie_back_white.svg'
+import hoodie_front_white from '../../layouts/images/hoodie_front_white.svg'
+import sweatshot_back_white from '../../layouts/images/sweatshot_back_white.svg'
+import sweatshot_front_white from '../../layouts/images/sweatshot_front_white.svg'
+import backImageBlack from '../../layouts/images/back_black.png'
+import frontImageBlack from '../../layouts/images/black_front.png'
 
 function YourDesignMobile() {
   const token = localStorage.getItem('token');
@@ -54,13 +69,27 @@ function YourDesignMobile() {
   const [tshirtImage, setTshirtImage] = useState(false);
   const [printImage, setPrintImage] = useState([]);
   const [countHeader, setCountHeader] = useState(0);
-
+  const [canvas, setCanvas] = useState(null);
+  const [imeyg, setImeyg] = useState('');
+  const [image2, setImage2] = useState(null);
+  const [photoInputVisible, setPhotoInputVisible] = useState(true);
+  const canvasRef = useRef(null);
   const ref = useRef(null)
   const refBack = useRef(null)
-
-  let [image, takeScreenshot] = useScreenshot()
-  let [imageBack, takeScreenshotBack] = useScreenshot()
-
+  let [image, takeScreenshot] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0,
+    width: '600px', 
+    height: '560px'
+  });
+  
+  let [imageBack, takeScreenshotBack] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0,
+    width: '600px', 
+    height: '560px'
+  });
+  
   let getImage = () => takeScreenshot(ref.current)
   let getImageBack = () => takeScreenshotBack(refBack.current)
 
@@ -157,16 +186,98 @@ function YourDesignMobile() {
     setTshirtImage((prev) => !prev);
   };
 
-  if (image === null) {
-    image = tShirt
-  }
-
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
     if (storedCount) {
       setCountHeader(Number(storedCount));
     }
   }, []);
+
+  const handleCustomPictureChange = (e) => {
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      const imgObj = new Image();
+      imgObj.src = event.target.result;
+      setImeyg(imgObj.src);
+
+      imgObj.onload = function () {
+        const img = new fabric.Image(imgObj);
+
+        img.scaleToHeight(300);
+        img.scaleToWidth(300);
+        canvas.centerObject(img);
+        canvas.add(img);
+        canvas.renderAll();
+        setPhotoInputVisible(!photoInputVisible);
+        setImage2(img);
+      };
+    };
+
+    setPrintImage(e.target.files[0]);
+
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  useEffect(() => {
+    const canvas = new fabric.Canvas(canvasRef.current);
+    canvasRef.current = canvas;
+
+    return () => {
+      canvas.dispose();
+    };
+  }, []);
+
+  useEffect(() => {
+    setCanvas(new fabric.Canvas('tshirt-canvas'));
+    console.log(image);
+  }, []);
+
+  if (image === null) {
+    if (categoryChange === 31) {
+      if (shirtColor === '#000000') {
+        image = frontImageBlack
+      } else {
+        image = frontImage
+      }
+    } else if (categoryChange === 33) {
+      if (shirtColor === '#000000') {
+        image = hoodie_front_black
+      } else {
+        image = hoodie_front_white
+      }
+    } else if (categoryChange === 32) {
+      if (shirtColor === '#000000') {
+        image = sweatshot_front_black
+      } else {
+        image = sweatshot_front_white
+      }
+    } 
+  }
+
+  if (imageBack === null) {
+    if (categoryChange === 31) {
+      if (shirtColor === '#000000') {
+        imageBack = backImageBlack
+      } else {
+        imageBack = backImage
+      }
+    } else if (categoryChange === 33) {
+      if (shirtColor === '#000000') {
+        imageBack = hoodie_back_black
+      } else {
+        imageBack = hoodie_back_white
+      }
+    } else if (categoryChange === 32) {
+      if (shirtColor === '#000000') {
+        imageBack = sweatshot_back_black
+      } else {
+        imageBack = sweatshot_back_white
+      }
+    }
+  }
 
   const handleButtonClick = () => {
     if (!localStorage.getItem('token')) {
@@ -226,6 +337,8 @@ function YourDesignMobile() {
     formdata.append("price", product_id.price);
 
     console.log(printImage);
+    console.log(imeyg);
+    console.log(image);
     console.log(frontImageBlob);
     console.log(backImageBlob);
     console.log(selectedSize);
@@ -270,19 +383,28 @@ function YourDesignMobile() {
       <div style={{position: 'absolute', width: '100%', zIndex: 100, height: '100%', top: '0', left: '0'}} onClick={() => {setTextBar(false); setFirstBar(true); setImageBar(false); setDesigState(true); setLayersState(false); setLibraryState(false); setProductState(false);}}></div>
 
       <div style={{position: 'relative', zIndex: 200}}>
-        {desigState === true && (
-          <div style={{textAlign: 'left', height: '500px'}}>
-            <center>
-              <div id='screenshot'>
-                <img style={{width: '90%', marginTop: '80px'}} src={tshirtImage ? tShirt_back : tShirt} alt="tShirt" ref={ref} />
-              </div>
+        <div ref={ref} id="tshirt-div">
+          {desigState === true && (
+            <div style={{textAlign: 'left', height: '500px'}}>
+              <center>
+                <div id='screenshot'>
+                  {/* <img style={{width: '90%', marginTop: '80px'}} src={tshirtImage ? tShirt_back : tShirt} alt="tShirt" /> */}
+                  <img style={{width: '300px', marginTop: '80px'}} src={tShirt} alt="tShirt" />
+                </div>
 
-              <div className='yourDesign_canvas_mobile'>
-                <canvas style={{position: 'absolute', zIndex: 300, top: '-300px', left: '0'}} id="canvasTextMobile" width="190" height="220"></canvas>
-              </div>
-            </center>
-          </div>
-        )}
+                <div className='yourDesign_canvas_mobile'>
+                  <canvas style={{position: 'absolute', zIndex: 300, top: '-300px', left: '0'}} id="canvasTextMobile" width="190" height="220"></canvas>
+                </div>
+
+                {/* <div style={{display: !photoInputVisible ? 'block' : 'none', left: '0', border: !photoInputVisible ? 'none' : 'none'}} id="drawingArea"> */}
+                  <div className="canvas-container" style={{position: 'relative', top: '-260px', transform: 'scale(0.7)',}}>
+                    <canvas id="tshirt-canvas" width={184} height={250} ></canvas>
+                  </div>
+                {/* </div> */}
+              </center>
+            </div>
+          )}
+        </div>
 
         {layersState === true && (
           <center style={{textAlign: 'left', padding: '16px'}}>
@@ -389,7 +511,11 @@ function YourDesignMobile() {
           <div className="yourDesign_bar">
             {desigState === true && (
               <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', position: 'relative', bottom: '-30px', zIndex: '100'}}>
-                <img src={addImage} alt="addImage" />
+                <label>
+                  <input type="file" accept="image/*" onChange={handleCustomPictureChange} style={{ display: 'none', }} />
+
+                  <img src={addImage} alt="addImage" />
+                </label>
 
                 <img onClick={() => {setTextBar(true); setFirstBar(false); setImageBar(false)}} src={addText} alt="addText" />
               </div>
@@ -468,12 +594,25 @@ function YourDesignMobile() {
 
                 <div className="flex-column center">
                   <div>
-                    <img style={{width: '220px', height: '220px'}} src={image} alt="tShirt_front" ref={ref} />
+                    <img style={{width: '220px', height: '240px', transform: 'scale(1.2)'}} src={image} alt="tShirt_front" />
                   </div>
 
                   <div>
-                    <img style={{width: '220px', height: '220px', marginTop: '32px'}} src={tShirt_back} alt="tShirt_back" ref={refBack} />
+                    <img style={{width: '220px', height: '220px', marginTop: '32px'}} src={imageBack} alt="tShirt_back" ref={refBack} />
                   </div>
+
+                  {/* <center>
+                    <div style={{display: 'flex', justifyContent: 'center', marginTop: '40px'}}>
+                      <span className='modal_size_title'>Размер:</span>
+                      <div style={{display: 'flex', flexWrap: 'wrap', width: '600px'}}>
+                        {categorySize.map(siz => (
+                          <div title={siz.name} key={siz.id} onClick={() => {setSize(siz.name); setSelectedSize(siz.id)}} className='color_change_selector_modal' style={{width: '80px', borderColor: size === siz.name ? '#829D50' : '#CCC'}}>
+                            {siz.name}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </center> */}
                 </div>
                 <center>
                   {/* {orderedProduct ? ( */}
