@@ -313,7 +313,7 @@ function ShowDetail() {
         });
     }
   };
-  
+
   useEffect(() => {
     addToBasket(selectedProduct);
   }, [selectedProduct]);
@@ -1501,8 +1501,12 @@ function ShowDetail() {
                             </div>
                           </div>
         
-                          <div className='modal_image_fat'>
+                          {/* <div className='modal_image_fat'>
                             <img src={displayedImage2 ? displayedImage2[0] : ''} alt="your_design" />
+                          </div> */}
+                          <div className='modal_image_fat'>
+                            {/* <img src={displayedImage ? displayedImage[0] : ''} alt="your_design" /> */}
+                            <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage2 ? displayedImage2[0] : ''})`, backgroundSize: 'cover'}}></div>
                           </div>
                         </div>
                       )}

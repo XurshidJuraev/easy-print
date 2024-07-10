@@ -421,10 +421,10 @@ function HeaderMain({ trashCardData }) {
       ) : (
         <center style={{textAlign: 'left'}} className="d-flex align-items-center justify-content-center">
           <NavLink title={`${localStorage.getItem('selectedLanguage') === 'ru' ? 'Перейти на главный страницу EasyGo' : 'EasyPrint bosh sahifasi'}`} to={'/'}>
-            <img className='header_logo' style={{marginTop: '3.1553398058252426vh', marginBottom: '3.1553398058252426vh'}} src={logo} alt="logo" />
+            <img className='header_logo' style={{marginTop: '26px', marginBottom: '26px'}} src={logo} alt="logo" />
           </NavLink>
 
-          <ul className="d-flex" style={{ marginLeft: '6.067961165048544vh', marginTop: '2.368932038834951vh', listStyle: 'none', fontFamily: 'Inter' }}>
+          <ul className="d-flex" style={{ marginLeft: '50px', marginTop: '20px', listStyle: 'none', fontFamily: 'Inter' }}>
             {category.data && category.data.length > 0 && category.data[0].map((data2) => (
               <li title={data2.name} key={data2.id} className="nav-item ms-3 me-3">
                 <NavLink to={`/categories/${data2.id}/${data2.name}`} className={`nav-link ${activeLinkId === data2.id ? 'active' : ''}`} onMouseEnter={() => setActiveLinkId(data2.id)} onMouseLeave={() => setActiveLinkId(null)}>
@@ -445,7 +445,7 @@ function HeaderMain({ trashCardData }) {
           </ul>
 
           <div className="d-flex">
-            <div style={{marginLeft: '12.135922330097088vh'}} className='header_search'>
+            <div style={{marginLeft: '100px'}} className='header_search'>
               <center>
                 <input className="header_search_input" type="search" placeholder="Поиск..." aria-label="Поиск..." />
                 <img className='header_search_icon' src={search} alt="search" />
@@ -454,34 +454,34 @@ function HeaderMain({ trashCardData }) {
 
             <div className="d-flex">
               <button title="Change language" onClick={toggleLanguageDropdown} style={{backgroundColor: 'transparent', border: 'none', position: 'relative', zIndex: '100'}}>
-                <img className='language_icon' style={{marginTop: '-0.24271844660194175vh'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
+                <img className='language_icon' style={{marginTop: '-2px'}} onClick={toggleLanguageDropdown} src={language} alt="user" />
               </button>
 
               <div onClick={toggleLanguageDropdown} style={{position: 'absolute', display: showLanguageDropdown === true ? 'block' : 'none', background: 'transparent', width: '100%', height: '100vh', top: '0', left: '0'}} className="color_background"></div>
 
               {showLanguageDropdown && (
-                <div value={selectedLanguage} style={{border: 'none',backgroundColor: 'white',position: 'absolute',top: '8.495145631067961vh', right: '22.33009708737864vh',boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',zIndex: '1000000000'}}>
+                <div value={selectedLanguage} style={{border: 'none',backgroundColor: 'white',position: 'absolute',top: '70px', right: '184px',boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.05)',zIndex: '1000000000'}}>
                   {data.data && data.data.language && data.data.language.map((lang) => (
                       <div title={lang.name} onClick={() => handleLanguageChange(lang.code)} value={lang.code} className='language_item' key={lang.id}>
                         {lang.name}
-                        {lang.code === localStorage.getItem('selectedLanguage') ? <img style={{width: '2.4271844660194173vh', height: '2.4271844660194173vh'}} src={language_verifed} alt="language_verifed" /> : null}
+                        {lang.code === localStorage.getItem('selectedLanguage') ? <img style={{width: '20px', height: '20px'}} src={language_verifed} alt="language_verifed" /> : null}
                       </div>
                     ))}
                 </div>
               )}
 
               <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none'}} className='basket_counter_father'>
-                <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'block'}}>{localStorage.getItem('counterValue')}</div>
+                <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'flex'}}>{localStorage.getItem('counterValue')}</div>
                 <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}>
                   <img className='language_icon' src={bag} alt="bag" />
                 </button>
               </NavLink>
 
               {localStorage.getItem('token') ? (
-                <NavLink title="Profile" to={'/profile'} style={{marginTop: '1.6990291262135921vh', textDecoration: 'none'}}>
-                  <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-1.2135922330097086vh', border: 'none', display: 'flex', marginTop: '0.4854368932038835vh',}}>
+                <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px', textDecoration: 'none'}}>
+                  <button style={{backgroundColor: 'transparent', position: 'absolute', marginLeft: '-10px', border: 'none', display: 'flex', marginTop: '4px',}}>
                     {profileImage ? (
-                      <img style={{borderRadius: '50%'}} className='language_icon' src={profileImage} alt="user" />
+                      <img style={{borderRadius: '50%', transform: 'scale(1.2)', marginRight: '6px'}} className='language_icon' src={profileImage} alt="user" />
                     ) : (
                       <img className='language_icon' src={user} alt="user" />
                     )}

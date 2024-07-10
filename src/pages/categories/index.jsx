@@ -37,6 +37,14 @@ function CategoryListByName() {
   const [defaultSize, setDefaultSize] = useState();
   const [defaultColor, setDefaultColor] = useState();
   const [colorOptions, setColorOptions] = useState([]);
+  const [displayedPrice, setDisplayedPrice] = useState();
+  const [displayedName, setDisplayedName] = useState();
+  const [displayedImage, setDisplayedImage] = useState();
+  const [displayedQuantity, setDisplayedQuantity] = useState();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayedItems, setDisplayedItems] = useState(11);
+  const [author, setAuthor] = useState([]);
+  const [clickIdColor, setClickIdColor] = useState();
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -99,31 +107,6 @@ function CategoryListByName() {
     });    
   }, []);
 
-  function openModal(cardData) {
-    setSelectedCard(cardData);
-    const modal = document.getElementById('exampleModal');
-    if (modal) {
-      modal.style.display = 'block';
-    }
-    
-    axios.get(`${process.env.REACT_APP_TWO}/product/show/warehouse_product?warehouse_product_id=${cardData.id}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-      }
-    }).then((response) => {
-      setColorArray(response.data.data.color_by_size);
-      setSizeArray(response.data.data.color_by_size);
-      setModalData(response.data.data);
-      setIsLoadingModal(false);
-    }).catch((error) => {
-      setIsLoadingModal(false);
-      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-    });
-  }
-
   useEffect(() => {
     if (modalData.size_by_color && modalData.size_by_color.length > 0) {
       const sizes = modalData.size_by_color.flatMap((size) => size.sizes.map((s) => s.name));
@@ -165,27 +148,60 @@ function CategoryListByName() {
     // });
   }  
 
+  function openModal(cardData) {
+    setSelectedCard(cardData);
+    const modal = document.getElementById('exampleModal');
+    if (modal) {
+      modal.style.display = 'block';
+    }
+    
+    axios.get(`${process.env.REACT_APP_TWO}/product/show/warehouse_product?warehouse_product_id=${cardData.id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+      }
+    }).then((response) => {
+      setColorArray(response.data.data.color_by_size);
+      setSizeArray(response.data.data.color_by_size);
+      setModalData(response.data.data);
+      setDisplayedName(response.data.data.color_by_size[0].color[0].product.name);
+      setDisplayedQuantity(response.data.data.color_by_size[0].color[0].product.quantity);
+      setDisplayedImage(response.data.data.color_by_size[0].color[0].product.img)
+      setDisplayedPrice(response.data.data.color_by_size[0].color[0].product.price)
+      setIsLoadingModal(false);
+      setClickIdColor(response.data.data.color_by_size[0].id)
+      console.log(response.data.data.color_by_size[0].id);
+    }).catch((error) => {
+      setIsLoadingModal(false);
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+    });
+  }
+
   const addToBasket = (productData) => {
     if (productData) {
       const selectedColor = modalData.color_by_size[selectedSizeIndex];
       const selectedSize = modalData.size_by_color[selectedColorIndex];
-  
+
       const colorId = selectedColor.color[0].id;
       const sizeId = selectedSize.sizes[0].id;
-  
+
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
-  
+
       var formdata = new FormData();
       formdata.append("warehouse_product_id", productData.id);
       formdata.append("quantity", 1);
+      // formdata.append("color_id", colorId);
+      // formdata.append("size_id", sizeId);
       formdata.append("color_id", colorId);
-      formdata.append("size_id", sizeId);
+      formdata.append("size_id", clickIdColor);
       formdata.append("price", productData.price);
       formdata.append("discount", modalData.discount ? modalData.discount : '0');
-  
+
       var requestOptions = {
         method: 'POST',
         headers: myHeaders,
@@ -196,14 +212,16 @@ function CategoryListByName() {
       const basketData = {
         warehouse_product_id: productData.id,
         quantity: 1,
+        // color_id: colorId,
+        // size_id: sizeId,
         color_id: colorId,
-        size_id: sizeId,
+        size_id: clickIdColor,
         price: productData.price,
         discount: modalData.discount ? modalData.discount : '0'
       };
 
       localStorage.setItem('basket', JSON.stringify(basketData));
-  
+
       fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
         .then(response => response.json())
         .then(result => {
@@ -255,12 +273,15 @@ function CategoryListByName() {
         .catch(error => {
           toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
           toast.error('Товар не добавлен');
+          console.log(error);
         });
     }
   };
 
   const handleGetHome = () => {
-    navigate('/basket');
+    setTimeout(() => {
+      navigate('/basket');
+    }, 1000);
   }
 
   return (
@@ -495,76 +516,34 @@ function CategoryListByName() {
                   <div className='d-flex'>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                       <div style={{margin: '80px 32px 16px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={336} 
-                          height={80} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={336}  height={80}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div style={{margin: '16px 32px 16px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={330} 
-                          height={48} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={330}  height={48}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div style={{margin: '16px 32px 57px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={336} 
-                          height={22} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={336}  height={22}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div style={{margin: '16px 32px 57px 32px'}}>
-                        <Placeholder 
-                          shape="rect"
-                          width={336} 
-                          height={68} 
-                          animation="wave" 
-                          style={{ marginBottom: '20px' }}
-                        />
+                        <Placeholder shape="rect" width={336}  height={68}  animation="wave"  style={{ marginBottom: '20px' }} />
                       </div>
 
                       <div className='d-flex' style={{margin: '16px 32px 57px 32px'}}>
                         <div>
-                          <Placeholder 
-                            shape="rect"
-                            width={84} 
-                            height={56} 
-                            animation="wave" 
-                            style={{ marginBottom: '20px' }}
-                          />
+                          <Placeholder  shape="rect" width={84}  height={56}  animation="wave"  style={{ marginBottom: '20px' }} />
                         </div>
 
                         <div style={{marginLeft: '16px'}}>
-                          <Placeholder 
-                            shape="rect"
-                            width={236} 
-                            height={56} 
-                            animation="wave" 
-                            style={{ marginBottom: '20px' }}
-                          />
+                          <Placeholder  shape="rect" width={236}  height={56}  animation="wave"  style={{ marginBottom: '20px' }} />
                         </div>
                       </div>
                     </div>
 
                     <div style={{margin: '16px'}}>
-                      <Placeholder 
-                        shape="rect"
-                        width={378} 
-                        height={580} 
-                        animation="wave" 
-                        style={{ marginBottom: '20px' }}
-                      />
+                      <Placeholder  shape="rect" width={378}  height={580}  animation="wave"  style={{ marginBottom: '20px' }} />
                     </div>
                   </div>
                 </div>
@@ -573,29 +552,66 @@ function CategoryListByName() {
                   {modalData && (
                     <div className='d-flex'>
                       <div style={{padding: '80px 32px 0px 32px'}}>
-                        <p className='modal_name'>{modalData.name ? modalData.name : 'Название отсутствует'}</p>
+                        <p className='modal_name'>{displayedName ? displayedName : 'Название отсутствует'}</p>
                         <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                        <p className='modal_price'>{Number(modalData.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                        <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
 
                         <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
-                          <div className='d-flex' style={{marginRight: '83px'}}>
+                          {/* <div className='d-flex' style={{marginRight: '83px'}}>
                             <p>Размер</p>
+                            <select style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}} value={sizeOptions[selectedSizeIndex]} onChange={(e) => { const index = sizeOptions.findIndex((size) => size === e.target.value); setSelectedSizeIndex(index); }}>
+                              {sizeArray.map((size, index) => (
+                                <option 
+                                  key={size.id} 
+                                  onClick={() => {
+                                    console.log(size);
+                                    setSelectedSizeIndex(index); 
+                                    const selectedSizeId = size.id; 
+                                    setDefaultSize(selectedSizeId); 
+                                    setDisplayedPrice(size.color[0].product.price); 
+                                    setDisplayedName(size.color[0].product.name); 
+                                    setDisplayedQuantity(size.color[0].product.quantity); 
+                                    setDisplayedImage(size.color[0].product.img)
+                                  }} 
+                                  value={size.name}
+                                >
+                                  {size.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div> */}
+
+                          <div className='d-flex center' style={{ marginRight: '83px' }}>
+                            <p style={{margin: 0}}>Размер</p>
+
                             <select
-                              style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}}
-                              value={sizeOptions[selectedSizeIndex]}
+                              style={{ border: 'none', height: '29px', marginLeft: '12px', outline: 'none' }}
+                              value={sizeArray[selectedSizeIndex]?.name || ''}
                               onChange={(e) => {
-                                const index = sizeOptions.findIndex((size) => size === e.target.value);
-                                setSelectedSizeIndex(index);
+                                const index = sizeArray.findIndex((size) => size.name === e.target.value);
+                                if (index !== -1) {
+                                  setSelectedSizeIndex(index);
+                                  const selectedSize = sizeArray[index];
+                                  const selectedSizeId = selectedSize.id;
+                                  setDefaultSize(selectedSizeId);
+                                  setClickIdColor(selectedSize.id);
+                                  setDisplayedPrice(selectedSize.color[0].product.price);
+                                  setDisplayedName(selectedSize.color[0].product.name);
+                                  setDisplayedQuantity(selectedSize.color[0].product.quantity);
+                                  setDisplayedImage(selectedSize.color[0].product.img);
+                                }
                               }}
                             >
-                              {sizeArray.map((size, index) => (
-                                <option key={size.id} onClick={() => {setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId)}} value={size.name}>{size.name}</option>
+                              {sizeArray.map((size) => (
+                                <option key={size.id} value={size.name}>
+                                  {size.name}
+                                </option>
                               ))}
                             </select>
                           </div>
 
-                          <div className='d-flex'>
-                            <p>Цвет</p>
+                          <div className='d-flex center'>
+                            <p style={{margin: 0}}>Цвет</p>
 
                             <div style={{marginLeft: '12px'}} className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
@@ -606,7 +622,12 @@ function CategoryListByName() {
                                   onClick={() => {
                                     setSelectedColorIndex(index);
                                     const selectedColorId = color.id;
-                                    setDefaultColor(selectedColorId)
+                                    setDefaultColor(selectedColorId);
+                                    setClickIdColor(color.id);
+                                    setDisplayedPrice(color.product.price); 
+                                    setDisplayedName(color.product.name); 
+                                    setDisplayedQuantity(color.product.quantity); 
+                                    setDisplayedImage(color.product.img)
                                   }}
                                 >
                                   <div className="color" style={{backgroundColor: color.code}}></div>
@@ -616,29 +637,19 @@ function CategoryListByName() {
                           </div>
                         </div>
 
-                        <hr style={{color: '#CCCCCC', marginTop: '-3px', marginBottom: '4px'}} />
+                        <hr style={{color: '#CCCCCC', marginTop: '10px', marginBottom: '4px'}} />
 
                         <div className="d-flex justify-content-between">
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.max(1, count - 1))}>-</div>
 
-                          <input
-                            type='text'
-                            style={{border: 'none', color: '#000', outline: 'none', width: '40px', textAlign: 'center'}}
-                            value={count}
-                            onChange={(e) => {
-                              const newValue = parseInt(e.target.value, 10);
-                              if (!isNaN(newValue)) {
-                                setCount(Math.min(modalData.quantity, Math.max(1, newValue)));
-                              }
-                            }}
-                          />
+                          <input type='text' style={{border: 'none', color: '#000', outline: 'none', width: '40px', textAlign: 'center'}} value={count} onChange={(e) => { const newValue = parseInt(e.target.value, 10); if (!isNaN(newValue)) { setCount(Math.min(modalData.quantity, Math.max(1, newValue))); } }} />
 
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
                         </div>
 
                         <div className='d-flex'>
                           <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{modalData.quantity}</p>
+                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{displayedQuantity}</p>
                         </div>
 
                         <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
@@ -661,7 +672,7 @@ function CategoryListByName() {
                             </button>
                           </div>
 
-                          <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome();}}>
+                          <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleGetHome(); handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome()}}>
                             <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
                               <span>Заказать сейчас </span>
 
@@ -674,7 +685,8 @@ function CategoryListByName() {
                       </div>
 
                       <div className='modal_image_fat'>
-                        <img src={modalData.images ? modalData.images[0] : ''} alt="your_design" />
+                        {/* <img src={displayedImage ? displayedImage[0] : ''} alt="your_design" /> */}
+                        <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover'}}></div>
                       </div>
                     </div>
                   )}

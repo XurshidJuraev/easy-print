@@ -7,7 +7,7 @@ import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
 import your_design from '../../layouts/images/landing.jpg'
 import FooterMain from '../../components/footer'
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -44,6 +44,8 @@ function HomePage() {
   const [displayedItems, setDisplayedItems] = useState(11);
   const [author, setAuthor] = useState([]);
   const [defaultColor, setDefaultColor] = useState();
+  const [clickIdColor, setClickIdColor] = useState();
+  const [displayedId, setDisplayedId] = useState();
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -169,14 +171,16 @@ function HomePage() {
       setColorArray(response.data.data.color_by_size);
       setSizeArray(response.data.data.color_by_size);
       setModalData(response.data.data);
-      setDisplayedName(response.data.data.color_by_size[0].color[0].product.name);
-      setDisplayedQuantity(response.data.data.color_by_size[0].color[0].product.quantity);
-      setDisplayedImage(response.data.data.images)
-      setDisplayedPrice(response.data.data.color_by_size[0].color[0].product.price)
+      setDisplayedName(response.data.data.color_by_size[0].color[selectedSizeIndex].product.name);
+      setDisplayedQuantity(response.data.data.color_by_size[0].color[selectedSizeIndex].product.quantity);
+      setDisplayedImage(response.data.data.color_by_size[0].color[selectedSizeIndex].product.img)
+      setDisplayedPrice(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price)
       setIsLoadingModal(false);
+      setDisplayedId(response.data.data.id);
+      setClickIdColor(response.data.data.color_by_size[0].id)
     }).catch((error) => {
       setIsLoadingModal(false);
-      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+      // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -184,20 +188,25 @@ function HomePage() {
     if (productData) {
       const selectedColor = modalData.color_by_size[selectedSizeIndex];
       const selectedSize = modalData.size_by_color[selectedColorIndex];
-  
-      const colorId = selectedColor.color[0].id;
-      const sizeId = selectedSize.sizes[0].id;
+
+      const colorId = selectedColor.id;
+      const sizeId = selectedSize.id;
+
+      // console.log(productData);
+
+      // alert(colorId ? colorId : `selectedColor ${selectedColor}`, sizeId ? sizeId : `selectedSize: ${selectedSize}`);
   
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
-  
+
       var formdata = new FormData();
-      formdata.append("warehouse_product_id", productData.id);
+      // formdata.append("warehouse_product_id", productData.id);
+      formdata.append("warehouse_product_id", displayedId);
       formdata.append("quantity", 1);
-      formdata.append("color_id", colorId);
-      formdata.append("size_id", sizeId);
+      formdata.append("color_id", defaultColor ? defaultColor : clickIdColor);
+      formdata.append("size_id", defaultSize ? defaultSize : colorId);
       formdata.append("price", productData.price);
       formdata.append("discount", modalData.discount ? modalData.discount : '0');
   
@@ -207,12 +216,12 @@ function HomePage() {
         body: formdata,
         redirect: 'follow'
       };
-      
+
       const basketData = {
         warehouse_product_id: productData.id,
         quantity: 1,
-        color_id: colorId,
-        size_id: sizeId,
+        color_id: defaultColor ? defaultColor : clickIdColor,
+        size_id: defaultSize ? defaultSize : colorId,
         price: productData.price,
         discount: modalData.discount ? modalData.discount : '0'
       };
@@ -225,8 +234,8 @@ function HomePage() {
           if (result.status === true) {
             toast(
               <ToastComponent
-                image={productData.images[0] ? productData.images[0] : ''}
-                title={productData.name}
+                image={displayedImage[0] ? displayedImage[0] : ''}
+                title={displayedName}
                 description={productData.description ? productData.description : 'Описание недоступно'}
                 link="/basket"
                 linkText="Перейти в корзину"
@@ -249,27 +258,18 @@ function HomePage() {
                 price: productData.price,
                 discount: modalData.discount ? modalData.discount : '0'
               };
-
+  
               localStorage.setItem('basket', JSON.stringify(basketData));
-
-              toast.warn('Вы еще не зарегистрированы. Товар добавлен в корзину.', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
+  
+              toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
             } else {
               toast.error('Товар не добавлен');
             }
           }
         })
         .catch(error => {
-          toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
           toast.error('Товар не добавлен');
+          console.log('error', error);
         });
     }
   };
@@ -301,7 +301,9 @@ function HomePage() {
   localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
 
   const handleGetHome = () => {
-    navigate('/basket');
+    setTimeout(() => {
+      navigate('/basket');
+    }, 1000);
   }
 
   const handleShowMore = () => {
@@ -310,10 +312,46 @@ function HomePage() {
     }
   };
 
+  useEffect(() => {
+    if (colorArray[selectedSizeIndex] && colorArray[selectedSizeIndex].color.length > 0) {
+      const defaultColor = colorArray[selectedSizeIndex].color[0];
+      setSelectedColorIndex(0);
+      setClickIdColor(defaultColor.id);
+      setDefaultColor(defaultColor.id);
+      setDisplayedId(defaultColor.product.id);
+      setDisplayedPrice(defaultColor.product.price);
+      setDisplayedName(defaultColor.product.name);
+      setDisplayedQuantity(defaultColor.product.quantity);
+      setDisplayedImage(defaultColor.product.img);
+    }
+  }, [selectedSizeIndex, colorArray]);
+
+  useEffect(() => {
+    const handleModalClose = () => {
+      setSelectedColorIndex(null);
+      setClickIdColor(null);
+      setDefaultColor(null);
+      setDisplayedId(null);
+      setDisplayedPrice(null);
+      setDisplayedName(null);
+      setDisplayedQuantity(null);
+      setDisplayedImage(null);
+    };
+
+    const modalElement = document.getElementById('exampleModal');
+    if (modalElement) {
+      modalElement.addEventListener('hidden.bs.modal', handleModalClose);
+      return () => {
+        modalElement.removeEventListener('hidden.bs.modal', handleModalClose);
+      };
+    }
+  }, []);
+
   return (
     <div style={{ backgroundColor: '#FFFFFF' }}>
       <HeaderMain trashCardData={trashCardData} />
       <HeroMain />
+      <ToastContainer />
       
       <section style={{margin: '24px 100px', marginTop: '-100px'}}>
         <div className='center container flex-column'>
@@ -659,8 +697,8 @@ function HomePage() {
                             </select>
                           </div> */}
 
-                          <div className='d-flex' style={{ marginRight: '83px' }}>
-                            <p>Размер</p>
+                          <div className='d-flex center' style={{ marginRight: '83px' }}>
+                            <p style={{margin: 0}}>Размер</p>
 
                             <select
                               style={{ border: 'none', height: '29px', marginLeft: '12px', outline: 'none' }}
@@ -672,6 +710,8 @@ function HomePage() {
                                   const selectedSize = sizeArray[index];
                                   const selectedSizeId = selectedSize.id;
                                   setDefaultSize(selectedSizeId);
+                                  setDisplayedId(selectedSize.color[0].product.id);
+                                  setClickIdColor(selectedSize.id);
                                   setDisplayedPrice(selectedSize.color[0].product.price);
                                   setDisplayedName(selectedSize.color[0].product.name);
                                   setDisplayedQuantity(selectedSize.color[0].product.quantity);
@@ -687,8 +727,8 @@ function HomePage() {
                             </select>
                           </div>
 
-                          <div className='d-flex'>
-                            <p>Цвет</p>
+                          <div className='d-flex center'>
+                            <p style={{margin: 0}}>Цвет</p>
 
                             <div style={{marginLeft: '12px'}} className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
@@ -700,6 +740,8 @@ function HomePage() {
                                     setSelectedColorIndex(index);
                                     const selectedColorId = color.id;
                                     setDefaultColor(selectedColorId);
+                                    setClickIdColor(color.id);
+                                    setDisplayedId(color.product.id);
                                     setDisplayedPrice(color.product.price); 
                                     setDisplayedName(color.product.name); 
                                     setDisplayedQuantity(color.product.quantity); 
@@ -713,7 +755,7 @@ function HomePage() {
                           </div>
                         </div>
 
-                        <hr style={{color: '#CCCCCC', marginTop: '-3px', marginBottom: '4px'}} />
+                        <hr style={{color: '#CCCCCC', marginTop: '10px', marginBottom: '4px'}} />
 
                         <div className="d-flex justify-content-between">
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.max(1, count - 1))}>-</div>
@@ -729,7 +771,7 @@ function HomePage() {
                         </div>
 
                         <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
-                          <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
+                          <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                             <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <g clip-path="url(#clip0_2381_4754)">
@@ -748,7 +790,7 @@ function HomePage() {
                             </button>
                           </div>
 
-                          <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome()}}>
+                          <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleGetHome(); handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome()}}>
                             <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
                               <span>Заказать сейчас </span>
 
@@ -761,7 +803,8 @@ function HomePage() {
                       </div>
 
                       <div className='modal_image_fat'>
-                        <img src={displayedImage ? displayedImage[0] : ''} alt="your_design" />
+                        {/* <img src={displayedImage ? displayedImage[0] : ''} alt="your_design" /> */}
+                        <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover'}}></div>
                       </div>
                     </div>
                   )}
