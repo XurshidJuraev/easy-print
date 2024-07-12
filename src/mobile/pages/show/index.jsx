@@ -762,7 +762,7 @@ function ProductShowMobile() {
 
                       <h3 className='show_detail_title_mobile' style={{marginTop: '16px'}}>Размер:</h3>
 
-                      <div className='size_selection' style={{width: '42.47572815533981vh'}}>
+                      <div className='size_selection' style={{width: '350px'}}>
                         {sizeArray.map((size, index) => (
                           <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id; setDefaultSize(selectedSizeId) }}>
                             {size.name}
@@ -774,7 +774,7 @@ function ProductShowMobile() {
                         <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Состав' : 'Tarkibi'}: {dataBeck.composition ? dataBeck.composition : 'Состав отсутствует или не найден'}</p>
                       </div>
 
-                      <div style={{display: 'flex', marginTop: '3.883495145631068vh'}}>
+                      <div style={{display: 'flex', marginTop: '32px'}}>
                         <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Автор' : 'Muallif'}:</p>
                         {/* <NavLink to={`/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink> */}
                         <NavLink to={`/mobile/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink>
@@ -803,15 +803,15 @@ function ProductShowMobile() {
             <center>
               <h2 style={{marginBottom: '-4px'}} className='home_card_title_mobile'>Рекомендуем вам:</h2>
 
-              <Swiper style={{marginLeft: '3.6407766990291264vh'}} slidesPerView={2.3} spaceBetween={10} freeMode={true} pagination={{clickable: true,}} className="mySwiper">
+              <Swiper style={{marginLeft: '30px'}} slidesPerView={2.3} spaceBetween={10} freeMode={true} pagination={{clickable: true,}} className="mySwiper">
                 {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
                   <SwiperSlide key={data2.id}>
                     <Reveal>
                       <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginLeft: '8px', marginRight: '8px'}}>
-                        <div className="clothes_fat" style={{borderRadius: '6px', width: '19.660194174757283vh', height: '23.058252427184467vh'}}>
+                        <div className="clothes_fat" style={{borderRadius: '6px', width: '162px', height: '190px'}}>
                           <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                             <div>
-                              <div style={{width: '19.660194174757283vh', height: '23.058252427184467vh', borderRadius: '6px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div style={{width: '162px', height: '190px', borderRadius: '6px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
                           </div>
                         </div>

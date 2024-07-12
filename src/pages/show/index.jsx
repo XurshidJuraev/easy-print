@@ -156,11 +156,11 @@ function ShowDetail() {
       setColorArray(response.data.data.color_by_size);
       setSizeArray(response.data.data.color_by_size);
       setDataBeck(response.data.data);
-      setDisplayedName(response.data.data.color_by_size[0].color[0].product.name);
-      setDisplayedQuantity(response.data.data.color_by_size[0].color[0].product.quantity);
-      setDisplayedImage(response.data.data.color_by_size[0].color[0].product.img)
-      setDisplayedId(response.data.data.id);
-      setDisplayedPrice(response.data.data.color_by_size[0].color[0].product.price)
+      setDisplayedName(response.data.data.color_by_size[0].color[selectedSizeIndex].product.name);
+      setDisplayedQuantity(response.data.data.color_by_size[0].color[selectedSizeIndex].product.quantity);
+      setDisplayedImage(response.data.data.color_by_size[0].color[selectedSizeIndex].product.img)
+      setDisplayedId(response.data.data.color_by_size[0].color[selectedSizeIndex].product.id);
+      setDisplayedPrice(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price)
       setIsLoading(false);
     }).catch((error) => {
       setIsLoading(false);
@@ -228,7 +228,7 @@ function ShowDetail() {
     if (productData) {
       const selectedColor = dataBeck.color_by_size[selectedSizeIndex];
       const selectedSize = dataBeck.size_by_color[selectedColorIndex];
-  
+
       const colorId = selectedColor.id;
       const sizeId = selectedSize.id;
 
@@ -258,7 +258,8 @@ function ShowDetail() {
       };
 
       const basketData = {
-        warehouse_product_id: productData.id,
+        // warehouse_product_id: productData.id,
+        warehouse_product_id: displayedId,
         quantity: 1,
         color_id: defaultColor ? defaultColor : clickIdColor,
         size_id: defaultSize ? defaultSize : colorId,
@@ -267,6 +268,9 @@ function ShowDetail() {
       };
 
       localStorage.setItem('basket', JSON.stringify(basketData));
+
+      // console.log(basketData);
+      // console.log(requestOptions);
 
       fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
         .then(response => response.json())
@@ -296,7 +300,7 @@ function ShowDetail() {
                 color_id: colorId,
                 size_id: sizeId,
                 price: productData.price,
-                discount: dataBeck.discount ? dataBeck.discount : '0'
+                discount: modalData.discount ? modalData.discount : '0'
               };
   
               localStorage.setItem('basket', JSON.stringify(basketData));
@@ -350,8 +354,6 @@ function ShowDetail() {
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
-
-  // {dataBeck.description && console.log(dataBeck.description.split('\n').slice(0, 3).join('\n').length)}
 
   const handleGetHome = () => {
     navigate('/basket');
@@ -1073,61 +1075,8 @@ function ShowDetail() {
                           <div>
                             <p className='show_detail_size'>Цвет</p>
 
-                            {/* <div className="d-flex">
-                              {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                                <div key={index} className="color_border me-4" style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer'}} onClick={() => { setSelectedColorIndex(index); const selectedColorId = color.id; setClickIdColor(color.id); setDefaultColor(selectedColorId); console.log(color.color[0].product.id); setDisplayedId(color.color[0].product.id); setDisplayedPrice(color.product.price); setDisplayedName(color.product.name); setDisplayedQuantity(color.product.quantity); setDisplayedImage(color.product.img) }}>
-                                  <div className="color" style={{backgroundColor: color.code}}></div>
-                                </div>
-                              ))}
-                            </div> */}
-
                             <div className="d-flex">
-                              {/* {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                                <div
-                                  key={index}
-                                  className="color_border me-4"
-                                  style={{ borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer' }}
-                                  onClick={() => {
-                                    setSelectedColorIndex(index);
-                                    const selectedColorId = color.id;
-                                    setClickIdColor(color.id);
-                                    setDefaultColor(selectedColorId);
-                                    setDisplayedId(color.product.id);
-                                    setDisplayedPrice(color.product.price);
-                                    setDisplayedName(color.product.name);
-                                    setDisplayedQuantity(color.product.quantity);
-                                    setDisplayedImage(color.product.img);
-                                  }}
-                                >
-                                  <div className="color" style={{ backgroundColor: color.code }}></div>
-                                </div>
-                              ))} */}
-
                               <div className="d-flex">
-                                {/* {colorArray[selectedSizeIndex]?.color.map((color, index) => (
-                                  <div
-                                    key={index}
-                                    className="color_border me-4"
-                                    style={{ borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer' }}
-                                    onClick={() => {
-                                      setSelectedColorIndex(index);
-                                      const selectedColorId = color.id;
-                                      setClickIdColor(selectedColorId);
-                                      setDefaultColor(selectedColorId);
-                                      setDisplayedId(color.product.id);
-                                      setDisplayedPrice(color.product.price);
-                                      setDisplayedName(color.product.name);
-                                      setDisplayedQuantity(color.product.quantity);
-                                      setDisplayedImage(color.product.img);
-                                    }}
-                                  >
-                                    <div className="color" style={{ backgroundColor: color.code }}></div>
-                                  </div>
-                                ))} */}
-
-                                {console.log(colorArray[selectedSizeIndex])}
-                                {console.log(dataBeck)}
-
                                 {colorArray[selectedSizeIndex]?.color.map((color, index) => (
                                   <div
                                     key={index}
@@ -1401,7 +1350,7 @@ function ShowDetail() {
                                     setSelectedSizeIndex(index);
 
                                     const selectedSize = sizeArray[index];
-                                    console.log(selectedSize);
+                                    // console.log(selectedSize);
                                     const selectedSizeId = selectedSize.id;
                                     setDefaultSize(selectedSizeId);
                                     setDisplayedPrice2(selectedSize.color[0].product.price);

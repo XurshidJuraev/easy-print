@@ -232,7 +232,7 @@ function YourDesignMobile() {
 
   useEffect(() => {
     setCanvas(new fabric.Canvas('tshirt-canvas'));
-    console.log(image);
+    // console.log(image);
   }, []);
 
   if (image === null) {
@@ -336,14 +336,14 @@ function YourDesignMobile() {
     formdata.append("image_back", backImageBlob);
     formdata.append("price", product_id.price);
 
-    console.log(printImage);
-    console.log(imeyg);
-    console.log(image);
-    console.log(frontImageBlob);
-    console.log(backImageBlob);
-    console.log(selectedSize);
-    console.log(shirtColor === '#000000' ? 3 : 4);
-    console.log(categoryChange);
+    // console.log(printImage);
+    // console.log(imeyg);
+    // console.log(image);
+    // console.log(frontImageBlob);
+    // console.log(backImageBlob);
+    // console.log(selectedSize);
+    // console.log(shirtColor === '#000000' ? 3 : 4);
+    // console.log(categoryChange);
   
     var requestOptions = {
       method: 'POST',

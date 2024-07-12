@@ -13,38 +13,39 @@ import './main.css';
 
 function CategoryListByName() {
   const [trashCardData, setTrashCardData] = useState([]);
-  const [data, setData] = useState([]);
   const [modalData, setModalData] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
   const [idCounter, setIdCounter] = useState(1);
   const [count, setCount] = useState(1);
+  const [selectedCard, setSelectedCard] = useState(null);
   const [selectedSize, setSelectedSize] = useState('s');
-  const [category, setCategory] = useState('');
-  const [subCategory, setSubCategory] = useState('');
-  const [subCategoryQuant, setSubCategoryQuant] = useState('');
   const [sizeOptions, setSizeOptions] = useState([]);
-  const [selectedColor, setSelectedColor] = useState('#D9CCC6');
-  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
-  const navigate = useNavigate();
-  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-  const token = localStorage.getItem('token');
-  const params = useParams()
-  const [sizeArray, setSizeArray] = useState([]);
-  const [colorArray, setColorArray] = useState([]);
-  const [countHeader, setCountHeader] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingModal, setIsLoadingModal] = useState(true);
-  const [defaultSize, setDefaultSize] = useState();
-  const [defaultColor, setDefaultColor] = useState();
   const [colorOptions, setColorOptions] = useState([]);
+  const [selectedColor, setSelectedColor] = useState('#D9CCC6');
   const [displayedPrice, setDisplayedPrice] = useState();
   const [displayedName, setDisplayedName] = useState();
   const [displayedImage, setDisplayedImage] = useState();
   const [displayedQuantity, setDisplayedQuantity] = useState();
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem('token');
+  const [sizeArray, setSizeArray] = useState([]);
+  const [colorArray, setColorArray] = useState([]);
+  const navigate = useNavigate();
+  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [countHeader, setCountHeader] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingModal, setIsLoadingModal] = useState(true);
+  const [defaultSize, setDefaultSize] = useState();
   const [displayedItems, setDisplayedItems] = useState(11);
   const [author, setAuthor] = useState([]);
+  const [defaultColor, setDefaultColor] = useState();
   const [clickIdColor, setClickIdColor] = useState();
+  const [displayedId, setDisplayedId] = useState();
+  const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [subCategoryQuant, setSubCategoryQuant] = useState('');
+  const params = useParams()
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -166,16 +167,16 @@ function CategoryListByName() {
       setColorArray(response.data.data.color_by_size);
       setSizeArray(response.data.data.color_by_size);
       setModalData(response.data.data);
-      setDisplayedName(response.data.data.color_by_size[0].color[0].product.name);
-      setDisplayedQuantity(response.data.data.color_by_size[0].color[0].product.quantity);
-      setDisplayedImage(response.data.data.color_by_size[0].color[0].product.img)
-      setDisplayedPrice(response.data.data.color_by_size[0].color[0].product.price)
+      setDisplayedName(response.data.data.color_by_size[0].color[selectedSizeIndex].product.name);
+      setDisplayedQuantity(response.data.data.color_by_size[0].color[selectedSizeIndex].product.quantity);
+      setDisplayedImage(response.data.data.color_by_size[0].color[selectedSizeIndex].product.img)
+      setDisplayedPrice(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price)
       setIsLoadingModal(false);
+      setDisplayedId(response.data.data.color_by_size[0].color[selectedSizeIndex].product.id);
       setClickIdColor(response.data.data.color_by_size[0].id)
-      console.log(response.data.data.color_by_size[0].id);
     }).catch((error) => {
       setIsLoadingModal(false);
-      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+      // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -184,24 +185,27 @@ function CategoryListByName() {
       const selectedColor = modalData.color_by_size[selectedSizeIndex];
       const selectedSize = modalData.size_by_color[selectedColorIndex];
 
-      const colorId = selectedColor.color[0].id;
-      const sizeId = selectedSize.sizes[0].id;
+      const colorId = selectedColor.id;
+      const sizeId = selectedSize.id;
 
+      // console.log(productData);
+
+      // alert(colorId ? colorId : `selectedColor ${selectedColor}`, sizeId ? sizeId : `selectedSize: ${selectedSize}`);
+  
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
 
       var formdata = new FormData();
-      formdata.append("warehouse_product_id", productData.id);
+      // formdata.append("warehouse_product_id", productData.id);
+      formdata.append("warehouse_product_id", displayedId);
       formdata.append("quantity", 1);
-      // formdata.append("color_id", colorId);
-      // formdata.append("size_id", sizeId);
-      formdata.append("color_id", colorId);
-      formdata.append("size_id", clickIdColor);
+      formdata.append("color_id", defaultColor ? defaultColor : clickIdColor);
+      formdata.append("size_id", defaultSize ? defaultSize : colorId);
       formdata.append("price", productData.price);
       formdata.append("discount", modalData.discount ? modalData.discount : '0');
-
+  
       var requestOptions = {
         method: 'POST',
         headers: myHeaders,
@@ -210,15 +214,15 @@ function CategoryListByName() {
       };
 
       const basketData = {
-        warehouse_product_id: productData.id,
+        warehouse_product_id: displayedId,
         quantity: 1,
-        // color_id: colorId,
-        // size_id: sizeId,
-        color_id: colorId,
-        size_id: clickIdColor,
+        color_id: defaultColor ? defaultColor : clickIdColor,
+        size_id: defaultSize ? defaultSize : colorId,
         price: productData.price,
         discount: modalData.discount ? modalData.discount : '0'
       };
+
+      // console.log(basketData);
 
       localStorage.setItem('basket', JSON.stringify(basketData));
 
@@ -228,8 +232,8 @@ function CategoryListByName() {
           if (result.status === true) {
             toast(
               <ToastComponent
-                image={productData.images[0] ? productData.images[0] : ''}
-                title={productData.name}
+                image={displayedImage[0] ? displayedImage[0] : ''}
+                title={displayedName}
                 description={productData.description ? productData.description : 'Описание недоступно'}
                 link="/basket"
                 linkText="Перейти в корзину"
@@ -252,28 +256,18 @@ function CategoryListByName() {
                 price: productData.price,
                 discount: modalData.discount ? modalData.discount : '0'
               };
-
+  
               localStorage.setItem('basket', JSON.stringify(basketData));
-
-              toast.warn('Вы еще не зарегистрированы. Товар добавлен в корзину.', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
+  
+              toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
             } else {
               toast.error('Товар не добавлен');
             }
           }
         })
         .catch(error => {
-          toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
           toast.error('Товар не добавлен');
-          console.log(error);
+          console.log('error', error);
         });
     }
   };
@@ -557,30 +551,6 @@ function CategoryListByName() {
                         <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
 
                         <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
-                          {/* <div className='d-flex' style={{marginRight: '83px'}}>
-                            <p>Размер</p>
-                            <select style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}} value={sizeOptions[selectedSizeIndex]} onChange={(e) => { const index = sizeOptions.findIndex((size) => size === e.target.value); setSelectedSizeIndex(index); }}>
-                              {sizeArray.map((size, index) => (
-                                <option 
-                                  key={size.id} 
-                                  onClick={() => {
-                                    console.log(size);
-                                    setSelectedSizeIndex(index); 
-                                    const selectedSizeId = size.id; 
-                                    setDefaultSize(selectedSizeId); 
-                                    setDisplayedPrice(size.color[0].product.price); 
-                                    setDisplayedName(size.color[0].product.name); 
-                                    setDisplayedQuantity(size.color[0].product.quantity); 
-                                    setDisplayedImage(size.color[0].product.img)
-                                  }} 
-                                  value={size.name}
-                                >
-                                  {size.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div> */}
-
                           <div className='d-flex center' style={{ marginRight: '83px' }}>
                             <p style={{margin: 0}}>Размер</p>
 
@@ -594,6 +564,7 @@ function CategoryListByName() {
                                   const selectedSize = sizeArray[index];
                                   const selectedSizeId = selectedSize.id;
                                   setDefaultSize(selectedSizeId);
+                                  setDisplayedId(selectedSize.color[0].product.id);
                                   setClickIdColor(selectedSize.id);
                                   setDisplayedPrice(selectedSize.color[0].product.price);
                                   setDisplayedName(selectedSize.color[0].product.name);
@@ -624,6 +595,7 @@ function CategoryListByName() {
                                     const selectedColorId = color.id;
                                     setDefaultColor(selectedColorId);
                                     setClickIdColor(color.id);
+                                    setDisplayedId(color.product.id);
                                     setDisplayedPrice(color.product.price); 
                                     setDisplayedName(color.product.name); 
                                     setDisplayedQuantity(color.product.quantity); 
@@ -653,7 +625,7 @@ function CategoryListByName() {
                         </div>
 
                         <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
-                          <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
+                          <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                             <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <g clip-path="url(#clip0_2381_4754)">

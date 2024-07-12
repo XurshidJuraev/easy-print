@@ -239,12 +239,12 @@ function MyOrders() {
     formdata.append("payment_method", "1");
     formdata.append("user_card_id", "1");
 
-    console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    console.log("payment_method:", "1");
-    console.log("user_card_id:", "1");
+    // console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+    // console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+    // console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    // console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    // console.log("payment_method:", "1");
+    // console.log("user_card_id:", "1");
 
     var requestOptions = {
       Accept: 'application/json',

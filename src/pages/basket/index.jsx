@@ -406,7 +406,7 @@ function Basket() {
           selected: parsedBasketData.some(selectedItem => selectedItem.id === item.id),
         }));
         const allSelected = updatedList.every(item => item.selected);
-        console.log("useEffect: ", allSelected); // Log after setData
+        // console.log("useEffect: ", allSelected); // Log after setData
         return { ...prevData, data: { ...prevData.data, list: updatedList } };
   });
 }, []);
@@ -415,7 +415,7 @@ function Basket() {
     if (data && data.data && data.data.list) {
       const allSelected = data.data.list.every(item => item.selected);
       // setIsSelectedAll(allSelected);
-      console.log("useLayoutEffect: ", allSelected);
+      // console.log("useLayoutEffect: ", allSelected);
     }
   }, [data]);
 

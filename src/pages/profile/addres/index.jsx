@@ -99,8 +99,8 @@ function ProfileAddres() {
       ))
     );
 
-    console.log(formData);
-    console.log(dataGetEdit);
+    // console.log(formData);
+    // console.log(dataGetEdit);
   };
 
   const handleCloseModal = () => {

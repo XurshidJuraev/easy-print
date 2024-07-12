@@ -176,7 +176,7 @@ function HomePage() {
       setDisplayedImage(response.data.data.color_by_size[0].color[selectedSizeIndex].product.img)
       setDisplayedPrice(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price)
       setIsLoadingModal(false);
-      setDisplayedId(response.data.data.id);
+      setDisplayedId(response.data.data.color_by_size[0].color[selectedSizeIndex].product.id);
       setClickIdColor(response.data.data.color_by_size[0].id)
     }).catch((error) => {
       setIsLoadingModal(false);
@@ -352,7 +352,7 @@ function HomePage() {
       <HeaderMain trashCardData={trashCardData} />
       <HeroMain />
       <ToastContainer />
-      
+
       <section style={{margin: '24px 100px', marginTop: '-100px'}}>
         <div className='center container flex-column'>
           <div style={{width: '100%'}}>
@@ -673,30 +673,6 @@ function HomePage() {
                         <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
 
                         <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
-                          {/* <div className='d-flex' style={{marginRight: '83px'}}>
-                            <p>Размер</p>
-                            <select style={{border: 'none', height: '29px', marginLeft: '12px', outline: 'none'}} value={sizeOptions[selectedSizeIndex]} onChange={(e) => { const index = sizeOptions.findIndex((size) => size === e.target.value); setSelectedSizeIndex(index); }}>
-                              {sizeArray.map((size, index) => (
-                                <option 
-                                  key={size.id} 
-                                  onClick={() => {
-                                    console.log(size);
-                                    setSelectedSizeIndex(index); 
-                                    const selectedSizeId = size.id; 
-                                    setDefaultSize(selectedSizeId); 
-                                    setDisplayedPrice(size.color[0].product.price); 
-                                    setDisplayedName(size.color[0].product.name); 
-                                    setDisplayedQuantity(size.color[0].product.quantity); 
-                                    setDisplayedImage(size.color[0].product.img)
-                                  }} 
-                                  value={size.name}
-                                >
-                                  {size.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div> */}
-
                           <div className='d-flex center' style={{ marginRight: '83px' }}>
                             <p style={{margin: 0}}>Размер</p>
 
