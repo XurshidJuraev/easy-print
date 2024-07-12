@@ -17,7 +17,6 @@ function ProfileOrders() {
   const [orders, setOrders] = useState([]);
   const [show, setShow] = useState([]);
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Мои заказы'
@@ -50,7 +49,7 @@ function ProfileOrders() {
 
     accordionItems.forEach(item => {
       const button = item.querySelector('.accordion-button');
-      const collapseId = button.getAttribute('data-bs-target').slice(1); // Slice to remove '#'
+      const collapseId = button.getAttribute('data-bs-target').slice(1); 
 
       if (collapseId !== `flush-collapseOne${id}`) {
         const collapse = document.getElementById(collapseId);
@@ -77,21 +76,6 @@ function ProfileOrders() {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   };
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-  
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/');
-  //   }
-  // }, []);
 
   return (
     <>
@@ -179,7 +163,6 @@ function ProfileOrders() {
                                           </div>
                                         </div>
                                         <div className='d-flex justify-content-space-between flex-column'>
-                                          {/* <p className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p> */}
                                           {item.all_price ?
                                             <div style={{marginRight: '-20px', position: 'relative', left: '-6px'}} className='d-flex flex-column'>
                                               {Number(item.all_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}

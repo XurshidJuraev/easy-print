@@ -28,8 +28,6 @@ function Basket() {
   const [discount_price, setDiscount_price] = useState('');
   const [order_id, setOrder_id] = useState('');
   const [grant_total, setGrant_total] = useState('');
-  const [colorOptions, setColorOptions] = useState({});
-  const [sizeOptions, setSizeOptions] = useState({});
   const token = localStorage.getItem('token');
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
@@ -37,7 +35,6 @@ function Basket() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorBorder, setErrorBorder] = useState(false);
-  const [isLoadingModal, setIsLoadingModal] = useState(true);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -45,7 +42,7 @@ function Basket() {
       setCountHeader(Number(storedCount));
     }
   }, []);
-  
+
   const decrementLocalStorageValue = (key) => {
     const storedValue = localStorage.getItem(key);
     const newValue = Math.max(0, Number(storedValue) - 1);
@@ -341,9 +338,6 @@ function Basket() {
       setGrant_total(totalAmount);
       setPrice(totalPrice);      
       setDiscount_price(totalDiscountPrice);
-      
-      // console.log(selectedItemsData.map(item => item.discount_price));
-
       calculateTotalPrice(selectedItemsData);
 
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
@@ -387,12 +381,7 @@ function Basket() {
     });
   };
 
-  // useLayoutEffect(() => {
-  //   handleSelectAll(); // data o'zgarishi bilan checkboxlarni yangilash
-  // }, [data]); 
-
   useEffect(() => {
-    // i  f (!isLoading) { 
       const basketData = localStorage.getItem('basketData');
       const parsedBasketData = JSON.parse(basketData) || [];
       setSelectedItems(parsedBasketData);
@@ -406,7 +395,6 @@ function Basket() {
           selected: parsedBasketData.some(selectedItem => selectedItem.id === item.id),
         }));
         const allSelected = updatedList.every(item => item.selected);
-        // console.log("useEffect: ", allSelected); // Log after setData
         return { ...prevData, data: { ...prevData.data, list: updatedList } };
   });
 }, []);
@@ -414,8 +402,6 @@ function Basket() {
   useLayoutEffect(() => {
     if (data && data.data && data.data.list) {
       const allSelected = data.data.list.every(item => item.selected);
-      // setIsSelectedAll(allSelected);
-      // console.log("useLayoutEffect: ", allSelected);
     }
   }, [data]);
 
@@ -724,8 +710,6 @@ function Basket() {
                     <input 
                       style={{ position: 'relative', top: '20px', left: '-27px', border: errorBorder === true ? '1px solid red' : 'none' }} 
                       type="checkbox"
-                      // checked={data?.data?.list?.length > 0 && data.data.list.every(item => item.selected)}
-                      // onChange={handleSelectAll}
                       checked={data.data && data.data.list.length > 0 && data.data.list.every(item => item.selected)} 
                       onChange={handleSelectAll}  
                     />

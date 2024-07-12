@@ -32,13 +32,10 @@ function CategoryListByName() {
   const [colorArray, setColorArray] = useState([]);
   const navigate = useNavigate();
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [countHeader, setCountHeader] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingModal, setIsLoadingModal] = useState(true);
   const [defaultSize, setDefaultSize] = useState();
-  const [displayedItems, setDisplayedItems] = useState(11);
-  const [author, setAuthor] = useState([]);
   const [defaultColor, setDefaultColor] = useState();
   const [clickIdColor, setClickIdColor] = useState();
   const [displayedId, setDisplayedId] = useState();
@@ -176,7 +173,6 @@ function CategoryListByName() {
       setClickIdColor(response.data.data.color_by_size[0].id)
     }).catch((error) => {
       setIsLoadingModal(false);
-      // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -188,24 +184,19 @@ function CategoryListByName() {
       const colorId = selectedColor.id;
       const sizeId = selectedSize.id;
 
-      // console.log(productData);
-
-      // alert(colorId ? colorId : `selectedColor ${selectedColor}`, sizeId ? sizeId : `selectedSize: ${selectedSize}`);
-  
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
 
       var formdata = new FormData();
-      // formdata.append("warehouse_product_id", productData.id);
       formdata.append("warehouse_product_id", displayedId);
       formdata.append("quantity", 1);
       formdata.append("color_id", defaultColor ? defaultColor : clickIdColor);
       formdata.append("size_id", defaultSize ? defaultSize : colorId);
       formdata.append("price", productData.price);
       formdata.append("discount", modalData.discount ? modalData.discount : '0');
-  
+
       var requestOptions = {
         method: 'POST',
         headers: myHeaders,
@@ -221,8 +212,6 @@ function CategoryListByName() {
         price: productData.price,
         discount: modalData.discount ? modalData.discount : '0'
       };
-
-      // console.log(basketData);
 
       localStorage.setItem('basket', JSON.stringify(basketData));
 

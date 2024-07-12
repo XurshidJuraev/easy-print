@@ -27,7 +27,6 @@ function MyOrders() {
   const [total, setTotal] = useState('');
   const [delivery, setDelivery] = useState('');
   const [nullAddres, setNullAddres] = useState(false);
-  const [getHome, setGetHome] = useState(false);
   const [nullName, setNullName] = useState(false);
   const [nullPhoneNumber, setNullPhoneNumber] = useState(false);
   const [products_total, setProducts_total] = useState('');
@@ -90,7 +89,6 @@ function MyOrders() {
       toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     }
   }, []);
-  // const pay = JSON.parse(localStorage.getItem('paymentDate'))
 
   const token = localStorage.getItem('token');
   const order_id = localStorage.getItem('order_id');
@@ -254,19 +252,14 @@ function MyOrders() {
       redirect: 'follow'
     };
 
-    // console.log(requestOptions);
-
     fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
       .then(response => response.json())
       .then(result => {
         if (result.status === true) {
-          // toast.success('Заказ успешно оформлен!');
           setTimeout(() => {
-            // navigate('/');
             localStorage.setItem('counterValue', 0);
           }, 1500);
           setDataModal(result.data);
-          // console.log(result);
         } else {
           toast.error('Заказ не был оформлен!');
         }
@@ -349,23 +342,6 @@ function MyOrders() {
       window.removeEventListener("scroll", handleScroll);
     })
 })
-
-const cls = visible ? "visible" : "hidden";
-
-// useEffect(() => {
-//   const token = localStorage.getItem('token');
-//   const path = window.location.pathname;
-
-//   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-//     navigate('/');
-//   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-//     navigate('/mobile/auth');
-//   } else if (path.startsWith('/checkout')) {
-//     navigate('/');
-//   } else {
-//     navigate('/');
-//   }
-// }, []);
 
   return (
     <div>
@@ -557,14 +533,12 @@ const cls = visible ? "visible" : "hidden";
                                     <div className='d-flex'>
                                       <div>
                                         {item.images && item.images[0] && (
-                                          // <img className='order_img' src={item.images[0]} alt={item.name} />
                                           <div className='order_img' style={{backgroundImage: `url(${item.images[0]})`, backgroundSize: item.relation_type === 'product' ? 'contain' : 'cover', backgroundColor: 'white', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                                         )}
                                       </div>
 
                                       <div style={{marginLeft: '12px'}}>
                                         <p className='order_name hiided_text'>{item.name ? item.name : ''}</p>
-                                        {/* <p className='order_price'>{item.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p> */}
                                         {item.all_price ?
                                           <div>
                                             {Number(item.all_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}

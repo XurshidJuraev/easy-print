@@ -124,7 +124,7 @@ function AuthorPage() {
     if (modal) {
       modal.style.display = 'block';
     }
-    
+
     axios.get(`${process.env.REACT_APP_TWO}/product/show/warehouse_product?warehouse_product_id=${cardData.id}`, {
       method: 'GET',
       headers: {
@@ -145,7 +145,6 @@ function AuthorPage() {
       setClickIdColor(response.data.data.color_by_size[0].id)
     }).catch((error) => {
       setIsLoadingModal(false);
-      // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -157,17 +156,12 @@ function AuthorPage() {
       const colorId = selectedColor.id;
       const sizeId = selectedSize.id;
 
-      // console.log(productData);
-
-      // alert(colorId ? colorId : `selectedColor ${selectedColor}`, sizeId ? sizeId : `selectedSize: ${selectedSize}`);
-  
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
 
       var formdata = new FormData();
-      // formdata.append("warehouse_product_id", productData.id);
       formdata.append("warehouse_product_id", displayedId);
       formdata.append("quantity", 1);
       formdata.append("color_id", defaultColor ? defaultColor : clickIdColor);
@@ -223,9 +217,9 @@ function AuthorPage() {
                 price: productData.price,
                 discount: modalData.discount ? modalData.discount : '0'
               };
-  
+
               localStorage.setItem('basket', JSON.stringify(basketData));
-  
+
               toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
             } else {
               toast.error('Товар не добавлен');
@@ -276,7 +270,6 @@ function AuthorPage() {
     <div>
       <HeaderMain trashCardData={trashCardData} />
 
-      {/* <div style={{width: '100%', height: '260px', backgroundImage: `url(${Author_background_default})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover'}}></div> */}
       <Reveal>
         <AdsSlider2 />
       </Reveal>
@@ -704,7 +697,6 @@ function AuthorPage() {
                       </div>
 
                       <div className='modal_image_fat'>
-                        {/* <img src={displayedImage ? displayedImage[0] : ''} alt="your_design" /> */}
                         <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover'}}></div>
                       </div>
                     </div>

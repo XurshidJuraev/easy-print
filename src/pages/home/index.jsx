@@ -42,7 +42,6 @@ function HomePage() {
   const [isLoadingModal, setIsLoadingModal] = useState(true);
   const [defaultSize, setDefaultSize] = useState();
   const [displayedItems, setDisplayedItems] = useState(11);
-  const [author, setAuthor] = useState([]);
   const [defaultColor, setDefaultColor] = useState();
   const [clickIdColor, setClickIdColor] = useState();
   const [displayedId, setDisplayedId] = useState();
@@ -779,7 +778,6 @@ function HomePage() {
                       </div>
 
                       <div className='modal_image_fat'>
-                        {/* <img src={displayedImage ? displayedImage[0] : ''} alt="your_design" /> */}
                         <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover'}}></div>
                       </div>
                     </div>

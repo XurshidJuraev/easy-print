@@ -12,7 +12,6 @@ import axios from 'axios';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import Reveal from '../../animation';
-import ReactInputDateMask from 'react-input-date-mask';
 
 function Profile() {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -25,7 +24,6 @@ function Profile() {
     gender: ''
   });
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Личная информация'
@@ -131,21 +129,6 @@ function Profile() {
     }
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-  
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/');
-  //   }
-  // }, []);
-
   return (
     <>
       <HeaderMain trashCardData={trashCardData} />
@@ -159,7 +142,6 @@ function Profile() {
 
             <Reveal>
               <div className="d-flex" v-if="data != undefined">
-                {/* <img style={{ width: '100px', height: '100px', borderRadius: '50%', }} src={formData.imageUrl ? formData.imageUrl : no_image} alt={formData.name ? `${formData.name} ${formData.lastName}` : 'no_image'} /> */}
                 <div style={{ width: '100px', height: '100px', borderRadius: '50%', backgroundImage: `url(${formData.imageUrl ? formData.imageUrl : no_image})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div>
 
                 <label>

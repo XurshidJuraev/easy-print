@@ -33,7 +33,6 @@ function ProfileAddres() {
   const [dataGet, setDataGet] = useState([]);
   const [dataGetEdit, setDataEdit] = useState([]);
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Мои адреса'
@@ -41,7 +40,7 @@ function ProfileAddres() {
 
   const handleEditAddress = (id) => {
     setEditAddressId(id);
-  
+
     const selectedAddress = dataGet.data.find((address) => address.id === id);
     if (selectedAddress) {
       const selectedRegionData = data.find((region) => region.region === selectedAddress.region.name);
@@ -50,7 +49,7 @@ function ProfileAddres() {
       } else {
         console.log('No selectedRegionData found');
       }
-  
+
       setFormData({
         id: selectedAddress.id,
         city_id: selectedAddress.city.id,
@@ -99,8 +98,6 @@ function ProfileAddres() {
       ))
     );
 
-    // console.log(formData);
-    // console.log(dataGetEdit);
   };
 
   const handleCloseModal = () => {
@@ -170,7 +167,6 @@ function ProfileAddres() {
         window.location.reload();
       })
       .catch((error) => {
-        // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
         console.log(error);
       });
   };
@@ -267,21 +263,6 @@ function ProfileAddres() {
         toast.error('Ошибка при удалении адреса.');
       });
   };
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-  
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/');
-  //   }
-  // }, []);
 
   return (
     <>
