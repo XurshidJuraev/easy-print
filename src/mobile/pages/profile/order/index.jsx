@@ -15,7 +15,6 @@ function ProfileMobileOrder() {
   const [show, setShow] = useState([]);
   const [collapse, setCollapse] = useState(false);
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -72,21 +71,6 @@ function ProfileMobileOrder() {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       });
   };
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/mobile/auth');
-  //   }
-  // }, []);
 
   return (
     <div>

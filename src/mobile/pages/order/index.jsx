@@ -249,7 +249,6 @@ function OrderMobile() {
         if (result.status === true) {
           toast.success('Заказ успешно оформлен!');
           setTimeout(() => {
-            // navigate('/');
             setDataModal(result.data);
             setBekStatus(result.status);
             setOpen(true);
@@ -372,21 +371,6 @@ function OrderMobile() {
         console.log(error);
       });
   }, [token]);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/mobile/auth');
-  //   }
-  // }, []);
 
   return (
     <div>

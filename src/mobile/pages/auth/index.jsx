@@ -61,9 +61,8 @@ function AuthPageMobile() {
 
   const handleOpenCodeVerification = (evt) => {
     evt.preventDefault();
-  
+
     const { code_verify } = localStorage.getItem('phone_code_verify')
-    // console.log(localStorage.getItem('phone_code_verify'));
 
     fetch(`${process.env.REACT_APP_TWO}/phone-verify`, {
       method: 'POST',

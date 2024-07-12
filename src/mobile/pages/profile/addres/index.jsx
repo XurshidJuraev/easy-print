@@ -28,7 +28,6 @@ function ProfileMobileAddres() {
   const [data, setData] = useState([]);
   const [dataGet, setDataGet] = useState([]);
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -226,22 +225,6 @@ function ProfileMobileAddres() {
       }
     }
   }, [editAddressId, data, dataGet.data]);
-
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const path = window.location.pathname;
-
-  //   if (!token && (path.startsWith('/profile') || path === '/profile/addres' || path === '/profile/checkout' || path === '/profile/payment')) {
-  //     navigate('/');
-  //   } else if (!token && (path.startsWith('/mobile/profile') || path === '/mobile/profile/addres' || path === '/mobile/profile/checkout' || path === '/mobile/checkout')) {
-  //     navigate('/mobile/auth');
-  //   } else if (path.startsWith('/checkout')) {
-  //     navigate('/');
-  //   } else {
-  //     navigate('/mobile/auth');
-  //   }
-  // }, []);
 
   return (
     <div>

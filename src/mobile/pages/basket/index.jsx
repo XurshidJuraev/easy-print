@@ -24,15 +24,11 @@ function BasketMobile() {
   const [discount_price, setDiscount_price] = useState('');
   const [order_id, setOrder_id] = useState('');
   const [grant_total, setGrant_total] = useState('');
-  const [colorOptions, setColorOptions] = useState({});
-  const [sizeOptions, setSizeOptions] = useState({});
   const token = localStorage.getItem('token');
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
-  // const [countHeader, setCountHeader] = useState(0);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingModal, setIsLoadingModal] = useState(true);
   const [errorBorder, setErrorBorder] = useState(false);
   const navigate = useNavigate();
 
@@ -268,8 +264,6 @@ function BasketMobile() {
       setGrant_total(totalAmount);
       setPrice(totalPrice);      
       setDiscount_price(totalDiscountPrice);
-      
-      // console.log(selectedItemsData.map(item => item.discount_price));
 
       calculateTotalPrice(selectedItemsData);
 
@@ -282,7 +276,7 @@ function BasketMobile() {
       if (!prevData.data || !prevData.data.list) {
         return prevData;
       }
-  
+
       const updatedList = prevData.data.list.map((item) => {
         if (item.id === id) {
           return {
@@ -292,10 +286,10 @@ function BasketMobile() {
         }
         return item;
       });
-  
+
       const selectedItemsData = updatedList.filter(item => item.selected);
       setSelectedItems(selectedItemsData);
-  
+
       const totalAmount = selectedItemsData.reduce((accumulator, item) => accumulator + item.total_price, 0);
       const totalPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.price), 0);
       const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
@@ -304,10 +298,10 @@ function BasketMobile() {
       setPrice(totalPrice);      
       setDiscount_price(totalDiscountPrice);
       calculateTotalPrice(selectedItemsData);
-  
+
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
-  
+
     setTrashCardData((prevTrashCardData) => {
       const updatedTrashCardData = prevTrashCardData.filter(item => item.id !== id);
       return updatedTrashCardData;

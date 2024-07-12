@@ -32,7 +32,6 @@ function HomePageMobile() {
         'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
       }
     }).then((response) => {
-      // console.log(response.data.data.warehouse_product_list);
       setData(response.data);
     }).catch((error) => {
       console.log(error);

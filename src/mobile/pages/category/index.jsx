@@ -40,7 +40,6 @@ function CategoryMobile() {
       }
     }).then((response) => {
       setData(response.data.data[0]);
-      // console.log(response.data.data);
       setCategory(response.data.data[0].category);
       setSubCategory(response.data.data[0].sub_category[0].name);
       setSubCategoryList(response.data.data[0].sub_category);

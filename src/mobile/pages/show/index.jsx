@@ -776,7 +776,6 @@ function ProductShowMobile() {
 
                       <div style={{display: 'flex', marginTop: '32px'}}>
                         <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Автор' : 'Muallif'}:</p>
-                        {/* <NavLink to={`/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink> */}
                         <NavLink to={`/mobile/author/${dataBeck.company_id}/${dataBeck.company_name}`} className='show_detail_author_name' href="#">{dataBeck.company_name}</NavLink>
                       </div>
 
