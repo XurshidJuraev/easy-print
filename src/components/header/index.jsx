@@ -420,7 +420,7 @@ function HeaderMain({ trashCardData }) {
         </div>
       ) : (
         <center style={{textAlign: 'left'}} className="d-flex align-items-center justify-content-center">
-          <NavLink title={`${localStorage.getItem('selectedLanguage') === 'ru' ? 'Перейти на главный страницу EasyGo' : 'EasyPrint bosh sahifasi'}`} to={'/'}>
+          <NavLink title={`${localStorage.getItem('selectedLanguage') === 'ru' ? 'Перейти на главный страницу EasyPrint' : 'EasyPrint bosh sahifasi'}`} to={'/'}>
             <img className='header_logo' style={{marginTop: '26px', marginBottom: '26px'}} src={logo} alt="logo" />
           </NavLink>
 

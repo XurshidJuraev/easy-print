@@ -680,7 +680,7 @@ const YourDesign = () => {
               // getImageBackBlackSweatshot();
               // getImageWhiteSweatshot();
               // getImageBackWhiteSweatshot();
-            }} style={{cursor: 'pointer'}} className='addToBasket_image' data-bs-target="#exampleModalToggle5" data-bs-toggle="modal" src={addToBasketImage} alt="addToBasketImage" />
+            }} style={{cursor: 'pointer', marginTop: '-10px', position: 'relative', left: '-30px'}} className='addToBasket_image' data-bs-target="#exampleModalToggle5" data-bs-toggle="modal" src={addToBasketImage} alt="addToBasketImage" />
         </div>
       </center>
 
@@ -1159,7 +1159,7 @@ const YourDesign = () => {
                 !isFrontView ? (
                   <>
                     <div ref={ref}>
-                      <img style={{width: '500px', height: '560px'}} src={hoodie_back_black} alt="hoodie_back_black" />
+                      <img style={{width: '560px', height: '600px'}} src={hoodie_back_black} alt="hoodie_back_black" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1188,7 +1188,7 @@ const YourDesign = () => {
                 ) : isFrontView ? (
                   <>
                     <div ref={ref}>
-                      <img style={{width: '500px', height: '560px'}} src={hoodie_front_black} alt="hoodie_front_black" />
+                      <img style={{width: '560px', height: '600px'}} src={hoodie_front_black} alt="hoodie_front_black" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1217,7 +1217,7 @@ const YourDesign = () => {
                 ) : (
                   <>
                     <div ref={ref}>
-                      <img style={{width: '500px', height: '560px'}} src={hoodie_front_black} alt="hoodie_front_black" />
+                      <img style={{width: '560px', height: '600px'}} src={hoodie_front_black} alt="hoodie_front_black" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1248,7 +1248,7 @@ const YourDesign = () => {
                 !isFrontView ? (
                   <>
                     <div ref={refBackWhiteSweatshot}>
-                      <img style={{width: '500px', height: '560px'}} src={hoodie_back_white} alt="hoodie_back_white" />
+                      <img style={{width: '560px', height: '600px'}} src={hoodie_back_white} alt="hoodie_back_white" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1277,7 +1277,7 @@ const YourDesign = () => {
                 ) : isFrontView ? (
                   <>
                     <div ref={refWhiteSweatshot}>
-                      <img style={{width: '500px', height: '560px'}} src={hoodie_front_white} alt="hoodie_front_white" />
+                      <img style={{width: '560px', height: '600px'}} src={hoodie_front_white} alt="hoodie_front_white" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1306,7 +1306,7 @@ const YourDesign = () => {
                 ) : (
                   <>
                     <div ref={refWhiteSweatshot}>
-                      <img style={{width: '500px', height: '560px'}} src={hoodie_front_white} alt="hoodie_front_white" />
+                      <img style={{width: '560px', height: '600px'}} src={hoodie_front_white} alt="hoodie_front_white" />
 
                       <div style={{display: !textInputVisible ? 'block' : 'none'}}>
                         <Reveal>
@@ -1518,7 +1518,7 @@ const YourDesign = () => {
         <>
           <div onClick={handleClickCategoryChange} style={{position: 'absolute', background: '#7c7c7c12', width: '100%', height: '100%', overflow: 'hidden', top: '0', left: '0'}} className="color_background"></div>
 
-          <div style={{ position: 'absolute', top: '150px', left: '19.2%', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
+          <div style={{ position: 'absolute', top: '170px', left: '19.2%', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', width: '130px', height: '36px', transform: 'scale(1.3)' }}>
             <div>
               {categoryName.category.map((cat, index) => (
                 <div key={index} onClick={() => {if (cat.type !== 'no active') { setCategory(cat.name); setCategoryChange(cat.id); setCategoryChangeCheck(cat.id); setCategorySize(cat.sizes); setCategoryIndex(index); } }} className={`${cat.type === 'no active' ? 'category_change_disbaled' : `category_change ${categoryIndex === index ? 'selected' : ''}`} `}>              
@@ -1539,7 +1539,7 @@ const YourDesign = () => {
         <>
           <div onClick={handleClickColorChange} style={{position: 'absolute', background: '#7c7c7c12', width: '100%', height: '100%', top: '0', left: '0'}} className="color_background"></div>
 
-          <div style={{ position: 'absolute', top: '150px', left: '30.6%', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
+          <div style={{ position: 'absolute', top: '170px', left: '30.6%', boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', width: '104px', height: '36px', transform: 'scale(1.3)' }}>
             <div className='d-flex' style={{cursor: 'pointer'}}>
               <div onClick={() => setShirtColor('#FFFFFF')} className='color_change_selector'>
                 <div className='center' style={{borderRadius: '50%', width: '23px', height: '23px', backgroundColor: 'white', border: '0.5px solid var(--neutral-200, #CCC)'}}>
