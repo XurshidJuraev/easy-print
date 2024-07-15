@@ -35,6 +35,7 @@ function Basket() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorBorder, setErrorBorder] = useState(false);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -46,13 +47,13 @@ function Basket() {
   const decrementLocalStorageValue = (key) => {
     const storedValue = localStorage.getItem(key);
     const newValue = Math.max(0, Number(storedValue) - 1);
-  
+
     if (newValue === 0) {
       localStorage.setItem(key, '0');
     } else {
       localStorage.setItem(key, newValue.toString());
     }
-  
+
     return newValue;
   };
 
@@ -62,7 +63,7 @@ function Basket() {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -76,17 +77,17 @@ function Basket() {
       }
       let newGrantTotal = 0;
       let newDiscountPrice = 0;
-  
+
       const updatedList = prevData.data.list.map((item) => {
         if (item.id === id && item.selected) {
           const newCount = item.quantity + change;
           const updatedCount = Math.min(Math.max(newCount, 1), maxQuantity);
           const updatedTotalPrice = item.price * updatedCount;
-  
+
           const finalTotalPrice = item.discount_price
             ? updatedTotalPrice - item.discount_price
             : updatedTotalPrice;
-  
+
           const newItem = {
             ...item,
             quantity: updatedCount,
@@ -94,27 +95,27 @@ function Basket() {
             selectedColor: selectedColor,
             selectedSize: selectedSize,
           };
-  
+
           return newItem;
         }
         return item;
       });
-  
+
       updatedList.forEach((item) => {
         newGrantTotal += item.total_price;
         newDiscountPrice += item.discount_price ? item.discount_price * item.quantity : 0;
       });
-  
+
       const totalPriceArray = updatedList.map(item => item.total_price + (item.discount_price || 0));
       const totalPriceSum = totalPriceArray.reduce((accumulator, totalPrice) => accumulator + totalPrice, 0);
-  
+
       setGrant_total(newGrantTotal);
       setDiscount_price(newDiscountPrice);
       setPrice(totalPriceSum);
-  
+
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
-  }  
+  }
 
   useEffect(() => {
     const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
@@ -128,26 +129,34 @@ function Basket() {
       setTrashCardData(savedCards);
       calculateTotalPrice(savedCards);
     }
-    handleSelectAll();
   }, []);
-  
+
+  useEffect(() => {
+    if (isInitialRender) {
+      if (data && data.data && data.data.list && data.data.list.length > 0) {
+        setIsInitialRender(false); 
+        handleSelectAll();
+      }
+    }
+  }, [data]);
+
   function calculateTotalPrice(data) {
     if (!data || !data.length || data.length === 0) {
       return 0;
     }
-  
+
     let total = 0;
     for (let i = 0; i < data.length; i++) {
       const price = parseInt(data[i].price.replace(/\s/g, ''), 10);
       const count = data[i].count;
       total += price * count;
     }
-  
+
     if (promoCode === 'PROMO123') {
       const discountAmount = (total * discount) / 100;
       total -= discountAmount;
     }
-  
+
     return total;
   }
 
@@ -189,7 +198,7 @@ function Basket() {
         localStorage.setItem('price', response.data.data.price);
         setData(response.data);
         setSelectedColorId(response.data.data.list[0].color.id);
-        setSelectedSizeId(response.data.data.list[0].size.id);   
+        setSelectedSizeId(response.data.data.list[0].size.id);
         setAllProduct(response.data.data.list.length);
         localStorage.setItem('basketData', JSON.stringify(response.data.data.list));
         // console.log(response.data.data);
@@ -199,7 +208,7 @@ function Basket() {
       const savedCards = JSON.parse(localStorage.getItem('trashCard')) || [];
       setTrashCardData(savedCards);
       calculateTotalPrice(savedCards);
-    });    
+    });
   }, [token]);
 
   async function saveOrder() {
@@ -270,13 +279,13 @@ function Basket() {
       .catch((error) => {
         toast.error('Товар в корзине не был удален.');
       });
-  };  
+  };
 
   function applyPromoCode() {
     let promoMessage = '';
     let promoColor = 'green';
 
-    axios.post(`${process.env.REACT_APP_TWO}/order/add-coupon`, { 
+    axios.post(`${process.env.REACT_APP_TWO}/order/add-coupon`, {
         order_id: order_id,
         coupon_name: promoCode
       },
@@ -336,7 +345,7 @@ function Basket() {
       const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
 
       setGrant_total(totalAmount);
-      setPrice(totalPrice);      
+      setPrice(totalPrice);
       setDiscount_price(totalDiscountPrice);
       calculateTotalPrice(selectedItemsData);
 
@@ -349,7 +358,7 @@ function Basket() {
       if (!prevData.data || !prevData.data.list) {
         return prevData;
       }
-  
+
       const updatedList = prevData.data.list.map((item) => {
         if (item.id === id) {
           return {
@@ -359,51 +368,27 @@ function Basket() {
         }
         return item;
       });
-  
+
       const selectedItemsData = updatedList.filter(item => item.selected);
       setSelectedItems(selectedItemsData);
-  
+
       const totalAmount = selectedItemsData.reduce((accumulator, item) => accumulator + item.total_price, 0);
       const totalPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.price), 0);
       const totalDiscountPrice = selectedItemsData.reduce((accumulator, item) => accumulator + parseInt(item.discount_price), 0);
       setAllProduct(selectedItemsData.length);
       setGrant_total(totalAmount);
-      setPrice(totalPrice);      
+      setPrice(totalPrice);
       setDiscount_price(totalDiscountPrice);
       calculateTotalPrice(selectedItemsData);
-  
+
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
-  
+
     setTrashCardData((prevTrashCardData) => {
       const updatedTrashCardData = prevTrashCardData.filter(item => item.id !== id);
       return updatedTrashCardData;
     });
   };
-
-  useEffect(() => {
-      const basketData = localStorage.getItem('basketData');
-      const parsedBasketData = JSON.parse(basketData) || [];
-      setSelectedItems(parsedBasketData);
-      setData((prevData) => {
-        if (!prevData.data || !prevData.data.list) {
-          return prevData;
-        }
-
-        const updatedList = prevData.data.list.map((item) => ({
-          ...item,
-          selected: parsedBasketData.some(selectedItem => selectedItem.id === item.id),
-        }));
-        const allSelected = updatedList.every(item => item.selected);
-        return { ...prevData, data: { ...prevData.data, list: updatedList } };
-  });
-}, []);
-
-  useLayoutEffect(() => {
-    if (data && data.data && data.data.list) {
-      const allSelected = data.data.list.every(item => item.selected);
-    }
-  }, [data]);
 
   return (
     <div>

@@ -147,7 +147,7 @@
 }
 
 .show_detail_author_name {
-  color: var(--Primary-7, #3064CC);
+  color: var(--Primary-7, #688E22);
   font-family: 'Inter400';
   font-size: 16px;
   font-style: normal;
@@ -274,12 +274,12 @@
 }
 
 .basket_promo_btn_price:hover {
-  background-color: #6396FC;
+  background-color: #92A86A;
   color: white;
 }
 
 .basket_promo_btn_price:active {
-  background-color: #3064CC;
+  background-color: #688E22;
   color: white;
 }
 

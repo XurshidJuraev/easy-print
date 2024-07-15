@@ -113,7 +113,7 @@
 }
 
 .layers_text_fat {
-  color: var(--Primary-7, #3064CC);
+  color: var(--Primary-7, #688E22);
   font-family: Inter;
   font-size: 20px;
   font-style: normal;
@@ -214,7 +214,7 @@
 .MuiSlider-valueLabelLabel {
   width: 42px !important;
   height: 38px !important;
-  color: var(--primary-7, #3064CC) !important;
+  color: var(--primary-7, #688E22) !important;
   font-family: Heebo !important;
   font-size: 12px !important;
   font-style: normal !important;
@@ -282,7 +282,7 @@
   justify-content: center;
   align-items: center;
   gap: 6px;
-  color: var(--Primary-7, #3064CC);
+  color: var(--Primary-7, #688E22);
   font-family: 'Inter400';
   font-size: 14px;
   font-style: normal;
@@ -397,7 +397,7 @@
 }
 
 .selected-image_modal {
-  border: 2px solid var(--Primary-6, #6396FC);
+  border: 2px solid var(--Primary-6, #92A86A);
 }
 
 /* .white_background {
@@ -451,7 +451,7 @@
 }
 
 .layers_text_fat {
-  color: var(--Primary-7, #3064CC);
+  color: var(--Primary-7, #688E22);
   font-family: Inter;
   font-size: 20px;
   font-style: normal;
@@ -569,7 +569,7 @@
 .MuiSlider-valueLabelLabel {
   width: 42px !important;
   height: 38px !important;
-  color: var(--primary-7, #3064CC) !important;
+  color: var(--primary-7, #688E22) !important;
   font-family: Heebo !important;
   font-size: 12px !important;
   font-style: normal !important;
@@ -621,7 +621,7 @@
   justify-content: center;
   align-items: center;
   gap: 6px;
-  color: var(--Primary-7, #3064CC);
+  color: var(--Primary-7, #688E22);
   font-family: 'Inter400';
   font-size: 14px;
   font-style: normal;
@@ -717,5 +717,5 @@
 }
 
 .selected-image_modal {
-  border: 2px solid var(--Primary-6, #6396FC);
+  border: 2px solid var(--Primary-6, #92A86A);
 } */

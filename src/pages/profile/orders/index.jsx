@@ -110,7 +110,7 @@ function ProfileOrders() {
 
                           <div style={{ marginLeft: '40px' }}>
                             <div className="d-flex">
-                              <button className='btn_order_profile hidden_three_dots' style={{ background: order.status === 'Ordered' ? '#D8E5FE' : order.status === 'Performed' ? '#D8E5FE' : order.status === 'Canceled' ? '#FFE7D6' : order.status === 'Accepted_by_recipient' ? '#E6E6E6' : '#D8E5FE', color: order.status === 'Ordered' ? '#3064CC' : order.status === 'Performed' ? '#3064CC' : order.status === 'Canceled' ? '#FF4A32' : order.status === 'Accepted_by_recipient' ? '#333' : '#3064CC' }}>{order.status}</button>
+                              <button className='btn_order_profile hidden_three_dots' style={{ background: order.status === 'Ordered' ? '#D8E5FE' : order.status === 'Performed' ? '#D8E5FE' : order.status === 'Canceled' ? '#FFE7D6' : order.status === 'Accepted_by_recipient' ? '#E6E6E6' : '#D8E5FE', color: order.status === 'Ordered' ? '#688E22' : order.status === 'Performed' ? '#688E22' : order.status === 'Canceled' ? '#FF4A32' : order.status === 'Accepted_by_recipient' ? '#333' : '#688E22' }}>{order.status}</button>
                               <p style={{width: order.status === 'Accepted_by_recipient' ? '220px' : 'auto'}} className='order_profile_opacity_text hidden_three_dots pt-1 ps-3'>{order.order_status_date ? order.order_status_date : 'Нет данных'}</p>
                             </div>
                             <p className='order_profile_text'>{order.order_date ? order.order_date : 'Нет данных'}</p>
