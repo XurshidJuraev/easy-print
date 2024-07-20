@@ -469,7 +469,7 @@ const YourDesign = () => {
               theme: "light",
             });
           } else {
-            toast.error('Товар не добавлен');
+            toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
           }
         }
       })

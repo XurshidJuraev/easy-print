@@ -111,6 +111,7 @@ function Profile() {
       }
     })
     .catch((error) => {
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       console.log('error:', error);
     });
   };  
@@ -132,6 +133,7 @@ function Profile() {
   return (
     <>
       <HeaderMain trashCardData={trashCardData} />
+      <ToastContainer />
 
       <div className="container mt-5 center">
         <div className="d-flex align-items-center justify-content-between" style={{width: '1200px'}}>
@@ -159,7 +161,7 @@ function Profile() {
                   </Reveal>
 
                   <Reveal>
-                    <InputMask mask='99-99-9999' placeholder="Дата рождения" className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
+                    <InputMask mask='99-99-9999' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Месяц, день, год' : 'Oy, kun, yil'} className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange}></InputMask>
                     {/* <ReactInputDateMask  mask='dd/mm/yyyy' className='input_profile' value={formData.birthDate} name="birthDate" onChange={handleChange} /> */}
                   </Reveal>
 

@@ -186,7 +186,8 @@ function MyOrders() {
         setFormData({
           city_id: initialRegion.cities[0]?.id,
           name: '',
-          postcode: ''
+          postcode: '',
+          region: 'Toshkent shahri',
         });
         setCities(initialRegion.cities);
       })
@@ -204,7 +205,7 @@ function MyOrders() {
 
   function saveOrder() {
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    myHeaders.append("language", localStorage.getItem('selectedLanguage') === 'ru' ? 'ru' : 'uz');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -270,25 +271,16 @@ function MyOrders() {
   const handleChange = (e) => {
     const selectedRegion = e.target.value;
     setFormData({ ...formData, [e.target.name]: selectedRegion });
-
+  
     const selectedRegionData = data.find((region) => region.region === selectedRegion);
-
     if (selectedRegionData) {
       const selectedCities = selectedRegionData.cities || [];
       setCities(selectedCities);
     }
-
-    const value = e.target.value;
-    const name = e.target.name;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
+  
     setFormErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: value.trim() === '',
+      [e.target.name]: selectedRegion.trim() === '',
     }));
   };
 
@@ -528,7 +520,7 @@ function MyOrders() {
                           <div id="collapseOne" style={{borderRadius: '12px'}} className="accordion-collapse collapse" data-bs-parent="#accordionExample" >
                             <div className="accordion-body">
                               {orders && orders.list && orders.list.map((item, itemIndex) => (
-                                <div key={itemIndex}>
+                                <NavLink to={`/show/detail/${item.relation_id}/${item.name}`} style={{textDecoration: 'none', color: 'black'}} key={itemIndex}>
                                   <Reveal>
                                     <div className='d-flex'>
                                       <div>
@@ -547,7 +539,7 @@ function MyOrders() {
                                             </del>
                                           </div>
                                           :
-                                          <div>
+                                          <div style={{color: 'black'}}>
                                             {item.price ? `${Number(item.price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
                                           </div>
                                         }
@@ -555,7 +547,7 @@ function MyOrders() {
                                     </div>
                                   </Reveal>
                                   <hr />
-                                </div>
+                                </NavLink>
                               ))}
                             </div>
                           </div>
@@ -610,7 +602,7 @@ function MyOrders() {
                 <div className="d-flex align-items-center mb-2 justify-content-between">
                   <p className='address_modal_text'>Область</p>
 
-                  <select style={{border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px'}} className='input_profile' onChange={handleChange}>
+                  <select style={{ border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px' }} className='input_profile' name="region" value={formData.region} onChange={handleChange} >
                     {data.map((region) => (
                       <option key={region.id} value={region.region}>
                         {region.region}
@@ -638,9 +630,11 @@ function MyOrders() {
                 </div>
 
                 <div className="d-flex align-items-center justify-content-between">
-                  <p style={{marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none'}} className='address_modal_text'>Почтовый индекс</p>
+                  <p style={{ marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} className='address_modal_text' >
+                    Почтовый индекс
+                  </p>
 
-                  <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
+                  <input style={{ marginRight: '40px', margin: 'auto', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
@@ -670,7 +664,7 @@ function MyOrders() {
 
                 <div>
                   <h4 className='order_modal_body_title'>Telegram</h4>
-                  <p className='order_modal_body_text'>EasyPrint_Support_Bot</p>
+                  <p className='order_modal_body_text' style={{marginTop: '-5px'}}>EasyPrint Support</p>
                 </div>
               </div>
 
@@ -680,7 +674,7 @@ function MyOrders() {
                 </div>
 
                 <div>
-                  <NavLink to={"tel:+998990123456"} className='order_modal_body_title'>+998 99 012 34 56</NavLink>
+                  <NavLink to={"tel:+998772778008"} className='order_modal_body_title'>+998 77 277 80 08</NavLink>
                   <p className='order_modal_body_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Бесплатный звонок по Узбекистану' : 'O`zbekiston bo`ylab'}</p>
                 </div>
               </div>

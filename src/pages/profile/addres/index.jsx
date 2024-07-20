@@ -16,6 +16,7 @@ function ProfileAddres() {
   const [trashCardData, setTrashCardData] = useState([]);
   const [cities, setCities] = useState([]);
   const [editAddressId, setEditAddressId] = useState(null);
+  const [hiddenTashkent, setHiddenTashkent] = useState(null);
   const [formData, setFormData] = useState({
     city_id: '',
     name: '',
@@ -123,32 +124,23 @@ function ProfileAddres() {
   const handleChange = (e) => {
     const selectedRegion = e.target.value;
     setFormData({ ...formData, [e.target.name]: selectedRegion });
-
+  
     const selectedRegionData = data.find((region) => region.region === selectedRegion);
-
     if (selectedRegionData) {
       const selectedCities = selectedRegionData.cities || [];
       setCities(selectedCities);
     }
-
-    const value = e.target.value;
-    const name = e.target.name;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
+  
     setFormErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: value.trim() === '',
+      [e.target.name]: selectedRegion.trim() === '',
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.region === '' || formData.city_id === '' || formData.name === '' || formData.postcode === '') {
+    if (formData.region === '' || formData.city_id === '' || formData.name === '') {
       toast.warning('Обязательно заполните все детали. Пожалуйста, проверьте все и отправьте повторно. Или обновите страницу еще раз и повторите попытку.');
       return;
     }
@@ -215,8 +207,10 @@ function ProfileAddres() {
         setFormData({
           city_id: initialRegion.cities[0]?.id,
           name: '',
-          postcode: ''
+          postcode: '',
+          region: 'Toshkent shahri',
         });
+        setHiddenTashkent(initialRegion.region);
         setCities(initialRegion.cities);
       })
       .catch((error) => {
@@ -283,7 +277,7 @@ function ProfileAddres() {
                     <Reveal>
                       <div className='user_address mb-3' key={data2.id}>
                         <div>
-                          {data2.name}, {data2.region.name}, {data2.city.name}, {data2.postcode}
+                          {data2.name}, {data2.region.name}, {data2.city.name} {data2.postcode ? `, ${data2.postcode}` : ''}
                         </div>
                         
                         <div>
@@ -329,9 +323,9 @@ function ProfileAddres() {
                       <div className="d-flex align-items-center mb-2 justify-content-between">
                         <p className='address_modal_text'>Область</p>
 
-                        <select style={{border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px'}} className='input_profile' onChange={handleChange}>
+                        <select style={{ border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px' }} className='input_profile' name="region" value={formData.region} onChange={handleChange} >
                           {data.map((region) => (
-                            <option selected={dataGetEdit.region && region.region === dataGetEdit.region.name} key={region.id} value={region.region}>
+                            <option key={region.id} value={region.region}>
                               {region.region}
                             </option>
                           ))}
@@ -357,9 +351,11 @@ function ProfileAddres() {
                       </div>
 
                       <div className="d-flex align-items-center justify-content-between">
-                        <p style={{marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none'}} className='address_modal_text'>Почтовый индекс</p>
+                        <p style={{ marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} className='address_modal_text'>
+                          Почтовый индекс
+                        </p>
 
-                        <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
+                        <input style={{ marginRight: '40px', margin: 'auto', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
                       </div>
 
                       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
@@ -379,12 +375,13 @@ function ProfileAddres() {
                       <h1 className="modal-title modal_title" id="exampleModalLabel">Ваш адрес</h1>
                     </center>
                   </div>
+
                   <div style={{padding: '48px'}} className="modal-body">
                     <form onSubmit={handleSubmit}>
                       <div className="d-flex align-items-center mb-2 justify-content-between">
                         <p className='address_modal_text'>Область</p>
 
-                        <select style={{border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px'}} className='input_profile' onChange={handleChange}>
+                        <select style={{ border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px' }} className='input_profile' name="region" value={formData.region} onChange={handleChange} >
                           {data.map((region) => (
                             <option key={region.id} value={region.region}>
                               {region.region}
@@ -412,9 +409,11 @@ function ProfileAddres() {
                       </div>
 
                       <div className="d-flex align-items-center justify-content-between">
-                        <p style={{marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none'}} className='address_modal_text'>Почтовый индекс</p>
+                        <p style={{ marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} className='address_modal_text' >
+                          Почтовый индекс
+                        </p>
 
-                        <input style={{marginRight: '40px', margin: 'auto'}} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
+                        <input style={{ marginRight: '40px', margin: 'auto', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
                       </div>
 
                       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>

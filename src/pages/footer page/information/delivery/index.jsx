@@ -35,35 +35,39 @@ function FooterDeliveryPage() {
             </Reveal>
 
             <Reveal>
-              <p className='footer_delivery_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? `Доставка заказов осуществляется по всему миру. Вы можете указать адрес и выбрать способ доставки на этапе оформления заказа. Срок доставки складывается из времени необходимого на производство заказа (от двух дней) и выбранного способа доставки. Ниже вы можете проверить доступные методы доставки для вашего региона и сроки доставки.` : `Buyurtmalarni yetkazib berish butun Oʻzbekiston boʻylab amalga oshiriladi. To‘lov vaqtida manzilingizni kiritishingiz va yetkazib berish usulini tanlashingiz mumkin. Yetkazib berish muddati buyurtmani ishlab chiqarish uchun zarur bo'lgan vaqtdan (ikki kundan boshlab) va tanlangan etkazib berish usulidan iborat. Quyida manzilingiz va yetkazib berish vaqtlari uchun mavjud etkazib berish usullarini tekshirishingiz mumkin.`}</p>
+              <p className='footer_delivery_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? `Доставка заказов осуществляется по всему миру. Вы можете указать адрес и выбрать способ доставки на этапе оформления заказа. Срок доставки складывается из времени необходимого на производство заказа (от одного дня) и выбранного способа доставки. Ниже вы можете проверить доступные методы доставки для вашего региона и сроки доставки.` : `Buyurtmalarni yetkazib berish butun Oʻzbekiston boʻylab amalga oshiriladi. To‘lov vaqtida manzilingizni kiritishingiz va yetkazib berish usulini tanlashingiz mumkin. Yetkazib berish muddati buyurtmani ishlab chiqarish uchun zarur bo'lgan vaqtdan (ikki kundan boshlab) va tanlangan etkazib berish usulidan iborat. Quyida manzilingiz va yetkazib berish vaqtlari uchun mavjud etkazib berish usullarini tekshirishingiz mumkin.`}</p>
             </Reveal>
 
             <Reveal>
               <h4 className='footer_delivery_subtitle mt-5 mb-3'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш адрес' : 'Sizning manzilingiz'}</h4>
             </Reveal>
 
-            <div className="d-flex">
-              <Reveal>
-                <h4 className='footer_delivery_subtitle_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Область' : 'Viloyat/Tuman'}</h4>
-
-                <select className='footer_delivery_select'>
-                  <option>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкентская область' : 'Toshkent viloyati'}</option>
-                  <option>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкентская область' : 'Toshkent viloyati'}</option>
-                  <option>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкентская область' : 'Toshkent viloyati'}</option>
-                  <option>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкентская область' : 'Toshkent viloyati'}</option>
-                </select>
-              </Reveal>
+            <div>
+              <div className='d-flex' style={{marginTop: 32, marginBottom: 20}}>
+                <button style={{marginLeft: 0}} className='footer_delivery_select_button'>Ташкент</button>
+                <button className='footer_delivery_select_button'>Ташкентская область</button>
+              </div>
 
               <Reveal>
-                <div style={{marginLeft: '80px'}}>
-                  <h4 className='footer_delivery_subtitle_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Город' : 'Shahar'}</h4>
+                <div>
+                  <h4 className='footer_delivery_subtitle_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Регионы' : 'Viloyat'}</h4>
 
-                  <select className='footer_delivery_select'>
-                    <option>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкент' : 'Toshkent shahri'}</option>
-                    <option>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкент' : 'Toshkent shahri'}</option>
-                    <option>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкент' : 'Toshkent shahri'}</option>
-                    <option>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкент' : 'Toshkent shahri'}</option>
-                  </select>
+                  <div className='d-flex' style={{marginTop: 12}}>
+                    <button className='footer_delivery_select_button' style={{marginLeft: 0}}>Самарканд</button>
+                    <button className='footer_delivery_select_button'>Андижан</button>
+                    <button className='footer_delivery_select_button'>Фергана</button>
+                    <button className='footer_delivery_select_button'>Наманган</button>
+                    <button className='footer_delivery_select_button'>Бухара</button>
+                    <button className='footer_delivery_select_button'>Джизак</button>
+                    <button className='footer_delivery_select_button'>Навоий</button>
+                  </div>
+
+                  <div className='d-flex' style={{marginTop: 16}}>
+                    <button className='footer_delivery_select_button' style={{marginLeft: 0}}>Кашкадарья</button>
+                    <button className='footer_delivery_select_button'>Сурхандарья</button>
+                    <button className='footer_delivery_select_button'>Сырдарья</button>
+                    <button className='footer_delivery_select_button'>Хорезм</button>
+                  </div>
                 </div>
               </Reveal>
             </div>

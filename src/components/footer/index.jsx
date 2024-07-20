@@ -52,8 +52,8 @@ function FooterMain() {
 
             <ul style={{listStyle: 'none'}}>
               <li className='footer_text'><a href="mailto:easyprintuz@gmail.com">easyprintuz@gmail.com</a></li>
-              <li className='footer_text'><a href="tel:+998974179000">+998 97 417 90 00</a></li>
-              <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'г. Ташкент, Инжобод 32' : 'Toshkent sh. Injobod 32'}</li>
+              <li className='footer_text'><a href="tel:+998772778008">+998 77 277 80 08</a></li>
+              <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'г. Ташкент, Юкорыкаракамыш 2' : 'Toshkent sh. Yuqoriqoraqamish 2'}</li>
             </ul>
           </li>
         </ul>

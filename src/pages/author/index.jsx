@@ -222,12 +222,12 @@ function AuthorPage() {
 
               toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
             } else {
-              toast.error('Товар не добавлен');
+              toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
             }
           }
         })
         .catch(error => {
-          toast.error('Товар не добавлен');
+          toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
           console.log('error', error);
         });
     }

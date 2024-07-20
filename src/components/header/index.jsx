@@ -34,6 +34,9 @@ function HeaderMain({ trashCardData }) {
   const [profileImage, setProfileImage] = useState();
   const [position, setPosition] = useState(window.pageYOffset)
   const [visible, setVisible] = useState(true) 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [registrationData, setRegistrationData] = useState({
     name: '',
     password: '',
@@ -109,7 +112,7 @@ function HeaderMain({ trashCardData }) {
         setIsLoginEntered(false)
         setPasswordsMatch(true);
       })
-      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
   };  
 
   const handleSubmitRegister = (evt) => {
@@ -299,14 +302,27 @@ function HeaderMain({ trashCardData }) {
     })
   });
 
-  const clickDisableAll = () => {
-    setIsFirstEntered(true);
-    setIsSuccesEntered(false);
-    setIsPhoneNumberEntered(false);
-    setIsCodeEntered(false);
-    setIsRegisterEntered(false);
-    setIsLoginEntered(false);
-  }
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/get-warehouses`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+      }
+    }).then((response) => {
+      setProducts(response.data.data.warehouse_product_list);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, []);
+
+  useEffect(() => {
+    setFilteredProducts(
+      products.filter(product => 
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, products]);
 
   return (
     <header style={{backgroundColor: '#ffffff'}}>
@@ -445,11 +461,46 @@ function HeaderMain({ trashCardData }) {
           </ul>
 
           <div className="d-flex">
-            <div style={{marginLeft: '100px'}} className='header_search'>
+            <div style={{ marginLeft: '100px' }} className='header_search'>
               <center>
-                <input className="header_search_input" type="search" placeholder="Поиск..." aria-label="Поиск..." />
+                <input 
+                  className="header_search_input" 
+                  type="search" 
+                  placeholder="Поиск..." 
+                  aria-label="Поиск..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
                 <img className='header_search_icon' src={search} alt="search" />
               </center>
+
+              {searchTerm && filteredProducts.length > 0 && (
+                <div style={{ position: 'absolute', width: 392, backgroundColor: 'white', zIndex: '1000', minHeight: 50, maxHeight: 500, overflow: 'scroll', padding: 10, boxShadow: '0px 0px 40px 5px rgba(0, 0, 0, 0.08)', marginTop: 30, marginLeft: '-100px', borderRadius: 15 }}>
+                  {filteredProducts.map(product => (
+                    <NavLink to={`/show/detail/${product.id}/${product.name}`} key={product.id} className="d-flex" style={{ marginBottom: 10, textDecoration: 'none' }}>
+                      <div>
+                        <div 
+                          className='order_img' 
+                          style={{
+                            backgroundImage: `url(${product.images[0]})`,
+                            backgroundSize: 'cover',
+                            backgroundColor: 'white',
+                            backgroundRepeat: 'no-repeat',
+                            width: '80px',
+                            height: '80px',
+                            borderRadius: 6
+                          }}></div>
+                      </div>
+                      <div style={{ marginLeft: '12px', paddingTop: '10px' }}>
+                        <p style={{width: '276px'}} className='order_name hiided_text'>{product.name}</p>
+                        <div style={{ color: 'black', marginTop: '-15px' }}>
+                          {product.price_discount ? product.price_discount : product.price}
+                        </div>
+                      </div>
+                    </NavLink>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="d-flex">

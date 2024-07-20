@@ -250,12 +250,12 @@ function CategoryListByName() {
   
               toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
             } else {
-              toast.error('Товар не добавлен');
+              toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
             }
           }
         })
         .catch(error => {
-          toast.error('Товар не добавлен');
+          toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
           console.log('error', error);
         });
     }
@@ -346,7 +346,7 @@ function CategoryListByName() {
         ) : (
           <>
             <Reveal>
-              <div style={{marginBottom: '28px'}}>
+              <div style={{marginBottom: '28px', marginLeft: 20}}>
                 <p className='categories_title'>
                   {category && (
                     <NavLink className='categories_title_link_sub' to={`/categories/${category.id}/${category.name}`}>{category.name}</NavLink>
@@ -367,11 +367,11 @@ function CategoryListByName() {
               </div>
             </Reveal>
 
-            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', width: '100%', flexWrap: 'wrap'}}>
               {data.data ? data.data.map(category => (
                 <>
                   {category.product_default.map(data2 => (
-                    <div key={data2.id}>
+                    <div style={{margin: '0 20px'}} key={data2.id}>
                       <Reveal>
                         <div style={{textDecoration: 'none'}} className="cards mb-5">
                           <NavLink to={`/yourDesign`} className="clothes_fat">
@@ -385,10 +385,10 @@ function CategoryListByName() {
                                     <p className='discount'>-{data2.discount}%</p>
                                   </div>
                                 </div>
-                                <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${your_design})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
-                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${your_design})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                             </div>
                           </NavLink>
@@ -399,12 +399,12 @@ function CategoryListByName() {
                               <p className='t-shirt_price'>
                                 {data2.price_discount ? 
                                   <span>
-                                    <span className='discount_price'>{data2.price_discount} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
-                                    <del className='discount_price_del'>{data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
+                                    <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
+                                    <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
                                   </span>
                                   : 
                                   <div>
-                                    {data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                    {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                                   </div>
                                 }
                               </p>
@@ -420,7 +420,7 @@ function CategoryListByName() {
               {data.data ? data.data.map(category => (
                 <>
                   {category.products.map(data2 => (
-                    <div key={data2.id}>
+                    <div style={{margin: '0 20px'}} key={data2.id}>
                       <Reveal>
                         <div style={{textDecoration: 'none'}} className="cards mb-5">
                           <NavLink to={`/show/detail/${data2.id}/${data2.name}`} className="clothes_fat">
@@ -448,12 +448,12 @@ function CategoryListByName() {
                               <p className='t-shirt_price'>
                                 {data2.price_discount ? 
                                   <span>
-                                    <span className='discount_price'>{data2.price_discount} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
-                                    <del className='discount_price_del'>{data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
+                                    <span className='discount_price'>{Number(data2.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</span> 
+                                    <del className='discount_price_del'>{Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</del> 
                                   </span>
                                   : 
                                   <div>
-                                    {data2.price} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                    {Number(data2.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                                   </div>
                                 }
                               </p>
@@ -485,7 +485,6 @@ function CategoryListByName() {
                 </>
               )) : null}
             </div>
-
           </>
         )}
       </div>

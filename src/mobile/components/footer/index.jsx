@@ -57,8 +57,8 @@ function FooterMainMobile() {
 
               <ul style={{listStyle: 'none', padding: '0', width: '147px',}}>
                 <li className='footer_text_mobile'><a href="mailto:easyprintuz@gmail.com">easyprintuz@gmail.com</a></li>
-                <li className='footer_text_mobile'><a href="tel:+998974179000">+998 97 417 90 00</a></li>
-                <li className='footer_text_mobile'>г. Ташкент, Инжобод 32</li>
+                <li className='footer_text_mobile'><a href="tel:+998772778008">+998 77 277 80 08</a></li>
+                <li className='footer_text_mobile'>г. Ташкент, Юкорыкаракамыш 2</li>
               </ul>
             </li>
           </ul>
