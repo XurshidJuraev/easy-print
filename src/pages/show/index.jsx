@@ -38,6 +38,7 @@ function ShowDetail() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [displayedPrice, setDisplayedPrice] = useState();
+  const [displayedPriceDiscount, setDisplayedPriceDiscount] = useState();
   const [displayedName, setDisplayedName] = useState();
   const [displayedImage, setDisplayedImage] = useState();
   const [displayedId, setDisplayedId] = useState();
@@ -160,6 +161,7 @@ function ShowDetail() {
       setDisplayedImage(response.data.data.color_by_size[0].color[selectedSizeIndex].product.img)
       setDisplayedId(response.data.data.color_by_size[0].color[selectedSizeIndex].product.id);
       setDisplayedPrice(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price)
+      setDisplayedPriceDiscount(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price_discount)
       setIsLoading(false);
     }).catch((error) => {
       setIsLoading(false);
@@ -357,6 +359,7 @@ function ShowDetail() {
       setDefaultColor(defaultColor.id);
       setDisplayedId(defaultColor.product.id);
       setDisplayedPrice(defaultColor.product.price);
+      setDisplayedPriceDiscount(defaultColor.product.price_discount)
       setDisplayedName(defaultColor.product.name);
       setDisplayedQuantity(defaultColor.product.quantity);
       setDisplayedImage(defaultColor.product.img);
@@ -1038,7 +1041,7 @@ function ShowDetail() {
                         <p className='show_detail_price'>
                           {dataBeck.price_discount ?
                             <div>
-                              {Number(dataBeck.price_discount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                              {Number(displayedPriceDiscount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                               <del className='show_detail_price_discount'>
                                 {Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                               </del>
@@ -1055,7 +1058,7 @@ function ShowDetail() {
                             <p className='show_detail_size'>Размер</p>
                             <div className='size_selection' style={{width: '350px'}}>
                               {sizeArray.map((size, index) => (
-                                <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id;  setClickIdColor(size.color[0].id); setDefaultSize(selectedSizeId); setDisplayedId(size.color[0].product.id); setDisplayedPrice(size.color[0].product.price); setDisplayedName(size.color[0].product.name); setDisplayedQuantity(size.color[0].product.quantity); setDisplayedImage(size.color[0].product.img) }}>
+                                <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id;  setClickIdColor(size.color[0].id); setDefaultSize(selectedSizeId); setDisplayedId(size.color[0].product.id); setDisplayedPrice(size.color[0].product.price); setDisplayedPriceDiscount(size.color[0].product.price_discount); setDisplayedName(size.color[0].product.name); setDisplayedQuantity(size.color[0].product.quantity); setDisplayedImage(size.color[0].product.img) }}>
                                   {size.name}
                                 </div>
                               ))}
@@ -1079,6 +1082,7 @@ function ShowDetail() {
                                       setDefaultColor(selectedColorId);
                                       setDisplayedId(color.product.id);
                                       setDisplayedPrice(color.product.price);
+                                      setDisplayedPriceDiscount(color.product.price_discount)
                                       setDisplayedName(color.product.name);
                                       setDisplayedQuantity(color.product.quantity);
                                       setDisplayedImage(color.product.img);

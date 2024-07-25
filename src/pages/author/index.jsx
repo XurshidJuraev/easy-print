@@ -534,7 +534,7 @@ function AuthorPage() {
 
             {author.products && author.products.warehouse_product_list.length > displayedItems && (
               <center className='mt-5'>
-                <button className='show_detail_button' onClick={handleShowMore}>Показать еще</button>
+                <button className='show_detail_button' onClick={handleShowMore}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Показать еще' : `Ko'proq ko'rsatish`}</button>
               </center>
             )}
           </div>
@@ -592,7 +592,7 @@ function AuthorPage() {
 
                         <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
                           <div className='d-flex center' style={{ marginRight: '83px' }}>
-                            <p style={{margin: 0}}>Размер</p>
+                            <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Размер' : `O'lchami`}</p>
 
                             <select
                               style={{ border: 'none', height: '29px', marginLeft: '12px', outline: 'none' }}
@@ -622,7 +622,7 @@ function AuthorPage() {
                           </div>
 
                           <div className='d-flex center'>
-                            <p style={{margin: 0}}>Цвет</p>
+                            <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цвет' : `Rangi`}</p>
 
                             <div style={{marginLeft: '12px'}} className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
@@ -660,7 +660,7 @@ function AuthorPage() {
                         </div>
 
                         <div className='d-flex'>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
+                          <p style={{color: '#1A1A1A'}} className='show_detail_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В наличии:' : `Sotuvda mavjud:`} </p>
                           <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{displayedQuantity}</p>
                         </div>
 
@@ -686,7 +686,7 @@ function AuthorPage() {
 
                           <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleGetHome(); handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome()}}>
                             <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
-                              <span>Заказать сейчас </span>
+                              <span> {localStorage.getItem('selectedLanguage') === 'ru' ? 'Заказать сейчас' : `Hoziroq buyurtma bering`} </span>
 
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path d="M22 13.0039C21.9951 12.4774 21.7832 11.9741 21.41 11.6029L17.12 7.29979C16.9326 7.11341 16.6792 7.00879 16.415 7.00879C16.1508 7.00879 15.8974 7.11341 15.71 7.29979C15.6163 7.39282 15.5419 7.5035 15.4911 7.62545C15.4403 7.7474 15.4142 7.8782 15.4142 8.0103C15.4142 8.14241 15.4403 8.27321 15.4911 8.39516C15.5419 8.5171 15.6163 8.62778 15.71 8.72081L19 12.0032H3C2.73478 12.0032 2.48043 12.1086 2.29289 12.2963C2.10536 12.484 2 12.7385 2 13.0039C2 13.2693 2.10536 13.5238 2.29289 13.7115C2.48043 13.8992 2.73478 14.0046 3 14.0046H19L15.71 17.297C15.5217 17.4841 15.4154 17.7384 15.4144 18.004C15.4135 18.2695 15.518 18.5246 15.705 18.713C15.892 18.9015 16.1461 19.0078 16.4115 19.0088C16.6768 19.0097 16.9317 18.9051 17.12 18.718L21.41 14.4149C21.7856 14.0413 21.9978 13.5339 22 13.0039Z" fill="white"/>

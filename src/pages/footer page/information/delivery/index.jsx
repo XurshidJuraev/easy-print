@@ -44,8 +44,8 @@ function FooterDeliveryPage() {
 
             <div>
               <div className='d-flex' style={{marginTop: 32, marginBottom: 20}}>
-                <button style={{marginLeft: 0}} className='footer_delivery_select_button'>Ташкент</button>
-                <button className='footer_delivery_select_button'>Ташкентская область</button>
+                <button style={{marginLeft: 0}} className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкент' : `Toshkent`}</button>
+                <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ташкентская область' : `Toshkent viloyati`}</button>
               </div>
 
               <Reveal>
@@ -53,20 +53,20 @@ function FooterDeliveryPage() {
                   <h4 className='footer_delivery_subtitle_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Регионы' : 'Viloyat'}</h4>
 
                   <div className='d-flex' style={{marginTop: 12}}>
-                    <button className='footer_delivery_select_button' style={{marginLeft: 0}}>Самарканд</button>
-                    <button className='footer_delivery_select_button'>Андижан</button>
-                    <button className='footer_delivery_select_button'>Фергана</button>
-                    <button className='footer_delivery_select_button'>Наманган</button>
-                    <button className='footer_delivery_select_button'>Бухара</button>
-                    <button className='footer_delivery_select_button'>Джизак</button>
-                    <button className='footer_delivery_select_button'>Навоий</button>
+                    <button className='footer_delivery_select_button' style={{marginLeft: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Самарканд' : `Samarqand`}</button>
+                    <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Андижан' : `Andijon`}</button>
+                    <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Фергана' : `Farg'ona`}</button>
+                    <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наманган' : `Namangan`}</button>
+                    <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Бухара' : `Buxoro`}</button>
+                    <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Джизак' : `Jizzax`}</button>
+                    <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Навоий' : `Navoiy`}</button>
                   </div>
 
                   <div className='d-flex' style={{marginTop: 16}}>
-                    <button className='footer_delivery_select_button' style={{marginLeft: 0}}>Кашкадарья</button>
-                    <button className='footer_delivery_select_button'>Сурхандарья</button>
-                    <button className='footer_delivery_select_button'>Сырдарья</button>
-                    <button className='footer_delivery_select_button'>Хорезм</button>
+                    <button className='footer_delivery_select_button' style={{marginLeft: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Кашкадарья' : `Qashqadaryo`}</button>
+                    <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Сурхандарья' : `Surxandaryo`}</button>
+                    <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Сырдарья' : `Sirdaryo`}</button>
+                    <button className='footer_delivery_select_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Хорезм' : `Xorazm`}</button>
                   </div>
                 </div>
               </Reveal>
@@ -74,7 +74,7 @@ function FooterDeliveryPage() {
 
             <Reveal>
               <div className="delivery" style={{marginTop: '36px'}}>
-                <h5 className='footer_delivery_subtitle_text_delivery'>Пункты выдачи и постаматы</h5>
+                <h5 className='footer_delivery_subtitle_text_delivery'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пункты выдачи и постаматы' : `Qabul qilish punktlari va posilka terminallari`}</h5>
 
                 <div className="d-flex align-items-center" style={{height: '60px', marginTop: '25px'}}>
                   <div>

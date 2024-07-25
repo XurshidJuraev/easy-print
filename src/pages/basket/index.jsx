@@ -28,6 +28,7 @@ function Basket() {
   const [discount_price, setDiscount_price] = useState('');
   const [order_id, setOrder_id] = useState('');
   const [grant_total, setGrant_total] = useState('');
+  const [grant_total2, setGrant_total2] = useState('');
   const token = localStorage.getItem('token');
   const [selectedColorId, setSelectedColorId] = useState('');
   const [selectedSizeId, setSelectedSizeId] = useState('');
@@ -87,7 +88,7 @@ function Basket() {
           const finalTotalPrice = item.discount_price
             ? updatedTotalPrice - item.discount_price
             : updatedTotalPrice;
-
+  
           const newItem = {
             ...item,
             quantity: updatedCount,
@@ -101,6 +102,8 @@ function Basket() {
         return item;
       });
 
+      const updatedSelectedItems = updatedList.filter(item => item.selected);
+
       updatedList.forEach((item) => {
         newGrantTotal += item.total_price;
         newDiscountPrice += item.discount_price ? item.discount_price * item.quantity : 0;
@@ -112,6 +115,8 @@ function Basket() {
       setGrant_total(newGrantTotal);
       setDiscount_price(newDiscountPrice);
       setPrice(totalPriceSum);
+
+      setSelectedItems(updatedSelectedItems);
 
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
@@ -147,8 +152,8 @@ function Basket() {
 
     let total = 0;
     for (let i = 0; i < data.length; i++) {
-      const price = parseInt(data[i].price.replace(/\s/g, ''), 10);
-      const count = data[i].count;
+      const price = typeof data[i].price === 'string' ? parseInt(data[i].price.replace(/\s/g, ''), 10) : 0;
+      const count = data[i].count || 0;
       total += price * count;
     }
 
@@ -158,7 +163,7 @@ function Basket() {
     }
 
     return total;
-  }
+  }  
 
   const navigate = useNavigate();
 
@@ -201,7 +206,7 @@ function Basket() {
         setSelectedSizeId(response.data.data.list[0].size.id);
         setAllProduct(response.data.data.list.length);
         localStorage.setItem('basketData', JSON.stringify(response.data.data.list));
-        // console.log(response.data.data);
+        console.log(response.data.data);
       }
     }).catch((error) => {
       setIsLoading(false);
@@ -209,7 +214,7 @@ function Basket() {
       setTrashCardData(savedCards);
       calculateTotalPrice(savedCards);
     });
-  }, [token]);
+  }, [token]);  
 
   async function saveOrder() {
     try {
@@ -233,6 +238,8 @@ function Basket() {
         setErrorBorder(false);
       }
 
+      console.log(apiData);
+
       localStorage.setItem('order_id', data.data.id);
       localStorage.setItem('paymentDate', JSON.stringify({ price, coupon_price, discount_price, grant_total }));
 
@@ -246,7 +253,6 @@ function Basket() {
 
       if (response.data.status === true) {
         navigate('/checkout');
-        // window.location.href = '/#/checkout';
       } else {
         toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
       }
@@ -309,8 +315,10 @@ function Basket() {
       setPromoMessageColor(promoColor);
     })
     .catch((error) => {
-      toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
-      promoMessage = `Введенный вами промокод ${promoCode} не сработал.`;
+      // toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
+      var russionText = `Введенный вами промокод ${promoCode} не сработал.`;
+      var uzbekText = `Siz kiritgan ${promoCode} promo-kodi ishlamadi.`;
+      promoMessage = localStorage.getItem('selectedLanguage') === 'ru' ? russionText : uzbekText;
       promoColor = 'red';
       setPromoMessage(promoMessage);
       setPromoMessageColor(promoColor);
@@ -718,14 +726,14 @@ function Basket() {
                                 <div>
                                   <div className="basket_info1">
                                     <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none' }}>
-                                      <p className='basket_card_name hiided_text'>{item.name ? item.name : 'Название отсутствует или не найден'}</p>
+                                      <p className='basket_card_name hiided_text'>{item.name ? item.name : `${localStorage.getItem('selectedLanguage') === 'ru' ? 'Название отсутствует или не найден' : `Sarlavha yo'q yoki topilmadi`}`}</p>
                                     </NavLink>
 
                                     <NavLink to={item.relation_type === 'warehouse_product' ? `/show/detail/${item.relation_id}/${item.name}` : `/yourDesign`} style={{ textDecoration: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                       <p className='basket_card_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                                     </NavLink>
 
-                                    <div className='d-flex' style={{}}>
+                                    <div className='d-flex'>
                                       <button style={{border: 'none'}} className='basket_card_plus_minus' onClick={() => handleCountChange(item.id, -1, item.max_quantity)}>
                                         -
                                       </button>
@@ -751,7 +759,7 @@ function Basket() {
                                   <div className='basket_size_fat' style={{marginTop: item.company_name ? '-55px' : '-65px'}}>
                                     <div style={{display: item.company_name ? 'flex' : 'none'}}>
                                       <p className='basket_card_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Продавец' : 'Sotuvchi'}:</p>
-                                      <p className='basket_card_size'>{item.company_name ? item.company_name : 'Название не найден'}</p>
+                                      <p className='basket_card_size'>{item.company_name ? item.company_name : `${localStorage.getItem('selectedLanguage') === 'ru' ? 'Название не найден' : `Sarlavha topilmadi`}`}</p>
                                     </div>
 
                                     <div className='d-flex'>
@@ -841,7 +849,7 @@ function Basket() {
                           <p className='basket_total_price' style={{marginBottom: '28px'}}>{price ? `${Number(price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
                           <p className='basket_total_price' style={{marginBottom: '28px'}}>{coupon_price ? `${Number(coupon_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
                           <p className='basket_total_price' style={{marginBottom: '28px'}}>{discount_price ? `${Number(discount_price).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
-                          <p className='basket_total_price'>{grant_total ? `${Number(grant_total).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
+                          <p className='basket_total_price'>{grant_total ? `${Number(localStorage.getItem('grant_total')).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : `0 ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}`}</p>
                         </div>
                       </div>
 

@@ -140,7 +140,7 @@ function Profile() {
           <ProfileHeader />
 
           <div className='info_profile'>
-            <h3 className='user_name'>Личная информация</h3>
+            <h3 className='user_name'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Личная информация' : `Shaxsiy ma'lumotlar`}</h3>
 
             <Reveal>
               <div className="d-flex" v-if="data != undefined">
@@ -157,7 +157,7 @@ function Profile() {
               <div className="d-flex">
                 <div>
                   <Reveal>
-                    <input type="text" className='input_profile' placeholder='Имя' name="name" value={formData.name} onChange={handleChange} />
+                    <input type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Имя' : `Ism`} name="name" value={formData.name} onChange={handleChange} />
                   </Reveal>
 
                   <Reveal>
@@ -166,20 +166,20 @@ function Profile() {
                   </Reveal>
 
                   <Reveal>
-                    <InputMask mask='+999 (99) 999-99-99' placeholder="Номер телефона" className='input_profile' value={formData.phoneNumber} name="phoneNumber" onChange={handleChange}></InputMask>
+                    <InputMask mask='+999 (99) 999-99-99' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Номер телефона' : `Telefon raqami`} className='input_profile' value={formData.phoneNumber} name="phoneNumber" onChange={handleChange}></InputMask>
                   </Reveal>
                 </div>
 
                 <div>
                   <Reveal>
-                    <input type="text" className='input_profile' placeholder='Фамилия' name="lastName" value={formData.lastName} onChange={handleChange} />
+                    <input type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Фамилия' : `Familya`} name="lastName" value={formData.lastName} onChange={handleChange} />
                   </Reveal>
 
                   <Reveal>
                     <select name="gender" className='input_profile' value={formData.gender} onChange={handleChange}>
-                      <option disabled hidden value="">Пол</option>
-                      <option value="1" selected={formData.gender === 1}>Мужской</option>
-                      <option value="2" selected={formData.gender === 2}>Женский</option>
+                      <option disabled hidden value="">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пол' : `Jins`}</option>
+                      <option value="1" selected={formData.gender === 1}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Мужской' : `Erkak`}</option>
+                      <option value="2" selected={formData.gender === 2}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Женский' : `Ayol`}</option>
                     </select>
                   </Reveal>
 
@@ -191,7 +191,7 @@ function Profile() {
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '138px' }}>
                 <Reveal>
-                  <button type="submit" className='btn_profile'>Изменить</button>
+                  <button type="submit" className='btn_profile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Изменить' : `O'zgartirish`}</button>
                 </Reveal>
               </div>
             </form>
