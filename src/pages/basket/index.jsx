@@ -88,7 +88,7 @@ function Basket() {
           const finalTotalPrice = item.discount_price
             ? updatedTotalPrice - item.discount_price
             : updatedTotalPrice;
-  
+
           const newItem = {
             ...item,
             quantity: updatedCount,
@@ -117,6 +117,10 @@ function Basket() {
       setPrice(totalPriceSum);
 
       setSelectedItems(updatedSelectedItems);
+
+      // Updating the allProduct count
+      const newAllProductCount = updatedList.reduce((total, item) => total + item.quantity, 0);
+      setAllProduct(newAllProductCount);
 
       return { ...prevData, data: { ...prevData.data, list: updatedList } };
     });
@@ -316,8 +320,8 @@ function Basket() {
     })
     .catch((error) => {
       // toast.error(`Введенный вами промокод ${promoCode} не сработал.`);
-      var russionText = `Введенный вами промокод ${promoCode} не сработал.`;
-      var uzbekText = `Siz kiritgan ${promoCode} promo-kodi ishlamadi.`;
+      const russionText = `Введенный вами промокод <span style="color: #841d1d; font-weight: bold; font-family: 'Inter500';">${promoCode}</span> не сработал.`;
+      const uzbekText = `Siz kiritgan <span style="color: #841d1d; font-weight: bold; font-family: 'Inter500';">${promoCode}</span> promo-kodi ishlamadi.`;
       promoMessage = localStorage.getItem('selectedLanguage') === 'ru' ? russionText : uzbekText;
       promoColor = 'red';
       setPromoMessage(promoMessage);
@@ -830,7 +834,12 @@ function Basket() {
                       <h3 className='basket_promo_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокод' : 'Promokod'}</h3>
                       <p className='basket_promo_text' style={{width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод чтобы активировать скидку' : 'Chegirmani faollashtirish uchun reklama kodini kiriting'}</p>
                       <input className='basket_promo' style={{width: '400px'}} type="text" placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Введите промокод' : 'Kupon kodini kiriting'} value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
-                      <p style={{ color: promoMessageColor }} className='basket_promo_text'>{promoMessage}</p>
+                      {/* <p style={{ color: promoMessageColor }} className='basket_promo_text'>{promoMessage}</p> */}
+                      <p
+                        style={{ color: promoMessageColor }}
+                        className='basket_promo_text'
+                        dangerouslySetInnerHTML={{ __html: promoMessage }}
+                      />
                       <p className='basket_promo_text' style={{marginTop: '32px', width: '400px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? '*Вы можете использовать только один промокод в одном заказе' : '*Har bir buyurtma uchun faqat bitta promokoddan foydalanishingiz mumkin'}</p>
                       <center style={{marginTop: '27px', width: '100%'}}>
                         <button style={{width: '100%'}} onClick={applyPromoCode} className='basket_promo_btn'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Применить' : `Qo'llash`}</button>
@@ -840,7 +849,10 @@ function Basket() {
                     <div style={{width: '540px'}}>
                       <div className="basket_total" style={{width: '540px'}}>
                         <div>
-                          <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})</p>
+                          {/* <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})</p> */}
+                          <p className='basket_total_title' style={{marginBottom: '28px'}}>
+                            {localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог товаров' : 'Jami tovarlar'} ({allProduct})
+                          </p>
                           <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Промокоды' : 'Promo kodlar'}</p>
                           <p className='basket_total_title' style={{marginBottom: '28px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Скидка' : 'Chegirmalar'}</p>
                           <p className='basket_total_title'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Итог' : 'Jami'}</p>
