@@ -190,7 +190,7 @@ function ProfileOrders() {
                   )) : (
                     <center style={{ marginTop: '56px' }}>
                       <img src={no_addres} alt="no_addres" />
-                      <p className='no_address_text'>Вы ещё не оформляли заказ</p>
+                      <p className='no_address_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы ещё не оформляли зака' : `Siz hali buyurtma bermadingiz`}</p>
                     </center>
                   )}
                 </div>

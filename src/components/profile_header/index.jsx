@@ -134,7 +134,7 @@ function ProfileHeader() {
           </defs>
         </svg>
 
-        <p className={isActive === 1 ? 'profile_header_text_active' : 'profile_header_text'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Личная информация' : `Mening manzillarim`}</p>
+        <p className={isActive === 1 ? 'profile_header_text_active' : 'profile_header_text'}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Мои адреса' : `Mening manzillarim`}</p>
       </NavLink>
 
       <NavLink to={'/profile/checkout'} onClick={() => toggleActive(2)} className={`d-flex profile_item ${isActive == 2 ? 'active' : ''}`} style={{marginTop: '20px', textDecoration: 'none'}}>

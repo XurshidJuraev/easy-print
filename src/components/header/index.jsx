@@ -94,6 +94,10 @@ function HeaderMain({ trashCardData }) {
     evt.preventDefault();
   
     const { user_email, user_password } = evt.target.elements;
+
+    const cleanedPhone = user_email.value.replace(/\D/g, '');
+
+    // setPhoneNumber(cleanedPhone);
   
     fetch(`${process.env.REACT_APP_TWO}/login`, {
       method: 'POST',
@@ -101,7 +105,7 @@ function HeaderMain({ trashCardData }) {
         'Content-type': 'application/json',
       },
       body: JSON.stringify({
-        email: user_email.value.trim(),
+        email: cleanedPhone,
         password: user_password.value.trim(),
       }),
     })
@@ -111,6 +115,9 @@ function HeaderMain({ trashCardData }) {
         setIsSuccesEntered(true); 
         setIsLoginEntered(false)
         setPasswordsMatch(true);
+        setTimeout(() => {
+          window.location.reload()
+        }, 100);
       })
       .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
   };  
@@ -141,7 +148,7 @@ function HeaderMain({ trashCardData }) {
 
     fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
       .then(response => response.text())
-      .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false);})
+      .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false); setTimeout(() => {window.location.reload()}, 100);})
       .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
   }
 
@@ -262,6 +269,47 @@ function HeaderMain({ trashCardData }) {
   };
 
   [].forEach.call(document.querySelectorAll('#phone'), function (input) {
+    let keyCode;
+    function mask(event) {
+      event.keyCode && (keyCode = event.keyCode);
+      let pos = this.selectionStart;
+      if (pos < 3) event.preventDefault()
+      let matrix = "+998 (__) ___-__-__",
+          i = 0,
+          def = matrix.replace(/\D/g, ""),
+          val = this.value.replace(/\D/g, ""),
+          newValue = matrix.replace(/[_\d]/g, function (a) {
+              return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
+          });
+      i = newValue.indexOf("_");
+      if (i != -1) {
+          i < 5 && (i = 3);
+          newValue = newValue.slice(0, i);
+      }
+      let reg = matrix.substr(0, this.value.length).replace(/_+/g,
+          function (a) {
+              return "\\d{1," + a.length + "}";
+          }).replace(/[+()]/g, "\\$&");
+      reg = new RegExp("^" + reg + "$");
+      if (!reg.test(this.value) || this.value.length < 5 || keyCode > 47 && keyCode < 58) this.value = newValue;
+      if (event.type == "blur" && this.value.length < 5) this.value = "";
+    }
+
+    input.addEventListener("input", mask, false);
+    input.addEventListener("focus", mask, false);
+    input.addEventListener("blur", mask, false);
+    input.addEventListener("keydown", mask, false);
+    input.addEventListener('mouseup', event => {
+      event.preventDefault()
+      if (input.value.length < 4) {
+        input.setSelectionRange(4, 4)
+      } else {
+        input.setSelectionRange(input.value.length, input.value.length)
+      }
+    })
+  });
+
+  [].forEach.call(document.querySelectorAll('#user_email'), function (input) {
     let keyCode;
     function mask(event) {
       event.keyCode && (keyCode = event.keyCode);
@@ -521,12 +569,21 @@ function HeaderMain({ trashCardData }) {
                 </div>
               )}
 
-              <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none'}} className='basket_counter_father'>
-                <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'flex'}}>{localStorage.getItem('counterValue')}</div>
-                <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}>
-                  <img className='language_icon' src={bag} alt="bag" />
-                </button>
-              </NavLink>
+              {localStorage.getItem('token') ? (
+                <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none'}} className='basket_counter_father'>
+                  <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'flex'}}>{localStorage.getItem('counterValue')}</div>
+                  <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}>
+                    <img className='language_icon' src={bag} alt="bag" />
+                  </button>
+                </NavLink>
+              ) : (
+                <NavLink title="Basket" to={'/basket'} style={{paddingTop: localStorage.getItem('counterValue') === '0' ? '9px' : 'none', marginRight: 3}} className='basket_counter_father'>
+                  <div title="Basket counter" className='basket_counter' style={{display: localStorage.getItem('counterValue') === '0' ? 'none' : 'flex'}}>{localStorage.getItem('counterValue')}</div>
+                  <button style={{backgroundColor: 'transparent', border: 'none', position: 'absolute', zIndex: '1', marginTop: '-4px', marginLeft: '6px'}}>
+                    <img className='language_icon' src={bag} alt="bag" />
+                  </button>
+                </NavLink>
+              )}
 
               {localStorage.getItem('token') ? (
                 <NavLink title="Profile" to={'/profile'} style={{marginTop: '14px', textDecoration: 'none'}}>
@@ -681,8 +738,9 @@ function HeaderMain({ trashCardData }) {
                   </center>
 
                   <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
-                    <p className='register_in_text'>E-mail или номер телефона</p>
-                    <input name='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите адрес электронной почты' />
+                    <p className='register_in_text'>Hомер телефона</p>
+                    <input name='user_email' id='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите адрес электронной почты' />
+                    {/* <input name='user_email' id='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='+998' /> */}
                   </label>
 
                   <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>

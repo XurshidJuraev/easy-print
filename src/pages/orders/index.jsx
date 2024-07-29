@@ -262,6 +262,7 @@ function MyOrders() {
             localStorage.setItem('counterValue', 0);
           }, 1500);
           setDataModal(result.data);
+          window.location.href = `https://admin.easyprint.uz/get-payme/${localStorage.getItem('order_id')}`
         } else {
           toast.error('Заказ не был оформлен!');
         }
@@ -578,7 +579,8 @@ function MyOrders() {
                       </div>
 
                       <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
-                        <button data-bs-toggle="modal" data-bs-target="#exampleModal3" style={{width: '550px', margin: '0', textAlign: 'center', padding: '0'}} onClick={() => {saveOrder();}} className='hero_button center'>
+                        {/* <button data-bs-toggle="modal" data-bs-target="#exampleModal3" style={{width: '550px', margin: '0', textAlign: 'center', padding: '0'}} onClick={() => {saveOrder();}} className='hero_button center'> */}
+                        <button style={{width: '550px', margin: '0', textAlign: 'center', padding: '0'}} onClick={() => {saveOrder();}} className='hero_button center'>
                           {localStorage.getItem('selectedLanguage') === 'ru' ? 'Оформить заказ' : 'Buyurtmani rasmiylashtirish'}
                         </button>
                       </div>

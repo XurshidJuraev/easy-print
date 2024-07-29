@@ -103,7 +103,7 @@ function HomePageMobile() {
         <h2 className='home_card_title_mobile'>Рекомендуем вам:</h2>
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-          {data.data ? data.data.warehouse_product_list.slice(3, displayedItems).map((data2) => (
+          {data.data ? data.data.warehouse_product_list.map((data2) => (
             <Reveal>
               <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '12px'}}>
                 <div className="clothes_fat" style={{borderRadius: '6px'}}>

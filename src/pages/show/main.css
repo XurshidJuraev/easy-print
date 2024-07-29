@@ -231,7 +231,7 @@
 
 .add_to_basket {
   border-radius: 8px;
-  background: var(--primary-6, #F19654);
+  background: var(--primary-6, #829D50);
   box-shadow: 0px 1px 2px 0px rgba(14, 23, 26, 0.30);
   display: flex;
   gap: 16px;
@@ -266,11 +266,11 @@
 }
 
 .add_basket_btn:hover, .add_to_basket:hover, .basket_promo_btn_price:hover {
-  background-color: #F4AB76;
+  background-color: #94b35b;
 }
 
 .add_basket_btn:active, .add_to_basket:active, .basket_promo_btn_price:active {
-  background-color: #C67B44;
+  background-color: #64793e;
 }
 
 .basket_promo_btn_price:hover {

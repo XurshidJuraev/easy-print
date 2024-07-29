@@ -374,9 +374,9 @@ function YourDesignMobile() {
         <NavLink to={'/mobile'} className='center' style={{margin: 0, padding: 0}}>
           <img src={homeImage} alt="homeImage" />
         </NavLink>
-        <img src={leftImage} alt="leftImage" />
+        <img src={leftImage} alt="leftImage" style={{opacity: 0}} />
         <img onClick={handleClickTshirtChange} src={cachedImage} alt="cachedImage" />
-        <img src={rightImage} alt="rightImage" />
+        <img src={rightImage} alt="rightImage" style={{opacity: 0}} />
         <img onClick={() => {getImage(); getImageBack();}} data-bs-toggle="modal" data-bs-target="#exampleModal" src={basketImage} alt="basketImage" />
       </div>
 
@@ -388,7 +388,6 @@ function YourDesignMobile() {
             <div style={{textAlign: 'left', height: '500px'}}>
               <center>
                 <div id='screenshot'>
-                  {/* <img style={{width: '90%', marginTop: '80px'}} src={tshirtImage ? tShirt_back : tShirt} alt="tShirt" /> */}
                   <img style={{width: '300px', marginTop: '80px'}} src={tShirt} alt="tShirt" />
                 </div>
 
@@ -396,11 +395,9 @@ function YourDesignMobile() {
                   <canvas style={{position: 'absolute', zIndex: 300, top: '-300px', left: '0'}} id="canvasTextMobile" width="190" height="220"></canvas>
                 </div>
 
-                {/* <div style={{display: !photoInputVisible ? 'block' : 'none', left: '0', border: !photoInputVisible ? 'none' : 'none'}} id="drawingArea"> */}
-                  <div className="canvas-container" style={{position: 'relative', top: '-260px', transform: 'scale(0.7)',}}>
-                    <canvas id="tshirt-canvas" width={184} height={250} ></canvas>
-                  </div>
-                {/* </div> */}
+                <div className="canvas-container" style={{position: 'relative', top: '-260px', transform: 'scale(0.7)',}}>
+                  <canvas id="tshirt-canvas" width={184} height={250} ></canvas>
+                </div>
               </center>
             </div>
           )}
@@ -587,46 +584,28 @@ function YourDesignMobile() {
             <div style={{padding: '48px'}} className="modal-body">
               <div>
                 <div data-bs-dismiss="modal" style={{position: 'absolute', left: '16px', top: '24px'}}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg style={{position: 'relative', zIndex: 2000}} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </div>
 
                 <div className="flex-column center">
                   <div>
-                    <img style={{width: '220px', height: '240px', transform: 'scale(1.2)'}} src={image} alt="tShirt_front" />
+                    <img style={{width: '220px', height: '240px', transform: 'scale(1.6)', position: 'relative', zIndex: 1000, top: 28}} src={image} alt="tShirt_front" />
                   </div>
 
                   <div>
-                    <img style={{width: '220px', height: '220px', marginTop: '32px'}} src={imageBack} alt="tShirt_back" ref={refBack} />
+                    <img style={{width: '220px', height: '220px', marginTop: '32px', position: 'relative', zIndex: 2000}} src={imageBack} alt="tShirt_back" ref={refBack} />
                   </div>
-
-                  {/* <center>
-                    <div style={{display: 'flex', justifyContent: 'center', marginTop: '40px'}}>
-                      <span className='modal_size_title'>Размер:</span>
-                      <div style={{display: 'flex', flexWrap: 'wrap', width: '600px'}}>
-                        {categorySize.map(siz => (
-                          <div title={siz.name} key={siz.id} onClick={() => {setSize(siz.name); setSelectedSize(siz.id)}} className='color_change_selector_modal' style={{width: '80px', borderColor: size === siz.name ? '#829D50' : '#CCC'}}>
-                            {siz.name}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </center> */}
                 </div>
                 <center>
-                  {/* {orderedProduct ? ( */}
-                    <button onClick={e => {addToBasketTo(e); handleButtonClick()}} className='add_basket_btn center' style={{width: '100%', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px', marginBottom: '0px', marginRight: '12px'}} data-bs-dismiss="modal">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M19.5 7H17C17 5.67392 16.4732 4.40215 15.5355 3.46447C14.5979 2.52678 13.3261 2 12 2C10.6739 2 9.40215 2.52678 8.46447 3.46447C7.52678 4.40215 7 5.67392 7 7H4.5C3.83696 7 3.20107 7.26339 2.73223 7.73223C2.26339 8.20107 2 8.83696 2 9.5L2 17.8333C2.00132 18.938 2.44073 19.997 3.22185 20.7782C4.00296 21.5593 5.062 21.9987 6.16667 22H17.8333C18.938 21.9987 19.997 21.5593 20.7782 20.7782C21.5593 19.997 21.9987 18.938 22 17.8333V9.5C22 8.83696 21.7366 8.20107 21.2678 7.73223C20.7989 7.26339 20.163 7 19.5 7ZM12 3.66667C12.8841 3.66667 13.7319 4.01786 14.357 4.64298C14.9821 5.2681 15.3333 6.11594 15.3333 7H8.66667C8.66667 6.11594 9.01786 5.2681 9.64298 4.64298C10.2681 4.01786 11.1159 3.66667 12 3.66667ZM20.3333 17.8333C20.3333 18.4964 20.0699 19.1323 19.6011 19.6011C19.1323 20.0699 18.4964 20.3333 17.8333 20.3333H6.16667C5.50363 20.3333 4.86774 20.0699 4.3989 19.6011C3.93006 19.1323 3.66667 18.4964 3.66667 17.8333V9.5C3.66667 9.27899 3.75446 9.06702 3.91074 8.91074C4.06702 8.75446 4.27899 8.66667 4.5 8.66667H7V10.3333C7 10.5543 7.0878 10.7663 7.24408 10.9226C7.40036 11.0789 7.61232 11.1667 7.83333 11.1667C8.05435 11.1667 8.26631 11.0789 8.42259 10.9226C8.57887 10.7663 8.66667 10.5543 8.66667 10.3333V8.66667H15.3333V10.3333C15.3333 10.5543 15.4211 10.7663 15.5774 10.9226C15.7337 11.0789 15.9457 11.1667 16.1667 11.1667C16.3877 11.1667 16.5996 11.0789 16.7559 10.9226C16.9122 10.7663 17 10.5543 17 10.3333V8.66667H19.5C19.721 8.66667 19.933 8.75446 20.0893 8.91074C20.2455 9.06702 20.3333 9.27899 20.3333 9.5V17.8333Z" fill="white"/>
-                      </svg>
-                      <span>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить в корзину' : 'Savatga qo\'shish'}</span>
-                    </button>
-                  {/* ) : (
-                    <NavLink to={localStorage.getItem('token') ? '/basket/mobile' : ''} className='add_basket_btn center' style={{width: localStorage.getItem('selectedLanguage') === 'ru' ? '100%' : '100%', height: '56px', marginTop: '18px', backgroundColor: '#829D50', marginLeft: '0px', padding: '15px 18px', marginRight: '12px'}}>
-                      <span>Перейти в корзину </span>
-                    </NavLink>
-                  )} */}
+
+                  <button onClick={e => {addToBasketTo(e); handleButtonClick()}} className='add_basket_btn center' style={{width: '100%', height: '56px', marginTop: '18px', marginLeft: '0px', padding: '15px 18px', marginBottom: '0px', marginRight: '12px'}} data-bs-dismiss="modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path d="M19.5 7H17C17 5.67392 16.4732 4.40215 15.5355 3.46447C14.5979 2.52678 13.3261 2 12 2C10.6739 2 9.40215 2.52678 8.46447 3.46447C7.52678 4.40215 7 5.67392 7 7H4.5C3.83696 7 3.20107 7.26339 2.73223 7.73223C2.26339 8.20107 2 8.83696 2 9.5L2 17.8333C2.00132 18.938 2.44073 19.997 3.22185 20.7782C4.00296 21.5593 5.062 21.9987 6.16667 22H17.8333C18.938 21.9987 19.997 21.5593 20.7782 20.7782C21.5593 19.997 21.9987 18.938 22 17.8333V9.5C22 8.83696 21.7366 8.20107 21.2678 7.73223C20.7989 7.26339 20.163 7 19.5 7ZM12 3.66667C12.8841 3.66667 13.7319 4.01786 14.357 4.64298C14.9821 5.2681 15.3333 6.11594 15.3333 7H8.66667C8.66667 6.11594 9.01786 5.2681 9.64298 4.64298C10.2681 4.01786 11.1159 3.66667 12 3.66667ZM20.3333 17.8333C20.3333 18.4964 20.0699 19.1323 19.6011 19.6011C19.1323 20.0699 18.4964 20.3333 17.8333 20.3333H6.16667C5.50363 20.3333 4.86774 20.0699 4.3989 19.6011C3.93006 19.1323 3.66667 18.4964 3.66667 17.8333V9.5C3.66667 9.27899 3.75446 9.06702 3.91074 8.91074C4.06702 8.75446 4.27899 8.66667 4.5 8.66667H7V10.3333C7 10.5543 7.0878 10.7663 7.24408 10.9226C7.40036 11.0789 7.61232 11.1667 7.83333 11.1667C8.05435 11.1667 8.26631 11.0789 8.42259 10.9226C8.57887 10.7663 8.66667 10.5543 8.66667 10.3333V8.66667H15.3333V10.3333C15.3333 10.5543 15.4211 10.7663 15.5774 10.9226C15.7337 11.0789 15.9457 11.1667 16.1667 11.1667C16.3877 11.1667 16.5996 11.0789 16.7559 10.9226C16.9122 10.7663 17 10.5543 17 10.3333V8.66667H19.5C19.721 8.66667 19.933 8.75446 20.0893 8.91074C20.2455 9.06702 20.3333 9.27899 20.3333 9.5V17.8333Z" fill="white"/>
+                    </svg>
+                    <span>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Добавить в корзину' : 'Savatga qo\'shish'}</span>
+                  </button>
                 </center>
               </div>
             </div>

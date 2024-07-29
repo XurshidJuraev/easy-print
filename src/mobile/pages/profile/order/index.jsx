@@ -170,7 +170,8 @@ function ProfileMobileOrder() {
                     )) : (
                       <center style={{ marginTop: '56px' }}>
                         <img style={{marginTop: '42px'}} src={no_addres} alt="no_addres" />
-                        <p style={{marginBottom: '72px'}} className='no_address_text'>Вы ещё не оформляли заказ</p>
+                        {/* <p style={{marginBottom: '72px'}} className='no_address_text'>Вы ещё не оформляли заказ</p> */}
+                        <p style={{marginBottom: '72px'}} className='no_address_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы ещё не оформляли зака' : `Siz hali buyurtma bermadingiz`}</p>
                       </center>
                     )}
                   </Reveal>

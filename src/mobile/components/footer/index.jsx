@@ -45,7 +45,7 @@ function FooterMainMobile() {
 
               <ul style={{listStyle: 'none', padding: '0', width: '147px',}}>
                 <li className='footer_text_mobile'>О нас</li>
-                <li className='footer_text_mobile'>Вакансии</li>
+                {/* <li className='footer_text_mobile'>Вакансии</li> */}
                 <li className='footer_text_mobile'>Блог EasyPrint</li>
                 <li className='footer_text_mobile'>Контакты</li>
               </ul>

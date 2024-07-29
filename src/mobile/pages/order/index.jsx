@@ -253,6 +253,7 @@ function OrderMobile() {
             setBekStatus(result.status);
             setOpen(true);
             localStorage.setItem('counterValue', 0);
+            window.location.href = `https://admin.easyprint.uz/get-payme/${localStorage.getItem('order_id')}`
           }, 1500);
         } else {
           toast.error('Заказ не был оформлен!');

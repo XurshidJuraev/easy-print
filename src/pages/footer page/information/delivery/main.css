@@ -101,3 +101,8 @@
   justify-content: center;
   margin-left: 24px;  
 }
+
+.footer_delivery_select_button.selected {
+  border: 2px solid #C9DA8F; /* Tanlangan tugma uchun border rangi */
+  background-color: #e0e6ce; /* Tanlangan tugma uchun fon rangi (ixtiyoriy) */
+}
