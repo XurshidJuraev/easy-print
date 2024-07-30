@@ -59,6 +59,7 @@ function ShowDetail() {
   const [displayedImage2, setDisplayedImage2] = useState();
   const [displayedQuantity2, setDisplayedQuantity2] = useState();
   const [loader, setLoader] = useState(true);
+  const [currentLength, setCurrentLength] = useState(100);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -327,6 +328,64 @@ function ShowDetail() {
   };
 
   useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') || 'ru',
+          },
+        });
+  
+        if (response.data.status === true) {
+          return;
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_last_name');
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_phone_number');
+          localStorage.removeItem('grant_total');
+          localStorage.removeItem('selectedCategory');
+          localStorage.removeItem('currentProduct');
+          localStorage.removeItem('selectedSubCategory');
+          localStorage.removeItem('paymentDate');
+          localStorage.removeItem('trueVerifed');
+          localStorage.removeItem('basketData');
+          localStorage.removeItem('trashCard');
+          localStorage.removeItem('selectedCategoryId');
+          localStorage.removeItem('basket');
+          localStorage.removeItem('price');
+          localStorage.removeItem('discount_price');
+          localStorage.removeItem('user_image');
+        }
+      } catch (error) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_last_name');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_phone_number');
+        localStorage.removeItem('grant_total');
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('currentProduct');
+        localStorage.removeItem('selectedSubCategory');
+        localStorage.removeItem('paymentDate');
+        localStorage.removeItem('trueVerifed');
+        localStorage.removeItem('basketData');
+        localStorage.removeItem('trashCard');
+        localStorage.removeItem('selectedCategoryId');
+        localStorage.removeItem('basket');
+        localStorage.removeItem('price');
+        localStorage.removeItem('discount_price');
+        localStorage.removeItem('user_image');
+      }
+    };
+  
+    if (token) {
+      checkUser();
+    }
+  }, [token]);
+
+  useEffect(() => {
     addToBasket(selectedProduct);
   }, [selectedProduct]);
 
@@ -359,10 +418,6 @@ function ShowDetail() {
     // });
   }
 
-  const toggleDescription = () => {
-    setShowFullDescription(!showFullDescription);
-  };
-
   const handleGetHome = () => {
     navigate('/basket');
   }
@@ -381,6 +436,22 @@ function ShowDetail() {
       setDisplayedImage(defaultColor.product.img);
     }
   }, [selectedSizeIndex, colorArray]);
+
+  const toggleDescription = () => {
+    if (showFullDescription) {
+      setCurrentLength(100); // If showing full text, reset to initial 100 chars
+    } else {
+      setCurrentLength(Math.min(dataBeck.description.length, currentLength + 100)); // Show 100 more chars
+    }
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const description = dataBeck.description || 'Описание отсутствует или не найден';
+  const isLongText = description.length > 100;
+  const showEllipsis = currentLength < description.length && !showFullDescription;
+  const truncatedDescription = showFullDescription 
+    ? description 
+    : description.slice(0, currentLength) + (showEllipsis ? '...' : '');
 
   return (
     <>
@@ -1032,25 +1103,22 @@ function ShowDetail() {
                         <h2 className='show_detail_name'>{displayedName ? displayedName : 'Название отсутствует или не найден'}</h2>
 
                         <div>
-                          <p className='show_detail_description'>
-                            {showFullDescription ? 
-                              dataBeck.description : 
-                              (dataBeck.description ? 
-                                <>
-                                  {dataBeck.description.split('\n').slice(0, 3).join('\n')}
-                                  <span style={{display: dataBeck.description && dataBeck.description.split('\n').slice(0, 3).join('\n').length < 140 ? 'none' : 'inline', marginLeft: '-4px'}}>...</span>
-                                </>
-                                : 'Описание отсутствует или не найден'
-                              )
-                            }
+                          <p className='show_detail_description' style={{width: '335px'}}>
+                            {truncatedDescription}
 
-                            <span style={{display: dataBeck.description && dataBeck.description.split('\n').slice(0, 3).join('\n').length < 140 ? 'none' : 'inline'}}>
-                              {dataBeck.description && (
-                                <button className='show_detail_description_more' onClick={toggleDescription}>
-                                  {showFullDescription ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi'}
+                            {isLongText && (
+                              <span>
+                                <button 
+                                  className='show_detail_description_more' 
+                                  onClick={toggleDescription}
+                                >
+                                  {showFullDescription ? 
+                                    (localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish') : 
+                                    (localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi')
+                                  }
                                 </button>
-                              )}
-                            </span>
+                              </span>
+                            )}
                           </p>
                         </div>
 
@@ -1081,7 +1149,7 @@ function ShowDetail() {
                             </div>
                           </div>
 
-                          <div>
+                          <div className='mb-3'>
                             <p className='show_detail_size'>Цвет</p>
 
                             <div className="d-flex">
@@ -1111,10 +1179,10 @@ function ShowDetail() {
                             </div>
                           </div>
 
-                          <div className='d-flex'>
+                          {/* <div className='d-flex'>
                             <p style={{color: '#1A1A1A'}} className='show_detail_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В наличии' : 'Sotuvda'}: </p>
                             <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{displayedQuantity} {localStorage.getItem('selectedLanguage') === 'ru' ? '' : ' dona bor'}</p>
-                          </div>
+                          </div> */}
                         </div>
 
                         <div className="d-flex" style={{marginTop: '-14px'}}>
@@ -1134,7 +1202,7 @@ function ShowDetail() {
                         </div>
 
                         <div style={{margin: '20px 0px -14px 0px'}}>
-                          <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Состав' : 'Tarkibi'}: {dataBeck.composition ? dataBeck.composition : 'Состав отсутствует или не найден'}</p>
+                          <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Состав' : 'Tarkibi'}: {dataBeck.material_composition ? dataBeck.material_composition : localStorage.getItem('selectedLanguage') === 'ru' ? 'Состав отсутствует или не найден' : `Tarkibi topilmadi yoki ko'rsatilmagan`}</p>
                         </div>
 
                         <div style={{display: 'flex', marginTop: '32px'}}>
@@ -1168,7 +1236,7 @@ function ShowDetail() {
                                   <p className='discount'>-{data2.discount}%</p>
                                 </div>
                               </div>
-                              <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
 
                             <div className="image-overlay" style={{borderRadius: '8px'}}>
@@ -1230,76 +1298,34 @@ function ShowDetail() {
                       <div className='d-flex'>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                           <div style={{margin: '80px 32px 16px 32px'}}>
-                            <Placeholder 
-                              shape="rect"
-                              width={336} 
-                              height={80} 
-                              animation="wave" 
-                              style={{ marginBottom: '20px' }}
-                            />
+                            <Placeholder shape="rect" width={336}  height={80}  animation="wave"  style={{ marginBottom: '20px' }} />
                           </div>
 
                           <div style={{margin: '16px 32px 16px 32px'}}>
-                            <Placeholder 
-                              shape="rect"
-                              width={330} 
-                              height={48} 
-                              animation="wave" 
-                              style={{ marginBottom: '20px' }}
-                            />
+                            <Placeholder shape="rect" width={330}  height={48}  animation="wave"  style={{ marginBottom: '20px' }} />
                           </div>
 
                           <div style={{margin: '16px 32px 57px 32px'}}>
-                            <Placeholder 
-                              shape="rect"
-                              width={336} 
-                              height={22} 
-                              animation="wave" 
-                              style={{ marginBottom: '20px' }}
-                            />
+                            <Placeholder shape="rect" width={336}  height={22}  animation="wave"  style={{ marginBottom: '20px' }} />
                           </div>
 
                           <div style={{margin: '16px 32px 57px 32px'}}>
-                            <Placeholder 
-                              shape="rect"
-                              width={336} 
-                              height={68} 
-                              animation="wave" 
-                              style={{ marginBottom: '20px' }}
-                            />
+                            <Placeholder shape="rect" width={336}  height={68}  animation="wave"  style={{ marginBottom: '20px' }} />
                           </div>
 
                           <div className='d-flex' style={{margin: '16px 32px 57px 32px'}}>
                             <div>
-                              <Placeholder 
-                                shape="rect"
-                                width={84} 
-                                height={56} 
-                                animation="wave" 
-                                style={{ marginBottom: '20px' }}
-                              />
+                              <Placeholder  shape="rect" width={84}  height={56}  animation="wave"  style={{ marginBottom: '20px' }} />
                             </div>
 
                             <div style={{marginLeft: '16px'}}>
-                              <Placeholder 
-                                shape="rect"
-                                width={236} 
-                                height={56} 
-                                animation="wave" 
-                                style={{ marginBottom: '20px' }}
-                              />
+                              <Placeholder  shape="rect" width={236}  height={56}  animation="wave"  style={{ marginBottom: '20px' }} />
                             </div>
                           </div>
                         </div>
 
                         <div style={{margin: '16px'}}>
-                          <Placeholder 
-                            shape="rect"
-                            width={378} 
-                            height={580} 
-                            animation="wave" 
-                            style={{ marginBottom: '20px' }}
-                          />
+                          <Placeholder  shape="rect" width={378}  height={580}  animation="wave"  style={{ marginBottom: '20px' }} />
                         </div>
                       </div>
                     </div>
@@ -1308,31 +1334,67 @@ function ShowDetail() {
                       {modalData && (
                         <div className='d-flex'>
                           <div style={{padding: '80px 32px 0px 32px'}}>
-                            <p className='modal_name'>{displayedName2 ? displayedName2 : 'Название отсутствует'}</p>
-                            <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                            <p className='modal_price'>{Number(displayedPrice2).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                            <p className='modal_name'>{displayedName2 ? displayedName2 : localStorage.getItem('selectedLanguage') === 'ru' ? 'Название отсутствует' : `Sarlavha yo'q`}</p>
+                            {/* <p className='modal_info'>{modalData.description ? modalData.description : localStorage.getItem('selectedLanguage') === 'ru' ? 'Описание отсутствует' : `Ta'rif yo'q`}</p> */}
+                            <p className='show_detail_description' style={{height: '120px', overflow: 'scroll', width: '335px', boxShadow: showFullDescription ? '1px 14px 59px -46px rgba(0,0,0,0.75)' : 'none'}}>
+                              {truncatedDescription}
 
-                            <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
-                              <div className='d-flex' style={{ marginRight: '83px' }}>
-                                <p>Размер</p>
+                              {isLongText && (
+                                <span>
+                                  <button 
+                                    className='show_detail_description_more' 
+                                    onClick={toggleDescription}
+                                  >
+                                    {showFullDescription ? 
+                                      (localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish') : 
+                                      (localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi')
+                                    }
+                                  </button>
+                                </span>
+                              )}
+                            </p>
+
+                            {/* <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p> */}
+                            <p className='show_detail_price'>
+                              {modalData.price_discount ?
+                                <div>
+                                  {Number(displayedPriceDiscount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                  <del className='show_detail_price_discount'>
+                                    {Number(displayedPrice2).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                  </del>
+                                </div>
+                                :
+                                <div style={{fontSize: 20}}>
+                                  {displayedPrice2 ? `${Number(displayedPrice2).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
+                                </div>
+                              }
+                            </p>
+
+                            <div className="d-flex justify-content-between" style={{marginTop: '26px'}}>
+                              <div className='d-flex center' style={{ marginRight: '83px' }}>
+                                <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Размер' : `O'lchami`}</p>
+
                                 <select
                                   style={{ border: 'none', height: '29px', marginLeft: '12px', outline: 'none' }}
-                                  value={sizeOptions[selectedSizeIndex]}
+                                  value={sizeArray[selectedSizeIndex]?.name || ''}
                                   onChange={(e) => {
-                                    const index = sizeOptions.findIndex((size) => size === e.target.value);
-                                    setSelectedSizeIndex(index);
-
-                                    const selectedSize = sizeArray[index];
-                                    // console.log(selectedSize);
-                                    const selectedSizeId = selectedSize.id;
-                                    setDefaultSize(selectedSizeId);
-                                    setDisplayedPrice2(selectedSize.color[0].product.price);
-                                    setDisplayedName2(selectedSize.color[0].product.name);
-                                    setDisplayedQuantity2(selectedSize.color[0].product.quantity);
-                                    setDisplayedImage2(selectedSize.color[0].product.img);
+                                    const index = sizeArray.findIndex((size) => size.name === e.target.value);
+                                    if (index !== -1) {
+                                      setSelectedSizeIndex(index);
+                                      const selectedSize = sizeArray[index];
+                                      const selectedSizeId = selectedSize.id;
+                                      setDefaultSize(selectedSizeId);
+                                      setDisplayedId(selectedSize.color[0].product.id);
+                                      setClickIdColor(selectedSize.id);
+                                      setDisplayedPrice2(selectedSize.color[0].product.price);
+                                      setDisplayedPriceDiscount(selectedSize.color[0].product.price_discount);
+                                      setDisplayedName2(selectedSize.color[0].product.name);
+                                      setDisplayedQuantity(selectedSize.color[0].product.quantity);
+                                      setDisplayedImage2(selectedSize.color[0].product.img);
+                                    }
                                   }}
                                 >
-                                  {sizeArray.map((size, index) => (
+                                  {sizeArray.map((size) => (
                                     <option key={size.id} value={size.name}>
                                       {size.name}
                                     </option>
@@ -1340,8 +1402,8 @@ function ShowDetail() {
                                 </select>
                               </div>
 
-                              <div className='d-flex'>
-                                <p>Цвет</p>
+                              <div className='d-flex center'>
+                                <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цвет' : `Rangi`}</p>
 
                                 <div style={{marginLeft: '12px'}} className="d-flex">
                                   {colorArray[selectedSizeIndex]?.color.map((color, index) => (
@@ -1353,9 +1415,12 @@ function ShowDetail() {
                                         setSelectedColorIndex(index);
                                         const selectedColorId = color.id;
                                         setDefaultColor(selectedColorId);
+                                        setClickIdColor(color.id);
+                                        setDisplayedId(color.product.id);
                                         setDisplayedPrice2(color.product.price); 
+                                        setDisplayedPriceDiscount(color.product.price_discount);
                                         setDisplayedName2(color.product.name); 
-                                        setDisplayedQuantity2(color.product.quantity); 
+                                        setDisplayedQuantity(color.product.quantity); 
                                         setDisplayedImage2(color.product.img)
                                       }}
                                     >
@@ -1366,33 +1431,18 @@ function ShowDetail() {
                               </div>
                             </div>
 
-                            <hr style={{color: '#CCCCCC', marginTop: '-3px', marginBottom: '4px'}} />
+                            <hr style={{color: '#CCCCCC', marginTop: '10px', marginBottom: '4px'}} />
 
                             <div className="d-flex justify-content-between">
                               <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.max(1, count - 1))}>-</div>
 
-                              <input
-                                type='text'
-                                style={{border: 'none', color: '#000', outline: 'none', width: '40px', textAlign: 'center'}}
-                                value={count}
-                                onChange={(e) => {
-                                  const newValue = parseInt(e.target.value, 10);
-                                  if (!isNaN(newValue)) {
-                                    setCount(Math.min(modalData.quantity, Math.max(1, newValue)));
-                                  }
-                                }}
-                              />
+                              <input type='text' style={{border: 'none', color: '#000', outline: 'none', width: '40px', textAlign: 'center'}} value={count} onChange={(e) => { const newValue = parseInt(e.target.value, 10); if (!isNaN(newValue)) { setCount(Math.min(modalData.quantity, Math.max(1, newValue))); } }} />
 
                               <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
                             </div>
 
-                            <div className='d-flex'>
-                              <p style={{color: '#1A1A1A'}} className='show_detail_size'>В наличии: </p>
-                              <p className='show_detail_size_quantity ms-1'>{displayedQuantity2}</p>
-                            </div>
-
-                            <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
-                              <div onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
+                            <div className="d-flex align-items-center justify-content-between" style={{marginTop: '36px'}}>
+                              <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                                 <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                     <g clip-path="url(#clip0_2381_4754)">
@@ -1411,9 +1461,9 @@ function ShowDetail() {
                                 </button>
                               </div>
 
-                              <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); localStorage.getItem('token') ? handleGetHome() : console.log('no token');}}>
+                              <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleGetHome(); handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome()}}>
                                 <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
-                                  <span>Заказать сейчас </span>
+                                  <span style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '18px' : '14px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Заказать сейчас' : `Hoziroq buyurtma bering`} </span>
 
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M22 13.0039C21.9951 12.4774 21.7832 11.9741 21.41 11.6029L17.12 7.29979C16.9326 7.11341 16.6792 7.00879 16.415 7.00879C16.1508 7.00879 15.8974 7.11341 15.71 7.29979C15.6163 7.39282 15.5419 7.5035 15.4911 7.62545C15.4403 7.7474 15.4142 7.8782 15.4142 8.0103C15.4142 8.14241 15.4403 8.27321 15.4911 8.39516C15.5419 8.5171 15.6163 8.62778 15.71 8.72081L19 12.0032H3C2.73478 12.0032 2.48043 12.1086 2.29289 12.2963C2.10536 12.484 2 12.7385 2 13.0039C2 13.2693 2.10536 13.5238 2.29289 13.7115C2.48043 13.8992 2.73478 14.0046 3 14.0046H19L15.71 17.297C15.5217 17.4841 15.4154 17.7384 15.4144 18.004C15.4135 18.2695 15.518 18.5246 15.705 18.713C15.892 18.9015 16.1461 19.0078 16.4115 19.0088C16.6768 19.0097 16.9317 18.9051 17.12 18.718L21.41 14.4149C21.7856 14.0413 21.9978 13.5339 22 13.0039Z" fill="white"/>
@@ -1422,8 +1472,9 @@ function ShowDetail() {
                               </div>
                             </div>
                           </div>
+
                           <div className='modal_image_fat'>
-                            <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage2 ? displayedImage2[0] : ''})`, backgroundSize: 'cover'}}></div>
+                            <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                           </div>
                         </div>
                       )}

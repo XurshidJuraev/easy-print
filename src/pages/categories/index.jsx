@@ -43,6 +43,9 @@ function CategoryListByName() {
   const [subCategory, setSubCategory] = useState('');
   const [subCategoryQuant, setSubCategoryQuant] = useState('');
   const params = useParams()
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [currentLength, setCurrentLength] = useState(100);
+  const [displayedPriceDiscount, setDisplayedPriceDiscount] = useState();
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -267,6 +270,22 @@ function CategoryListByName() {
     }, 1000);
   }
 
+  const toggleDescription = () => {
+    if (showFullDescription) {
+      setCurrentLength(100); // If showing full text, reset to initial 100 chars
+    } else {
+      setCurrentLength(Math.min(modalData.description.length, currentLength + 100)); // Show 100 more chars
+    }
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const description = modalData.description || 'Описание отсутствует или не найден';
+  const isLongText = description.length > 100;
+  const showEllipsis = currentLength < description.length && !showFullDescription;
+  const truncatedDescription = showFullDescription 
+    ? description 
+    : description.slice(0, currentLength) + (showEllipsis ? '...' : '');
+
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
@@ -395,7 +414,7 @@ function CategoryListByName() {
 
                           <div className="d-flex mt-3">
                             <div style={{textDecoration: 'none'}}>
-                              <p className='t-shirt_name' style={{width: '100%'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Одежда с вашим дизайном' : 'Sizning dizayningiz bilan kiyimlar'}</p>
+                              <p className='t-shirt_name' style={{width: '100%'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? `${category.category.name} с вашим дизайном` : `Sizning dizayningiz bilan ${category.category.name}`}</p>
                               <p className='t-shirt_price'>
                                 {data2.price_discount ? 
                                   <span>
@@ -434,7 +453,7 @@ function CategoryListByName() {
                                     <p className='discount'>-{data2.discount}%</p>
                                   </div>
                                 </div>
-                                <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', borderRadius: '8px', height: '320px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
                                 <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
@@ -534,11 +553,43 @@ function CategoryListByName() {
                   {modalData && (
                     <div className='d-flex'>
                       <div style={{padding: '80px 32px 0px 32px'}}>
-                        <p className='modal_name'>{displayedName ? displayedName : 'Название отсутствует'}</p>
-                        <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                        <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                        <p className='modal_name'>{displayedName ? displayedName : localStorage.getItem('selectedLanguage') === 'ru' ? 'Название отсутствует' : `Sarlavha yo'q`}</p>
+                        {/* <p className='modal_info'>{modalData.description ? modalData.description : localStorage.getItem('selectedLanguage') === 'ru' ? 'Описание отсутствует' : `Ta'rif yo'q`}</p> */}
+                        <p className='show_detail_description' style={{height: '120px', overflow: 'scroll', width: '335px', boxShadow: showFullDescription ? '1px 14px 59px -46px rgba(0,0,0,0.75)' : 'none'}}>
+                          {truncatedDescription}
 
-                        <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
+                          {isLongText && (
+                            <span>
+                              <button 
+                                className='show_detail_description_more' 
+                                onClick={toggleDescription}
+                              >
+                                {showFullDescription ? 
+                                  (localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish') : 
+                                  (localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi')
+                                }
+                              </button>
+                            </span>
+                          )}
+                        </p>
+
+                        {/* <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p> */}
+                        <p className='show_detail_price'>
+                          {modalData.price_discount ?
+                            <div>
+                              {Number(displayedPriceDiscount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                              <del className='show_detail_price_discount'>
+                                {Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                              </del>
+                            </div>
+                            :
+                            <div style={{fontSize: 20}}>
+                              {displayedPrice ? `${Number(displayedPrice).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
+                            </div>
+                          }
+                        </p>
+
+                        <div className="d-flex justify-content-between" style={{marginTop: '26px'}}>
                           <div className='d-flex center' style={{ marginRight: '83px' }}>
                             <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Размер' : `O'lchami`}</p>
 
@@ -555,6 +606,7 @@ function CategoryListByName() {
                                   setDisplayedId(selectedSize.color[0].product.id);
                                   setClickIdColor(selectedSize.id);
                                   setDisplayedPrice(selectedSize.color[0].product.price);
+                                  setDisplayedPriceDiscount(selectedSize.color[0].product.price_discount);
                                   setDisplayedName(selectedSize.color[0].product.name);
                                   setDisplayedQuantity(selectedSize.color[0].product.quantity);
                                   setDisplayedImage(selectedSize.color[0].product.img);
@@ -570,7 +622,7 @@ function CategoryListByName() {
                           </div>
 
                           <div className='d-flex center'>
-                            <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цвет' : 'Rangi'}</p>
+                            <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Цвет' : `Rangi`}</p>
 
                             <div style={{marginLeft: '12px'}} className="d-flex">
                               {colorArray[selectedSizeIndex]?.color.map((color, index) => (
@@ -585,6 +637,7 @@ function CategoryListByName() {
                                     setClickIdColor(color.id);
                                     setDisplayedId(color.product.id);
                                     setDisplayedPrice(color.product.price); 
+                                    setDisplayedPriceDiscount(color.product.price_discount);
                                     setDisplayedName(color.product.name); 
                                     setDisplayedQuantity(color.product.quantity); 
                                     setDisplayedImage(color.product.img)
@@ -607,12 +660,7 @@ function CategoryListByName() {
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
                         </div>
 
-                        <div className='d-flex'>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В наличии:' : `Sotuvda mavjud:`} </p>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{displayedQuantity}</p>
-                        </div>
-
-                        <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
+                        <div className="d-flex align-items-center justify-content-between" style={{marginTop: '36px'}}>
                           <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                             <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -645,8 +693,7 @@ function CategoryListByName() {
                       </div>
 
                       <div className='modal_image_fat'>
-                        {/* <img src={displayedImage ? displayedImage[0] : ''} alt="your_design" /> */}
-                        <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover'}}></div>
+                        <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                       </div>
                     </div>
                   )}

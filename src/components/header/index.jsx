@@ -148,7 +148,7 @@ function HeaderMain({ trashCardData }) {
 
     fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
       .then(response => response.text())
-      .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false); setTimeout(() => {window.location.reload()}, 100);})
+      .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false)})
       .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
   }
 
@@ -210,6 +210,7 @@ function HeaderMain({ trashCardData }) {
         setIsRegisterEntered(false);
         setIsSuccesEntered(true);
         // console.log(result);
+        setTimeout(() => {window.location.reload()}, 100);
       })
       .catch(error => {
         toast.error('Регистрация не была оформлена.');

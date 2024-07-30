@@ -402,6 +402,64 @@ function Basket() {
     });
   };
 
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') || 'ru',
+          },
+        });
+  
+        if (response.data.status === true) {
+          return;
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_last_name');
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_phone_number');
+          localStorage.removeItem('grant_total');
+          localStorage.removeItem('selectedCategory');
+          localStorage.removeItem('currentProduct');
+          localStorage.removeItem('selectedSubCategory');
+          localStorage.removeItem('paymentDate');
+          localStorage.removeItem('trueVerifed');
+          localStorage.removeItem('basketData');
+          localStorage.removeItem('trashCard');
+          localStorage.removeItem('selectedCategoryId');
+          localStorage.removeItem('basket');
+          localStorage.removeItem('price');
+          localStorage.removeItem('discount_price');
+          localStorage.removeItem('user_image');
+        }
+      } catch (error) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_last_name');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_phone_number');
+        localStorage.removeItem('grant_total');
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('currentProduct');
+        localStorage.removeItem('selectedSubCategory');
+        localStorage.removeItem('paymentDate');
+        localStorage.removeItem('trueVerifed');
+        localStorage.removeItem('basketData');
+        localStorage.removeItem('trashCard');
+        localStorage.removeItem('selectedCategoryId');
+        localStorage.removeItem('basket');
+        localStorage.removeItem('price');
+        localStorage.removeItem('discount_price');
+        localStorage.removeItem('user_image');
+      }
+    };
+  
+    if (token) {
+      checkUser();
+    }
+  }, [token]);
+
   return (
     <div>
       <ToastContainer />

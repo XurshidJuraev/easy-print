@@ -46,6 +46,8 @@ function HomePage() {
   const [defaultColor, setDefaultColor] = useState();
   const [clickIdColor, setClickIdColor] = useState();
   const [displayedId, setDisplayedId] = useState();
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [currentLength, setCurrentLength] = useState(100);
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -66,6 +68,64 @@ function HomePage() {
       window.removeEventListener('resize', checkScreenSize);
     };
   }, []);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') || 'ru',
+          },
+        });
+  
+        if (response.data.status === true) {
+          return;
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_last_name');
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_phone_number');
+          localStorage.removeItem('grant_total');
+          localStorage.removeItem('selectedCategory');
+          localStorage.removeItem('currentProduct');
+          localStorage.removeItem('selectedSubCategory');
+          localStorage.removeItem('paymentDate');
+          localStorage.removeItem('trueVerifed');
+          localStorage.removeItem('basketData');
+          localStorage.removeItem('trashCard');
+          localStorage.removeItem('selectedCategoryId');
+          localStorage.removeItem('basket');
+          localStorage.removeItem('price');
+          localStorage.removeItem('discount_price');
+          localStorage.removeItem('user_image');
+        }
+      } catch (error) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_last_name');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_phone_number');
+        localStorage.removeItem('grant_total');
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('currentProduct');
+        localStorage.removeItem('selectedSubCategory');
+        localStorage.removeItem('paymentDate');
+        localStorage.removeItem('trueVerifed');
+        localStorage.removeItem('basketData');
+        localStorage.removeItem('trashCard');
+        localStorage.removeItem('selectedCategoryId');
+        localStorage.removeItem('basket');
+        localStorage.removeItem('price');
+        localStorage.removeItem('discount_price');
+        localStorage.removeItem('user_image');
+      }
+    };
+  
+    if (token) {
+      checkUser();
+    }
+  }, [token]);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -349,6 +409,22 @@ function HomePage() {
     }
   }, []);
 
+  const toggleDescription = () => {
+    if (showFullDescription) {
+      setCurrentLength(100); // If showing full text, reset to initial 100 chars
+    } else {
+      setCurrentLength(Math.min(modalData.description.length, currentLength + 100)); // Show 100 more chars
+    }
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const description = modalData.description || 'Описание отсутствует или не найден';
+  const isLongText = description.length > 100;
+  const showEllipsis = currentLength < description.length && !showFullDescription;
+  const truncatedDescription = showFullDescription 
+    ? description 
+    : description.slice(0, currentLength) + (showEllipsis ? '...' : '');
+
   return (
     <div style={{ backgroundColor: '#FFFFFF' }}>
       <HeaderMain trashCardData={trashCardData} />
@@ -361,10 +437,10 @@ function HomePage() {
             <h2 className='products_father_text mb-3 ms-5' style={{textAlign: 'left'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Хиты Продаж' : 'Savdo Xitlari'}</h2>
           </div>
 
-          <div className='center' style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '1200px', flexWrap: 'wrap'}}>
+          <div className='center' style={{display: 'flex', alignItems: 'center', width: '1200px', flexWrap: 'wrap', position: 'relative', left: '20px'}}>
             {isLoading ? (
               <>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+                <div style={{display: 'flex', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
                   <Placeholder 
                     shape="rect"
                     width={276} 
@@ -434,9 +510,9 @@ function HomePage() {
               </>
             ) : (
               <center>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap'}}>
+                <div style={{display: 'flex', alignItems: 'center', width: '1280px', flexWrap: 'wrap'}}>
                   {currentProduct && (
-                    <div key={currentProduct.id}>
+                    <div key={currentProduct.id} style={{margin: '20px'}}>
                       <Reveal>
                         <div style={{textDecoration: 'none'}} className="cards your_print">
                           <NavLink to={'/yourDesign'} onClick={() => handleCardShow(`${currentProduct.images[0]}`, `${currentProduct.name}`, `${currentProduct.price}`, `${currentProduct.id}`)} className="clothes_fat">
@@ -463,7 +539,7 @@ function HomePage() {
                           <div className="d-flex mt-3">
                             <div style={{textDecoration: 'none'}}>
                               {/* <p className='t-shirt_name' style={{width: '100%'}}>Одежда с вашим дизайном</p> */}
-                              <p className='t-shirt_name' style={{width: '100%'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Одежда с вашим дизайном' : `Sizning dizayningiz bilan kiyimlar`}</p>
+                              <p className='t-shirt_name' style={{width: '100%'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка с вашим дизайном' : `Sizning dizayningiz bilan futbolka`}</p>
                               <p className='t-shirt_price'>
                                 {currentProduct.price_discount ? 
                                   <span>
@@ -484,7 +560,7 @@ function HomePage() {
                   )}
 
                   {data.data ? data.data.warehouse_product_list.slice(0, 3).map((data2) => (
-                    <div key={data2.id}>
+                    <div key={data2.id} style={{margin: '20px'}}>
                       <Reveal>
                         <div style={{textDecoration: 'none'}} className="cards">
                           <NavLink to={`/show/detail/${data2.id}/${data2.name}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
@@ -498,7 +574,7 @@ function HomePage() {
                                     <p className='discount'>-{data2.discount}%</p>
                                   </div>
                                 </div>
-                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
 
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
@@ -549,7 +625,7 @@ function HomePage() {
                   )): null}
 
                   {data.data ? data.data.warehouse_product_list.slice(3, displayedItems).map((data2) => (
-                    <div key={data2.id} style={{marginTop: '48px'}}>
+                    <div key={data2.id} style={{margin: '20px'}}>
                       <Reveal>
                         <div style={{textDecoration: 'none'}} className="cards">
                           <NavLink to={`/show/detail/${data2.id}/${data2.name}`} onClick={() => handleCardShow(`${data2.images[0]}`, `${data2.name}`, `${data2.price}`, `${data2.id}`)} className="clothes_fat">
@@ -564,7 +640,7 @@ function HomePage() {
                                   </div>
                                 </div>
                                 {/* <img style={{ width: '276px', height: '320px' }} src={`${data2.images[0]}`} alt={data2.name} /> */}
-                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                                <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
                               </div>
                               <div className="image-overlay" style={{borderRadius: '8px'}}>
                                 <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
@@ -671,7 +747,25 @@ function HomePage() {
                     <div className='d-flex'>
                       <div style={{padding: '80px 32px 0px 32px'}}>
                         <p className='modal_name'>{displayedName ? displayedName : localStorage.getItem('selectedLanguage') === 'ru' ? 'Название отсутствует' : `Sarlavha yo'q`}</p>
-                        <p className='modal_info'>{modalData.description ? modalData.description : localStorage.getItem('selectedLanguage') === 'ru' ? 'Описание отсутствует' : `Ta'rif yo'q`}</p>
+                        {/* <p className='modal_info'>{modalData.description ? modalData.description : localStorage.getItem('selectedLanguage') === 'ru' ? 'Описание отсутствует' : `Ta'rif yo'q`}</p> */}
+                        <p className='show_detail_description' style={{height: '120px', overflow: 'scroll', width: '335px', boxShadow: showFullDescription ? '1px 14px 59px -46px rgba(0,0,0,0.75)' : 'none'}}>
+                          {truncatedDescription}
+
+                          {isLongText && (
+                            <span>
+                              <button 
+                                className='show_detail_description_more' 
+                                onClick={toggleDescription}
+                              >
+                                {showFullDescription ? 
+                                  (localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish') : 
+                                  (localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi')
+                                }
+                              </button>
+                            </span>
+                          )}
+                        </p>
+
                         {/* <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p> */}
                         <p className='show_detail_price'>
                           {modalData.price_discount ?
@@ -682,13 +776,13 @@ function HomePage() {
                               </del>
                             </div>
                             :
-                            <div>
+                            <div style={{fontSize: 20}}>
                               {displayedPrice ? `${Number(displayedPrice).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
                             </div>
                           }
                         </p>
 
-                        <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
+                        <div className="d-flex justify-content-between" style={{marginTop: '26px'}}>
                           <div className='d-flex center' style={{ marginRight: '83px' }}>
                             <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Размер' : `O'lchami`}</p>
 
@@ -704,7 +798,6 @@ function HomePage() {
                                   setDefaultSize(selectedSizeId);
                                   setDisplayedId(selectedSize.color[0].product.id);
                                   setClickIdColor(selectedSize.id);
-                                  console.log(selectedSize.color[0].product);
                                   setDisplayedPrice(selectedSize.color[0].product.price);
                                   setDisplayedPriceDiscount(selectedSize.color[0].product.price_discount);
                                   setDisplayedName(selectedSize.color[0].product.name);
@@ -760,12 +853,7 @@ function HomePage() {
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
                         </div>
 
-                        <div className='d-flex'>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В наличии:' : `Sotuvda mavjud:`} </p>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{displayedQuantity}</p>
-                        </div>
-
-                        <div className="d-flex align-items-center justify-content-between">
+                        <div className="d-flex align-items-center justify-content-between" style={{marginTop: '36px'}}>
                           <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                             <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -798,7 +886,7 @@ function HomePage() {
                       </div>
 
                       <div className='modal_image_fat'>
-                        <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover'}}></div>
+                        <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                       </div>
                     </div>
                   )}

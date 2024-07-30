@@ -256,6 +256,64 @@ function ProductShowMobile() {
   };
 
   useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            language: localStorage.getItem('selectedLanguage') || 'ru',
+          },
+        });
+  
+        if (response.data.status === true) {
+          return;
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_last_name');
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_phone_number');
+          localStorage.removeItem('grant_total');
+          localStorage.removeItem('selectedCategory');
+          localStorage.removeItem('currentProduct');
+          localStorage.removeItem('selectedSubCategory');
+          localStorage.removeItem('paymentDate');
+          localStorage.removeItem('trueVerifed');
+          localStorage.removeItem('basketData');
+          localStorage.removeItem('trashCard');
+          localStorage.removeItem('selectedCategoryId');
+          localStorage.removeItem('basket');
+          localStorage.removeItem('price');
+          localStorage.removeItem('discount_price');
+          localStorage.removeItem('user_image');
+        }
+      } catch (error) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_last_name');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_phone_number');
+        localStorage.removeItem('grant_total');
+        localStorage.removeItem('selectedCategory');
+        localStorage.removeItem('currentProduct');
+        localStorage.removeItem('selectedSubCategory');
+        localStorage.removeItem('paymentDate');
+        localStorage.removeItem('trueVerifed');
+        localStorage.removeItem('basketData');
+        localStorage.removeItem('trashCard');
+        localStorage.removeItem('selectedCategoryId');
+        localStorage.removeItem('basket');
+        localStorage.removeItem('price');
+        localStorage.removeItem('discount_price');
+        localStorage.removeItem('user_image');
+      }
+    };
+  
+    if (token) {
+      checkUser();
+    }
+  }, [token]);
+
+  useEffect(() => {
     if (colorArray[selectedSizeIndex] && colorArray[selectedSizeIndex].color.length > 0) {
       const defaultColor = colorArray[selectedSizeIndex].color[0];
       setSelectedColorIndex(0);
@@ -767,7 +825,7 @@ function ProductShowMobile() {
                           <div className="carousel-inner" style={{borderRadius: '6px'}}>
                             {displayedImage.map((image, index) => (
                               <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`} style={{borderRadius: '6px'}}>
-                                <div className='img_animation_img' data-bs-toggle="modal" data-bs-target="#exampleModal"style={{backgroundImage: `url(${image})`, borderRadius: '6px', width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}onTouchStart={handleTouchStart}onTouchMove={handleTouchMove}></div>
+                                <div className='img_animation_img' data-bs-toggle="modal" data-bs-target="#exampleModal"style={{backgroundImage: `url(${image})`, backgroundPosition: 'center', borderRadius: '6px', width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}onTouchStart={handleTouchStart}onTouchMove={handleTouchMove}></div>
                               </div>
                             ))}
                           </div>
@@ -786,11 +844,6 @@ function ProductShowMobile() {
 
                       <h3 className='show_detail_title_mobile'>{displayedName ? displayedName : 'Название отсутствует или не найден'}</h3>
 
-                      <div className='d-flex'>
-                        <p className='show_detail_size_mobile'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В наличии' : 'Sotuvda'}: </p>
-                        <p className='show_detail_size_mobile_number ms-2'>{displayedQuantity} {localStorage.getItem('selectedLanguage') === 'ru' ? '' : ' dona bor'}</p>
-                      </div>
-                      
                       <h3 className='show_detail_title_mobile' style={{marginTop: '8px'}}>Цвет:</h3>
 
                       <div className="d-flex">
@@ -827,7 +880,7 @@ function ProductShowMobile() {
                       </div>
 
                       <div style={{margin: '20px 0px -14px 0px'}}>
-                        <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Состав' : 'Tarkibi'}: {dataBeck.composition ? dataBeck.composition : 'Состав отсутствует или не найден'}</p>
+                        <p className='show_detail_author'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Состав' : 'Tarkibi'}: {dataBeck.material_composition ? dataBeck.material_composition : 'Состав отсутствует или не найден'}</p>
                       </div>
 
                       <div style={{display: 'flex', marginTop: '32px'}}>
@@ -859,14 +912,14 @@ function ProductShowMobile() {
               <h2 style={{marginBottom: '-4px'}} className='home_card_title_mobile'>Рекомендуем вам:</h2>
 
               <Swiper style={{marginLeft: '30px'}} slidesPerView={2.3} spaceBetween={10} freeMode={true} pagination={{clickable: true,}} className="mySwiper">
-                {data.data ? data.data.warehouse_product_list.slice(3).map((data2) => (
+                {data.data ? data.data.warehouse_product_list.map((data2) => (
                   <SwiperSlide key={data2.id}>
                     <Reveal>
                       <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginLeft: '8px', marginRight: '8px'}}>
                         <div className="clothes_fat" style={{borderRadius: '6px', width: '162px', height: '190px'}}>
                           <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
                             <div>
-                              <div style={{width: '162px', height: '190px', borderRadius: '6px', backgroundImage: `url(${data2.images[0]})`, borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div style={{width: '162px', height: '190px', borderRadius: '6px', backgroundImage: `url(${data2.images[0]})`, backgroundPosition: 'center', borderRadius: '6px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
                           </div>
                         </div>
@@ -940,7 +993,7 @@ function ProductShowMobile() {
                                 className='img_animation_img' 
                                 data-bs-toggle="modal" 
                                 data-bs-target="#exampleModal"
-                                style={{backgroundImage: `url(${image})`, width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
+                                style={{backgroundImage: `url(${image})`, backgroundPosition: 'center', width: '100%', height: '382px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
                                 onTouchStart={handleTouchStart}
                                 onTouchMove={handleTouchMove}
                               ></div>
