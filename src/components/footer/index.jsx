@@ -45,7 +45,7 @@ function FooterMain() {
 
               <ul style={{listStyle: 'none'}}>
                 <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'О нас' : 'Biz haqimizda'}</li>
-                {/* <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вакансии' : `Bo'sh ish o'rinlari`}</li> */}
+                <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вакансии' : `Bo'sh ish o'rinlari`}</li>
                 <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Блог EasyPrint' : `EasyPrint blogi`}</li>
                 <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Контакты' : 'Kontaktlar'}</li>
               </ul>
@@ -110,14 +110,14 @@ function FooterMain() {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
-              <form style={{marginTop: 41, marginBottom: 97, width: 346}}>
+              <div style={{marginTop: 41, marginBottom: 97, width: 346}}>
                 <input className='modal_footer_input' type="text" placeholder='Имя' />
                 <input className='modal_footer_input' type="text" placeholder='Номер телефона' />
                 <input className='modal_footer_input' type="text" placeholder='E-mail' />
                 <textarea className='modal_footer_input' style={{height: 120}} placeholder='Комментарий'></textarea>
 
                 <button style={{backgroundColor: '#1C471F', color: '#FFFFFF'}} className='modal_footer_input_button'>Отправить</button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -131,14 +131,14 @@ function FooterMain() {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
-              <form style={{marginTop: 41, marginBottom: 97, width: 346}}>
+              <div style={{marginTop: 41, marginBottom: 97, width: 346}}>
                 <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Имя' />
                 <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Номер телефона' />
                 <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='E-mail' />
                 <textarea className='modal_footer_input' style={{height: 120, color: '#969696'}} placeholder='Комментарий'></textarea>
 
                 <button style={{backgroundColor: '#184363', color: '#FFFFFF'}} className='modal_footer_input_button'>Отправить</button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -152,14 +152,14 @@ function FooterMain() {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
-              <form style={{marginTop: 41, marginBottom: 97, width: 346}}>
+              <div style={{marginTop: 41, marginBottom: 97, width: 346}}>
                 <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Имя' />
                 <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Номер телефона' />
                 <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='E-mail' />
                 <textarea className='modal_footer_input' style={{height: 120, color: '#969696'}} placeholder='Комментарий'></textarea>
 
                 <button style={{backgroundColor: '#52225E', color: '#FFFFFF'}} className='modal_footer_input_button'>Отправить</button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -173,14 +173,14 @@ function FooterMain() {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
-              <form style={{marginTop: 41, marginBottom: 97, width: 346}}>
+              <div style={{marginTop: 41, marginBottom: 97, width: 346}}>
                 <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Имя' />
                 <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Номер телефона' />
                 <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='E-mail' />
                 <textarea className='modal_footer_input' style={{height: 120, color: '#969696'}} placeholder='Комментарий'></textarea>
 
                 <button style={{backgroundColor: '#4A411E', color: '#FFFFFF'}} className='modal_footer_input_button'>Отправить</button>
-              </form>
+              </div>
             </div>
           </div>
         </div>

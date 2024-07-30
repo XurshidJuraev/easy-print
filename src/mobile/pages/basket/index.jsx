@@ -29,6 +29,7 @@ function BasketMobile() {
   const [selectedSizeId, setSelectedSizeId] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const [errorBorder, setErrorBorder] = useState(false);
   const navigate = useNavigate();
 
@@ -123,6 +124,15 @@ function BasketMobile() {
       calculateTotalPrice(savedCards);
     });    
   }, [token]);
+
+  useEffect(() => {
+    if (isInitialRender) {
+      if (data && data.data && data.data.list && data.data.list.length > 0) {
+        setIsInitialRender(false); 
+        handleSelectAll();
+      }
+    }
+  }, [data]);
 
   async function saveOrder() {
     try {

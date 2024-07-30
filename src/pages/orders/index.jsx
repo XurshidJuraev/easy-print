@@ -56,6 +56,22 @@ function MyOrders() {
   });
 
   useEffect(() => {
+    const checkScreenSize = () => {
+      if (window.screen.width < 800) {
+        navigate('/mobile/checkout/accept/true');
+      }
+    };
+
+    checkScreenSize();
+
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
+  useEffect(() => {
     document.title = 'Подтверждение заказа'
   }, []);
 
@@ -205,70 +221,71 @@ function MyOrders() {
   }, 5000);
 
   function saveOrder() {
-    var myHeaders = new Headers();
-    myHeaders.append("language", localStorage.getItem('selectedLanguage') === 'ru' ? 'ru' : 'uz');
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    // var myHeaders = new Headers();
+    // myHeaders.append("language", localStorage.getItem('selectedLanguage') === 'ru' ? 'ru' : 'uz');
+    // myHeaders.append("Accept", "application/json");
+    // myHeaders.append("Authorization", `Bearer ${token}`);
 
-    var formdata = new FormData();
-    formdata.append("order_id", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    if (addressId === null) {
-      toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы не можете отправить свой заказ. Потому что у тебя нет адреса. Выберите свой адрес и отправьте.' : `Buyurtmani yubora olmaysiz. Chunki sizda manzil yo'q. Manzilingizni tanlang va yuboring.`);
-      setNullAddres(true)
-      return;
-    } else {
-      formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    }
-    formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    if (localStorage.getItem('user_name') === null) {
-      toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Похоже, ваше имя недоступно для подтверждения заказа. Пожалуйста, создайте себе имя на странице своего профиля.' : `Buyurtmani tasdiqlash uchun ismingiz mavjud emasga o'xshaydi. Iltimos, profil sahifangizda o'zingiz uchun nom yarating.`);
-      setNullName(true)
-      return;
-    } else {
-      formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    }
-    formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    if (localStorage.getItem('user_phone_number') === null) {
-      toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш номер телефона для подтверждения заказа недоступен. Пожалуйста, подтвердите себя, добавив свой номер телефона на странице своего профиля.' : `Buyurtmani tasdiqlash uchun telefon raqamingiz mavjud emas. Profil sahifangizga telefon raqamingizni qoʻshish orqali oʻzingizni tasdiqlang.`);
-      setNullPhoneNumber(true)
-      return;
-    } else {
-      formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    }
-    formdata.append("payment_method", '2');
-    formdata.append("user_card_id", "1");
+    // var formdata = new FormData();
+    // formdata.append("order_id", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+    // formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+    // if (addressId === null) {
+    //   toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы не можете отправить свой заказ. Потому что у тебя нет адреса. Выберите свой адрес и отправьте.' : `Buyurtmani yubora olmaysiz. Chunki sizda manzil yo'q. Manzilingizni tanlang va yuboring.`);
+    //   setNullAddres(true)
+    //   return;
+    // } else {
+    //   formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+    // }
+    // formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    // if (localStorage.getItem('user_name') === null) {
+    //   toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Похоже, ваше имя недоступно для подтверждения заказа. Пожалуйста, создайте себе имя на странице своего профиля.' : `Buyurtmani tasdiqlash uchun ismingiz mavjud emasga o'xshaydi. Iltimos, profil sahifangizda o'zingiz uchun nom yarating.`);
+    //   setNullName(true)
+    //   return;
+    // } else {
+    //   formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    // }
+    // formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    // if (localStorage.getItem('user_phone_number') === null) {
+    //   toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш номер телефона для подтверждения заказа недоступен. Пожалуйста, подтвердите себя, добавив свой номер телефона на странице своего профиля.' : `Buyurtmani tasdiqlash uchun telefon raqamingiz mavjud emas. Profil sahifangizga telefon raqamingizni qoʻshish orqali oʻzingizni tasdiqlang.`);
+    //   setNullPhoneNumber(true)
+    //   return;
+    // } else {
+    //   formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    // }
+    // formdata.append("payment_method", '2');
+    // formdata.append("user_card_id", "1");
 
-    // console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    // console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    // console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    // console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    // console.log("payment_method:", "1");
-    // console.log("user_card_id:", "1");
+    // // console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+    // // console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+    // // console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+    // // console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+    // // console.log("payment_method:", "1");
+    // // console.log("user_card_id:", "1");
 
-    var requestOptions = {
-      Accept: 'application/json',
-      method: 'POST',
-      headers: myHeaders,
-      body: formdata,
-      redirect: 'follow'
-    };
+    // var requestOptions = {
+    //   Accept: 'application/json',
+    //   method: 'POST',
+    //   headers: myHeaders,
+    //   body: formdata,
+    //   redirect: 'follow'
+    // };
 
-    fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        if (result.status === true) {
-          setTimeout(() => {
-            localStorage.setItem('counterValue', 0);
-          }, 1500);
-          setDataModal(result.data);
-          window.location.href = `https://admin.easyprint.uz/get-payme/${localStorage.getItem('order_id')}`
-        } else {
-          toast.error('Заказ не был оформлен!');
-        }
-      })
-      // .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
-      .catch(error => console.log(error));
+    // fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
+    //   .then(response => response.json())
+    //   .then(result => {
+    //     if (result.status === true) {
+    //       setTimeout(() => {
+    //         localStorage.setItem('counterValue', 0);
+    //       }, 1500);
+    //       setDataModal(result.data);
+          
+    //     } else {
+    //       toast.error('Заказ не был оформлен!');
+    //     }
+    //   })
+    //   // .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
+    //   .catch(error => console.log(error));
+    window.location.href = `https://admin.easyprint.uz/get-payme/${localStorage.getItem('order_id')}`
   }
 
   const handleChange = (e) => {

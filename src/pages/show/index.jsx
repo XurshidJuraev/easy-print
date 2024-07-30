@@ -61,6 +61,22 @@ function ShowDetail() {
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
+    const checkScreenSize = () => {
+      if (window.screen.width < 800) {
+        navigate(`/mobile/show/detail/${params.id}/${params.name}`);
+      }
+    };
+
+    checkScreenSize();
+
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
+  useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
     if (storedCount) {
       setCountHeader(Number(storedCount));
