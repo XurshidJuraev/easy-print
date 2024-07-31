@@ -147,35 +147,35 @@ function Profile() {
       formdata.append("image", formData.img);
     }
 
-    // console.log("first_name", formData.name ? formData.name : '');
-    // console.log("last_name", formData.lastName ? formData.lastName : '');
-    // console.log("phone_number", formData.phoneNumber ? formData.phoneNumber : '');
-    // console.log("gender", formData.gender ? formData.gender : 1);
-    // console.log("email", formData.email ? formData.email : '');
-    // console.log("birth_date", formData.birthDate ? formData.birthDate : '');
-    // console.log(formdata.append("image", formData.img));
+    console.log("first_name", formData.name ? formData.name : '');
+    console.log("last_name", formData.lastName ? formData.lastName : '');
+    console.log("phone_number", formData.phoneNumber ? formData.phoneNumber : '');
+    console.log("gender", formData.gender ? formData.gender : 1);
+    console.log("email", formData.email ? formData.email : '');
+    console.log("birth_date", formData.birthDate ? formData.birthDate : '');
+    console.log(formdata.append("image", formData.img));
 
     localStorage.setItem('user_name', formData.name ? formData.name : '');
     localStorage.setItem('user_image', formData.image);
 
-    axios.post(`${process.env.REACT_APP_TWO}/personal-information`, formdata,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          lang: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
-        },
-      }
-    )
-    .then((response) => {
-      if (response.data.status === true) {
-        window.location.reload();
-      }
-    })
-    .catch((error) => {
-      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
-      console.log('error:', error);
-    });
+    // axios.post(`${process.env.REACT_APP_TWO}/personal-information`, formdata,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       Accept: 'application/json',
+    //       lang: localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+    //     },
+    //   }
+    // )
+    // .then((response) => {
+    //   if (response.data.status === true) {
+    //     window.location.reload();
+    //   }
+    // })
+    // .catch((error) => {
+    //   toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+    //   console.log('error:', error);
+    // });
   };  
 
   const handleImageChange = (e) => {

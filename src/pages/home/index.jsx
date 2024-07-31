@@ -142,7 +142,7 @@ function HomePage() {
   };
 
   useEffect(() => {
-    document.title = 'Easy Print';
+    document.title = 'Easy Print - футболки с принтом, одежда на заказ от интернет магазина!';
   }, []);
 
   function handleCardClick(imageSrc, name, price) {

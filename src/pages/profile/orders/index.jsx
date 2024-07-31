@@ -39,8 +39,10 @@ function ProfileOrders() {
       }
     }).then((response) => {
       setOrders(response.data);
+      console.log(response.data);
     }).catch((error) => {
       toast.error(error.response.data.message);
+      console.log(error);
     });    
   }, []);
 
@@ -102,21 +104,54 @@ function ProfileOrders() {
                         <div style={{ padding: '24px 32px', display: 'flex', alignItems: 'center' }}>
                           <div>
                             <p className='order_profile_opacity_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Статус:' : `Holat:`}</p>
-                            <p className='order_profile_opacity_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Дата заказа:' : `Buyurtma sanasi:`}</p>
+                            <p className='order_profile_opacity_text' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '16px' : '13px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Дата заказа:' : `Buyurtma sanasi:`}</p>
                             <p className='order_profile_opacity_text' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '16px' : '13px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Дата доставки:' : `Yetkazib berish sanasi:`}</p>
-                            <p className='order_profile_opacity_text' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '16px' : '13px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес доставки:' : `Yetkazib berish manzili:`}</p>
+                            <p className='order_profile_opacity_text' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '16px' : '13px'}}>{order.address_type === 'deliver' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес доставки:' : `Yetkazib berish manzili:` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Пункт самовывоза:' : `Qabul qilish punkti:`}</p>
+                            <p className='order_profile_opacity_text' style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '16px' : '13px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Время доставки' : `Yetkazib berish vaqti`}</p>
                             <p className='order_profile_opacity_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Сумма заказа:' : `Buyurtma narxi:`}</p>
                           </div>
 
                           <div style={{ marginLeft: '40px' }}>
                             <div className="d-flex">
-                              <button className='btn_order_profile hidden_three_dots' style={{ background: order.status === 'Ordered' ? '#D8E5FE' : order.status === 'Performed' ? '#D8E5FE' : order.status === 'Canceled' ? '#FFE7D6' : order.status === 'Accepted_by_recipient' ? '#E6E6E6' : '#D8E5FE', color: order.status === 'Ordered' ? '#688E22' : order.status === 'Performed' ? '#688E22' : order.status === 'Canceled' ? '#FF4A32' : order.status === 'Accepted_by_recipient' ? '#333' : '#688E22' }}>{order.status}</button>
-                              <p style={{width: order.status === 'Accepted_by_recipient' ? '220px' : 'auto'}} className='order_profile_opacity_text hidden_three_dots pt-1 ps-3'>{order.order_status_date ? order.order_status_date : 'Нет данных'}</p>
+                              <button className='btn_order_profile hidden_three_dots' 
+                                style={{
+                                  position: 'relative', 
+                                  top: '-10px', 
+                                  background: 
+                                    order.status === 'Заказ принят' ? '#D8E5FE' : 
+                                    order.status === 'Выполняется' ? '#D8E5FE' : 
+                                    order.status === 'Доставляется' ? '#C9DA8F' : 
+                                    order.status === 'Готов к выдаче' ? '#C9DA8F' : 
+                                    order.status === 'Принят получателем' ? '#E6E6E6' : 
+                                    order.status === 'Отменен' ? '#FFE7D6' :
+                                    order.status === 'Buyurtma yaraldi' ? '#D8E5FE' : 
+                                    order.status === 'Yasalmoqda' ? '#D8E5FE' : 
+                                    order.status === 'Yetkazilmoqda' ? '#C9DA8F' : 
+                                    order.status === 'Olib ketishga tayyor' ? '#C9DA8F' : 
+                                    order.status === 'Xaridorga berildi' ? '#E6E6E6' : 
+                                    order.status === 'Bekor qilingan' ? '#FFE7D6' : '#D8E5FE',
+                                  color: 
+                                    order.status === 'Заказ принят' ? '#3064CC' : 
+                                    order.status === 'Выполняется' ? '#3064CC' : 
+                                    order.status === 'Доставляется' ? '#000000' : 
+                                    order.status === 'Готов к выдаче' ? '#000000' : 
+                                    order.status === 'Принят получателем' ? '#333333' : 
+                                    order.status === 'Отменен' ? '#FF4A32' :
+
+                                    order.status === 'Buyurtma yaraldi' ? '#3064CC' : 
+                                    order.status === 'Yasalmoqda' ? '#3064CC' : 
+                                    order.status === 'Yetkazilmoqda' ? '#000000' : 
+                                    order.status === 'Olib ketishga tayyor' ? '#000000' : 
+                                    order.status === 'Xaridorga berildi' ? '#333333' : 
+                                    order.status === 'Bekor qilingan' ? '#FF4A32' : '#3064CC',
+                                  }}>{order.status}</button>
+                              {/* <p style={{width: order.status === 'Accepted_by_recipient' ? '220px' : 'auto'}} className='order_profile_opacity_text hidden_three_dots pt-1 ps-3'>{order.order_status_date ? order.order_status_date : 'Нет данных'}</p> */}
                             </div>
                             <p className='order_profile_text'>{order.order_date ? order.order_date : localStorage.getItem('selectedLanguage') === 'ru' ? 'Нет данных' : `Maʼlumot yoʻq`}</p>
                             <p className='order_profile_text'>{order.delivery_date ? order.delivery_date : localStorage.getItem('selectedLanguage') === 'ru' ? 'Я еще не получила заказ :(' : `Siz hali buyurtmani olmadingiz`}</p>
                             <p className='order_profile_text'>{order.address ? `${order.address.region === null ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Пока нет данных :(' : `Hozircha ma'lumot yo'q :(` : order.address.region} ${order.address.city === null ? '' : order.address.city} ${order.address.street === null ? '' : order.address.street} ${order.address.house === null ? '' : order.address.house === undefined ? '' : order.address.house}` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Нет данных' : `Maʼlumot yoʻq`}</p>
-                            <p className='order_profile_text'>{Number(order.all_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                            <p className='order_profile_text' style={{position: 'relative', top: 6}}>10:00 - 20:00</p>
+                            <p className='order_profile_text' style={{position: 'relative', top: 8}}>{Number(order.all_price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                           </div>
                         </div>
 

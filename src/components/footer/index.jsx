@@ -98,7 +98,7 @@ function FooterMain() {
 
               <ul style={{listStyle: 'none'}}>
                 <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'О нас' : 'Biz haqimizda'}</li>
-                <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вакансии' : `Bo'sh ish o'rinlari`}</li>
+                {/* <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вакансии' : `Bo'sh ish o'rinlari`}</li> */}
                 <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Блог EasyPrint' : `EasyPrint blogi`}</li>
                 <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Контакты' : 'Kontaktlar'}</li>
               </ul>
@@ -194,7 +194,7 @@ function FooterMain() {
                 <input id="corporative_phone" className='modal_footer_input' type="text" placeholder='Номер телефона' />
                 <input id="corporative_email" className='modal_footer_input' type="text" placeholder='E-mail' />
                 <textarea id="corporative_comment" className='modal_footer_input' style={{ height: 120 }} placeholder='Комментарий'></textarea>
-                <button onClick={() => handleSend('corporative')} style={{ backgroundColor: '#1C471F', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
+                <button onClick={() => handleSend('corporative')} style={{ backgroundColor: '#184363', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
               </div>
 
               <div id='send_corporative' style={{ display: isCorporateSent ? 'flex' : 'none', justifyContent: 'center', alignContent: 'center', marginTop: 41, marginBottom: 97, width: 346, height: 370 }}>
@@ -220,7 +220,7 @@ function FooterMain() {
                 <input id="designer_phone" className='modal_footer_input' type="text" placeholder='Номер телефона' />
                 <input id="designer_email" className='modal_footer_input' type="text" placeholder='E-mail' />
                 <textarea id="designer_comment" className='modal_footer_input' style={{ height: 120 }} placeholder='Комментарий'></textarea>
-                <button onClick={() => handleSend('designer')} style={{ backgroundColor: '#1C471F', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
+                <button onClick={() => handleSend('designer')} style={{ backgroundColor: '#52225E', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
               </div>
 
               <div id='send_designer' style={{ display: isDesignerSent ? 'flex' : 'none', justifyContent: 'center', alignContent: 'center', marginTop: 41, marginBottom: 97, width: 346, height: 370 }}>
@@ -246,7 +246,7 @@ function FooterMain() {
                 <input id="bloger_phone" className='modal_footer_input' type="text" placeholder='Номер телефона' />
                 <input id="bloger_email" className='modal_footer_input' type="text" placeholder='E-mail' />
                 <textarea id="bloger_comment" className='modal_footer_input' style={{ height: 120 }} placeholder='Комментарий'></textarea>
-                <button onClick={() => handleSend('bloger')} style={{ backgroundColor: '#1C471F', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
+                <button onClick={() => handleSend('bloger')} style={{ backgroundColor: '#4A411E', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
               </div>
 
               <div id='send_bloger' style={{ display: isBlogerSent ? 'flex' : 'none', justifyContent: 'center', alignContent: 'center', marginTop: 41, marginBottom: 97, width: 346, height: 370 }}>

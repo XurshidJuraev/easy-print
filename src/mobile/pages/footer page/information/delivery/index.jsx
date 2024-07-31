@@ -82,7 +82,7 @@ function Delivermobile() {
                   <h2 className='delivery_text_mobile'>Отделения почты Узбекистана</h2>
 
                   <div className="d-flex justify-content-between">
-                    <p className='delivery_text_mobile'>от 2 дней</p>
+                    <p className='delivery_text_mobile'>от 1 дней</p>
                     <p className='delivery_text_mobile'>25 000 </p>
                   </div>
                 </div>
@@ -103,7 +103,7 @@ function Delivermobile() {
                   <h2 className='delivery_text_mobile'>Достака курьером UZPOST</h2>
 
                   <div className="d-flex justify-content-between">
-                    <p style={{color: '#F19654'}} className='delivery_text_mobile'>от 2 дней</p>
+                    <p style={{color: '#F19654'}} className='delivery_text_mobile'>от 1 дней</p>
                     <p className='delivery_text_mobile'>25 000 </p>
                   </div>
                 </div>
@@ -124,7 +124,7 @@ function Delivermobile() {
                   <h2 className='delivery_text_mobile'>Почта UZPOST</h2>
 
                   <div className="d-flex justify-content-between">
-                    <p style={{color: '#F19654'}} className='delivery_text_mobile'>от 2 дней</p>
+                    <p style={{color: '#F19654'}} className='delivery_text_mobile'>от 1 дней</p>
                     <p style={{marginLeft: '90px'}} className='delivery_text_mobile'>25 000 </p>
                   </div>
                 </div>
@@ -147,7 +147,7 @@ function Delivermobile() {
                   <h2 className='delivery_text_mobile'>Отделения почты Узбекистана</h2>
 
                   <div className="d-flex justify-content-between">
-                    <p className='delivery_text_mobile'>от 2 дней</p>
+                    <p className='delivery_text_mobile'>от 1 дней</p>
                     <p className='delivery_text_mobile'>25 000 </p>
                   </div>
                 </div>
@@ -168,7 +168,7 @@ function Delivermobile() {
                   <h2 className='delivery_text_mobile'>Достака курьером Яндекс GO</h2>
 
                   <div className="d-flex justify-content-between">
-                    <p style={{color: '#F19654'}} className='delivery_text_mobile'>от 2 дней</p>
+                    <p style={{color: '#F19654'}} className='delivery_text_mobile'>от 1 дней</p>
                     <p className='delivery_text_mobile'>25 000 </p>
                   </div>
                 </div>

@@ -100,7 +100,7 @@ function ShowDetail() {
   })
 
   useEffect(() => {
-    document.title = 'Посмотреть продукт'
+    document.title = params.name
   }, []);
 
   if (params.id !== localStorage.getItem('selectedCategory')) {

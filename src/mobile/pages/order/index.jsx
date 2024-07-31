@@ -269,16 +269,16 @@ function OrderMobile() {
         .then(result => {
           if (result.status === true) {
             setOpen(true);
+            setBekStatus(result.status);
+            setDataModal(result.data);
             setTimeout(() => {
-                setDataModal(result.data);
-                setBekStatus(result.status);
-                localStorage.setItem('counterValue', 0);
-              }, 1500);
-            } else {
-              toast.error('Заказ не был оформлен!');
-            }
-          })
-          .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
+              localStorage.setItem('counterValue', 0);
+            }, 1500);
+          } else {
+            toast.error('Заказ не был оформлен!');
+          }
+        })
+        .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
       }
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);

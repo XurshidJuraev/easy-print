@@ -166,7 +166,7 @@ function FooterDeliveryPage() {
                       </div>
                       <div className='mt-3' style={{marginRight: '121px'}}>
                         <p className='delivery_text'>
-                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 2 дней' : '2 kundan boshlab'}
+                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 1 дней' : '1 kundan boshlab'}
                         </p>
                       </div>
                       <div className='mt-3'>
@@ -193,7 +193,7 @@ function FooterDeliveryPage() {
                       </div>
                       <div className='mt-3' style={{marginRight: '121px'}}>
                         <p className='delivery_text'>
-                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 2 дней' : '2 kundan boshlab'}
+                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 1 дней' : '1 kundan boshlab'}
                         </p>
                       </div>
                       <div className='mt-3'>
@@ -221,7 +221,7 @@ function FooterDeliveryPage() {
                       </div>
                       <div className='mt-3' style={{marginRight: '121px'}}>
                         <p className='delivery_text'>
-                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 2 дней' : '2 kundan boshlab'}
+                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 1 дней' : '1 kundan boshlab'}
                         </p>
                       </div>
                       <div className='mt-3'>
@@ -247,7 +247,7 @@ function FooterDeliveryPage() {
                       </div>
                       <div className='mt-3' style={{marginRight: '121px'}}>
                         <p className='delivery_text'>
-                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 2 дней' : '2 kundan boshlab'}
+                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 1 дней' : '1 kundan boshlab'}
                         </p>
                       </div>
                       <div className='mt-3'>
@@ -273,7 +273,7 @@ function FooterDeliveryPage() {
                       </div>
                       <div className='mt-3' style={{marginRight: '121px'}}>
                         <p className='delivery_text'>
-                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 2 дней' : '2 kundan boshlab'}
+                          {localStorage.getItem('selectedLanguage') === 'ru' ? 'от 1 дней' : '1 kundan boshlab'}
                         </p>
                       </div>
                       <div className='mt-3'>

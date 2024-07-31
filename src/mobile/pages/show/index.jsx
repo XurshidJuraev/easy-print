@@ -17,6 +17,35 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/swiper-bundle.css';
 
+const clearLocalStorage = () => {
+  const keysToRemove = [
+    'token', 'user_last_name', 'user_name', 'user_phone_number',
+    'grant_total', 'selectedCategory', 'currentProduct', 'selectedSubCategory',
+    'paymentDate', 'trueVerifed', 'basketData', 'trashCard',
+    'selectedCategoryId', 'basket', 'price', 'discount_price', 'user_image'
+  ];
+  keysToRemove.forEach(key => localStorage.removeItem(key));
+};
+
+const checkUser = async (token) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        language: localStorage.getItem('selectedLanguage') || 'ru',
+      },
+    });
+
+    if (!response.data.status) {
+      clearLocalStorage();
+    }
+  } catch (error) {
+    console.error('Error checking user:', error);
+    clearLocalStorage();
+  }
+};
+
 function ProductShowMobile() {
   const params = useParams()
   const [trashCardData, setTrashCardData] = useState([]);
@@ -44,6 +73,64 @@ function ProductShowMobile() {
   const [displayedId, setDisplayedId] = useState();
   const [displayedQuantity, setDisplayedQuantity] = useState();
   const [clickIdColor, setClickIdColor] = useState();
+
+  // useEffect(() => {
+  //   const checkUser = async () => {
+  //     try {
+  //       const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           Accept: 'application/json',
+  //           language: localStorage.getItem('selectedLanguage') || 'ru',
+  //         },
+  //       });
+  
+  //       if (response.data.status === true) {
+  //         return;
+  //       } else {
+  //         localStorage.removeItem('token');
+  //         localStorage.removeItem('user_last_name');
+  //         localStorage.removeItem('user_name');
+  //         localStorage.removeItem('user_phone_number');
+  //         localStorage.removeItem('grant_total');
+  //         localStorage.removeItem('selectedCategory');
+  //         localStorage.removeItem('currentProduct');
+  //         localStorage.removeItem('selectedSubCategory');
+  //         localStorage.removeItem('paymentDate');
+  //         localStorage.removeItem('trueVerifed');
+  //         localStorage.removeItem('basketData');
+  //         localStorage.removeItem('trashCard');
+  //         localStorage.removeItem('selectedCategoryId');
+  //         localStorage.removeItem('basket');
+  //         localStorage.removeItem('price');
+  //         localStorage.removeItem('discount_price');
+  //         localStorage.removeItem('user_image');
+  //       }
+  //     } catch (error) {
+  //       localStorage.removeItem('token');
+  //       localStorage.removeItem('user_last_name');
+  //       localStorage.removeItem('user_name');
+  //       localStorage.removeItem('user_phone_number');
+  //       localStorage.removeItem('grant_total');
+  //       localStorage.removeItem('selectedCategory');
+  //       localStorage.removeItem('currentProduct');
+  //       localStorage.removeItem('selectedSubCategory');
+  //       localStorage.removeItem('paymentDate');
+  //       localStorage.removeItem('trueVerifed');
+  //       localStorage.removeItem('basketData');
+  //       localStorage.removeItem('trashCard');
+  //       localStorage.removeItem('selectedCategoryId');
+  //       localStorage.removeItem('basket');
+  //       localStorage.removeItem('price');
+  //       localStorage.removeItem('discount_price');
+  //       localStorage.removeItem('user_image');
+  //     }
+  //   };
+  
+  //   if (token) {
+  //     checkUser();
+  //   }
+  // }, [token]);
 
   useEffect(() => {
     const storedCount = localStorage.getItem('counterValue');
@@ -199,9 +286,9 @@ function ProductShowMobile() {
             //     theme: "colored",
             //   }
             // );
-            alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Продукт был добавлен в корзину' : 'Mahsulot savatga qo`shildi')
+            alert('Товар добавлен ')
           } else {
-            if (result.message === "Unauthenticated.") {
+            if (result.message === 'Unauthenticated.') {
               const basketData = {
                 warehouse_product_id: productData.id,
                 quantity: 1,
@@ -213,13 +300,14 @@ function ProductShowMobile() {
 
               localStorage.setItem('basket', JSON.stringify(basketData));
 
-              alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы еще не зарегистрированы. Товар добавлен в корзину.' : 'Siz hali ro`yxatdan o`tmagansiz. Mahsulot savatga qo`shildi.')
+              alert(result.message)
             } else {
               alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi')
             }
           }
         })
         .catch(error => {
+          // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
           alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi')
           console.log('error', error);
         });
@@ -254,64 +342,6 @@ function ProductShowMobile() {
       setTouchStartX(null);
     }
   };
-
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_TWO}/get-user`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-            language: localStorage.getItem('selectedLanguage') || 'ru',
-          },
-        });
-  
-        if (response.data.status === true) {
-          return;
-        } else {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user_last_name');
-          localStorage.removeItem('user_name');
-          localStorage.removeItem('user_phone_number');
-          localStorage.removeItem('grant_total');
-          localStorage.removeItem('selectedCategory');
-          localStorage.removeItem('currentProduct');
-          localStorage.removeItem('selectedSubCategory');
-          localStorage.removeItem('paymentDate');
-          localStorage.removeItem('trueVerifed');
-          localStorage.removeItem('basketData');
-          localStorage.removeItem('trashCard');
-          localStorage.removeItem('selectedCategoryId');
-          localStorage.removeItem('basket');
-          localStorage.removeItem('price');
-          localStorage.removeItem('discount_price');
-          localStorage.removeItem('user_image');
-        }
-      } catch (error) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user_last_name');
-        localStorage.removeItem('user_name');
-        localStorage.removeItem('user_phone_number');
-        localStorage.removeItem('grant_total');
-        localStorage.removeItem('selectedCategory');
-        localStorage.removeItem('currentProduct');
-        localStorage.removeItem('selectedSubCategory');
-        localStorage.removeItem('paymentDate');
-        localStorage.removeItem('trueVerifed');
-        localStorage.removeItem('basketData');
-        localStorage.removeItem('trashCard');
-        localStorage.removeItem('selectedCategoryId');
-        localStorage.removeItem('basket');
-        localStorage.removeItem('price');
-        localStorage.removeItem('discount_price');
-        localStorage.removeItem('user_image');
-      }
-    };
-  
-    if (token) {
-      checkUser();
-    }
-  }, [token]);
 
   useEffect(() => {
     if (colorArray[selectedSizeIndex] && colorArray[selectedSizeIndex].color.length > 0) {
