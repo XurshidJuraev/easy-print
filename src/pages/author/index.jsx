@@ -5,7 +5,7 @@ import HeaderMain from '../../components/header';
 import Reveal from '../../animation';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import FooterMain from '../../components/footer';
 import AdvantageMain from '../../components/advantage';
 import ToastComponent from '../../components/toast';
@@ -127,7 +127,7 @@ function AuthorPage() {
     if (modal) {
       modal.style.display = 'block';
     }
-
+    
     axios.get(`${process.env.REACT_APP_TWO}/product/show/warehouse_product?warehouse_product_id=${cardData.id}`, {
       method: 'GET',
       headers: {
@@ -143,11 +143,13 @@ function AuthorPage() {
       setDisplayedQuantity(response.data.data.color_by_size[0].color[selectedSizeIndex].product.quantity);
       setDisplayedImage(response.data.data.color_by_size[0].color[selectedSizeIndex].product.img)
       setDisplayedPrice(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price)
+      setDisplayedPriceDiscount(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price_discount)
       setIsLoadingModal(false);
-      setDisplayedId(response.data.data.id);
+      setDisplayedId(response.data.data.color_by_size[0].color[selectedSizeIndex].product.id);
       setClickIdColor(response.data.data.color_by_size[0].id)
     }).catch((error) => {
       setIsLoadingModal(false);
+      // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -159,12 +161,17 @@ function AuthorPage() {
       const colorId = selectedColor.id;
       const sizeId = selectedSize.id;
 
+      // console.log(productData);
+
+      // alert(colorId ? colorId : `selectedColor ${selectedColor}`, sizeId ? sizeId : `selectedSize: ${selectedSize}`);
+  
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
 
       var formdata = new FormData();
+      // formdata.append("warehouse_product_id", productData.id);
       formdata.append("warehouse_product_id", displayedId);
       formdata.append("quantity", 1);
       formdata.append("color_id", defaultColor ? defaultColor : clickIdColor);
@@ -220,9 +227,9 @@ function AuthorPage() {
                 price: productData.price,
                 discount: modalData.discount ? modalData.discount : '0'
               };
-
+  
               localStorage.setItem('basket', JSON.stringify(basketData));
-
+  
               toast.error('Вы еще не зарегистрированы. Товар добавлен в корзину.');
             } else {
               toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi');
@@ -235,6 +242,20 @@ function AuthorPage() {
         });
     }
   };
+
+  useEffect(() => {
+    if (colorArray[selectedSizeIndex] && colorArray[selectedSizeIndex].color.length > 0) {
+      const defaultColor = colorArray[selectedSizeIndex].color[0];
+      setSelectedColorIndex(0);
+      setClickIdColor(defaultColor.id);
+      setDefaultColor(defaultColor.id);
+      setDisplayedId(defaultColor.product.id);
+      setDisplayedPrice(defaultColor.product.price);
+      setDisplayedName(defaultColor.product.name);
+      setDisplayedQuantity(defaultColor.product.quantity);
+      setDisplayedImage(defaultColor.product.img);
+    }
+  }, [selectedSizeIndex, colorArray]);
 
   function handleCardClick(imageSrc, name, price) {
     const currentTime = new Date();
@@ -288,6 +309,7 @@ function AuthorPage() {
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
+      <ToastContainer />
 
       <Reveal>
         <AdsSlider2 />

@@ -171,11 +171,13 @@ function CategoryListByName() {
       setDisplayedQuantity(response.data.data.color_by_size[0].color[selectedSizeIndex].product.quantity);
       setDisplayedImage(response.data.data.color_by_size[0].color[selectedSizeIndex].product.img)
       setDisplayedPrice(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price)
+      setDisplayedPriceDiscount(response.data.data.color_by_size[0].color[selectedSizeIndex].product.price_discount)
       setIsLoadingModal(false);
       setDisplayedId(response.data.data.color_by_size[0].color[selectedSizeIndex].product.id);
       setClickIdColor(response.data.data.color_by_size[0].id)
     }).catch((error) => {
       setIsLoadingModal(false);
+      // toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
     });
   }
 
@@ -187,19 +189,24 @@ function CategoryListByName() {
       const colorId = selectedColor.id;
       const sizeId = selectedSize.id;
 
+      // console.log(productData);
+
+      // alert(colorId ? colorId : `selectedColor ${selectedColor}`, sizeId ? sizeId : `selectedSize: ${selectedSize}`);
+  
       var myHeaders = new Headers();
       myHeaders.append("language", "uz");
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
 
       var formdata = new FormData();
+      // formdata.append("warehouse_product_id", productData.id);
       formdata.append("warehouse_product_id", displayedId);
       formdata.append("quantity", 1);
       formdata.append("color_id", defaultColor ? defaultColor : clickIdColor);
       formdata.append("size_id", defaultSize ? defaultSize : colorId);
       formdata.append("price", productData.price);
       formdata.append("discount", modalData.discount ? modalData.discount : '0');
-
+  
       var requestOptions = {
         method: 'POST',
         headers: myHeaders,
@@ -208,7 +215,7 @@ function CategoryListByName() {
       };
 
       const basketData = {
-        warehouse_product_id: displayedId,
+        warehouse_product_id: productData.id,
         quantity: 1,
         color_id: defaultColor ? defaultColor : clickIdColor,
         size_id: defaultSize ? defaultSize : colorId,
@@ -263,6 +270,20 @@ function CategoryListByName() {
         });
     }
   };
+
+  useEffect(() => {
+    if (colorArray[selectedSizeIndex] && colorArray[selectedSizeIndex].color.length > 0) {
+      const defaultColor = colorArray[selectedSizeIndex].color[0];
+      setSelectedColorIndex(0);
+      setClickIdColor(defaultColor.id);
+      setDefaultColor(defaultColor.id);
+      setDisplayedId(defaultColor.product.id);
+      setDisplayedPrice(defaultColor.product.price);
+      setDisplayedName(defaultColor.product.name);
+      setDisplayedQuantity(defaultColor.product.quantity);
+      setDisplayedImage(defaultColor.product.img);
+    }
+  }, [selectedSizeIndex, colorArray]);
 
   const handleGetHome = () => {
     setTimeout(() => {
