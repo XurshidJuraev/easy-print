@@ -6,6 +6,7 @@ import FooterBarMobile from '../../components/footer bar'
 import blueVerifed from '../../layouts/icons/blue_verifed.svg'
 import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
+import your_design from '../../../layouts/images/landing.jpg'
 import Reveal from '../../animation/index'
 import axios from 'axios';
 import './main.css';
@@ -158,9 +159,29 @@ function HomePageMobile() {
       <HeroMainMobile />
 
       <center>
-        <h2 className='home_card_title_mobile'>Рекомендуем вам:</h2>
+        <h2 className='home_card_title_mobile'>Хиты Продаж</h2>
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
+
+        <Reveal>
+          <NavLink to={`/mobile/yourDesign`} style={{textDecoration: 'none', marginBottom: '12px'}}>
+            <div className="clothes_fat" style={{borderRadius: '6px'}}>
+              <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
+                <div>
+                  <div style={{width: '162px', height: '190px', backgroundImage: `url(${your_design})`, borderRadius: '6px', backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="d-flex">
+              <div>
+                <p className='home_card_price'>От 120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                <p className='home_card_title hiided_text' title='Одежда с вашим дизайном'>Одежда с вашим дизайном</p>
+              </div>
+            </div>
+          </NavLink>
+        </Reveal>
+
           {data.data ? data.data.warehouse_product_list.map((data2) => (
             <Reveal>
               <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginBottom: '12px'}}>

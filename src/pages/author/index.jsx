@@ -45,6 +45,9 @@ function AuthorPage() {
   const [defaultColor, setDefaultColor] = useState();
   const [clickIdColor, setClickIdColor] = useState();
   const [displayedId, setDisplayedId] = useState();
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [currentLength, setCurrentLength] = useState(100);
+  const [displayedPriceDiscount, setDisplayedPriceDiscount] = useState();
 
   const handleButtonClick = () => {
     if (!localStorage.getItem('token')) {
@@ -266,6 +269,22 @@ function AuthorPage() {
     navigate('/basket');
   }
 
+  const toggleDescription = () => {
+    if (showFullDescription) {
+      setCurrentLength(100); // If showing full text, reset to initial 100 chars
+    } else {
+      setCurrentLength(Math.min(modalData.description.length, currentLength + 100)); // Show 100 more chars
+    }
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const description = modalData.description || 'Описание отсутствует или не найден';
+  const isLongText = description.length > 100;
+  const showEllipsis = currentLength < description.length && !showFullDescription;
+  const truncatedDescription = showFullDescription 
+    ? description 
+    : description.slice(0, currentLength) + (showEllipsis ? '...' : '');
+
   return (
     <div>
       <HeaderMain trashCardData={trashCardData} />
@@ -305,7 +324,7 @@ function AuthorPage() {
                   </Reveal>
 
                   <Reveal>
-                    <button className='author_button'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пожаловаться' : 'Shikoyat'}</button>
+                    <button className='author_button' data-bs-toggle="modal" data-bs-target="#exampleModal500">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Пожаловаться' : 'Shikoyat'}</button>
                   </Reveal>
                 </div>
 
@@ -418,9 +437,9 @@ function AuthorPage() {
                 </div>
               </>
             ) : (
-              <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '-130px', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
+              <div style={{marginTop: '-80px', position: 'relative', left: '-20px', display: 'flex', alignItems: 'center', width: '1280px', flexWrap: 'wrap'}}>
                 {author.products ? author.products.product_list.map((data2) => (
-                  <div key={data2.id} className='mt-5'>
+                  <div key={data2.id} style={{margin: '20px'}}>
                     <Reveal>
                       <div style={{textDecoration: 'none'}} className="cards">
                         <NavLink to={`/show/detail/${data2.id}/${data2.name}`} className="clothes_fat">
@@ -434,11 +453,11 @@ function AuthorPage() {
                                   <p className='discount'>-{data2.discount}%</p>
                                 </div>
                               </div>
-                              <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
 
                             <div className="image-overlay" style={{borderRadius: '8px'}}>
-                              <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div className='home_image_hover_product' style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[1] ? data2.images[1] : data2.images[0]})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
                           </div>
                         </NavLink>
@@ -466,7 +485,7 @@ function AuthorPage() {
                 )): null}
 
                 {author.products ? author.products.warehouse_product_list.slice(0, displayedItems).map((data2) => (
-                  <div key={data2.id} className='mt-5'>
+                  <div key={data2.id} style={{margin: '20px'}}>
                     <Reveal>
                       <div style={{textDecoration: 'none'}} className="cards">
                         <NavLink to={`/show/detail/${data2.id}/${data2.name}`} className="clothes_fat">
@@ -480,7 +499,7 @@ function AuthorPage() {
                                   <p className='discount'>-{data2.discount}%</p>
                                 </div>
                               </div>
-                              <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                              <div style={{width: '276px', height: '320px', borderRadius: '8px', backgroundImage: `url(${data2.images[0]})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
                             </div>
 
                             <div className="image-overlay" style={{borderRadius: '8px'}}>
@@ -586,11 +605,43 @@ function AuthorPage() {
                   {modalData && (
                     <div className='d-flex'>
                       <div style={{padding: '80px 32px 0px 32px'}}>
-                        <p className='modal_name'>{displayedName ? displayedName : 'Название отсутствует'}</p>
-                        <p className='modal_info'>{modalData.description ? modalData.description : 'Описание отсутствует'}</p>
-                        <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                        <p className='modal_name'>{displayedName ? displayedName : localStorage.getItem('selectedLanguage') === 'ru' ? 'Название отсутствует' : `Sarlavha yo'q`}</p>
+                        {/* <p className='modal_info'>{modalData.description ? modalData.description : localStorage.getItem('selectedLanguage') === 'ru' ? 'Описание отсутствует' : `Ta'rif yo'q`}</p> */}
+                        <p className='show_detail_description' style={{height: '120px', overflow: 'scroll', width: '335px', boxShadow: showFullDescription ? '1px 14px 59px -46px rgba(0,0,0,0.75)' : 'none'}}>
+                          {truncatedDescription}
 
-                        <div className="d-flex justify-content-between" style={{marginTop: '57px'}}>
+                          {isLongText && (
+                            <span>
+                              <button 
+                                className='show_detail_description_more' 
+                                onClick={toggleDescription}
+                              >
+                                {showFullDescription ? 
+                                  (localStorage.getItem('selectedLanguage') === 'ru' ? 'Скрывать' : 'Yashirish') : 
+                                  (localStorage.getItem('selectedLanguage') === 'ru' ? 'Еще' : 'Davomi')
+                                }
+                              </button>
+                            </span>
+                          )}
+                        </p>
+
+                        {/* <p className='modal_price'>{Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p> */}
+                        <p className='show_detail_price'>
+                          {modalData.price_discount ?
+                            <div>
+                              {Number(displayedPriceDiscount).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                              <del className='show_detail_price_discount'>
+                                {Number(displayedPrice).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                              </del>
+                            </div>
+                            :
+                            <div style={{fontSize: 20}}>
+                              {displayedPrice ? `${Number(displayedPrice).toLocaleString('ru-RU')} ${localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}` : 'Цена отсутствует или не найден'}
+                            </div>
+                          }
+                        </p>
+
+                        <div className="d-flex justify-content-between" style={{marginTop: '26px'}}>
                           <div className='d-flex center' style={{ marginRight: '83px' }}>
                             <p style={{margin: 0}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Размер' : `O'lchami`}</p>
 
@@ -607,6 +658,7 @@ function AuthorPage() {
                                   setDisplayedId(selectedSize.color[0].product.id);
                                   setClickIdColor(selectedSize.id);
                                   setDisplayedPrice(selectedSize.color[0].product.price);
+                                  setDisplayedPriceDiscount(selectedSize.color[0].product.price_discount);
                                   setDisplayedName(selectedSize.color[0].product.name);
                                   setDisplayedQuantity(selectedSize.color[0].product.quantity);
                                   setDisplayedImage(selectedSize.color[0].product.img);
@@ -637,6 +689,7 @@ function AuthorPage() {
                                     setClickIdColor(color.id);
                                     setDisplayedId(color.product.id);
                                     setDisplayedPrice(color.product.price); 
+                                    setDisplayedPriceDiscount(color.product.price_discount);
                                     setDisplayedName(color.product.name); 
                                     setDisplayedQuantity(color.product.quantity); 
                                     setDisplayedImage(color.product.img)
@@ -659,12 +712,7 @@ function AuthorPage() {
                           <div className='basket_card_plus_minus' style={{backgroundColor: 'transparent', color: '#000', cursor: 'pointer'}} onClick={() => setCount(Math.min(modalData.quantity, count + 1))}>+</div>
                         </div>
 
-                        <div className='d-flex'>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'В наличии:' : `Sotuvda mavjud:`} </p>
-                          <p style={{color: '#1A1A1A'}} className='show_detail_size ms-1'>{displayedQuantity}</p>
-                        </div>
-
-                        <div style={{marginTop: '50px'}}  className="d-flex align-items-center justify-content-between">
+                        <div className="d-flex align-items-center justify-content-between" style={{marginTop: '36px'}}>
                           <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData)} }>
                             <button className='add_to_basket' style={{width: '84px', height: '56px', padding: '18px 20px'}}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -686,7 +734,7 @@ function AuthorPage() {
 
                           <div style={{marginTop: '12px'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => {handleGetHome(); handleCardClick(modalData.images ? modalData.images[0] : '', modalData.name, modalData.price); handleButtonClick(); addToBasket(modalData); handleGetHome()}}>
                             <button style={{height: '56px', width: '234px', marginLeft: '12px', padding: '12px 8px'}} className='no_address_button'>
-                              <span> {localStorage.getItem('selectedLanguage') === 'ru' ? 'Заказать сейчас' : `Hoziroq buyurtma bering`} </span>
+                              <span style={{fontSize: localStorage.getItem('selectedLanguage') === 'ru' ? '18px' : '14px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Заказать сейчас' : `Hoziroq buyurtma bering`} </span>
 
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path d="M22 13.0039C21.9951 12.4774 21.7832 11.9741 21.41 11.6029L17.12 7.29979C16.9326 7.11341 16.6792 7.00879 16.415 7.00879C16.1508 7.00879 15.8974 7.11341 15.71 7.29979C15.6163 7.39282 15.5419 7.5035 15.4911 7.62545C15.4403 7.7474 15.4142 7.8782 15.4142 8.0103C15.4142 8.14241 15.4403 8.27321 15.4911 8.39516C15.5419 8.5171 15.6163 8.62778 15.71 8.72081L19 12.0032H3C2.73478 12.0032 2.48043 12.1086 2.29289 12.2963C2.10536 12.484 2 12.7385 2 13.0039C2 13.2693 2.10536 13.5238 2.29289 13.7115C2.48043 13.8992 2.73478 14.0046 3 14.0046H19L15.71 17.297C15.5217 17.4841 15.4154 17.7384 15.4144 18.004C15.4135 18.2695 15.518 18.5246 15.705 18.713C15.892 18.9015 16.1461 19.0078 16.4115 19.0088C16.6768 19.0097 16.9317 18.9051 17.12 18.718L21.41 14.4149C21.7856 14.0413 21.9978 13.5339 22 13.0039Z" fill="white"/>
@@ -697,12 +745,55 @@ function AuthorPage() {
                       </div>
 
                       <div className='modal_image_fat'>
-                        <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover'}}></div>
+                        <div style={{width: '400px', height: '580px', backgroundImage: `url(${displayedImage ? displayedImage[0] : ''})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></div>
                       </div>
                     </div>
                   )}
                 </>
               )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade flaap_modal" id="exampleModal500" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content" style={{ width: 800, backgroundColor: 'white', height: 520, marginLeft: '-150px', borderRadius: 20, backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}>
+            <div className="modal-body" style={{ width: 800, padding: '16px 16px 24px 24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <h2 className='complain_modal_center'>Нарушение авторских прав</h2>
+
+              <div className="d-flex" style={{marginTop: 32, justifyContent: 'space-around'}}>
+                <div>
+                  <p className='complain_modal_center_text'>Все макеты на сайте EasyPrint.uz создаются пользователями с соблюдением авторских прав. Если вы уверены, что данное изображение нарушает ваши авторские права и используется несанкционированно, пожалуйста, заполните форму. Если вы являетесь правообладателем и у вас есть документы, подтверждающие ваше право на изображение (зарегистрированный товарный знак), отметьте это в форме и по возможности укажите ссылку на сайт в сообщении</p>
+
+                  <p className='complain_modal_center_text'>Все Ваши обращения будут рассмотрены и мы примем соответствующие меры. Заранее спасибо.</p>
+                </div>
+
+                <div>
+                  <div id='sender_corporative' style={{ display: 'block', marginBottom: 97, width: 346 }}>
+                    <input style={{border: '1px solid #E6E6E6', marginBottom: 14}} className='modal_footer_input' type="text" placeholder='Имя' />
+                    <input style={{border: '1px solid #E6E6E6', marginBottom: 14}} className='modal_footer_input' type="text" placeholder='Номер телефона' />
+                    <input style={{border: '1px solid #E6E6E6', marginBottom: 14}} className='modal_footer_input' type="text" placeholder='E-mail' />
+                    <textarea className='modal_footer_input' style={{ height: 80, border: '1px solid #E6E6E6', marginBottom: 14 }} placeholder='Комментарий'></textarea>
+
+                    <style>{` input[type=checkbox]:checked:before { background-color: #C9DA8F; } `}</style>
+
+                    <label style={{ cursor: 'pointer', marginLeft: '30px', marginTop: '-20px', marginBottom: 30 }}>
+                      <input 
+                        style={{ position: 'relative', top: '20px', left: '-27px'}} 
+                        type="checkbox"
+                      />
+                      <p className='basket_check'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Я являюсь правообладателем' : 'Men mualliflik huquqi egasiman'}</p>
+                    </label>
+
+                    <button style={{ backgroundColor: '#C9DA8F', color: '#1C471F' }} className='modal_footer_input_button'>Отправить</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -265,11 +265,11 @@
   text-decoration: none;
 }
 
-.add_basket_btn:hover, .add_to_basket:hover, .basket_promo_btn_price:hover {
+.add_to_basket:hover, .basket_promo_btn_price:hover {
   background-color: #94b35b;
 }
 
-.add_basket_btn:active, .add_to_basket:active, .basket_promo_btn_price:active {
+.add_to_basket:active, .basket_promo_btn_price:active {
   background-color: #64793e;
 }
 

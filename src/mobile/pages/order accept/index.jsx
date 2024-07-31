@@ -271,14 +271,13 @@ function OrderMobileAccept() {
     };
 
     fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        if (result.status === true) {
-          toast.success('Заказ успешно оформлен!');
-          setTimeout(() => {
+    .then(response => response.json())
+    .then(result => {
+      if (result.status === true) {
+        setOpen(true);
+        setTimeout(() => {
             setDataModal(result.data);
             setBekStatus(result.status);
-            setOpen(true);
             localStorage.setItem('counterValue', 0);
           }, 1500);
         } else {

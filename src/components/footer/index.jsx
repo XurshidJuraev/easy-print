@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './main.css'
 import Reveal from '../../animation'
 import logo from '../../layouts/icons/logo.svg'
@@ -7,8 +7,61 @@ import manufacture_back from '../../layouts/images/footer_modal/manufactur.svg'
 import bloger_back from '../../layouts/images/footer_modal/bloger.svg'
 import corporative_back from '../../layouts/images/footer_modal/corporative.svg'
 import designer_back from '../../layouts/images/footer_modal/designer.svg'
+import manufacture_back_verifed from '../../layouts/images/footer_modal/manufactur_verifed.svg'
+import bloger_back_verifed from '../../layouts/images/footer_modal/bloger_verifed.svg'
+import corporative_back_verifed from '../../layouts/images/footer_modal/corporative_verifed.svg'
+import designer_back_verifed from '../../layouts/images/footer_modal/designer_verifed.svg'
 
 function FooterMain() {
+  const [isManufactureSent, setIsManufactureSent] = useState(false);
+  const [isCorporateSent, setIsCorporateSent] = useState(false);
+  const [isDesignerSent, setIsDesignerSent] = useState(false);
+  const [isBlogerSent, setIsBlogerSent] = useState(false);
+
+  const handleSend = (type) => {
+    let isValid = false;
+
+    if (type === 'manufacture') {
+      const name = document.getElementById('manufacture_name').value;
+      const phone = document.getElementById('manufacture_phone').value;
+      const email = document.getElementById('manufacture_email').value;
+      const comment = document.getElementById('manufacture_comment').value;
+      isValid = name && phone && email && comment;
+      if (isValid) setIsManufactureSent(true);
+    }
+
+    if (type === 'corporative') {
+      const name = document.getElementById('corporative_name').value;
+      const phone = document.getElementById('corporative_phone').value;
+      const email = document.getElementById('corporative_email').value;
+      const comment = document.getElementById('corporative_comment').value;
+      isValid = name && phone && email && comment;
+      if (isValid) setIsCorporateSent(true);
+    }
+
+    if (type === 'designer') {
+      const name = document.getElementById('designer_name').value;
+      const phone = document.getElementById('designer_phone').value;
+      const email = document.getElementById('designer_email').value;
+      const comment = document.getElementById('designer_comment').value;
+      isValid = name && phone && email && comment;
+      if (isValid) setIsDesignerSent(true);
+    }
+
+    if (type === 'bloger') {
+      const name = document.getElementById('bloger_name').value;
+      const phone = document.getElementById('bloger_phone').value;
+      const email = document.getElementById('bloger_email').value;
+      const comment = document.getElementById('bloger_comment').value;
+      isValid = name && phone && email && comment;
+      if (isValid) setIsBlogerSent(true);
+    }
+
+    if (!isValid) {
+      alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Обязательно заполните всю информацию.' : `Barcha ma'lumotlarni to'ldirganingizga ishonch hosil qiling.`);
+    }
+  };
+
   return (
     <>
       <footer className='footer'>
@@ -58,7 +111,7 @@ function FooterMain() {
               <ul style={{listStyle: 'none'}}>
                 <li className='footer_text'><a href="mailto:easyprintuz@gmail.com">easyprintuz@gmail.com</a></li>
                 <li className='footer_text'><a href="tel:+998772778008">+998 77 277 80 08</a></li>
-                <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'г. Ташкент, Юкорыкаракамыш 2' : 'Toshkent sh. Yuqoriqoraqamish 2'}</li>
+                <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'г. Ташкент, Мирзо-Улугбекский' : 'Toshkent sh. Mirzo Ulug‘bek'} <br /> {localStorage.getItem('selectedLanguage') === 'ru' ? 'район, Мустакиллик 88д' : 'tumani, Mustaqillik 88d'}</li>
               </ul>
             </li>
           </ul>
@@ -102,84 +155,104 @@ function FooterMain() {
         </Reveal>
       </footer>
 
-      <div class="modal fade flaap_modal" id="exampleModal100" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content" style={{backgroundImage: `url(${manufacture_back})`, width: 800, marginLeft: '-150px', backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}>
-            <div class="modal-body" style={{width: 800}}>
-              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div className="modal fade flaap_modal" id="exampleModal100" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content" style={{ backgroundImage: `url(${manufacture_back})`, width: 800, marginLeft: '-150px', backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}>
+            <div className="modal-body" style={{ width: 800 }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
-              <div style={{marginTop: 41, marginBottom: 97, width: 346}}>
-                <input className='modal_footer_input' type="text" placeholder='Имя' />
-                <input className='modal_footer_input' type="text" placeholder='Номер телефона' />
-                <input className='modal_footer_input' type="text" placeholder='E-mail' />
-                <textarea className='modal_footer_input' style={{height: 120}} placeholder='Комментарий'></textarea>
-
-                <button style={{backgroundColor: '#1C471F', color: '#FFFFFF'}} className='modal_footer_input_button'>Отправить</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade flaap_modal" id="exampleModal200" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content" style={{backgroundImage: `url(${corporative_back})`, width: 800, marginLeft: '-150px', backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}>
-            <div class="modal-body" style={{width: 800}}>
-              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div id='sender_manufacture' style={{ display: isManufactureSent ? 'none' : 'block', marginTop: 41, marginBottom: 97, width: 346 }}>
+                <input id="manufacture_name" className='modal_footer_input' type="text" placeholder='Имя' />
+                <input id="manufacture_phone" className='modal_footer_input' type="text" placeholder='Номер телефона' />
+                <input id="manufacture_email" className='modal_footer_input' type="text" placeholder='E-mail' />
+                <textarea id="manufacture_comment" className='modal_footer_input' style={{ height: 120 }} placeholder='Комментарий'></textarea>
+                <button onClick={() => handleSend('manufacture')} style={{ backgroundColor: '#1C471F', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
               </div>
 
-              <div style={{marginTop: 41, marginBottom: 97, width: 346}}>
-                <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Имя' />
-                <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Номер телефона' />
-                <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='E-mail' />
-                <textarea className='modal_footer_input' style={{height: 120, color: '#969696'}} placeholder='Комментарий'></textarea>
-
-                <button style={{backgroundColor: '#184363', color: '#FFFFFF'}} className='modal_footer_input_button'>Отправить</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> 
-
-      <div class="modal fade flaap_modal" id="exampleModal300" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content" style={{backgroundImage: `url(${designer_back})`, width: 800, marginLeft: '-150px', backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}>
-            <div class="modal-body" style={{width: 800}}>
-              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-
-              <div style={{marginTop: 41, marginBottom: 97, width: 346}}>
-                <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Имя' />
-                <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Номер телефона' />
-                <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='E-mail' />
-                <textarea className='modal_footer_input' style={{height: 120, color: '#969696'}} placeholder='Комментарий'></textarea>
-
-                <button style={{backgroundColor: '#52225E', color: '#FFFFFF'}} className='modal_footer_input_button'>Отправить</button>
+              <div id='send_manufacture' style={{ display: isManufactureSent ? 'flex' : 'none', justifyContent: 'center', alignContent: 'center', marginTop: 41, marginBottom: 97, width: 346, height: 370 }}>
+                <Reveal>
+                  <img style={{width: 122, marginTop: 122, transform: 'scale(1.5)'}} src={manufacture_back_verifed} alt="manufacture_back_verifed" />
+                </Reveal>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="modal fade flaap_modal" id="exampleModal400" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content" style={{backgroundImage: `url(${bloger_back})`, width: 800, marginLeft: '-150px', backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}>
-            <div class="modal-body" style={{width: 800}}>
-              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div className="modal fade flaap_modal" id="exampleModal200" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content" style={{ backgroundImage: `url(${corporative_back})`, width: 800, marginLeft: '-150px', backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}>
+            <div className="modal-body" style={{ width: 800 }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
-              <div style={{marginTop: 41, marginBottom: 97, width: 346}}>
-                <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Имя' />
-                <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='Номер телефона' />
-                <input style={{color: '#969696'}} className='modal_footer_input' type="text" placeholder='E-mail' />
-                <textarea className='modal_footer_input' style={{height: 120, color: '#969696'}} placeholder='Комментарий'></textarea>
+              <div id='sender_corporative' style={{ display: isCorporateSent ? 'none' : 'block', marginTop: 41, marginBottom: 97, width: 346 }}>
+                <input id="corporative_name" className='modal_footer_input' type="text" placeholder='Имя' />
+                <input id="corporative_phone" className='modal_footer_input' type="text" placeholder='Номер телефона' />
+                <input id="corporative_email" className='modal_footer_input' type="text" placeholder='E-mail' />
+                <textarea id="corporative_comment" className='modal_footer_input' style={{ height: 120 }} placeholder='Комментарий'></textarea>
+                <button onClick={() => handleSend('corporative')} style={{ backgroundColor: '#1C471F', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
+              </div>
 
-                <button style={{backgroundColor: '#4A411E', color: '#FFFFFF'}} className='modal_footer_input_button'>Отправить</button>
+              <div id='send_corporative' style={{ display: isCorporateSent ? 'flex' : 'none', justifyContent: 'center', alignContent: 'center', marginTop: 41, marginBottom: 97, width: 346, height: 370 }}>
+                <Reveal>
+                  <img style={{width: 122, marginTop: 122, transform: 'scale(1.5)'}} src={corporative_back_verifed} alt="corporative_back_verifed" />
+                </Reveal>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade flaap_modal" id="exampleModal300" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content" style={{ backgroundImage: `url(${designer_back})`, width: 800, marginLeft: '-150px', backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}>
+            <div className="modal-body" style={{ width: 800 }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <div id='sender_designer' style={{ display: isDesignerSent ? 'none' : 'block', marginTop: 41, marginBottom: 97, width: 346 }}>
+                <input id="designer_name" className='modal_footer_input' type="text" placeholder='Имя' />
+                <input id="designer_phone" className='modal_footer_input' type="text" placeholder='Номер телефона' />
+                <input id="designer_email" className='modal_footer_input' type="text" placeholder='E-mail' />
+                <textarea id="designer_comment" className='modal_footer_input' style={{ height: 120 }} placeholder='Комментарий'></textarea>
+                <button onClick={() => handleSend('designer')} style={{ backgroundColor: '#1C471F', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
+              </div>
+
+              <div id='send_designer' style={{ display: isDesignerSent ? 'flex' : 'none', justifyContent: 'center', alignContent: 'center', marginTop: 41, marginBottom: 97, width: 346, height: 370 }}>
+                <Reveal>
+                  <img style={{width: 122, marginTop: 122, transform: 'scale(1.5)'}} src={designer_back_verifed} alt="designer_back_verifed" />
+                </Reveal>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade flaap_modal" id="exampleModal400" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content" style={{ backgroundImage: `url(${bloger_back})`, width: 800, marginLeft: '-150px', backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}>
+            <div className="modal-body" style={{ width: 800 }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <div id='sender_bloger' style={{ display: isBlogerSent ? 'none' : 'block', marginTop: 41, marginBottom: 97, width: 346 }}>
+                <input id="bloger_name" className='modal_footer_input' type="text" placeholder='Имя' />
+                <input id="bloger_phone" className='modal_footer_input' type="text" placeholder='Номер телефона' />
+                <input id="bloger_email" className='modal_footer_input' type="text" placeholder='E-mail' />
+                <textarea id="bloger_comment" className='modal_footer_input' style={{ height: 120 }} placeholder='Комментарий'></textarea>
+                <button onClick={() => handleSend('bloger')} style={{ backgroundColor: '#1C471F', color: '#FFFFFF' }} className='modal_footer_input_button'>Отправить</button>
+              </div>
+
+              <div id='send_bloger' style={{ display: isBlogerSent ? 'flex' : 'none', justifyContent: 'center', alignContent: 'center', marginTop: 41, marginBottom: 97, width: 346, height: 370 }}>
+                <Reveal>
+                  <img style={{width: 122, marginTop: 122, transform: 'scale(1.5)'}} src={bloger_back_verifed} alt="bloger_back_verifed" />
+                </Reveal>
               </div>
             </div>
           </div>

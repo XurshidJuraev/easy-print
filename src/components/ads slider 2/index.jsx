@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import vbannarImage from '../../layouts/images/banner.svg'
+import vbannarImage from '../../layouts/images/author_banner.jpeg'
 
 function AdsSlider2() {
   const [slider, setSlider] = useState([]);

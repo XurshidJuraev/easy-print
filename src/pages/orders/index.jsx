@@ -43,6 +43,7 @@ function MyOrders() {
   const [deliveryMethod, setDeliveryMethod] = useState('pickup');
   const [position, setPosition] = useState(window.pageYOffset)
   const [visible, setVisible] = useState(true) 
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     city_id: '',
     name: '',
@@ -220,72 +221,94 @@ function MyOrders() {
     setNullPhoneNumber(false)
   }, 5000);
 
-  function saveOrder() {
-    // var myHeaders = new Headers();
-    // myHeaders.append("language", localStorage.getItem('selectedLanguage') === 'ru' ? 'ru' : 'uz');
-    // myHeaders.append("Accept", "application/json");
-    // myHeaders.append("Authorization", `Bearer ${token}`);
+  async function saveOrder() {
+    const orderId = localStorage.getItem('order_id');
+    const statusUrl = 'https://admin.easyprint.uz/api/payment/get/status';
 
-    // var formdata = new FormData();
-    // formdata.append("order_id", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    // formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    // if (addressId === null) {
-    //   toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы не можете отправить свой заказ. Потому что у тебя нет адреса. Выберите свой адрес и отправьте.' : `Buyurtmani yubora olmaysiz. Chunki sizda manzil yo'q. Manzilingizni tanlang va yuboring.`);
-    //   setNullAddres(true)
-    //   return;
-    // } else {
-    //   formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    // }
-    // formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    // if (localStorage.getItem('user_name') === null) {
-    //   toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Похоже, ваше имя недоступно для подтверждения заказа. Пожалуйста, создайте себе имя на странице своего профиля.' : `Buyurtmani tasdiqlash uchun ismingiz mavjud emasga o'xshaydi. Iltimos, profil sahifangizda o'zingiz uchun nom yarating.`);
-    //   setNullName(true)
-    //   return;
-    // } else {
-    //   formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    // }
-    // formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    // if (localStorage.getItem('user_phone_number') === null) {
-    //   toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш номер телефона для подтверждения заказа недоступен. Пожалуйста, подтвердите себя, добавив свой номер телефона на странице своего профиля.' : `Buyurtmani tasdiqlash uchun telefon raqamingiz mavjud emas. Profil sahifangizga telefon raqamingizni qoʻshish orqali oʻzingizni tasdiqlang.`);
-    //   setNullPhoneNumber(true)
-    //   return;
-    // } else {
-    //   formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    // }
-    // formdata.append("payment_method", '2');
-    // formdata.append("user_card_id", "1");
+    try {
+      const response = await fetch(statusUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    // // console.log("order_id:", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
-    // // console.log("address_id:", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
-    // // console.log("receiver_name:", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
-    // // console.log("receiver_phone:", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
-    // // console.log("payment_method:", "1");
-    // // console.log("user_card_id:", "1");
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
-    // var requestOptions = {
-    //   Accept: 'application/json',
-    //   method: 'POST',
-    //   headers: myHeaders,
-    //   body: formdata,
-    //   redirect: 'follow'
-    // };
+      const data = await response.json();
 
-    // fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
-    //   .then(response => response.json())
-    //   .then(result => {
-    //     if (result.status === true) {
-    //       setTimeout(() => {
-    //         localStorage.setItem('counterValue', 0);
-    //       }, 1500);
-    //       setDataModal(result.data);
-          
-    //     } else {
-    //       toast.error('Заказ не был оформлен!');
-    //     }
-    //   })
-    //   // .catch(error =>  toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'));
-    //   .catch(error => console.log(error));
-    window.location.href = `https://admin.easyprint.uz/get-payme/${localStorage.getItem('order_id')}`
+      // Check if data contains 'Active'
+      if (data.data.includes('Active')) {
+        window.location.href = `https://admin.easyprint.uz/get-payme/${orderId}`;
+      } else {
+        var myHeaders = new Headers();
+        myHeaders.append("language", localStorage.getItem('selectedLanguage') === 'ru' ? 'ru' : 'uz');
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        var formdata = new FormData();
+        formdata.append("order_id", localStorage.getItem('order_id') ? localStorage.getItem('order_id') : null);
+        formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+
+        console.log('Address ID in saveOrder:', addressId); // Log to check the address ID in saveOrder
+
+        if (addressId === null) {
+          // toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Вы не можете отправить свой заказ. Потому что у тебя нет адреса. Выберите свой адрес и отправьте.' : `Buyurtmani yubora olmaysiz. Chunki sizda manzil yo'q. Manzilingizni tanlang va yuboring.`);
+          setNullAddres(true);
+          return;
+        } else {
+          formdata.append("address_id", deliveryMethod === 'pickup' ? pickapAdrseCheck : addressId);
+        }
+
+        formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+        if (localStorage.getItem('user_name') === null) {
+          toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Похоже, ваше имя недоступно для подтверждения заказа. Пожалуйста, создайте себе имя на странице своего профиля.' : `Buyurtmani tasdiqlash uchun ismingiz mavjud emasga o'xshaydi. Iltimos, profil sahifangizda o'zingiz uchun nom yarating.`);
+          setNullName(true);
+          return;
+        } else {
+          formdata.append("receiver_name", localStorage.getItem('user_name') ? localStorage.getItem('user_name') : null);
+        }
+
+        formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+        if (localStorage.getItem('user_phone_number') === null) {
+          toast.warning(localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш номер телефона для подтверждения заказа недоступен. Пожалуйста, подтвердите себя, добавив свой номер телефона на странице своего профиля.' : `Buyurtmani tasdiqlash uchun telefon raqamingiz mavjud emas. Profil sahifangizga telefon raqamingizni qoʻshish orqali oʻzingizni tasdiqlang.`);
+          setNullPhoneNumber(true);
+          return;
+        } else {
+          formdata.append("receiver_phone", localStorage.getItem('user_phone_number') ? localStorage.getItem('user_phone_number') : null);
+        }
+
+        formdata.append("payment_method", '1');
+        formdata.append("user_card_id", "1");
+
+        var requestOptions = {
+          Accept: 'application/json',
+          method: 'POST',
+          headers: myHeaders,
+          body: formdata,
+          redirect: 'follow'
+        };
+
+        fetch(`${process.env.REACT_APP_TWO}/order/accepted/order`, requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            if (result.status === true) {
+              setTimeout(() => {
+                localStorage.setItem('counterValue', 0);
+              }, 1500);
+              setDataModal(result.data);
+              setShowModal(true)
+            } else {
+              toast.error('Заказ не был оформлен!');
+            }
+          })
+          .catch(error => console.log(error));
+      }
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   }
 
   const handleChange = (e) => {
@@ -358,6 +381,10 @@ function MyOrders() {
   return (
     <div>
       <HeaderMainCopy trashCardData={trashCardData} />
+
+      {showModal && (
+        <NavLink to={'/'} style={{width: '100%', height: '2200px', overflow: 'hidden', position: 'absolute', backgroundColor: '#00000070', left: 0, top: 0, zIndex: 10000, overflow: 'hidden'}}></NavLink>
+      )}
 
       <center>
         <div className='white_background' style={{backgroundColor: '#ffffff', width: '77%', height: '6.613756613756614vw', position: 'relative', marginTop: '-6.5476190476190474vw', marginLeft: '21.891534391534393vw', paddingTop: '1.917989417989418vw', paddingLeft: '13.227513227513228vw', position: 'relative', zIndex: '100'}}>
@@ -709,40 +736,43 @@ function MyOrders() {
         </div>
       </div>
 
-      <div className="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '24px', width: '520px'}}>
-          <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
-            <div className="modal-header d-flex justify-content-between" style={{borderBottom: 'none', padding: '32px'}}>
-              <div style={{width: '100%'}} className="d-flex mt-4 flex-column">
-                <div style={{display: 'flex', justifyContent: 'center', marginLeft: '25px'}}>
-                  {localStorage.getItem('selectedLanguage') === 'ru' ? <img src={saved_order_modal} alt="saved_order_modal" /> : <img src={accepted} alt="saved_order_modal" />}
+      {showModal && (
+        <div className="modal fade show" id="exampleModal3" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{ display: 'block', position: 'absolute', zIndex: 10000000 }}>
+          <div className="modal-dialog modal-dialog-centered" style={{ borderRadius: '24px', width: '520px' }}>
+            <div className="modal-content" style={{ borderRadius: '24px', width: '520px' }}>
+              <div className="modal-header d-flex justify-content-between" style={{ borderBottom: 'none', padding: '32px' }}>
+                <div style={{ width: '100%' }} className="d-flex mt-4 flex-column">
+                  <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '25px' }}>
+                    {localStorage.getItem('selectedLanguage') === 'ru' ? <img src={saved_order_modal} alt="saved_order_modal" /> : <img src={accepted} alt="saved_order_modal" />}
+                  </div>
                 </div>
+                <button style={{ marginTop: '-80px' }} onClick={handleGetHome} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <button style={{marginTop: '-80px'}} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div style={{padding: '32px'}} className="modal-body">
-              <div style={{marginTop: '-45px'}} className="d-flex">
-                <p className='order_modal_body_text_link_link'>{localStorage.getItem('selectedLanguage') === 'ru' ? `Заказ №${dataModal.code ? dataModal.code : '000'} оформлен. В день доставки вам придёт СМС с кодом. Покажите его, чтобы получить заказ` : `Buyurtma raqami №${dataModal.code ? dataModal.code : '000'}. Yetkazib berish kuni sizga kodli SMS keladi. Buyurtmani olish uchun uni ko'rsating`}</p>
-              </div>
-
-              <center>
-                <div className='accept_modal_body'>
-                  <p className='order_modal_body_text_opacity'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Где забирать' : `Qayerdan olish kerak`}</p>
-                  <p className='order_modal_body_text'>{dataModal.address ? dataModal.address : localStorage.getItem('selectedLanguage') === 'ru' ? 'г. Ташкент, Мирзо-Улугбекский район, массив Буюк Ипак Йули, 31 дом' : `Toshkent shahri, Mirzo Ulug‘bek tumani, Buyuk Ipak yo‘li massivi, 31-uy`}</p>
-
-                  <p className='order_modal_body_text_opacity mt-2'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Часы работы' : `Ish vaqti`}</p>
-                  <p className='order_modal_body_text'>10:00 - 20:00</p>
-
-                  <p className='order_modal_body_text_opacity mt-2'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Когда забирать' : `Qachon olish kerak`}</p>
-                  <p className='order_modal_body_text'>{dataModal.pick_up_time ? dataModal.pick_up_time : localStorage.getItem('selectedLanguage') === 'ru' ? 'Завтра' : `Ertaga`}</p>
+              <div style={{ padding: '32px' }} className="modal-body">
+                <div style={{ marginTop: '-45px' }} className="d-flex">
+                  <p className='order_modal_body_text_link_link'>{localStorage.getItem('selectedLanguage') === 'ru' ? `Заказ №${dataModal.code ? dataModal.code : '000'} оформлен. ${deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? 'В день доставки позвонит вам курьер для уточнения время доставки.' : 'В день доставки вам придёт СМС с кодом. Покажите его, чтобы получить заказ'}` : `Buyurtma raqami №${dataModal.code ? dataModal.code : '000'}. ${deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? `Yetkazib berish kunida kurer etkazib berish vaqtini tasdiqlash uchun qo'ng'iroq qiladi.` : `Yetkazib berish kuni sizga kod bilan SMS keladi. Buyurtmani olish uchun uni ko'rsating`}`}</p>
                 </div>
 
-                <div style={{cursor: 'pointer'}} data-bs-dismiss="modal" aria-label="Close" onClick={() => handleGetHome()} className='basket_promo_btn_price'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Продолжить покупки' : `Xarid qilishda davom eting`}</div>
-              </center>
+                <center>
+                  <div className='accept_modal_body'>
+                    <p className='order_modal_body_text_opacity'>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Адрес доставки' : `Yetkazib berish manzili` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Где забирать' : `Qayerdan olish kerak`}</p>
+                    <p className='order_modal_body_text'>{dataModal.address ? dataModal.address : localStorage.getItem('selectedLanguage') === 'ru' ? 'г. Ташкент, Мирзо-Улугбекский район, массив Буюк Ипак Йули, 31 дом' : `Toshkent shahri, Mirzo Ulug‘bek tumani, Buyuk Ipak yo‘li massivi, 31-uy`}</p>
+
+                    <p className='order_modal_body_text_opacity mt-2'>{deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Время доставки' : `Yetkazib berish vaqti` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Часы работы' : `Ish vaqti`}</p>
+                    <p className='order_modal_body_text'>10:00 - 20:00</p>
+
+                    <p className='order_modal_body_text_opacity mt-2'> {deliveryMethod === 'tashkent' || deliveryMethod === 'homeDelivery' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Дата доставки' : `Yetkazib berish sanasi` : localStorage.getItem('selectedLanguage') === 'ru' ? 'Когда забирать' : `Qachon olish kerak`}</p>
+                    <p className='order_modal_body_text'>{dataModal.pick_up_time ? dataModal.pick_up_time : localStorage.getItem('selectedLanguage') === 'ru' ? 'Завтра' : `Ertaga`}</p>
+                    
+                  </div>
+
+                  <div style={{ cursor: 'pointer' }} data-bs-dismiss="modal" aria-label="Close" onClick={() => handleGetHome()} className='basket_promo_btn_price'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Продолжить покупки' : `Xarid qilishda davom eting`}</div>
+                </center>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="container">
         <NavLink to={'/'} className='basket_promo_btn_price'>
