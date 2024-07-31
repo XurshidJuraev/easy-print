@@ -8,7 +8,7 @@ import axios from 'axios';
 import ToastComponent from '../../components/toast';
 import Placeholder from 'react-placeholder-loading';
 import Reveal from '../../animation';
-import your_design from '../../layouts/images/landing.jpg'
+import your_design from '../../layouts/images/shirt.svg'
 import './main.css';
 
 function CategoryListByName() {

@@ -25,6 +25,9 @@ import { useScreenshot } from 'use-react-screenshot'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import ToastComponent from '../../components/toast';
+import CodeVerificationInputLaptop from '../../components/code verifed';
+import register_image from '../../layouts/images/43.svg'
+import verifed from '../../layouts/images/green_verifed.svg'
 
 const YourDesign = () => {
   const [trashCardData, setTrashCardData] = useState([]);
@@ -60,6 +63,24 @@ const YourDesign = () => {
   const token = localStorage.getItem('token');
   const { editor, onReady } = useFabricJSEditor()
   const [text, setText] = useState('EasyPrint')
+  const [data, setData] = useState([]);
+  const [isPhoneNumberEntered, setIsPhoneNumberEntered] = useState(false);
+  const [isCodeEntered, setIsCodeEntered] = useState(false);
+  const [isRegisterEntered, setIsRegisterEntered] = useState(false);
+  const [isLoginEntered, setIsLoginEntered] = useState(false);
+  const [bascent, setBascent] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isFirstEntered, setIsFirstEntered] = useState(true);
+  const [isSuccesEntered, setIsSuccesEntered] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState();
+  const [visible, setVisible] = useState(false) 
+  const [registrationData, setRegistrationData] = useState({
+    name: '',
+    password: '',
+    passwordConfirmation: '',
+  });
   const [headText, setHeadText] = useState(
     new fabric.Textbox(text, {
       fill: color,
@@ -611,6 +632,7 @@ const YourDesign = () => {
               theme: "colored",
             }
           );
+          handleButtonClick()
         } else {
           if (result.message === "Unauthenticated.") {
             toast.warn('Вы еще не зарегистрированы. Товар добавлен в корзину.', {
@@ -623,6 +645,7 @@ const YourDesign = () => {
               progress: undefined,
               theme: "light",
             });
+            setVisible(true)
           } else {
             toast.error('Товар не добавлен');
           }
@@ -657,10 +680,164 @@ const YourDesign = () => {
     }
   };
 
+  const handleSubmitLogin = (evt) => {
+    evt.preventDefault();
+  
+    const { user_email, user_password } = evt.target.elements;
+
+    const cleanedPhone = user_email.value.replace(/\D/g, '');
+
+    // setPhoneNumber(cleanedPhone);
+  
+    fetch(`${process.env.REACT_APP_TWO}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: cleanedPhone,
+        password: user_password.value.trim(),
+      }),
+    })
+      .then(response => response.json())
+      .then(result => {
+        localStorage.setItem('token', result.data.token);
+        setIsSuccesEntered(true); 
+        setIsLoginEntered(false)
+        setPasswordsMatch(true);
+        setTimeout(() => {
+          window.location.reload()
+        }, 100);
+      })
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsSuccesEntered(false); setIsLoginEntered(true); setPasswordsMatch(false);});
+  };  
+
+  const handleSubmitRegister = (evt) => {
+    evt.preventDefault();
+  
+    const { phone } = evt.target.elements;
+
+    const cleanedPhone = phone.value.replace(/\D/g, '');
+
+    setPhoneNumber(cleanedPhone);
+
+    var myHeaders = new Headers();
+    myHeaders.append("language", "uz");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
+
+    var formdata = new FormData();
+    formdata.append("phone", cleanedPhone);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
+      .then(response => response.text())
+      .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false)})
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
+  }
+
+  const handleOpenCodeVerificationModal = (evt) => {
+    evt.preventDefault();
+  
+    const { code_verify } = evt.target.elements;
+
+      fetch(`${process.env.REACT_APP_TWO}/phone-verify`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          phone_number: phoneNumber,
+          verify_code: localStorage.getItem('phone_code_verify'),
+        }),
+      })
+        .then(response => response.json())
+        .then(result => {localStorage.setItem('token', result.data.token); setIsCodeEntered(false); setIsSuccesEntered(false); setIsRegisterEntered(true);})
+        .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(true); setIsSuccesEntered(false); setIsRegisterEntered(false);});
+  };
+
+  const handleOpenRegisterModal = (evt) => {
+    evt.preventDefault();
+    setIsSuccesEntered(false);
+
+    if (registrationData.password !== registrationData.passwordConfirmation) {
+      setPasswordsMatch(false);
+      return;
+    }
+
+    setPasswordsMatch(true);
+  
+    var myHeaders = new Headers();
+    myHeaders.append("language", "uz");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+    myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
+  
+    var formdata = new FormData();
+    formdata.append("name", registrationData.name);
+    formdata.append("surname", localStorage.getItem('user_last_name'));
+    formdata.append("password", registrationData.password);
+    formdata.append("password_confirmation", registrationData.passwordConfirmation);
+  
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+  
+    fetch(`${process.env.REACT_APP_TWO}/register`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        localStorage.setItem('user_name', result.data.user.first_name);
+        setIsRegisterEntered(false);
+        setIsSuccesEntered(true);
+        // console.log(result);
+        setTimeout(() => {window.location.reload()}, 100);
+      })
+      .catch(error => {
+        toast.error('Регистрация не была оформлена.');
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_TWO}/profile-info`, {
+      method: 'GET',
+      headers: {
+        // Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        'language': localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru',
+        token: token
+      }
+    }).then((response) => {
+      setBascent(response.data.data.basket_count)
+      const basket_number = response.data.data.basket_count;
+      localStorage.setItem('counterValue', basket_number.toString());
+      setProfileImage(response.data.data.profile[1]);
+      setData(response.data)
+      setIsLoading(false);
+    }).catch((error) => {
+      console.log(error);
+      toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+    })
+  }, []);
+
   return (
     <div style={{overflow: 'hidden'}}>
       <HeaderMainCopy />
       <ToastContainer />
+
+      {visible && (
+        <div style={{width: '100%', height: '2100px', overflow: 'hidden', position: 'absolute', backgroundColor: '#00000070', left: 0, top: 0, zIndex: 10000, overflow: 'hidden'}}></div>
+      )}
 
       <center>
         <div className='white_background'>
@@ -1586,12 +1763,194 @@ const YourDesign = () => {
                   </div>
                 </center>
 
-                <img onClick={e => {addToBasketTo(e); handleButtonClick()}} src={addToBasketImage} data-bs-dismiss="modal" aria-label="Close" style={{marginTop: '20px', cursor: 'pointer'}} alt="addToBasket" />
+                <img onClick={e => {addToBasketTo(e);}} src={addToBasketImage} data-bs-dismiss="modal" aria-label="Close" style={{marginTop: '20px', cursor: 'pointer'}} alt="addToBasket" />
               </center>
             </div>
           </div>
         </div>
       </div>
+
+      {visible && (
+        <div className="modal fade show" id="exampleModal3" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{ display: 'block', position: 'absolute', zIndex: 10000000 }}>
+          <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
+            <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
+              <div className="modal-body get_phonenumber" id='get_phonenumber' style={{padding: '32px', display: isPhoneNumberEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleSubmitRegister(evt) }}>
+                  <center>
+                    <h2 className='register_title'>Введите номер телефона</h2>
+                  </center>
+
+                  <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
+
+                  <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
+                    <p className='register_in_text'>Номер телефона</p>
+
+                    <input name='phone' id='phone' className='register_input' type="text" placeholder='+998' />
+                  </label>
+
+                  <button type='submit' className='register'>Подтвердить</button>
+                </form>
+              </div>
+
+              <div className="modal-body get_code" id='get_code' style={{padding: '32px', display: isCodeEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleOpenCodeVerificationModal(evt) }}>
+                  <center>
+                    <h2 className='register_title'>Введите код подтверждения</h2>
+                  </center>
+
+                  <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
+
+                  <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
+                    <p className='register_in_text'>Код подтверждения</p>
+
+                    {/* <input name='phone' id='code_verify' className='register_input' type="text" placeholder='_ _ _ _ _ _' /> */}
+                    <div className='center'>
+                      <CodeVerificationInputLaptop length={6} name='phone' id='code_verify' />
+                    </div>
+                  </label>
+
+                  <button className='register'>Подтвердить</button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_register' style={{padding: '32px', display: isRegisterEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleOpenRegisterModal(evt) }} action="">
+                  <center>
+                    <h2 className='register_title'>Регистация</h2>
+                    <p className='register_text'>Введите свои данные</p>
+                  </center>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Имя</p>
+                    <input
+                      name='name'
+                      className='register_input'
+                      type="text"
+                      placeholder='Введите имя'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          name: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Фамилия</p>
+                    <input
+                      name='surname'
+                      className='register_input'
+                      type="text"
+                      placeholder='Ведите фамилию'
+                      onChange={(e) =>
+                        localStorage.setItem(
+                          'user_last_name',
+                          e.target.value
+                        )
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Пароль</p>
+                    <input
+                      name='password'
+                      className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
+                      type="password"
+                      placeholder='Введите пароль'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          password: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Подтвердите пароль</p>
+                    <input
+                      name='passwordConfirmation'
+                      className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
+                      type="password"
+                      placeholder='Подтвердите пароль'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          passwordConfirmation: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  {passwordsMatch ? null : (
+                    <p className='register_text_no_password' style={{color: 'red'}}>Пароли не совпадают</p>
+                  )}
+
+                  <button className='register'>
+                    Регистрация
+                  </button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_login' style={{padding: '32px', display: isLoginEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={handleSubmitLogin} action="">
+                  <center>
+                    <h2 className='register_title'>Авторизация</h2>
+                    <p className='register_text'>Введите свои данные</p>
+                  </center>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Hомер телефона</p>
+                    <input name='user_email' id='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите адрес электронной почты' />
+                    {/* <input name='user_email' id='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='+998' /> */}
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Пароль</p>
+                    <input name='user_password' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="password" placeholder='Введите пароль' />
+                  </label>
+
+                  <p className='register_text_no_password'></p>
+
+                  <div style={{textAlign: 'right'}}>
+                    <p className='register_text_no_password'>Забыли пароль?</p>
+                  </div>
+
+                  {passwordsMatch ? null : (
+                    <p className='register_text_no_password' style={{color: 'red'}}>Аккаунт не найден :(</p>
+                  )}
+
+                  <button className='register'>Войти</button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_first' style={{padding: '32px', display: isFirstEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <center>
+                  <h2 className='register_title'>Регистрация</h2>
+                  <p className='register_text'>Зарегистрируйтесь если вы тут впервые</p>
+
+                  <img src={register_image} alt={register_image} />
+                </center>
+
+                  <button onClick={() => { setIsPhoneNumberEntered(true); setIsFirstEntered(false); }} className='register'>Регистрация</button>
+                  <button onClick={() => { setIsLoginEntered(true); setIsFirstEntered(false); }} className='login'>Войти в существующий</button>
+              </div>
+
+              <div className="modal-body" id='get_success' style={{padding: '32px', display: isSuccesEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <center>
+                  <h2 className='register_title'>Отлично!</h2>
+                  <p className='register_text'>Вы вошли в свой личный кабинет</p>
+                  <img src={verifed} alt="verifed" />
+                </center>
+
+                <button className='register' data-bs-dismiss="modal">Назад на главную</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

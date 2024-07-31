@@ -23,12 +23,15 @@ function HeaderMain({ trashCardData }) {
   const [activeLinkId, setActiveLinkId] = useState(null);
   const [isPhoneNumberEntered, setIsPhoneNumberEntered] = useState(false);
   const [isCodeEntered, setIsCodeEntered] = useState(false);
+  const [isCodeEntered2, setIsCodeEntered2] = useState(false);
   const [isRegisterEntered, setIsRegisterEntered] = useState(false);
   const [isLoginEntered, setIsLoginEntered] = useState(false);
   const [bascent, setBascent] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isFirstEntered, setIsFirstEntered] = useState(false);
   const [isSuccesEntered, setIsSuccesEntered] = useState(false);
+  const [isForgetPasswordEntered, setIsForgetPasswordEntered] = useState(false);
+  const [isForgetPasswordEntered2, setIsForgetPasswordEntered2] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [profileImage, setProfileImage] = useState();
@@ -148,8 +151,38 @@ function HeaderMain({ trashCardData }) {
 
     fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
       .then(response => response.text())
-      .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false)})
+      .then(result => {setIsCodeEntered(true); setIsPhoneNumberEntered(false); setIsForgetPasswordEntered(false)})
       .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(false); setIsPhoneNumberEntered(true);});
+  }
+
+  const handleSubmitRegister2 = (evt) => {
+    evt.preventDefault();
+  
+    const { phone } = evt.target.elements;
+
+    const cleanedPhone = phone.value.replace(/\D/g, '');
+
+    setPhoneNumber(cleanedPhone);
+
+    var myHeaders = new Headers();
+    myHeaders.append("language", "uz");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
+
+    var formdata = new FormData();
+    formdata.append("phone", cleanedPhone);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
+      .then(response => response.text())
+      .then(result => {setIsCodeEntered2(true); setIsPhoneNumberEntered(false); setIsForgetPasswordEntered(false)})
+      .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsForgetPasswordEntered2(false); setIsCodeEntered2(true);});
   }
 
   const handleOpenCodeVerificationModal = (evt) => {
@@ -173,6 +206,27 @@ function HeaderMain({ trashCardData }) {
         .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsCodeEntered(true); setIsSuccesEntered(false); setIsRegisterEntered(false);});
   };
 
+  const handleOpenCodeVerificationModal2 = (evt) => {
+    evt.preventDefault();
+  
+    const { code_verify } = evt.target.elements;
+
+      fetch(`${process.env.REACT_APP_TWO}/phone-verify`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          phone_number: phoneNumber,
+          verify_code: localStorage.getItem('phone_code_verify'),
+        }),
+      })
+        .then(response => response.json())
+        .then(result => {localStorage.setItem('token', result.data.token); setIsCodeEntered2(false); setIsForgetPasswordEntered2(false); setIsSuccesEntered(true);})
+        .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsForgetPasswordEntered2(true); setIsSuccesEntered(false); setIsCodeEntered2(false);});
+  };
+
   const handleOpenRegisterModal = (evt) => {
     evt.preventDefault();
     setIsSuccesEntered(false);
@@ -183,7 +237,7 @@ function HeaderMain({ trashCardData }) {
     }
 
     setPasswordsMatch(true);
-  
+
     var myHeaders = new Headers();
     myHeaders.append("language", "uz");
     myHeaders.append("Accept", "application/json");
@@ -193,6 +247,51 @@ function HeaderMain({ trashCardData }) {
     var formdata = new FormData();
     formdata.append("name", registrationData.name);
     formdata.append("surname", localStorage.getItem('user_last_name'));
+    formdata.append("password", registrationData.password);
+    formdata.append("password_confirmation", registrationData.passwordConfirmation);
+  
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+  
+    fetch(`${process.env.REACT_APP_TWO}/register`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        localStorage.setItem('user_name', result.data.user.first_name);
+        setIsRegisterEntered(false);
+        setIsSuccesEntered(true);
+        // console.log(result);
+        setTimeout(() => {window.location.reload()}, 100);
+      })
+      .catch(error => {
+        toast.error('Регистрация не была оформлена.');
+        console.log(error);
+      });
+  };
+
+  const handleOpenRegisterModal2 = (evt) => {
+    evt.preventDefault();
+    setIsSuccesEntered(false);
+
+    if (registrationData.password !== registrationData.passwordConfirmation) {
+      setPasswordsMatch(false);
+      return;
+    }
+
+    setPasswordsMatch(true);
+
+    var myHeaders = new Headers();
+    myHeaders.append("language", "uz");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+    myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
+  
+    var formdata = new FormData();
+    formdata.append("name", 'Xurshid');
+    formdata.append("surname", 'Juraev');
     formdata.append("password", registrationData.password);
     formdata.append("password_confirmation", registrationData.passwordConfirmation);
   
@@ -650,6 +749,27 @@ function HeaderMain({ trashCardData }) {
                 </form>
               </div>
 
+              <div className="modal-body get_code" id='get_code' style={{padding: '32px', display: isCodeEntered2 ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleOpenCodeVerificationModal2(evt) }}>
+                  <center>
+                    <h2 className='register_title'>Введите код подтверждения</h2>
+                  </center>
+
+                  <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
+
+                  <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
+                    <p className='register_in_text'>Код подтверждения</p>
+
+                    {/* <input name='phone' id='code_verify' className='register_input' type="text" placeholder='_ _ _ _ _ _' /> */}
+                    <div className='center'>
+                      <CodeVerificationInputLaptop length={6} name='phone' id='code_verify' />
+                    </div>
+                  </label>
+
+                  <button className='register'>Подтвердить</button>
+                </form>
+              </div>
+
               <div className="modal-body" id='get_register' style={{padding: '32px', display: isRegisterEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
                 <form onSubmit={(evt) => { handleOpenRegisterModal(evt) }} action="">
                   <center>
@@ -752,7 +872,7 @@ function HeaderMain({ trashCardData }) {
                   <p className='register_text_no_password'></p>
 
                   <div style={{textAlign: 'right'}}>
-                    <p className='register_text_no_password'>Забыли пароль?</p>
+                    <p className='register_text_no_password' onClick={() => {setIsForgetPasswordEntered(true); setIsLoginEntered(false)}}>Забыли пароль?</p>
                   </div>
 
                   {passwordsMatch ? null : (
@@ -783,6 +903,74 @@ function HeaderMain({ trashCardData }) {
                 </center>
 
                 <button className='register' data-bs-dismiss="modal">Назад на главную</button>
+              </div>
+
+              <div className="modal-body" id='get_success' style={{padding: '32px', display: isForgetPasswordEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleSubmitRegister2(evt) }}>
+                  <center>
+                    <h2 className='register_title'>Восстановление пароля</h2>
+                    <p className='register_title2_forget'>Введите номер телефона</p>
+                  </center>
+
+                  <p className='register_text' style={{textAlign: 'left', marginTop: '32px'}}>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
+
+                  <label style={{ width: '100%', display: 'grid', marginTop: '32px' }}>
+                    <p className='register_in_text'>Номер телефона</p>
+
+                    <input name='phone' id='phone' className='register_input' type="text" placeholder='+998' />
+                  </label>
+
+                  <button type='submit' className='register'>Подтвердить</button>
+                </form>
+              </div>
+
+              <div className="modal-body" id='get_register' style={{padding: '32px', display: isForgetPasswordEntered2 ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
+                <form onSubmit={(evt) => { handleOpenRegisterModal2(evt) }} action="">
+                  <center>
+                    <h2 className='register_title'>Сброс пароля</h2>
+                    <p className='register_text'>Придумайте новый пароль</p>
+                  </center>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Пароль</p>
+                    <input
+                      name='password'
+                      className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
+                      type="password"
+                      placeholder='Введите пароль'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          password: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
+                    <p className='register_in_text'>Подтвердите пароль</p>
+                    <input
+                      name='passwordConfirmation'
+                      className={`register_input ${!passwordsMatch ? 'password-error' : ''}`}
+                      type="password"
+                      placeholder='Подтвердите пароль'
+                      onChange={(e) =>
+                        setRegistrationData({
+                          ...registrationData,
+                          passwordConfirmation: e.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  {passwordsMatch ? null : (
+                    <p className='register_text_no_password' style={{color: 'red'}}>Пароли не совпадают</p>
+                  )}
+
+                  <button className='register'>
+                    Сбросить пароль
+                  </button>
+                </form>
               </div>
             </div>
           </div>

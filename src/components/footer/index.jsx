@@ -100,7 +100,7 @@ function FooterMain() {
                 <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'О нас' : 'Biz haqimizda'}</li>
                 {/* <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Вакансии' : `Bo'sh ish o'rinlari`}</li> */}
                 <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Блог EasyPrint' : `EasyPrint blogi`}</li>
-                <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Контакты' : 'Kontaktlar'}</li>
+                {/* <li className='footer_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Контакты' : 'Kontaktlar'}</li> */}
               </ul>
             </li>
 

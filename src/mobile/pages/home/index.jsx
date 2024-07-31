@@ -6,7 +6,7 @@ import FooterBarMobile from '../../components/footer bar'
 import blueVerifed from '../../layouts/icons/blue_verifed.svg'
 import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
-import your_design from '../../../layouts/images/landing.jpg'
+import your_design from '../../../layouts/images/shirt.svg'
 import Reveal from '../../animation/index'
 import axios from 'axios';
 import './main.css';

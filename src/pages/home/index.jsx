@@ -5,7 +5,7 @@ import HeroMain from '../../components/hero'
 import blueVerifed from '../../layouts/icons/blue_verifed.svg'
 import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
-import your_design from '../../layouts/images/landing.jpg'
+import your_design from '../../layouts/images/shirt.svg'
 import FooterMain from '../../components/footer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

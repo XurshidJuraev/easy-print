@@ -334,3 +334,13 @@
   transition: all 0.1s ease;
   border-radius: 10px;
 }
+
+.register_title2_forget {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #282828;  
+}
