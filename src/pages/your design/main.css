@@ -719,3 +719,53 @@
 .selected-image_modal {
   border: 2px solid var(--Primary-6, #92A86A);
 } */
+
+.modal_image_title {
+  font-family: Manrope;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;  
+  margin-top: 10px;
+  margin-bottom: 3px;
+  color: #000000;
+}
+
+.modal_image_title_price {
+  font-family: Manrope;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+  text-align: center;  
+  color: #666666;
+}
+
+.modal_image_title_button {
+  width: 148px;
+  height: 36px;
+  border-radius: 5px;
+  border: 1px solid #F2F2F2;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 2px 0px #0000000D;
+  font-family: Manrope;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #333333;
+  background-color: transparent;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.modal_image {
+  transition: all 0.2s ease;
+}
+
+.modal_image:hover {
+  transform: scale(1.2);
+  transition: all 0.2s ease;
+}

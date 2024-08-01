@@ -14,6 +14,10 @@ import hoodie_back_white from '../../layouts/images/hoodie_back_white.svg'
 import hoodie_front_white from '../../layouts/images/hoodie_front_white.svg'
 import sweatshot_back_white from '../../layouts/images/sweatshot_back_white.svg'
 import sweatshot_front_white from '../../layouts/images/sweatshot_front_white.svg'
+import modal_image1 from '../../layouts/images/design_modal/first.svg'
+import modal_image_size1 from '../../layouts/images/design_modal/first_size.svg'
+import modal_image2 from '../../layouts/images/design_modal/second.svg'
+import modal_image3 from '../../layouts/images/design_modal/third.svg'
 import backImageBlack from '../../layouts/images/back_black.png'
 import frontImageBlack from '../../layouts/images/black_front.png'
 import { Slider } from '@mui/material';
@@ -74,6 +78,11 @@ const YourDesign = () => {
   const [isSuccesEntered, setIsSuccesEntered] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [shirtTypeName, setShirtTypeName] = useState(localStorage.getItem('selectedLanguage') === 'ru' ? 'стандарт' : 'standart');
+  const [shirtTypeId, setShirtTypeId] = useState(0);
+  const [shirtTypeId0, setShirtTypeId0] = useState(false);
+  const [shirtTypeId1, setShirtTypeId1] = useState(false);
+  const [shirtTypeId2, setShirtTypeId2] = useState(false);
   const [profileImage, setProfileImage] = useState();
   const [visible, setVisible] = useState(false) 
   const [registrationData, setRegistrationData] = useState({
@@ -600,6 +609,7 @@ const YourDesign = () => {
     formdata.append("image_front", frontImageBlob);
     formdata.append("image_back", backImageBlob);
     formdata.append("price", product_id.price);
+    formdata.append("type", shirtTypeId);
 
     // console.log(printImage);
     // console.log(frontImageBlob);
@@ -647,6 +657,7 @@ const YourDesign = () => {
             });
             setVisible(true)
           } else {
+            console.log(result);
             toast.error('Товар не добавлен');
           }
         }
@@ -958,8 +969,9 @@ const YourDesign = () => {
 
         <div className='shirt_drawing'>
           <div className="shirt_drawing_header">
-            <div style={{width: '80%'}} onClick={() => {handleClickCategoryChange(); handleImageClickHeader(1)}} className={`shirt_drawing_header_select`}>
-              {categoryChange === 31 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка' : 'Futbolka' : categoryChange === 32 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Свитшот' : 'Svitter' : categoryChange === 33 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Худи' : 'Xudi' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка' : 'Futbolka'} 
+            <div style={{width: '80%'}} data-bs-target="#exampleModalToggle500" data-bs-toggle="modal" onClick={() => {handleImageClickHeader(1)}} className={`shirt_drawing_header_select`}>
+              {localStorage.getItem('selectedLanguage') === 'ru' ? `Тип: ${shirtTypeName}` : `Turi: ${shirtTypeName}`}
+              {/* {categoryChange === 31 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Тип: стандарт' : 'Turi: standart' : categoryChange === 32 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Свитшот' : 'Svitter' : categoryChange === 33 ? localStorage.getItem('selectedLanguage') === 'ru' ? 'Худи' : 'Xudi' : localStorage.getItem('selectedLanguage') === 'ru' ? 'Футболка' : 'Futbolka'}  */}
               <svg className='ms-2' xmlns="http://www.w3.org/2000/svg" style={{width: '16px', height: '16px'}} viewBox="0 0 16 16" fill="none">
                 <path d="M8 12C7.72592 12.0004 7.45444 11.9511 7.20118 11.8547C6.94792 11.7583 6.71786 11.6169 6.52423 11.4385L1.79945 7.09254C1.36915 6.69675 1.36918 6.01767 1.79951 5.62192C2.18181 5.27034 2.76973 5.27034 3.15203 5.62192L8 10.0803L12.848 5.62189C13.2303 5.27033 13.8182 5.27033 14.2004 5.62189C14.6308 6.01764 14.6308 6.69674 14.2004 7.0925L9.47577 11.4375C9.28223 11.6161 9.05221 11.7577 8.79894 11.8543C8.54567 11.9508 8.27415 12.0003 8 12Z" fill="#32454B"/>
               </svg>
@@ -1765,6 +1777,67 @@ const YourDesign = () => {
 
                 <img onClick={e => {addToBasketTo(e);}} src={addToBasketImage} data-bs-dismiss="modal" aria-label="Close" style={{marginTop: '20px', cursor: 'pointer'}} alt="addToBasket" />
               </center>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" id="exampleModalToggle500" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none', width: '800px',marginTop: '100px', minHeight: '400px', marginLeft: '356px'}}>
+          <div className="modal-content" style={{borderRadius: '12px', border: 'none', width: '800px', minHeight: '400px'}}>
+            <div className="modal-body" style={{padding: '32px', width: '800px', minHeight: '400px'}}>
+              <div className="d-flex justify-content-between">
+                <div onClick={() => {setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Стандарт' : 'Standart'); setShirtTypeId(0)}} className='center flex-column'>
+                  <img className='modal_image' src={modal_image1} alt="modal_image1" />
+
+                  <h2 className='modal_image_title'>Стандарт</h2>
+                  <p className='modal_image_title_price'>150 000 сум</p>
+
+                  <button onClick={() => {setShirtTypeId0(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
+                </div>
+
+                <div onClick={() => {setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'С воротником' : 'Yoqa bilan'); setShirtTypeId(1)}}  className='center flex-column'>
+                  <img className='modal_image' src={modal_image2} alt="modal_image1" />
+
+                  <h2 className='modal_image_title'>С воротником</h2>
+                  <p className='modal_image_title_price'>185 000 сум</p>
+
+                  <button onClick={() => {setShirtTypeId1(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
+                </div>
+
+                <div onClick={() => {setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Оверсайз' : `Katta o'lchamli`); setShirtTypeId(2)}}  className='center flex-column'>
+                  <img className='modal_image' src={modal_image3} alt="modal_image1" />
+
+                  <h2 className='modal_image_title'>Оверсайз</h2>
+                  <p className='modal_image_title_price'>195 000 сум</p>
+
+                  <button onClick={() => {setShirtTypeId2(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
+                </div>
+              </div>
+
+              {shirtTypeId0 === true ? (
+                <div className='center flex-column' style={{marginTop: '16px'}}>
+                  <img src={modal_image_size1} alt="modal_image_size1" />
+
+                  <button onClick={() => {setShirtTypeId0(false);}} style={{width: '89px'}} className='modal_image_title_button'>Свернуть</button>
+                </div>
+              ) : null}
+
+              {shirtTypeId1 === true ? (
+                <div className='center flex-column' style={{marginTop: '16px'}}>
+                  <img src={modal_image_size1} alt="modal_image_size1" />
+
+                  <button onClick={() => {setShirtTypeId1(false);}} style={{width: '89px'}} className='modal_image_title_button'>Свернуть</button>
+                </div>
+              ) : null}
+
+              {shirtTypeId2 === true ? (
+                <div className='center flex-column' style={{marginTop: '16px'}}>
+                  <img src={modal_image_size1} alt="modal_image_size1" />
+
+                  <button onClick={() => {setShirtTypeId2(false);}} style={{width: '89px'}} className='modal_image_title_button'>Свернуть</button>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

@@ -336,15 +336,14 @@ function MyOrders() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.region === '' || formData.city_id === '' || formData.name === '' || formData.postcode === '') {
+    if (formData.region === '' || formData.city_id === '' || formData.name === '') {
       toast.warning('Обязательно заполните все детали. Пожалуйста, проверьте все и отправьте повторно. Или обновите страницу еще раз и повторите попытку.');
       return;
     }
 
-    const apiUrl = editAddressId ? `${process.env.REACT_APP_TWO}/edit-address` : `${process.env.REACT_APP_TWO}/set-address`;
+    const apiUrl = editAddressId ? `${process.env.REACT_APP_TWO}/set-address` : `${process.env.REACT_APP_TWO}/set-address`;
 
-    axios
-      .post(apiUrl, formData, {
+    axios.post(apiUrl, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
@@ -356,7 +355,7 @@ function MyOrders() {
         window.location.reload();
       })
       .catch((error) => {
-        toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!');
+        console.log(error);
       });
   };
 
@@ -430,7 +429,7 @@ function MyOrders() {
 
                     <h3 className='order_subtitle' style={{ marginTop: '32px' }}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Способ получения' : 'Qabul qilish usuli:'}</h3>
 
-                    <label className='order_info'>
+                    <label className='order_info' style={{border: nullAddres === true ? '1px solid red' : 'none'}}>
                       <input
                         style={{ cursor: 'pointer' }}
                         type="radio"
@@ -458,7 +457,7 @@ function MyOrders() {
                       </label>
                     )}
 
-                    <label className='order_info mt-2'>
+                    <label style={{border: nullAddres === true ? '1px solid red' : 'none'}} className='order_info mt-2'>
                       <input
                         style={{ cursor: 'pointer' }}
                         type="radio"
@@ -470,6 +469,8 @@ function MyOrders() {
                       />
                       <label style={{ cursor: 'pointer' }} htmlFor="homeDelivery">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Доставка до дома' : 'Kuryer orqali eshikkacha'}</label>
                     </label>
+
+                    <p style={{display: nullAddres === true ? 'flex' : 'none', marginTop: 10, color: 'red', width: 400}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'У вас еще нет адреса доставки. Пожалуйста, добавьте адрес или выберите один из пунктов доставки.' : `Sizda hali yetkazib berish manzili mavjud emas. Iltimos manzil qo'shing yoki yetkazib berish punktlaridan birini tanlang`}</p>
 
                     {deliveryMethod === 'pickup' && (
                       <div>
@@ -642,13 +643,14 @@ function MyOrders() {
           <div className="modal-content" style={{borderRadius: '24px', width: '520px'}}>
             <div className="modal-header text-center d-flex justify-content-center" style={{borderBottom: 'none', paddingTop: '48px'}}>
               <center>
-                <h1 className="modal-title modal_title" id="exampleModalLabel">Ваш адрес</h1>
+                <h1 className="modal-title modal_title" id="exampleModalLabel">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ваш адрес' : `Sizning manzilingiz`}</h1>
               </center>
             </div>
+
             <div style={{padding: '48px'}} className="modal-body">
               <form onSubmit={handleSubmit}>
                 <div className="d-flex align-items-center mb-2 justify-content-between">
-                  <p className='address_modal_text'>Область</p>
+                <p className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Область' : `Viloyat`}</p>
 
                   <select style={{ border: formErrors.region ? '1px solid red' : 'none', margin: 'auto', marginLeft: '66px', width: '280px' }} className='input_profile' name="region" value={formData.region} onChange={handleChange} >
                     {data.map((region) => (
@@ -660,7 +662,7 @@ function MyOrders() {
                 </div>
 
                 <div className="d-flex align-items-center mb-2 justify-content-between">
-                  <p className='address_modal_text'>Город</p>
+                  <p style={{marginRight: localStorage.getItem('selectedLanguage') === 'ru' ? '0' : `-23px`}} className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Город' : `Shahar`}</p>
 
                   <select style={{border: formErrors.city_id ? '1px solid red' : 'none', margin: 'auto', marginLeft: '87px', width: '280px'}} name="city_id" className='input_profile' value={formData.city} onChange={handleChange}>
                     {cities.map((city) => (
@@ -672,17 +674,17 @@ function MyOrders() {
                 </div>
 
                 <div className="d-flex align-items-center justify-content-between">
-                  <p className='address_modal_text'>Ул. и дом</p>
+                  <p style={{marginRight: localStorage.getItem('selectedLanguage') === 'ru' ? '0' : `-42px`}} className='address_modal_text'>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Ул. и дом' : `Ko'cha va uy`}</p>
 
-                  <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder="Ул. и дом" onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
+                  <input style={{border: formErrors.name ? '1px solid red' : 'none', margin: 'auto', marginLeft: '59px', width: '280px'}} type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Ул. и дом' : `Ko'cha va uy`} onfocus="(this.type='date')" name="name" value={formData.name} onChange={handleChange} />
                 </div>
 
                 <div className="d-flex align-items-center justify-content-between">
                   <p style={{ marginRight: '0px', border: formErrors.postcode ? '1px solid red' : 'none', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} className='address_modal_text' >
-                    Почтовый индекс
+                    {localStorage.getItem('selectedLanguage') === 'ru' ? 'Почтовый индекс' : `Pochta indeksi`}
                   </p>
 
-                  <input style={{ marginRight: '40px', margin: 'auto', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} type="text" className='input_profile' placeholder="Почтовый индекс" name="postcode" value={formData.postcode} onChange={handleChange} />
+                  <input style={{ marginRight: '40px', margin: 'auto', display: formData.region === 'Toshkent shahri' ? 'none' : 'block', }} type="text" className='input_profile' placeholder={localStorage.getItem('selectedLanguage') === 'ru' ? 'Почтовый индекс' : `Pochta indeksi`} name="postcode" value={formData.postcode} onChange={handleChange} />
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
