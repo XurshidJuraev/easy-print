@@ -80,6 +80,7 @@ const YourDesign = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [shirtTypeName, setShirtTypeName] = useState(localStorage.getItem('selectedLanguage') === 'ru' ? 'стандарт' : 'standart');
   const [shirtTypeId, setShirtTypeId] = useState(0);
+  const [shirtTypePrice, setShirtTypePrice] = useState();
   const [shirtTypeId0, setShirtTypeId0] = useState(false);
   const [shirtTypeId1, setShirtTypeId1] = useState(false);
   const [shirtTypeId2, setShirtTypeId2] = useState(false);
@@ -608,7 +609,7 @@ const YourDesign = () => {
     formdata.append("imagesPrint[]", printImage);
     formdata.append("image_front", frontImageBlob);
     formdata.append("image_back", backImageBlob);
-    formdata.append("price", product_id.price);
+    formdata.append("price", shirtTypePrice ? shirtTypePrice : product_id.price);
     formdata.append("type", shirtTypeId);
 
     // console.log(printImage);
@@ -1787,7 +1788,7 @@ const YourDesign = () => {
           <div className="modal-content" style={{borderRadius: '12px', border: 'none', width: '800px', minHeight: '400px'}}>
             <div className="modal-body" style={{padding: '32px', width: '800px', minHeight: '400px'}}>
               <div className="d-flex justify-content-between">
-                <div onClick={() => {setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Стандарт' : 'Standart'); setShirtTypeId(0)}} className='center flex-column'>
+                <div onClick={() => {setShirtTypePrice(150000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Стандарт' : 'Standart'); setShirtTypeId(0)}} className='center flex-column'>
                   <img className='modal_image' src={modal_image1} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>Стандарт</h2>
@@ -1796,7 +1797,7 @@ const YourDesign = () => {
                   <button onClick={() => {setShirtTypeId0(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
                 </div>
 
-                <div onClick={() => {setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'С воротником' : 'Yoqa bilan'); setShirtTypeId(1)}}  className='center flex-column'>
+                <div onClick={() => {setShirtTypePrice(185000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'С воротником' : 'Yoqa bilan'); setShirtTypeId(1)}}  className='center flex-column'>
                   <img className='modal_image' src={modal_image2} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>С воротником</h2>
@@ -1805,7 +1806,7 @@ const YourDesign = () => {
                   <button onClick={() => {setShirtTypeId1(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
                 </div>
 
-                <div onClick={() => {setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Оверсайз' : `Katta o'lchamli`); setShirtTypeId(2)}}  className='center flex-column'>
+                <div onClick={() => {setShirtTypePrice(195000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Оверсайз' : `Katta o'lchamli`); setShirtTypeId(2)}}  className='center flex-column'>
                   <img className='modal_image' src={modal_image3} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>Оверсайз</h2>
