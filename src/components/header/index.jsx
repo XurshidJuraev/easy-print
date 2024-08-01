@@ -115,6 +115,7 @@ function HeaderMain({ trashCardData }) {
       .then(response => response.json())
       .then(result => {
         localStorage.setItem('token', result.data.token);
+        localStorage.setItem('user_name', result.data.name);
         setIsSuccesEntered(true); 
         setIsLoginEntered(false)
         setPasswordsMatch(true);
@@ -135,12 +136,14 @@ function HeaderMain({ trashCardData }) {
     setPhoneNumber(cleanedPhone);
 
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
+    myHeaders.append('language', 'uz');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
 
     var formdata = new FormData();
     formdata.append("phone", cleanedPhone);
+    formdata.append("is_forgot", 0);
 
     var requestOptions = {
       method: 'POST',
@@ -165,12 +168,14 @@ function HeaderMain({ trashCardData }) {
     setPhoneNumber(cleanedPhone);
 
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
+    myHeaders.append('language', 'uz');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
 
     var formdata = new FormData();
     formdata.append("phone", cleanedPhone);
+    formdata.append("is_forgot", 0);
 
     var requestOptions = {
       method: 'POST',
@@ -181,7 +186,7 @@ function HeaderMain({ trashCardData }) {
 
     fetch(`${process.env.REACT_APP_TWO}/phone-register`, requestOptions)
       .then(response => response.text())
-      .then(result => {setIsCodeEntered2(true); setIsPhoneNumberEntered(false); setIsForgetPasswordEntered(false)})
+      .then(result => {console.log(result); setIsCodeEntered2(true); setIsPhoneNumberEntered(false); setIsForgetPasswordEntered(false)})
       .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsForgetPasswordEntered2(false); setIsCodeEntered2(true);});
   }
 
@@ -223,8 +228,8 @@ function HeaderMain({ trashCardData }) {
         }),
       })
         .then(response => response.json())
-        .then(result => {localStorage.setItem('token', result.data.token); setIsCodeEntered2(false); setIsForgetPasswordEntered2(false); setIsSuccesEntered(true);})
-        .catch(error => {toast.error(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!'); setIsForgetPasswordEntered2(true); setIsSuccesEntered(false); setIsCodeEntered2(false);});
+        .then(result => {localStorage.setItem('token', result.data.token); setIsCodeEntered2(false); setIsForgetPasswordEntered2(false); isForgetPasswordEntered2(true);})
+        .catch(error => {console.log(localStorage.getItem('selectedLanguage') === 'ru' ? 'Произошла ошибка. Пожалуйста, попробуйте еще раз!' : 'Xatolik yuz berdi. Iltimos qaytadan urining!', error); setIsForgetPasswordEntered2(true); setIsSuccesEntered(false); setIsCodeEntered2(false);});
   };
 
   const handleOpenRegisterModal = (evt) => {
@@ -239,7 +244,8 @@ function HeaderMain({ trashCardData }) {
     setPasswordsMatch(true);
 
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
+    myHeaders.append('language', 'uz');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
     myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
@@ -284,14 +290,13 @@ function HeaderMain({ trashCardData }) {
     setPasswordsMatch(true);
 
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
+    myHeaders.append('language', 'uz');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
     myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
   
-    var formdata = new FormData();
-    formdata.append("name", 'Xurshid');
-    formdata.append("surname", 'Juraev');
+    var formdata = new FormData()
     formdata.append("password", registrationData.password);
     formdata.append("password_confirmation", registrationData.passwordConfirmation);
   
@@ -306,7 +311,7 @@ function HeaderMain({ trashCardData }) {
       .then(response => response.json())
       .then(result => {
         localStorage.setItem('user_name', result.data.user.first_name);
-        setIsRegisterEntered(false);
+        setIsForgetPasswordEntered2(false);
         setIsSuccesEntered(true);
         // console.log(result);
         setTimeout(() => {window.location.reload()}, 100);
@@ -362,7 +367,7 @@ function HeaderMain({ trashCardData }) {
     localStorage.setItem('selectedLanguage', selectedLang);
     toggleLanguageDropdown();
     window.location.reload();
-  };  
+  };
 
   const toggleLanguageDropdown = () => {
     setShowLanguageDropdown(!showLanguageDropdown);
@@ -783,6 +788,7 @@ function HeaderMain({ trashCardData }) {
                       name='name'
                       className='register_input'
                       type="text"
+                      required
                       placeholder='Введите имя'
                       onChange={(e) =>
                         setRegistrationData({
@@ -799,6 +805,7 @@ function HeaderMain({ trashCardData }) {
                       name='surname'
                       className='register_input'
                       type="text"
+                      required
                       placeholder='Ведите фамилию'
                       onChange={(e) =>
                         localStorage.setItem(
@@ -860,7 +867,7 @@ function HeaderMain({ trashCardData }) {
 
                   <label style={{width: '100%', display: 'grid', marginTop: '16px'}}>
                     <p className='register_in_text'>Hомер телефона</p>
-                    <input name='user_email' id='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите адрес электронной почты' />
+                    <input name='user_email' required id='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='Введите адрес электронной почты' />
                     {/* <input name='user_email' id='user_email' className={`register_input ${!passwordsMatch ? 'password-error' : ''}`} type="text" placeholder='+998' /> */}
                   </label>
 

@@ -42,12 +42,14 @@ function AuthPageMobile() {
     setPhoneNumber(cleanedPhone);
 
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    myHeaders.append('language', 'uz');
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
 
     var formdata = new FormData();
     formdata.append("phone", cleanedPhone);
+    formdata.append("is_forgot", 0);
 
     var requestOptions = {
       method: 'POST',
@@ -72,12 +74,14 @@ function AuthPageMobile() {
     setPhoneNumber(cleanedPhone);
 
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    myHeaders.append('language', 'uz');
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
 
     var formdata = new FormData();
     formdata.append("phone", cleanedPhone);
+    formdata.append("is_forgot", 0);
 
     var requestOptions = {
       method: 'POST',
@@ -145,7 +149,8 @@ function AuthPageMobile() {
     setPasswordsMatch(true);
 
     var myHeaders = new Headers();
-    myHeaders.append("language", "uz");
+    myHeaders.append('language', 'uz');
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
     myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
@@ -153,6 +158,50 @@ function AuthPageMobile() {
     var formdata = new FormData();
     formdata.append("name", registrationData.name);
     formdata.append("surname", localStorage.getItem('user_last_name'));
+    formdata.append("password", registrationData.password);
+    formdata.append("password_confirmation", registrationData.passwordConfirmation);
+
+    console.log(registrationData);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+  
+    fetch(`${process.env.REACT_APP_TWO}/register`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        localStorage.setItem('user_name', result.data.user.first_name);
+        // setIsRegisterEntered(false);
+        // console.log(result);
+        setPassword(false); navigate('/mobile');
+      })
+      .catch(error => {
+        toast.error('Регистрация не была оформлена.');
+        console.log(error);
+      });
+  };
+
+  const handleAddPasword2 = (evt) => {
+    evt.preventDefault();
+
+    if (registrationData.password !== registrationData.passwordConfirmation) {
+      setPasswordsMatch(false);
+      return;
+    }
+
+    setPasswordsMatch(true);
+
+    var myHeaders = new Headers();
+    myHeaders.append('language', 'uz');
+    // myHeaders.append('language', localStorage.getItem('selectedLanguage') ? localStorage.getItem('selectedLanguage') : 'ru');
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", `Bearer ${localStorage.getItem('token')}`);
+    myHeaders.append("Cookie", "laravel_session=y1Jx3e0YpgmZNhomT4H7G6IVj79Tj7OxleBR5Hl2");
+  
+    var formdata = new FormData();
     formdata.append("password", registrationData.password);
     formdata.append("password_confirmation", registrationData.passwordConfirmation);
 
@@ -288,15 +337,15 @@ function AuthPageMobile() {
 
   return (
     <div style={{backgroundColor: '#FFFFFF', height: '100vh'}}>
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
-        <center style={{display: first ? 'block' : 'none', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='first'>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
+        <center style={{display: first ? 'block' : 'none', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='first'>
           <NavLink to={'/mobile'}>
             <svg style={{position: 'absolute', left: '20px', top: '50px'}} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </NavLink>
 
-          <div style={{position: 'relative', top: '32px'}}>
+          <div style={{position: 'relative', top: '-32px'}}>
             <Reveal>
               <h2 className='auth_title' style={{marginTop: '100px'}}>Регистрация</h2>
               <p className='auth_text'>Зарегистрируйтесь если вы тут впервые</p>
@@ -310,7 +359,7 @@ function AuthPageMobile() {
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
         <center style={{display: register ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='register'>
           <div onClick={() => {setRegister(false); setFirst(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', position: 'absolute', top: '10px', left: '18px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -319,7 +368,7 @@ function AuthPageMobile() {
           </div>
 
           <Reveal>
-            <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleSubmitRegister(evt) }}>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={(evt) => { handleSubmitRegister(evt) }}>
               <h2 style={{width: '343px'}} className='auth_title'>Ведите номер телефона</h2>
               <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
               <label style={{width: '343px', display: 'grid', marginTop: '64px'}}>
@@ -334,7 +383,7 @@ function AuthPageMobile() {
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
         <center style={{display: register2 ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='register'>
           <div onClick={() => {setRegister2(false); setFirst(true)}} style={{display: 'flex', width: '343px', marginTop: '32px', position: 'absolute', top: '10px', left: '18px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -343,7 +392,7 @@ function AuthPageMobile() {
           </div>
 
           <Reveal>
-            <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleSubmitRegister2(evt) }}>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={(evt) => { handleSubmitRegister2(evt) }}>
               <h2 style={{width: '343px'}} className='auth_title'>Восстановление пароля</h2>
               <p className='forget_mobile_title2'>Введите номер телефона</p>
               <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправим 6-значный СМС-код безопасности на ваш номер</p>
@@ -353,13 +402,13 @@ function AuthPageMobile() {
                 <input name='phone' id='phone' className='register_input' type="text" placeholder='Введите номер телефона' />
               </label>
 
-              <button className='auth_button_reg' style={{marginTop: '280px', marginBottom: '74px'}}>Получить код</button>
+              <button className='auth_button_reg' style={{marginTop: '190px', marginBottom: '74px'}}>Получить код</button>
             </form>
           </Reveal>
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
         <center style={{display: phone_confirm ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='phone_confirm'>
           <div onClick={() => {setPhone_confirm(false); setRegister(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -368,7 +417,7 @@ function AuthPageMobile() {
           </div>
 
           <Reveal>
-            <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleOpenCodeVerification(evt) }}>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={(evt) => { handleOpenCodeVerification(evt) }}>
               <h2 style={{width: '343px', marginBottom: '48px'}} className='auth_title'>Введите код подтверждения</h2>
               <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
               <div style={{width: '343px', display: 'grid', marginTop: '64px'}}>
@@ -382,7 +431,7 @@ function AuthPageMobile() {
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
         <center style={{display: phone_confirm2 ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='phone_confirm'>
           <div onClick={() => {setPhone_confirm2(false); setRegister(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -391,7 +440,7 @@ function AuthPageMobile() {
           </div>
 
           <Reveal>
-            <form style={{position: 'relative', top: '32px'}} onSubmit={(evt) => { handleOpenCodeVerification2(evt) }}>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={(evt) => { handleOpenCodeVerification2(evt) }}>
               <h2 style={{width: '343px', marginBottom: '48px'}} className='auth_title'>Введите код подтверждения</h2>
               <p style={{width: '343px', textAlign: 'left'}} className='auth_text'>Мы отправили 6-значный СМС-код безопасности на ваш номер</p>
               <div style={{width: '343px', display: 'grid', marginTop: '64px'}}>
@@ -399,13 +448,13 @@ function AuthPageMobile() {
                 <CodeVerificationInput length={6} name='phone' id='code_verify' />
               </div>
 
-              <button className='auth_button_reg' style={{marginTop: '240px', marginBottom: '74px'}}>Подтвердить</button>
+              <button className='auth_button_reg' style={{marginTop: '200px', marginBottom: '74px'}}>Подтвердить</button>
             </form>
           </Reveal>
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}> 
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}> 
         <center style={{display: password ? 'block' : 'none', marginTop: '73px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='password'>
           <div onClick={() => {setPassword(false); setRegister(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -413,7 +462,7 @@ function AuthPageMobile() {
             </svg>
           </div>
 
-          <div style={{position: 'relative', top: '32px'}}>
+          <div style={{position: 'relative', top: '-32px'}}>
             <Reveal>
               <h2 className='auth_title'>Регистрация</h2>
               <p className='auth_text' style={{marginTop: '-12px'}}>Введите свои данные</p>
@@ -455,7 +504,7 @@ function AuthPageMobile() {
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}> 
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}> 
         <center style={{display: password2 ? 'block' : 'none', marginTop: '73px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='password'>
           <div onClick={() => {setPassword2(false); setRegister2(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -463,12 +512,12 @@ function AuthPageMobile() {
             </svg>
           </div>
 
-          <div style={{position: 'relative', top: '32px'}}>
+          <div style={{position: 'relative', top: '-32px'}}>
             <Reveal>
               <h2 style={{width: 200}} className='auth_title'>Сброс пароля</h2>
               <p className='auth_text' style={{marginTop: '-12px'}}>Введите новый пароль и подтвердите его</p>
 
-              <form style={{marginTop: 155, position: 'relative', top: '-90px'}} onSubmit={(evt) => { handleAddPasword(evt) }}>
+              <form style={{marginTop: 155, position: 'relative', top: '-90px'}} onSubmit={(evt) => { handleAddPasword2(evt) }}>
                 <label style={{width: '90%', display: 'grid', marginTop: '16px'}}>
                   <p className='register_in_text' style={{textAlign: 'left', marginLeft: '5px'}}>Пароль</p>
                   <input name='password' onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})} className='register_input' type="password" placeholder='Придумайте надёжный пароль' />
@@ -495,7 +544,7 @@ function AuthPageMobile() {
         </center>
       </div>
 
-      <div style={{backgroundColor: '#CCCCCC', position: 'absolute', top: 0, width: '100%'}}>
+      <div style={{backgroundColor: 'white', position: 'absolute', top: 0, width: '100%'}}>
         <center style={{display: login ? 'block' : 'none', marginTop: '100px', backgroundColor: '#FFFFFF', borderTopLeftRadius: '16px', borderTopRightRadius: '16px'}} id='login'>
           <div onClick={() => {setLogin(false); setFirst(true)}} style={{display: 'flex', width: '343px', position: 'absolute', top: '10px', left: '18px', marginTop: '32px', marginBottom: '-32px', justifyContent: 'flex-start'}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -504,7 +553,7 @@ function AuthPageMobile() {
           </div>
 
           <Reveal>
-            <form style={{position: 'relative', top: '32px'}} onSubmit={handleSubmitLogin}>
+            <form style={{position: 'relative', top: '-32px'}} onSubmit={handleSubmitLogin}>
               <h2 className='auth_title'>Авторизация</h2>
               <p className='auth_text'>Введите свои данные</p>
               <label style={{width: '90%', display: 'grid', marginTop: '64px'}}>
