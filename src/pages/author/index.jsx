@@ -384,7 +384,7 @@ function AuthorPage() {
           </div>
         </div>
 
-        <h2 className='products_father_text ms-3' style={{marginBottom: '100px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Товары' : 'Mahsulotlar'}</h2>
+        <h2 className='products_father_text ms-3' style={{marginBottom: '100px'}}>{localStorage.getItem('selectedLanguage') === 'ru' ? 'Принты' : 'Printlar'}</h2>
 
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
           <div className="container">

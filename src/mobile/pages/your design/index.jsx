@@ -79,15 +79,15 @@ function YourDesignMobile() {
   let [image, takeScreenshot] = useScreenshot({
     type: "image/jpeg",
     quality: 1.0,
-    width: '600px', 
-    height: '560px'
+    width: '200px', 
+    height: '250px'
   });
   
   let [imageBack, takeScreenshotBack] = useScreenshot({
     type: "image/jpeg",
     quality: 1.0,
-    width: '600px', 
-    height: '560px'
+    width: '200px', 
+    height: '250px'
   });
   
   let getImage = () => takeScreenshot(ref.current)
@@ -383,10 +383,10 @@ function YourDesignMobile() {
       <div style={{position: 'absolute', width: '100%', zIndex: 100, height: '100%', top: '0', left: '0'}} onClick={() => {setTextBar(false); setFirstBar(true); setImageBar(false); setDesigState(true); setLayersState(false); setLibraryState(false); setProductState(false);}}></div>
 
       <div style={{position: 'relative', zIndex: 200}}>
-        <div ref={ref} id="tshirt-div">
+        <div id="tshirt-div" style={{position: 'relative', left: '103px', transform: 'scale(1.3)', top: '69px'}}>
           {desigState === true && (
             <div style={{textAlign: 'left', height: '500px'}}>
-              <center>
+              <center ref={ref}>
                 <div id='screenshot'>
                   <img style={{width: '300px', marginTop: '80px'}} src={tShirt} alt="tShirt" />
                 </div>
@@ -395,8 +395,8 @@ function YourDesignMobile() {
                   <canvas style={{position: 'absolute', zIndex: 300, top: '-300px', left: '0'}} id="canvasTextMobile" width="190" height="220"></canvas>
                 </div>
 
-                <div className="canvas-container" style={{position: 'relative', top: '-260px', transform: 'scale(0.7)',}}>
-                  <canvas id="tshirt-canvas" width={184} height={250} ></canvas>
+                <div className="canvas-container" style={{position: 'relative', top: '-260px', transform: 'scale(0.6)',}}>
+                  <canvas id="tshirt-canvas" width={200} height={250} ></canvas>
                 </div>
               </center>
             </div>
@@ -591,11 +591,11 @@ function YourDesignMobile() {
 
                 <div className="flex-column center">
                   <div>
-                    <img style={{width: '220px', height: '240px', transform: 'scale(1.6)', position: 'relative', zIndex: 1000, top: 28}} src={image} alt="tShirt_front" />
+                    <img style={{width: '170px', height: '350px', transform: 'scale(1.3)', position: 'relative', zIndex: 1000, top: '28px'}} src={image} alt="tShirt_front" />
                   </div>
 
                   <div>
-                    <img style={{width: '220px', height: '220px', marginTop: '32px', position: 'relative', zIndex: 2000}} src={imageBack} alt="tShirt_back" ref={refBack} />
+                    <img style={{width: '220px', height: '220px', marginTop: '-70px', position: 'relative', zIndex: 2000}} src={imageBack} alt="tShirt_back" ref={refBack} />
                   </div>
                 </div>
                 <center>
