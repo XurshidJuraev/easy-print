@@ -9,10 +9,8 @@
   height: 100px;
   position: relative;
   margin-top: -99px;
-  /* margin-left: 331px; */
   padding-top: 29px;
   padding-left: 640px;
-  /* z-index: 1000000; */
 }
 
 .addToBasket_image {
@@ -93,12 +91,6 @@
   cursor: pointer;
 }
 
-/* .shirt_drawing_header_select:hover {
-  cursor: pointer;
-  transform: scale(1.1);
-  transition: all 0.3s ease;
-} */
-
 .shirt_drawing_header_select:active {
   border: 1px solid var(--primary-6, #829d50);
   background: var(--primary-6, #829d50);
@@ -171,8 +163,6 @@
   font-size: 32px;
   font-style: normal;
   font-weight: 400;
-  /* line-height: 32px; */
-  /* padding: 5px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -251,7 +241,6 @@
   border: 1px solid var(--neutral-200, #ccc);
   background: var(--White, #fff);
   color: var(--primary-6, #17262b);
-  /* font-family: "Inter400"; */
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -281,7 +270,7 @@
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 153.846% */
+  line-height: 20px;
   letter-spacing: -0.13px;
   text-transform: uppercase;
   cursor: pointer;
@@ -301,7 +290,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 142.857% */
+  line-height: 20px;
   letter-spacing: 0.14px;
   text-transform: uppercase;
   border: 1px solid var(--Neutral-200, #ccc);
@@ -333,7 +322,7 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 125% */
+  line-height: 20px;
   letter-spacing: -0.08px;
   cursor: pointer;
 }
@@ -356,7 +345,7 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 125% */
+  line-height: 20px;
   letter-spacing: -0.08px;
   background-color: #f3f3f3;
   cursor: pointer;
@@ -368,7 +357,7 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
+  line-height: 24px;
   letter-spacing: -0.032px;
 }
 
@@ -386,7 +375,7 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
+  line-height: 24px;
   border: none;
   margin-top: 40px;
 }
@@ -405,7 +394,7 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
+  line-height: 24px;
   border: none;
   margin-top: 40px;
 }

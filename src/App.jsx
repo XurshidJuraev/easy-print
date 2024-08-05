@@ -53,6 +53,7 @@ import OrderMobileAccept from './mobile/pages/order accept';
 import MobileNotFound from './mobile/pages/404';
 // Изменить футболки страниция 
 import YourDesignMobile from './mobile/pages/your design';
+// import YourDesignMobileTest from './mobile/pages/your design/index_test';
 // Показать детальный продукт
 import ProductShowMobile from './mobile/pages/show';
 // Футeр страниция 
@@ -108,6 +109,7 @@ function App() {
           <Route path='/mobile/checkout/accept/:name' element={<OrderMobileAccept />} />
           <Route path='/mobile/404' element={<MobileNotFound />} />
           <Route path='/mobile/yourDesign' element={<YourDesignMobile />} />
+          {/* <Route path='/mobile/yourDesign/test' element={<YourDesignMobileTest />} /> */}
           <Route path='/mobile/show/detail/:id/:name' element={<ProductShowMobile />} />
           <Route path='/mobile/footer/delivery' element={<Delivermobile />} />
           <Route path='/mobile/footer/pay' element={<PayMobile />} />

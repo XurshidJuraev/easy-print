@@ -148,6 +148,13 @@ function HomePageMobile() {
     }
   }, [token]);
 
+  let checkedMobile = localStorage.getItem('updateHome')
+
+  if (checkedMobile === true) {
+    window.location.reload();
+    localStorage.removeItem('updateHome')
+  }
+
   return (
     <div style={{backgroundColor: '#ffffff'}}>
       <HeaderMainMobile />

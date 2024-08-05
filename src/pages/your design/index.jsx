@@ -45,17 +45,11 @@ import { v4 as uuid } from "uuid";
 import CodeVerificationInputLaptop from "../../components/code verifed";
 
 const YourDesign = () => {
-  // const [color, setColor] = useState("#fff");
-  // const pickerRef = useRef(null);
-  // const [pickerColor, setPickerColor] = useState(color);
-
-  // const [trashCardData, setTrashCardData] = useState([]);
   const [categoryName, setCategoryName] = useState([]);
   const [printImage, setPrintImage] = useState([]);
   const [categorySize, setCategorySize] = useState([]);
   const [imageList, setImageList] = useState([]);
   const [size, setSize] = useState("xxs");
-  // const [category, setCategory] = useState("Футболка");
   const [shirtColor, setShirtColor] = useState("#FFFFFF");
   const [isFrontView, setIsFrontView] = useState(true);
   const [isColorChange, setIsColorChange] = useState(false);
@@ -63,16 +57,9 @@ const YourDesign = () => {
   const [isCategoryChange, setIsCategoryChange] = useState(false);
   const [textInputVisible, setTextInputVisible] = useState(false);
   const [photoInputVisible, setPhotoInputVisible] = useState(false);
-
-  // const [shirtTypePrice, setShirtTypePrice] = useState();
-  // const [shirtTypeName, setShirtTypeName] = useState(
-  //   localStorage.getItem("selectedLanguage") === "ru" ? "стандарт" : "standart",
-  // );
-  // const [shirtTypeId, setShirtTypeId] = useState(0);
   const [shirtTypeId0, setShirtTypeId0] = useState(false);
   const [shirtTypeId1, setShirtTypeId1] = useState(false);
   const [shirtTypeId2, setShirtTypeId2] = useState(false);
-  // const [visible] = useState(false);
   const [isPhoneNumberEntered, setIsPhoneNumberEntered] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isCodeEntered, setIsCodeEntered] = useState(false);
@@ -86,7 +73,6 @@ const YourDesign = () => {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [isLoginEntered, setIsLoginEntered] = useState(false);
   const [isFirstEntered, setIsFirstEntered] = useState(true);
-
   const [textInputValue] = useState("");
   const [imeyg, setImeyg] = useState("");
   const [categoryChange, setCategoryChange] = useState(31);
@@ -132,7 +118,6 @@ const YourDesign = () => {
     height: "560px",
   });
 
-  // const [countHeader, setCountHeader] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
 
@@ -405,29 +390,6 @@ const YourDesign = () => {
     }
   };
 
-  // const _onReadyBack = (canvas) => {
-  //   canvas.backgroundColor = "transparent";
-  //   canvas.setDimensions({
-  //     width: 300,
-  //     height: 300,
-  //     left: 10,
-  //   });
-  //   canvas.add(headTextBack);
-  //   canvas.renderAll();
-  //   if (typeof onReadyBack === "function") {
-  //     onReadyBack(canvas);
-  //   } else {
-  //     console.error("onReadyBack is not a function");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const storedCount = localStorage.getItem("counterValue");
-  //   if (storedCount) {
-  //     setCountHeader(Number(storedCount));
-  //   }
-  // }, []);
-
   localStorage.setItem("selectedColor", "#000000");
 
   useEffect(() => {
@@ -535,26 +497,7 @@ const YourDesign = () => {
         console.error("Element with class 'addToBasketImage' not found.");
       }
     }
-  };  
-
-  // let getImage = async () => {
-  //   setIsFrontView(true);
-
-  //   if (ref.current && isFrontView) {
-  //     await takeScreenshot(ref.current)
-  //       .then(() => setIsFrontView(false))
-  //       .then(() => {
-  //         if (refBack.current && !isFrontView) {
-  //           takeScreenshotBack(refBack.current).catch((error) => {
-  //             console.error("Screenshot capture failed:", error);
-  //           });
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Screenshot capture failed:", error);
-  //       });
-  //   }
-  // };
+  }; 
 
   const handleScaleChange = (newValue) => {
     const val = newValue.target.value;
@@ -993,89 +936,6 @@ const YourDesign = () => {
 
     localStorage.setItem('counterValue', newCount.toString());
   };
-
-  // const addToBasketTo = async (e) => {
-  //   e.preventDefault();
-
-  //   const frontImageBlob = await fetchFiles();
-  //   const backImageBlob = await fetchFilesBack();
-
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("language", "uz");
-  //   myHeaders.append("Accept", "application/json");
-  //   myHeaders.append(
-  //     "Authorization",
-  //     `Bearer ${localStorage.getItem("token")}`,
-  //   );
-  //   myHeaders.append(
-  //     "Cookie",
-  //     "laravel_session=RFyUZ3GeQSe3Lq7nUZa38vzJHBFTYrkdu1hOsLY5",
-  //   );
-
-  //   var formdata = new FormData();
-  //   formdata.append("product_id", product_id.id);
-  //   // formdata.append("category_id", categoryChange);
-  //   formdata.append("quantity", 1);
-  //   formdata.append("color_id", shirtColor === "#000000" ? 3 : 4);
-  //   formdata.append("size_id", selectedSize);
-  //   formdata.append("imagesPrint[]", printImage);
-  //   formdata.append("image_front", frontImageBlob);
-  //   formdata.append("image_back", backImageBlob);
-  //   formdata.append("price", product_id.price);
-
-  //   var requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: formdata,
-  //     redirect: "follow",
-  //   };
-
-  //   fetch(`${process.env.REACT_APP_TWO}/order/set-warehouse`, requestOptions)
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       if (result.status === true) {
-  //         toast(
-  //           <ToastComponent
-  //             image={image ? image : ""}
-  //             title={product_id.name}
-  //             description={
-  //               product_id.description
-  //                 ? product_id.description
-  //                 : "Описание недоступно"
-  //             }
-  //             link="/basket"
-  //             linkText="Перейти в корзину"
-  //             onClose={() => toast.dismiss()}
-  //           />,
-  //           {
-  //             position: "top-center",
-  //             autoClose: 3000,
-  //             draggable: true,
-  //             theme: "colored",
-  //           },
-  //         );
-  //       } else {
-  //         if (result.message === "Unauthenticated.") {
-  //           toast.warn(
-  //             "Вы еще не зарегистрированы. Товар добавлен в корзину.",
-  //             {
-  //               position: "top-right",
-  //               autoClose: 5000,
-  //               hideProgressBar: false,
-  //               closeOnClick: true,
-  //               pauseOnHover: true,
-  //               draggable: true,
-  //               progress: undefined,
-  //               theme: "light",
-  //             },
-  //           );
-  //         } else {
-  //           toast.error("Товар не добавлен");
-  //         }
-  //       }
-  //     })
-  //     .catch((error) => console.log("error", error));
-  // };
 
   const addToBasketTo = async (e) => {
     e.preventDefault();
@@ -1975,7 +1835,7 @@ const YourDesign = () => {
           <div className="modal-content" style={{borderRadius: '12px', border: 'none', width: '800px', minHeight: '400px'}}>
             <div className="modal-body" style={{padding: '32px', width: '800px', minHeight: '400px'}}>
               <div className="d-flex justify-content-between">
-                <div onClick={() => {setShirtTypePrice(150000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Стандарт' : 'Standart'); setShirtTypeId(0)}} className='center flex-column'>
+                <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {setShirtTypePrice(150000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Стандарт' : 'Standart'); setShirtTypeId(0)}} className='center flex-column'>
                   <img className='modal_image' src={modal_image1} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>Стандарт</h2>
@@ -1984,7 +1844,7 @@ const YourDesign = () => {
                   <button onClick={() => {setShirtTypeId0(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
                 </div>
 
-                <div onClick={() => {setShirtTypePrice(185000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'С воротником' : 'Yoqa bilan'); setShirtTypeId(1)}}  className='center flex-column'>
+                <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {setShirtTypePrice(185000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'С воротником' : 'Yoqa bilan'); setShirtTypeId(1)}}  className='center flex-column'>
                   <img className='modal_image' src={modal_image2} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>С воротником</h2>
@@ -1993,7 +1853,7 @@ const YourDesign = () => {
                   <button onClick={() => {setShirtTypeId1(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
                 </div>
 
-                <div onClick={() => {setShirtTypePrice(195000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Оверсайз' : `Katta o'lchamli`); setShirtTypeId(2)}}  className='center flex-column'>
+                <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {setShirtTypePrice(195000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Оверсайз' : `Katta o'lchamli`); setShirtTypeId(2)}}  className='center flex-column'>
                   <img className='modal_image' src={modal_image3} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>Оверсайз</h2>
@@ -2035,6 +1895,9 @@ const YourDesign = () => {
         <div className="modal fade show" style={{display: 'block', position: 'absolute', zIndex: 100000, }} id="exampleModal3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex={1}>
           <div className="modal-dialog modal-dialog-centered" style={{borderRadius: '12px', border: 'none'}}>
             <div className="modal-content" style={{borderRadius: '12px', border: 'none'}}>
+              <div style={{display: 'flex', justifyContent: 'flex-end', padding: '10px'}}>
+                <button onClick={() => {setVisible(false)}} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
               <div className="modal-body get_phonenumber" id='get_phonenumber' style={{padding: '32px', display: isPhoneNumberEntered ? 'block' : 'none', position: 'relative', zIndex: '10000000'}}>
                 <form onSubmit={(evt) => { handleSubmitRegister(evt) }}>
                   <center>

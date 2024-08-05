@@ -13,6 +13,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 1000;
 }
 
 .yourDesign_bar_bottom {
@@ -135,7 +136,6 @@
 
 .mobile_add_text_imput {
   position: relative;
-  /* top: -149px; */
   width: 93%;
   height: 80px;
   margin: 16px;
