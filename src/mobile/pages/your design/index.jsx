@@ -887,50 +887,6 @@ function YourDesignMobileTest() {
     }
   };
 
-  if (image === null) {
-    if (categoryChange === 31) {
-      if (shirtColor === "#000000") {
-        image = frontImageBlack;
-      } else {
-        image = frontImage;
-      }
-    } else if (categoryChange === 33) {
-      if (shirtColor === "#000000") {
-        image = hoodie_front_black;
-      } else {
-        image = hoodie_front_white;
-      }
-    } else if (categoryChange === 32) {
-      if (shirtColor === "#000000") {
-        image = sweatshot_front_black;
-      } else {
-        image = sweatshot_front_white;
-      }
-    }
-  }
-
-  if (imageBack === null) {
-    if (categoryChange === 31) {
-      if (shirtColor === "#000000") {
-        imageBack = backImageBlack;
-      } else {
-        imageBack = backImage;
-      }
-    } else if (categoryChange === 33) {
-      if (shirtColor === "#000000") {
-        imageBack = hoodie_back_black;
-      } else {
-        imageBack = hoodie_back_white;
-      }
-    } else if (categoryChange === 32) {
-      if (shirtColor === "#000000") {
-        imageBack = sweatshot_back_black;
-      } else {
-        imageBack = sweatshot_back_white;
-      }
-    }
-  }
-
   const product_id = JSON.parse(localStorage.getItem("currentProduct"));
 
   const fetchFiles = async () => {
@@ -968,6 +924,50 @@ function YourDesignMobileTest() {
 
     localStorage.setItem('counterValue', newCount.toString());
   };
+
+  if (image === null) {
+    if (categoryChange === 31) {
+      if (shirtColor === "#000000") {
+        image = frontImage;
+      } else {
+        image = frontImage;
+      }
+    } else if (categoryChange === 33) {
+      if (shirtColor === "#000000") {
+        image = hoodie_front_black;
+      } else {
+        image = hoodie_front_white;
+      }
+    } else if (categoryChange === 32) {
+      if (shirtColor === "#000000") {
+        image = sweatshot_front_black;
+      } else {
+        image = sweatshot_front_white;
+      }
+    }
+  }
+
+  if (imageBack === null) {
+    if (categoryChange === 31) {
+      if (shirtColor === "#000000") {
+        imageBack = backImage;
+      } else {
+        imageBack = backImage;
+      }
+    } else if (categoryChange === 33) {
+      if (shirtColor === "#000000") {
+        imageBack = hoodie_back_black;
+      } else {
+        imageBack = hoodie_back_white;
+      }
+    } else if (categoryChange === 32) {
+      if (shirtColor === "#000000") {
+        imageBack = sweatshot_back_black;
+      } else {
+        imageBack = sweatshot_back_white;
+      }
+    }
+  }
 
   const addToBasketTo = async (e) => {
     e.preventDefault();
