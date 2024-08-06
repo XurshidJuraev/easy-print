@@ -11,8 +11,8 @@ import design from '../../layouts/images/design.svg';
 import layer from '../../layouts/images/layer.svg';
 import library from '../../layouts/images/library.svg';
 import product from '../../layouts/images/product.svg';
-import tShirt from '../../layouts/images/front.svg';
-import tShirt_back from '../../layouts/icons/back.svg';
+import tShirt from '../../../layouts/images/black_front_design.jpeg';
+import tShirt_back from '../../../layouts/images/black_back_design.jpeg';
 import { Slider } from "@mui/material";
 import Reveal from "../../../animation";
 import size_text from '../../layouts/icons/size_text.svg';
@@ -928,7 +928,7 @@ function YourDesignMobileTest() {
   if (image === null) {
     if (categoryChange === 31) {
       if (shirtColor === "#000000") {
-        image = frontImage;
+        image = tShirt;
       } else {
         image = frontImage;
       }
@@ -950,7 +950,7 @@ function YourDesignMobileTest() {
   if (imageBack === null) {
     if (categoryChange === 31) {
       if (shirtColor === "#000000") {
-        imageBack = backImage;
+        imageBack = tShirt_back;
       } else {
         imageBack = backImage;
       }
