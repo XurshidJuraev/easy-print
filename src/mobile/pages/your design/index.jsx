@@ -498,41 +498,35 @@ function YourDesignMobileTest() {
     }
   }, [isFrontView, takeScreenshotBack]);
 
-  let getImage = async () => {
+  let getImage = () => {
     setModalLeft('20px');
     setModalTop('21px');
-    setIsFrontView(true);
-    setModalLeft('20px');
-    setModalTop('21px');
+    // setIsFrontView(true);
+  
+    setTimeout(async () => {
+      if (ref.current && isFrontView) {
+        takeScreenshot(ref.current)
+          .then(() => {setModalLeft('20px'); setModalTop('21px');})
+          .catch((error) => {
+            console.error("Screenshot capture failed:", error);
+            setModalLeft('20px');
+            setModalTop('21px');
+          });
+      }
+    }, 1000);
 
-    if (ref.current) {
-      try {
-        setTimeout(async () => {
-          await takeScreenshot(ref.current);
-          setModalLeft('20px');
-          setModalTop('21px');
-          console.log('aa');
-        }, 1000);
-      } catch (error) {
-        console.error("Screenshot capture failed:", error);
-        setModalLeft('20px');
-        setModalTop('21px');
+    if (image && imageBack) {
+      const elements = document.getElementsByClassName("addToBasket_image");
+
+      if (elements.length > 0) {
+        const element = elements[0];
+        element.setAttribute("data-bs-target", "#exampleModalToggle5");
+        element.setAttribute("data-bs-toggle", "modal");
+      } else {
+        console.error("Element with class 'addToBasketImage' not found.");
       }
     }
-
-    setModalLeft('20px');
-    setModalTop('21px');
-
-    const elements = document.getElementsByClassName("addToBasket_image");
-    if (elements.length > 0) {
-      const element = elements[0];
-      element.setAttribute("data-bs-target", "#exampleModalToggle5");
-      element.setAttribute("data-bs-toggle", "modal");
-      element.click(); // manually trigger the click event to open the modal
-    } else {
-      console.error("Element with class 'addToBasket_image' not found.");
-    }
-  };  
+  }; 
 
   const handleScaleChange = (newValue) => {
     const val = newValue.target.value;
@@ -995,16 +989,18 @@ function YourDesignMobileTest() {
     formdata.append("imagesPrint[]", printImage);
     formdata.append("image_front", frontImageBlob);
     formdata.append("image_back", backImageBlob);
-    formdata.append("price", product_id.price);
+    formdata.append("price", shirtTypePrice ? shirtTypePrice : product_id.price);
+    formdata.append("type", shirtTypeId);
+    formdata.append("for_mobile", 1);
 
-    console.log(printImage);
-    console.log(imeyg);
-    console.log(image);
-    console.log(frontImageBlob);
-    console.log(backImageBlob);
-    console.log(selectedSize);
-    console.log(shirtColor === '#000000' ? 3 : 4);
-    console.log(categoryChange);
+    // console.log(printImage);
+    // console.log(imeyg);
+    // console.log(image);
+    // console.log(frontImageBlob);
+    // console.log(backImageBlob);
+    // console.log(selectedSize);
+    // console.log(shirtColor === '#000000' ? 3 : 4);
+    // console.log(categoryChange);
 
     var requestOptions = {
       method: 'POST',
@@ -1425,7 +1421,7 @@ function YourDesignMobileTest() {
         </div>
 
         {/* {layersState === true && ( */}
-          <center style={{textAlign: 'left', padding: '16px', marginTop: '-85px', display: layersState ? 'block' : 'none'}}>
+          <center style={{textAlign: 'left', padding: '16px', marginTop: '-50px', display: layersState ? 'block' : 'none'}}>
             {/* <div className='yourDesign_layer'>
               <div className='d-flex'>
                 <svg style={{marginRight: '12px'}} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">

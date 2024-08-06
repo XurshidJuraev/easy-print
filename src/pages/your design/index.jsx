@@ -960,6 +960,7 @@ const YourDesign = () => {
     formdata.append("image_back", backImageBlob);
     formdata.append("price", shirtTypePrice ? shirtTypePrice : product_id.price);
     formdata.append("type", shirtTypeId);
+    // formdata.append("for_mobile", 0);
 
     // console.log(printImage);
     // console.log(frontImageBlob);

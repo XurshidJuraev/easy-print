@@ -408,9 +408,10 @@ function BasketMobile() {
                   <Reveal>
                     <input style={{position: 'absolute', right: '40px'}} checked={item.selected} onChange={() => handleSelectItem(item.id)} type="checkbox" name="" id="" />
                     <div key={item.id} style={{marginBottom: '12px'}}>
-                      <div className='d-flex'>
+                      <NavLink to={item.relation_type === 'warehouse_product' ? `/mobile/show/detail/${item.relation_id}/${item.name}` : `/mobile/yourDesign`} style={{textDecoration: 'none'}} className='d-flex'>
                         <div>
-                          <div style={{width: '130px', height: '180px', backgroundColor: '#F6F6F6', backgroundImage: `url(${item.images[0]})`, borderRadius: '8px', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div>
+                          <div style={{width: '130px', height: '180px', backgroundColor: '#F6F6F6', backgroundImage: `url(${item.images[0]})`, borderRadius: '8px', backgroundSize: 'cover', backgroundPosition: item.for_mobile ? 'none' : 'center', backgroundRepeat: 'no-repeat', transform: item.for_mobile ? 'scale(1.2)' : 'scale(1)', position: 'relative', top: item.for_mobile ? '28px' : '0px', zIndex: 100}}></div>
+                          {/*<div style={{width: '130px', height: '180px', backgroundColor: '#F6F6F6', backgroundImage: `url(${item.images[0]})`, borderRadius: '8px', backgroundSize: 'cover', backgroundPosition: item.relation_type === 'warehouse_product' ? 'center' : '', backgroundRepeat: 'no-repeat'}}></div> */}
                         </div>
 
                         <div style={{display: 'flex', width: '195px', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '12px'}}>
@@ -426,12 +427,12 @@ function BasketMobile() {
                           </div>
                           <p style={{color: '#18356D', fontFamily: 'Inter400', marginBottom: '0', position: 'relative', top: '-11px'}} className='order_price'>{Number(item.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm` : `so'm`}</p>
                         </div>
-                      </div>
+                      </NavLink>
                     </div>
 
                     <div className="d-flex justify-content-between">
                       <div onClick={() => {handleDeleteAddress(item.id)}}>
-                        <img src={trash} alt="trash" />
+                        <img style={{position: 'relative', zIndex: 100}} src={trash} alt="trash" />
                       </div>
                       <div style={{display: item.relation_type === 'warehouse_product' ? 'none' : 'flex'}}>
                         <img style={{transform: 'scale(0.8)', marginRight: '15px'}} src={pencil} alt="pencil" />

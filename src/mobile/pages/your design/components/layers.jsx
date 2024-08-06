@@ -57,11 +57,13 @@ const LayersContent = ({
 
 const LayersText = () => (
   <Reveal>
-    <p className="layers_text" style={{width: '100%'}}>
-      {localStorage.getItem("selectedLanguage") === "ru"
-        ? "Добавленные объекты будут отображаться здесь"
-        : `Qo'shilgan ob'ektlar bu yerda ko'rsatiladi`}
-    </p>
+    <div className="center">
+      <p className="layers_text" style={{width: '80%', marginTop: '200px'}}>
+        {localStorage.getItem("selectedLanguage") === "ru"
+          ? "Добавленные объекты будут отображаться здесь"
+          : `Qo'shilgan ob'ektlar bu yerda ko'rsatiladi`}
+      </p>
+    </div>
   </Reveal>
 );
 
