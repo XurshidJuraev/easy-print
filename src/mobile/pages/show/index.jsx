@@ -582,6 +582,16 @@ function ProductShowMobile() {
         <div style={{backgroundColor: 'white'}}>
           <HeaderMainMobile />
 
+          <style>
+            {`
+              @media only screen and (max-width: 380px){
+                .swiper-slide {
+                  margin-right: 34px !important;
+                }
+              }
+            `}
+          </style>
+
           <div style={{width: '100%', backgroundColor: 'white'}}>
             {isLoading ? (
               <>
@@ -942,8 +952,7 @@ function ProductShowMobile() {
               <h2 style={{marginBottom: '-4px'}} className='home_card_title_mobile'>Рекомендуем вам:</h2>
 
               <Swiper style={{marginLeft: '30px'}} slidesPerView={2.3} spaceBetween={10} freeMode={true} pagination={{clickable: true,}} className="mySwiper">
-                {data.data ? data.data.warehouse_product_list.filter((data2) => data2.id !== parseInt(params.id))
-                      .map((data2) => (
+                {data.data ? data.data.warehouse_product_list.filter((data2) => data2.id !== parseInt(params.id)).map((data2) => (
                   <SwiperSlide key={data2.id}>
                     <Reveal>
                       <NavLink onClick={() => {localStorage.setItem('idActive', data2.id); localStorage.setItem('nameActive', data2.name)}} to={`/mobile/show/detail/${data2.id}/${data2.name}`} style={{textDecoration: 'none', marginLeft: '8px', marginRight: '8px'}}>

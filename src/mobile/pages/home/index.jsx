@@ -16,6 +16,7 @@ function HomePageMobile() {
   const [data, setData] = useState(0);
   const token = localStorage.getItem('token');
   const [category, setCategory] = useState(null);
+  const [designPrice, seDesignPrice] = useState();
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayedItems, setDisplayedItems] = useState(11);
@@ -34,6 +35,7 @@ function HomePageMobile() {
       }
     }).then((response) => {
       setData(response.data);
+      seDesignPrice(response.data.data.product_list[0].price);
     }).catch((error) => {
       console.log(error);
     });    
@@ -169,25 +171,24 @@ function HomePageMobile() {
         <h2 className='home_card_title_mobile'>Хиты Продаж</h2>
 
         <div className="d-flex" style={{width: '344px', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-
-        <Reveal>
-          <NavLink to={`/mobile/yourDesign`} style={{textDecoration: 'none', marginBottom: '12px'}}>
-            <div className="clothes_fat" style={{borderRadius: '6px'}}>
-              <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
-                <div>
-                  <div style={{width: '162px', height: '190px', backgroundImage: `url(${your_design})`, borderRadius: '6px', backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+          <Reveal>
+            <NavLink to={`/mobile/yourDesign`} style={{textDecoration: 'none', marginBottom: '12px'}}>
+              <div className="clothes_fat" style={{borderRadius: '6px'}}>
+                <div className="image-container" style={{position: 'relative', borderRadius: '6px', zIndex: '200'}}>
+                  <div>
+                    <div style={{width: '162px', height: '190px', backgroundImage: `url(${your_design})`, borderRadius: '6px', backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="d-flex">
-              <div>
-                <p className='home_card_price'>От 120 000 {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
-                <p className='home_card_title hiided_text' title='Одежда с вашим дизайном'>Одежда с вашим дизайном</p>
+              <div className="d-flex">
+                <div>
+                  <p className='home_card_price'>От {designPrice} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                  <p className='home_card_title hiided_text' title='Одежда с вашим дизайном'>Одежда с вашим дизайном</p>
+                </div>
               </div>
-            </div>
-          </NavLink>
-        </Reveal>
+            </NavLink>
+          </Reveal>
 
           {data.data ? data.data.warehouse_product_list.map((data2) => (
             <Reveal>
