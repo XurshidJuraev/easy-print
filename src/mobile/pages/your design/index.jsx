@@ -1355,7 +1355,7 @@ function YourDesignMobileTest() {
     <div style={{overflow: 'hidden'}}>
       <style>
         {`
-          @media only screen and (max-width: 380px){
+          @media only screen and (max-width: 400px){
             .clothes_image {
               mix-blend-mode: multiply;
               width: 280px;
@@ -1406,7 +1406,7 @@ function YourDesignMobileTest() {
             }
           }
 
-          @media only screen and (min-width: 380px){
+          @media only screen and (min-width: 400px){
             .clothes_image {
               mix-blend-mode: multiply;
               width: 320px;
@@ -1723,6 +1723,9 @@ function YourDesignMobileTest() {
         <div className="modal-dialog" style={{borderRadius: '12px', border: 'none', minHeight: '400px'}}>
           <div className="modal-content" style={{borderRadius: '12px', border: 'none', minHeight: '400px'}}>
             <div className="modal-body" style={{padding: '32px', minHeight: '400px'}}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
               <div className="d-flex justify-content-between" style={{flexDirection: 'column'}}>
                 <div data-bs-dismiss="modal" aria-label="Close" onClick={() => {setShirtTypePrice(150000); setShirtTypeName(localStorage.getItem('selectedLanguage') === 'ru' ? 'Стандарт' : 'Standart'); setShirtTypeId(0)}} className='center flex-column'>
                   <img className='modal_image' src={modal_image1} alt="modal_image1" />
@@ -1737,7 +1740,7 @@ function YourDesignMobileTest() {
                   <img className='modal_image' src={modal_image2} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>С воротником</h2>
-                  <p className='modal_image_title_price'>185 000 сум</p>
+                  <p className='modal_image_title_price'>175 000 сум</p>
 
                   <button onClick={() => {setShirtTypeId1(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex', width: '160px'}}>Таблица размеров</button>
                 </div>

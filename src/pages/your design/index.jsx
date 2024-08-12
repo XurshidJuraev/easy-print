@@ -9,6 +9,8 @@ import backImage from "../../layouts/images/backShirt.png";
 import hoodie_back_black from "../../layouts/images/hoodieBack.png";
 import hoodie_front_black from "../../layouts/images/hoodieFront.png";
 import sweatshot_back_black from "../../layouts/images/sweatshotBack.png";
+import aiApplyImage from "../../layouts/icons/ai_apply.svg";
+import aiLoader from "../../layouts/icons/ai_loader.gif";
 import sweatshot_front_black from "../../layouts/images/sweatshotFront.png";
 import hoodie_back_white from "../../layouts/images/hoodieBack.png";
 import hoodie_front_white from "../../layouts/images/hoodieFront.png";
@@ -53,6 +55,7 @@ const YourDesign = () => {
   const [shirtColor, setShirtColor] = useState("#FFFFFF");
   const [isFrontView, setIsFrontView] = useState(true);
   const [isColorChange, setIsColorChange] = useState(false);
+  const [aiHere, setAiHere] = useState(false);
   const [showLibrary, setShowLibrary] = useState(false);
   const [isCategoryChange, setIsCategoryChange] = useState(false);
   const [textInputVisible, setTextInputVisible] = useState(false);
@@ -117,6 +120,10 @@ const YourDesign = () => {
     width: "600px",
     height: "560px",
   });
+  const [text, setText] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
@@ -465,40 +472,6 @@ const YourDesign = () => {
     }
   };
 
-  useEffect(() => {
-    if (!isFrontView && refBack.current) {
-      takeScreenshotBack(refBack.current).catch((error) => {
-        console.error("Screenshot capture failed:", error);
-      });
-    }
-  }, [isFrontView, takeScreenshotBack]);
-
-  let getImage = () => {
-    setIsFrontView(true);
-  
-    setTimeout(async () => {
-      if (ref.current && isFrontView) {
-        takeScreenshot(ref.current)
-          .then(() => setIsFrontView(false))
-          .catch((error) => {
-            console.error("Screenshot capture failed:", error);
-          });
-      }
-    }, 1000);
-  
-    if (image && imageBack) {
-      const elements = document.getElementsByClassName("addToBasket_image");
-  
-      if (elements.length > 0) {
-        const element = elements[0];
-        element.setAttribute("data-bs-target", "#exampleModalToggle5");
-        element.setAttribute("data-bs-toggle", "modal");
-      } else {
-        console.error("Element with class 'addToBasketImage' not found.");
-      }
-    }
-  }; 
-
   const handleScaleChange = (newValue) => {
     const val = newValue.target.value;
     ImageParamsChanger({ type: "imageScale", value: val });
@@ -747,25 +720,51 @@ const YourDesign = () => {
   };
 
   const handleLibraryPictureChange = async () => {
-    if (selectedImageIndex !== -1) {
-      const selectedImage = imageList[selectedImageIndex];
-      const imgObj = new Image();
-
-      imgObj.src = selectedImage;
-
-      imgObj.onload = function () {
-        const img = new fabric.Image(imgObj);
-
-        img.scaleToHeight(300);
-        img.scaleToWidth(300);
-        canvas.centerObject(img);
-        canvas.add(img);
-        canvas.renderAll();
-        setShowLibrary(false);
-        setPhotoInputVisible(!photoInputVisible);
-      };
+    const uniqueKey = uuid();
+    const selectedImage = imageList[selectedImageIndex];
+  
+    if (selectedImage) {
       setPrintImage(selectedImage);
-      setImeyg(selectedImage);
+  
+      const imgObj = new Image();
+      imgObj.src = selectedImage;
+  
+      imgObj.onload = () => {
+        fabric.Image.fromURL(selectedImage, (img) => {
+          const scaleFactor = 234 / img.width;
+          img.scale(scaleFactor);
+          img.uniqueKey = uniqueKey;
+          img.isFront = isFrontView ? "front" : "back";
+
+          ControlVisible.forEach((item) => {
+            img.setControlVisible(item.corner, item.value);
+          });
+
+          img.set(ControlOptions);
+          canvas.add(img);
+          setTextUniqueKey(uniqueKey);
+          setHeadText((prev) => [...prev, img]);
+          ImageParamsChanger({ type: "imageScale", value: 0, uniqueKey });
+          canvas.renderAll();
+
+          // Ensure screenshot is taken after the image is rendered
+          setTimeout(() => {
+            if (isFrontView) {
+              takeScreenshot(ref.current)
+                .then(() => setIsFrontView(true))
+                .catch((error) => console.error("Screenshot capture failed:", error));
+            }
+          }, 1000);
+        });
+  
+        setShowLibrary(false);
+        setPhotoInputVisible(true);
+      };
+  
+      imgObj.onerror = (err) => {
+        setError('Error loading image.');
+        console.error(err);
+      };
     }
   };
 
@@ -831,6 +830,10 @@ const YourDesign = () => {
 
   const handleClickColorChange = () => {
     setIsColorChange((prev) => !prev);
+  };
+
+  const handleClickAiInput = () => {
+    setAiHere((prev) => !prev);
   };
 
   useEffect(() => {
@@ -1050,6 +1053,99 @@ const YourDesign = () => {
     }
   };
 
+  const generateImage = async () => {
+    setLoading(true);
+    setAiHere(false);
+    setError('');
+    setImageUrl('');
+
+    const options = {
+      method: 'POST',
+      url: 'https://ai-text-to-image-generator-api.p.rapidapi.com/realistic',
+      headers: {
+        // lmwr_sk_OXSxyBnBjv_LkmCgMAkBFlVkIxGdFUKZYfoN48g5yCneuzbu
+        'x-rapidapi-key': '829432e3e4msh734d22d3dd436e4p1fa0e5jsna3bb50a5e199',
+        'x-rapidapi-host': 'ai-text-to-image-generator-api.p.rapidapi.com',
+        'Content-Type': 'application/json'
+      },
+      data: {
+        inputs: text
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      const imageUrl = response.data.url;
+      setImageList(response.data.url);
+      setLoading(false)
+      setImageUrl(imageUrl);
+      setPrintImage(imageUrl);
+
+      const imgObj = new Image();
+      imgObj.src = imageUrl;
+
+      fabric.Image.fromURL(imageUrl, (img) => {
+        const scaleFactor = 234 / img.width;
+        img.scale(scaleFactor);
+        img.uniqueKey = uuid();
+        img.isFront = isFrontView ? "front" : "back";
+
+        ControlVisible.forEach((item) => {
+          img.setControlVisible(item.corner, item.value);
+        });
+
+        img.set(ControlOptions);
+        canvas.add(img);
+        setTextUniqueKey(img.uniqueKey);
+        setHeadText((prev) => [...prev, img]);
+        ImageParamsChanger({ type: "imageScale", value: 0, uniqueKey: img.uniqueKey });
+        canvas.renderAll();
+      });
+
+      setPhotoInputVisible(true);
+    } catch (err) {
+      setError('Rasmni yaratishda xatolik yuz berdi.');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!isFrontView && refBack.current) {
+      takeScreenshotBack(refBack.current).catch((error) => {
+        console.error("Screenshot capture failed:", error);
+      });
+    }
+  }, [isFrontView, takeScreenshotBack]);
+
+  let getImage = () => {
+    setIsFrontView(true);
+
+    setTimeout(async () => {
+      if (ref.current && isFrontView) {
+        console.log(ref);
+        takeScreenshot(ref.current)
+          .then(() => setIsFrontView(false))
+          .catch((error) => {
+            console.error("Screenshot capture failed:", error);
+          });
+      }
+    }, 1000);
+
+    if (image && imageBack) {
+      const elements = document.getElementsByClassName("addToBasket_image");
+
+      if (elements.length > 0) {
+        const element = elements[0];
+        element.setAttribute("data-bs-target", "#exampleModalToggle5");
+        element.setAttribute("data-bs-toggle", "modal");
+      } else {
+        console.error("Element with class 'addToBasketImage' not found.");
+      }
+    }
+  }; 
+
   return (
     <div>
       <HeaderMainCopy />
@@ -1211,6 +1307,7 @@ const YourDesign = () => {
             <div
               style={{ width: "60%" }}
               onClick={() => {
+                handleClickAiInput();
                 handleImageClickHeader(8);
               }}
               className={`shirt_drawing_header_select`}
@@ -1221,7 +1318,7 @@ const YourDesign = () => {
           </div>
 
           <div className="d-flex justify-content-center mt-5 position-relative">
-            <LeftArrovSVG />
+            {/* <LeftArrovSVG /> */}
             <Categories
               category={categoryChange}
               isFrontView={isFrontView}
@@ -1231,7 +1328,11 @@ const YourDesign = () => {
               ref={isFrontView ? ref : refBack}
               ref2={canvasRef}
             />
-            <RightArrovSVG />
+
+            {/* <div className="canvas-container" style={{position: 'relative', top: '-260px', transform: 'scale(0.6)',}}>
+              <canvas id="tshirt-canvas" width={200} height={250} ></canvas>
+            </div> */}
+            {/* <RightArrovSVG /> */}
           </div>
         </div>
 
@@ -1639,6 +1740,67 @@ const YourDesign = () => {
         </>
       )}
 
+      {loading && (
+        <>
+          <div
+            style={{
+              position: "absolute",
+              background: "#7c7c7c66",
+              width: "100%",
+              height: "100%",
+              top: "0",
+              left: "0",
+            }}
+            className="color_background"
+          ></div>
+
+          <div style={{backgroundColor: 'white', width: '300px', height: '184px', position: 'absolute', top: '10%', borderRadius: '20px', left: '40%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <img src={aiLoader} alt="aiLoader" />
+          </div>
+        </>
+      )}
+
+      {aiHere && (
+        <>
+          <div
+            onClick={handleClickAiInput}
+            style={{
+              position: "absolute",
+              background: "#7c7c7c12",
+              width: "100%",
+              height: "100%",
+              top: "0",
+              left: "0",
+            }}
+            className="color_background"
+          ></div>
+
+          <div
+            style={{
+              position: "absolute",
+              top: "165px",
+              right: "18.2%",
+              // boxShadow: "0 0.5rem 1rem rgba(0, 0, 0, 0.15)",
+              backgroundColor: 'white',
+              // width: "130px",
+              // height: "36px",
+              transform: "scale(1.3)",
+              borderRadius: '5px',
+              padding: '5px',
+              width: '170px',          
+            }}
+          >
+            <div className="d-flex" style={{width: '130px'}}>
+              <input value={text} onChange={(e) => setText(e.target.value)} style={{height: '37px', outline: 'none', fontSize: '8px', width: '120px', marginRight: '8px'}} placeholder={localStorage.getItem("selectedLanguage") === "ru" ? "Какую картинку вы хотите?" : "Qanday rasmni xohlaysiz?"} className="selcet_option_layer" type="text" />
+
+              <button onClick={() => {generateImage(); setLoading(true)}} style={{backgroundColor: '#829d50', border: 'none', borderRadius: '5px'}}>
+                <img style={{width: '20px', height: '30px'}} src={aiApplyImage} alt="ai Apply Image" />
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
       {isColorChange && (
         <>
           <div
@@ -1849,7 +2011,7 @@ const YourDesign = () => {
                   <img className='modal_image' src={modal_image2} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>С воротником</h2>
-                  <p className='modal_image_title_price'>185 000 сум</p>
+                  <p className='modal_image_title_price'>175 000 сум</p>
 
                   <button onClick={() => {setShirtTypeId1(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
                 </div>

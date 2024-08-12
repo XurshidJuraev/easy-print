@@ -1,7 +1,7 @@
 {
   "name": "easy-print",
-  "version": "2.0.6",
-  "mobile_version": "2.0.6",
+  "version": "2.1",
+  "mobile_version": "2.1",
   "homepage": "http://easyprint.uz/",
   "rewrites": [
     {
@@ -13,6 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fontsource/poppins": "^5.0.14",
     "@mui/icons-material": "^5.16.6",
     "@mui/material": "^5.14.11",
     "@splidejs/react-splide": "^0.7.12",
