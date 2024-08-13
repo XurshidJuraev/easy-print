@@ -33,8 +33,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import ToastComponent from "../../components/toast";
 import { Categories } from "./components/categories";
-import LeftArrovSVG from "../../layouts/icons/left-arrow";
-import RightArrovSVG from "../../layouts/icons/right-arrow";
 import { Layers } from "./components/layers";
 import DownArrowSVG from "../../layouts/icons/down-arrow";
 import RefreshSVG from "../../layouts/icons/refresh";

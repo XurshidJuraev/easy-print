@@ -553,10 +553,10 @@ function OrderMobile() {
                     <img src={cards} alt="cards" />
                   )}
 
-                  <label className='order_info mt-2' style={{width: '100%'}}>
+                  {/* <label className='order_info mt-2' style={{width: '100%'}}>
                     <input style={{ cursor: 'pointer' }} type="radio" id="naxt" name="pay" value="60" checked={selectedPaymentMethod === 'cash'} onChange={() => setSelectedPaymentMethod('cash')} />
                     <label style={{ cursor: 'pointer' }} htmlFor="naxt">{localStorage.getItem('selectedLanguage') === 'ru' ? 'Наличными, при получении' : 'Naqd pul yoki karta orqali qabul qilganda'}</label>
-                  </label>
+                  </label> */}
                 </div>
               </div>
 
