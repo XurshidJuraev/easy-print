@@ -99,6 +99,7 @@ function YourDesignMobileTest() {
   );
   const [headText, setHeadText] = useState([]);
   const [textUniqueKey, setTextUniqueKey] = useState("");
+  const [borderColor, setBorderColor] = useState('#bebfc2');
   const ref = useRef(null);
   const refBack = useRef(null);
   const canvasRef = useRef(null);
@@ -501,16 +502,18 @@ function YourDesignMobileTest() {
   let getImage = () => {
     setModalLeft('20px');
     setModalTop('21px');
+    setBorderColor('transparent')
     // setIsFrontView(true);
 
     setTimeout(async () => {
       if (ref.current && isFrontView) {
         takeScreenshot(ref.current)
-          .then(() => {setModalLeft('20px'); setModalTop('21px');})
+          .then(() => {setModalLeft('20px'); setModalTop('21px'); setBorderColor('transparent');})
           .catch((error) => {
             console.error("Screenshot capture failed:", error);
             setModalLeft('20px');
             setModalTop('21px');
+            setBorderColor('transparent')
           });
       }
     }, 1000);
@@ -1348,6 +1351,12 @@ function YourDesignMobileTest() {
   if (modalLeft === '20px' || modalTop === '20px') {
     setTimeout(() => {
       setModalLeft('0px'); setModalTop('-7px')
+    }, 3000);
+  }
+
+  if (borderColor === 'transparent') {
+    setTimeout(() => {
+      setBorderColor('#bebfc2')
     }, 3000);
   }
 

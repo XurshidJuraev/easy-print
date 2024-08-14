@@ -105,6 +105,7 @@ const YourDesign = () => {
   const [shirtTypeName, setShirtTypeName] = useState(localStorage.getItem('selectedLanguage') === 'ru' ? 'Тип: стандарт' : 'Turi: standart');
   const [countHeader, setCountHeader] = useState(0);
   const [categoryIndex, setCategoryIndex] = useState(0);
+  const [borderColor, setBorderColor] = useState('#bebfc2');
   const [visible, setVisible] = useState(false) 
   let [image, takeScreenshot] = useScreenshot({
     type: "image/jpeg",
@@ -1117,15 +1118,21 @@ const YourDesign = () => {
     }
   }, [isFrontView, takeScreenshotBack]);
 
+/**
+ * The function `getImage` sets the front view of an image, takes a screenshot, and updates the element
+ * attributes for a modal if certain conditions are met.
+ */
   let getImage = () => {
     setIsFrontView(true);
+    setBorderColor('transparent')
 
     setTimeout(async () => {
       if (ref.current && isFrontView) {
         console.log(ref);
         takeScreenshot(ref.current)
-          .then(() => setIsFrontView(false))
+          .then(() => {setIsFrontView(false);})
           .catch((error) => {
+            setBorderColor('transparent')
             console.error("Screenshot capture failed:", error);
           });
       }
@@ -1142,12 +1149,30 @@ const YourDesign = () => {
         console.error("Element with class 'addToBasketImage' not found.");
       }
     }
-  }; 
+  };
+
+/* The above code is written in JavaScript React. It checks if the variable `borderColor` is equal to
+'transparent'. If it is, then it sets a timeout function to execute after 3 seconds (3000
+milliseconds). Inside the timeout function, it calls `setBorderColor('#bebfc2')`, which presumably
+updates the border color to '#bebfc2' after the 3-second delay. */
+  if (borderColor === 'transparent') {
+    setTimeout(() => {
+      setBorderColor('#bebfc2')
+    }, 3000);
+  }
 
   return (
     <div>
       <HeaderMainCopy />
       <ToastContainer />
+
+      <style>
+        {`
+          .lower-canvas, .upper-canvas {
+            border: 2px solid ${borderColor} !important;
+          }
+        `}
+      </style>
 
       {visible && (
         <div data-bs-dismiss="modal" aria-label="Close" style={{width: '100%', height: '2100px', overflow: 'hidden', position: 'absolute', backgroundColor: '#00000070', left: 0, top: 0, zIndex: 10000, overflow: 'hidden'}}></div>
