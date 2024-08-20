@@ -548,7 +548,7 @@ function HomePage() {
                                   </span>
                                   :
                                   <div>
-                                    {localStorage.getItem('selectedLanguage') === 'ru' ? 'От' : `Boshlanadi`} {Number(currentProduct.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
+                                    {Number(currentProduct.price).toLocaleString('ru-RU')} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}
                                   </div>
                                 }
                               </p>

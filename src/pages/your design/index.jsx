@@ -2025,7 +2025,7 @@ updates the border color to '#bebfc2' after the 3-second delay. */
                   <img className='modal_image' src={modal_image1} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>Стандарт</h2>
-                  <p className='modal_image_title_price'>150 000 сум</p>
+                  <p className='modal_image_title_price'>110 000 сум</p>
 
                   <button onClick={() => {setShirtTypeId0(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
                 </div>
@@ -2034,7 +2034,7 @@ updates the border color to '#bebfc2' after the 3-second delay. */
                   <img className='modal_image' src={modal_image2} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>С воротником</h2>
-                  <p className='modal_image_title_price'>175 000 сум</p>
+                  <p className='modal_image_title_price'>125 000 сум</p>
 
                   <button onClick={() => {setShirtTypeId1(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
                 </div>
@@ -2043,7 +2043,7 @@ updates the border color to '#bebfc2' after the 3-second delay. */
                   <img className='modal_image' src={modal_image3} alt="modal_image1" />
 
                   <h2 className='modal_image_title'>Оверсайз</h2>
-                  <p className='modal_image_title_price'>195 000 сум</p>
+                  <p className='modal_image_title_price'>145 000 сум</p>
 
                   <button onClick={() => {setShirtTypeId2(true);}} className='modal_image_title_button' style={{display: shirtTypeId0 || shirtTypeId1 || shirtTypeId2 === true ? 'none' : 'flex'}}>Таблица размеров</button>
                 </div>

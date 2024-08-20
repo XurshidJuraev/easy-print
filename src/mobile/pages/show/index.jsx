@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import blueVerifed from '../../layouts/icons/blue_verifed.svg'
 import blueBuds from '../../layouts/icons/operator.svg'
 import blueTruck from '../../layouts/icons/truck.svg'
@@ -73,6 +73,8 @@ function ProductShowMobile() {
   const [displayedId, setDisplayedId] = useState();
   const [displayedQuantity, setDisplayedQuantity] = useState();
   const [clickIdColor, setClickIdColor] = useState();
+
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const checkUser = async () => {
@@ -300,7 +302,8 @@ function ProductShowMobile() {
 
               localStorage.setItem('basket', JSON.stringify(basketData));
 
-              alert(result.message)
+              // alert(result.message)
+              navigate('/mobile/auth')
             } else {
               alert(localStorage.getItem('selectedLanguage') === 'ru' ? 'Товар не добавлен' : 'Mahsulot qo`shilmadi')
             }
@@ -891,7 +894,7 @@ function ProductShowMobile() {
                           <div
                             key={index}
                             className="color_border me-4"
-                            style={{borderColor: selectedColorIndex === index ? '#829D50' : '#E6E6E6', cursor: 'pointer', width: '50px', height: '50px'}}
+                            style={{border: selectedColorIndex === index ? '2px solid #829D50' : '1px solid #E6E6E6', cursor: 'pointer', width: '50px', height: '50px'}}
                             onClick={() => {
                               setSelectedColorIndex(index);
                               const selectedColorId = color.id;
@@ -913,7 +916,7 @@ function ProductShowMobile() {
 
                       <div className='size_selection' style={{width: '350px'}}>
                         {sizeArray.map((size, index) => (
-                          <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option ${selectedSizeIndex === index ? 'selected_size' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id;  setClickIdColor(size.color[0].id); setDefaultSize(selectedSizeId); setDisplayedId(size.color[0].product.id); setDisplayedPrice(size.color[0].product.price); setDisplayedName(size.color[0].product.name); setDisplayedQuantity(size.color[0].product.quantity); setDisplayedImage(size.color[0].product.img) }}>
+                          <div style={{marginBottom: '12px', cursor: 'pointer'}} key={size.id} className={`size_option_mobile_2 ${selectedSizeIndex === index ? 'selected_size_mobile2' : ''}`} onClick={() => { setSelectedSizeIndex(index); const selectedSizeId = size.id;  setClickIdColor(size.color[0].id); setDefaultSize(selectedSizeId); setDisplayedId(size.color[0].product.id); setDisplayedPrice(size.color[0].product.price); setDisplayedName(size.color[0].product.name); setDisplayedQuantity(size.color[0].product.quantity); setDisplayedImage(size.color[0].product.img) }}>
                             {size.name}
                           </div>
                         ))}

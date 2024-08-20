@@ -123,3 +123,40 @@
     transform: rotate(360deg);
   }
 }
+
+.size_option_mobile_2 {
+  width: 74px;
+  height: 32px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #CCCCCC;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  color: #122956;
+  /* margin-left: 8px; */
+  margin-right: 8px;
+}
+
+.selected_size_mobile2 {
+  width: 74px;
+  height: 32px;
+  border-radius: 4px;
+  background-color: #829D50;
+  border: 1px solid #829D50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  color: #FFFFFF;
+}

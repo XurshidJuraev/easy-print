@@ -183,7 +183,7 @@ function HomePageMobile() {
 
               <div className="d-flex">
                 <div>
-                  <p className='home_card_price'>От {designPrice} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
+                  <p className='home_card_price'>{designPrice} {localStorage.getItem('selectedLanguage') === 'ru' ? 'сум' : `so'm`}</p>
                   <p className='home_card_title hiided_text' title='Одежда с вашим дизайном'>Одежда с вашим дизайном</p>
                 </div>
               </div>
