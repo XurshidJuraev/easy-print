@@ -25,7 +25,7 @@
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
     "dom-to-image": "^2.6.0",
-    "dompurify": "^3.0.9",
+    "dompurify": "^3.0.11",
     "fabric": "^4.3.1",
     "fabricjs-react": "^1.2.2",
     "framer-motion": "^10.16.4",
